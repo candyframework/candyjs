@@ -1,6 +1,6 @@
 {
   "name": "candyjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An Object-Oriented node mvc and REST framework",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "api",
     "framework"
   ],
-  "author": "yulipu",
+  "author": "candyjs",
   "bin": {
       "_candy": "./bin/_candy"
   },
