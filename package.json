@@ -1,0 +1,22 @@
+{
+  "name": "candyjs",
+  "version": "1.0.0",
+  "description": "An Object-Oriented node mvc and REST framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "mvc",
+    "REST",
+    "api",
+    "framework"
+  ],
+  "author": "yulipu",
+  "bin": {
+      "_candy": "./bin/_candy"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/candy-js"
+}

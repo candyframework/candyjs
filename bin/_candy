@@ -1,0 +1,112 @@
+#!/usr/bin/env node
+
+'use strict';
+
+/**
+ * 该文件用来初始化基本的应用框架
+ */
+var fs = require('fs');
+var path = require('path');
+
+var dir = process.cwd();
+var appName = process.argv.slice(2)[0];
+
+if(undefined === appName) {
+    console.log('appName must specified');
+    return;
+}
+
+function createDirectorySync(dir, mode) {
+    undefined === mode && (mode = 0o777);
+    
+    if(fs.existsSync(dir)) {
+        return true;
+    }
+        
+    if(createDirectorySync(path.dirname(dir))) {
+        fs.mkdirSync(dir, mode);
+    }
+    
+    return true;
+}
+
+/*
+project structor
+
+prject
+    app
+        controllers
+            index
+                IndexController.js
+        views
+            index
+                index.html
+        modules
+        runtime
+*/
+var controllerPath = dir + '/' + appName + '/app/controllers/index';
+var viewPath = dir + '/' + appName + '/app/views/index';
+var mainFile = dir + '/' + appName + '/index.js';
+
+createDirectorySync(controllerPath);
+createDirectorySync(viewPath);
+
+// controller file
+fs.writeFile(controllerPath + '/IndexController.js',
+`'use strict';
+
+var CandyJs = require('candyjs');
+var Controller = CandyJs.Candy.include('y/web/Controller');
+
+class IndexController extends Controller {
+
+    run(req, res) {
+       this.getView().getTemplate('index', (err, data) => {
+           res.end(data);
+       });
+    }
+
+}
+
+module.exports = IndexController;
+`,
+    function(err){
+        if(err) throw err;
+});
+
+// view file
+fs.writeFile(viewPath + '/index.html',
+`<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CandyJs</title>
+</head>
+<body>
+    <h2>Hello CandyJs</h2>
+</body>
+</html>
+`,
+    function(err){
+        if(err) throw err;
+});
+
+// main file
+fs.writeFile(mainFile,
+`var CandyJs = require('candyjs');
+
+new CandyJs({
+    'id': 1,
+    'debug': true,
+    'appPath': __dirname + '/app'
+    
+}).listen(8090, function(){
+    console.log('listen on 8090');
+});
+`,
+    function(err){
+        if(err) throw err;
+});
+
+// done
+console.log('done');
