@@ -1,7 +1,7 @@
 'use strict';
 
 var CandyJs = require('CandyJs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class Demo extends Controller {
     

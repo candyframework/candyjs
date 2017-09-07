@@ -24,7 +24,7 @@ class Application extends CoreApp {
         /**
          * @property {String} exceptionHandler 异常处理类
          */
-        this.exceptionHandler = 'y/web/ExceptionHandler';
+        this.exceptionHandler = 'candy/web/ExceptionHandler';
     }
     
     /**

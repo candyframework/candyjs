@@ -21,7 +21,7 @@ class Controller extends CoreController {
         /**
          * @property {String} viewHandler
          */
-        this.viewHandler = 'y/web/View';
+        this.viewHandler = 'candy/web/View';
         
         /**
          * @property {View} view

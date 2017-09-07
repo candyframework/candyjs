@@ -57,7 +57,7 @@ makedirs $viewPath
 c=$controllerPath/IndexController.js
 echo "'use strict';" > $c
 echo "var CandyJs = require('candyjs');" >> $c
-echo "var Controller = CandyJs.Candy.include('y/web/Controller');" >> $c
+echo "var Controller = CandyJs.Candy.include('candy/web/Controller');" >> $c
 echo "class IndexController extends Controller {" >> $c
 echo "  run(req, res) {" >> $c
 echo "    res.end('hello candyjs');" >> $c

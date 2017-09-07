@@ -14,7 +14,7 @@ var app = new CandyJs({
 });
 var server = app.getServer();
 
-var Restful = CandyJs.Candy.include('y/web/Restful');
+var Restful = CandyJs.Candy.include('candy/web/Restful');
 // api
 Restful.get('/abc', function(req, res){
     res.end('get ok');

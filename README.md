@@ -10,7 +10,7 @@
 
 ###### 系统内置别名
 
-+ @y  系统目录
++ @candy  系统目录
 + @app  项目目录 由 appPath 指定 ```CandyJs.Candy.app.getAppPath()``` 可得到该值
 + @runtime  缓存目录 默认指向 @app/runtime ```CandyJs.Candy.app.getRuntimePath()``` 可得到该值
 + @root  网站根目录 ```CandyJs.Candy.app.getRootPath()``` 可得到该值

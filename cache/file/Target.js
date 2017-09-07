@@ -16,7 +16,7 @@ var CacheException = require('../../core/CacheException');
  *
  * 'cache': {
  *      'file': {
- *          'class': 'y/cache/file/Target',
+ *          'class': 'candy/cache/file/Target',
  *          'cachePath': '...'
  *      }
  * }

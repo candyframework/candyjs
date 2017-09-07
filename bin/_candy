@@ -56,7 +56,7 @@ fs.writeFile(controllerPath + '/IndexController.js',
 `'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 

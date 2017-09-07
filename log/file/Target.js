@@ -18,7 +18,7 @@ var TimeHelper = require('../../helpers/TimeHelper');
  * 'log': {
  *     'targets': {
  *         'file': {
- *             'class': 'y/log/file/Target',
+ *             'class': 'candy/log/file/Target',
  *             'logPath': __dirname + '/logs'
  *         },
  *         'other': {...}

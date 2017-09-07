@@ -194,7 +194,7 @@ new CandyJs({
     'log': {
         'targets': {
             'file': {
-                'class': 'y/log/file/Target'
+                'class': 'candy/log/file/Target'
             }
         }
     }
@@ -220,17 +220,17 @@ new CandyJs({
             <h6><b>Required properties</b></h6>
             <ul>
                 <li>
-                    <p><code>y/web/Application.id</code>This property is used to identify the only application</p>
+                    <p><code>candy/web/Application.id</code>This property is used to identify the only application</p>
                 </li>
                 <li>
-                    <p><code>y/web/Application.appPath</code>This property used to specified application directory</p>
+                    <p><code>candy/web/Application.appPath</code>This property used to specified application directory</p>
                 </li>
             </ul>
             
             <h6><b>Important attributes</b></h6>
             <ul>
                 <li>
-                    <p><code>y/web/Application.routesMap</code>Used to define the routing handler</p>
+                    <p><code>candy/web/Application.routesMap</code>Used to define the routing handler</p>
 <p>
 <pre><code>
 'account': {
@@ -241,7 +241,7 @@ new CandyJs({
 </p>
                 </li>
                 <li>
-                    <p><code>y/web/Application.modules</code>To register application module</p>
+                    <p><code>candy/web/Application.modules</code>To register application module</p>
 <p>
 <pre><code>
 // register a bbs module
@@ -252,10 +252,10 @@ new CandyJs({
 </p>
                 </li>
                 <li>
-                    <p><code>y/web/Application.encoding</code>Project encoding</p>
+                    <p><code>candy/web/Application.encoding</code>Project encoding</p>
                 </li>
                 <li>
-                    <p><code>y/web/Application.debug</code>Whether debugging is on</p>
+                    <p><code>candy/web/Application.debug</code>Whether debugging is on</p>
                 </li>
             </ul>
             
@@ -263,7 +263,7 @@ new CandyJs({
             <p>Other parameters passed in the entry file are passed to the application as a custom parameter</p>
             
             <h1 class="page-header" id="controller"><b>Application controller</b></h1>
-            <p>The controller is part of the<code>MVC</code>schema that inherits the object of<code>y/core/Controller</code>class responsible for handling the request and generating the response</p>
+            <p>The controller is part of the<code>MVC</code>schema that inherits the object of<code>candy/core/Controller</code>class responsible for handling the request and generating the response</p>
         
             <h4><b>Action</b></h4>
             <p>
@@ -275,7 +275,7 @@ new CandyJs({
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -291,7 +291,7 @@ module.exports = IndexController;
         
             <h4><b>Action aspect</b></h4>
             <p>
-                If the controller inherits from<code>y/web/Controller</code>
+                If the controller inherits from<code>candy/web/Controller</code>
                 Then you can use the action aspect in the controller before or after action to perform some business logic
             </p>
 <p>
@@ -299,7 +299,7 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -355,7 +355,7 @@ module.exports = IndexController;
             
             <h4><b>Controller level view API</b></h4>
             <p>
-                If the user's controller inherits from the<code>y/web/Controller</code>
+                If the user's controller inherits from the<code>candy/web/Controller</code>
                 then can use the<code>getView()</code>method in the controller to get the view class instance
             </p>
             <p>The view class provides the following API for user to use</p>
@@ -369,7 +369,7 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
     
@@ -440,11 +440,11 @@ new CandyJs({
             
             <h4><b>Component</b></h4>
             <p>Component is the base class of<code>Property Behavior and Event</code></p>
-            <p>Components are instances of<code>y/core/Controller</code>, or an extended class</p>
+            <p>Components are instances of<code>candy/core/Controller</code>, or an extended class</p>
             <p>Behavior classes are typically used in conjunction with component classes</p>
             
             <h4><b>Behavior</b></h4>
-            <p>Behavior is instances of<code>y/core/Behavior</code>, or an extended class</p>
+            <p>Behavior is instances of<code>candy/core/Behavior</code>, or an extended class</p>
             <p>A behavior class can be used to enhance its functionality without changing the original component code</p>
             <p>When a behavior is attached to a component, it will inject its methods and properties into the component and then access them as if they were to access the component's own methods and properties</p>
             <p>The behavior class also can listen to the component's events and respond</p>
@@ -459,7 +459,7 @@ new CandyJs({
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
     
@@ -486,13 +486,13 @@ module.exports = IndexController;
             <h4><b>Use behavior</b></h4>
             
             <h6><b>Define behavior</b></h6>
-            <p>Create a class by inheriting<code>y/core/Behavior</code>or its subclasses</p>
+            <p>Create a class by inheriting<code>candy/core/Behavior</code>or its subclasses</p>
 <p>
 <pre><code>
 'use strict';
 
 var CandyJs = require('candyjs');
-var Behavior = CandyJs.Candy.include('y/core/Behavior');
+var Behavior = CandyJs.Candy.include('candy/core/Behavior');
 
 class MyBehavior extends Behavior {
     constructor() {
@@ -523,7 +523,7 @@ module.exports = MyBehavior;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
     
@@ -551,7 +551,7 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
     
@@ -582,7 +582,7 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('y/web/Controller');
+var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
     
@@ -617,7 +617,7 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Behavior = CandyJs.Candy.include('y/core/Behavior');
+var Behavior = CandyJs.Candy.include('candy/core/Behavior');
 
 class MyBehavior extends Behavior {
     events() {
@@ -650,8 +650,8 @@ module.exports = MyBehavior;
 <pre><code>
 var CandyJs = require('candyjs');
 
-var Hook = CandyJs.Candy.include('y/core/Hook');
-var R = CandyJs.Candy.include('y/midwares/Resource');
+var Hook = CandyJs.Candy.include('candy/core/Hook');
+var R = CandyJs.Candy.include('candy/midwares/Resource');
 
 Hook.getInstance().addHook(new R(__dirname + '/public').serve());
 
@@ -667,16 +667,16 @@ new CandyJs({
             
             <h1 class="page-header" id="url"><b>URI & URL</b></h1>
             <p>
-                <code>y/web/URI and y/web/URL</code>classes provide methods for uri and url operations
+                <code>candy/web/URI and candy/web/URL</code>classes provide methods for uri and url operations
             </p>
             
-            <h4><b>y/web/URI</b></h4>
+            <h4><b>candy/web/URI</b></h4>
             <ul>
                 <li><code>parseUrl()</code>Used for parse url</li>
             </ul>
 <p>
 <pre><code>
-var URI = CandyJs.Candy.include('y/web/URI');
+var URI = CandyJs.Candy.include('candy/web/URI');
 
 var uri = new URI();
 
@@ -697,7 +697,7 @@ uri.parseUrl('http://xxx.com:8080/abc?q=1#anchor');
 </code></pre>
 </p>
             
-            <h4><b>y/web/URL</b></h4>
+            <h4><b>candy/web/URL</b></h4>
             <ul>
                 <li><code>getReferer()</code>Used to get the referer url</li>
                 <li><code>getHostInfo()</code>Used to get the host section of URI</li>
@@ -706,7 +706,7 @@ uri.parseUrl('http://xxx.com:8080/abc?q=1#anchor');
             </ul>
 <p>
 <pre><code>
-var URL = CandyJs.Candy.include('y/web/URL');
+var URL = CandyJs.Candy.include('candy/web/URL');
 
 var url = new URL(req);
 
@@ -720,13 +720,13 @@ url.to('index/index', {id: 1, '#': 'anchor'})
             
             <h1 class="page-header" id="reqres"><b>Request and Response</b></h1>
             <p>
-                <code>CandyJs</code>provides classes<code>y/web/Request</code>and<code>y/web/Response</code>that handle requests and responses
+                <code>CandyJs</code>provides classes<code>candy/web/Request</code>and<code>candy/web/Response</code>that handle requests and responses
             </p>
             
             <h4><b>HTTP Request</b></h4>
             <p>Used to handle http requests</p>
             <p>
-                <code>y/web/Request</code>class provides a set of instances and static methods to manipulate the required data
+                <code>candy/web/Request</code>class provides a set of instances and static methods to manipulate the required data
             </p>
             <ul>
                 <li><code>static parseUrl(request)</code>Simple resolution url</li>
@@ -743,7 +743,7 @@ url.to('index/index', {id: 1, '#': 'anchor'})
             </blockquote>
 <p>
 <pre><code>
-var Request = CandyJs.Candy.include('y/web/Request');
+var Request = CandyJs.Candy.include('candy/web/Request');
 var request = new Request(req);
 var id = request.getQueryString('id');
 ...
@@ -753,7 +753,7 @@ var id = request.getQueryString('id');
             <h4><b>HTTP Response</b></h4>
             <p>Outputs a response message to the client</p>
             <p>
-                <code>y/web/Response</code>class provides a set of instances and static methods to manipulate the response data
+                <code>candy/web/Response</code>class provides a set of instances and static methods to manipulate the response data
             </p>
             <ul>
                 <li><code>setStatusCode(value[, text])</code>Set the http status code</li>
@@ -767,7 +767,7 @@ var id = request.getQueryString('id');
             <h6><b>Use the Response to output data</b></h6>
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('y/web/Response');
+var Response = CandyJs.Candy.include('candy/web/Response');
 var response = new Response(res);
 response.setContent('some data from server');
 response.send();
@@ -777,7 +777,7 @@ response.send();
             <h6><b>Use the Response to redirection</b></h6>
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('y/web/Response');
+var Response = CandyJs.Candy.include('candy/web/Response');
 var response = new Response(res);
 response.redirect('http://foo.com');
 </code></pre>
@@ -812,9 +812,9 @@ response.redirect('http://foo.com');
             
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('y/helpers/FileHelper');
-var Response = CandyJs.Candy.include('y/helpers/StringHelper');
-var Response = CandyJs.Candy.include('y/helpers/TimeHelper');
+var Response = CandyJs.Candy.include('candy/helpers/FileHelper');
+var Response = CandyJs.Candy.include('candy/helpers/StringHelper');
+var Response = CandyJs.Candy.include('candy/helpers/TimeHelper');
 
 // return /a/c
 var path = FileHelper.normalizePath('/a/./b/../c');
@@ -837,7 +837,7 @@ var time = TimeHelper.format('y-m-d h:i:s');
             
             <h4><b>System built-in alias</b></h4>
             <ul>
-                <li><code>@y</code>Points to the CandyJs directory</li>
+                <li><code>@candy</code>Points to the CandyJs directory</li>
                 <li><code>@app</code>Project directory</li>
                 <li><code>@runtime</code>Cache directory</li>
                 <li><code>@root</code>Website root directory</li>
@@ -881,10 +881,10 @@ app.listen(8090, function(){
     console.log(8090)
 });
 
-var Restful = CandyJs.Candy.include('y/web/Restful');
+var Restful = CandyJs.Candy.include('candy/web/Restful');
 // get route
 Restful.get('/abc/{id:\\d+}', function(req, res, id){
-    var Request = CandyJs.Candy.include('y/web/Request');
+    var Request = CandyJs.Candy.include('candy/web/Request');
     var r = new Request(req);
     
     console.log(r.getQueryString('id'));
@@ -923,7 +923,7 @@ module.exports = User;
 'log': {
     'targets': {
         'file': {
-            'class': 'y/log/file/Target',
+            'class': 'candy/log/file/Target',
             'logPath': __dirname + '/logs'
         },
         'other': {...}
@@ -944,7 +944,7 @@ module.exports = User;
 <p>
 <pre><code>
 var CandyJs = require('candyjs')
-var Logger = CandyJs.Candy.include('y/log/Logger');
+var Logger = CandyJs.Candy.include('candy/log/Logger');
 
 var log = Logger.getLogger();
 log.error('This is a error message');
@@ -963,7 +963,7 @@ log.flush();  // flush data to disk
 <pre><code>
 'cache': {
     'file': {
-        'class': 'y/cache/file/Target',
+        'class': 'candy/cache/file/Target',
         'cachePath': '...'
     }
 }
@@ -982,7 +982,7 @@ log.flush();  // flush data to disk
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
-var Cache = CandyJs.Candy.include('y/cache/Cache');
+var Cache = CandyJs.Candy.include('candy/cache/Cache');
 
 var c = Cache.getCache('file');
 

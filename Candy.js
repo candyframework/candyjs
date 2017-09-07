@@ -60,7 +60,7 @@ class Candy {
      * @param {String | JSON} clazz 以某个已经定义的别名开头的类全名或带 'class' 键的配置
      *
      * eg.
-     * y/log/file/Target
+     * candy/log/file/Target
      * or
      * {class: '...', ...}
      *
@@ -133,7 +133,7 @@ Candy.app = null;
 /**
  * @property {JSON} pathAliases 路径别名
  */
-Candy.pathAliases = {'@y': __dirname};
+Candy.pathAliases = {'@candy': __dirname};
 
 /**
  * @property {String} fileExtention 默认文件扩展名
