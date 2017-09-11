@@ -31,6 +31,11 @@ class Application extends Core {
          */
         this.debug = false;
         
+        /**
+         * @property {String} exceptionHandler 异常处理类
+         */
+        this.exceptionHandler = '';
+        
         Candy.app = this;
         this.init(config);
         Candy.config(this, config);

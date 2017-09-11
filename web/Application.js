@@ -21,10 +21,7 @@ class Application extends CoreApp {
     constructor(config) {
         super(config);
         
-        /**
-         * @property {String} exceptionHandler 异常处理类
-         */
-        this.exceptionHandler = 'candy/web/ExceptionHandler';
+        this.defaultExceptionHandler = 'candy/web/ExceptionHandler';
     }
     
     /**
@@ -53,7 +50,9 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     handlerException(response, exception) {
-        var handler = Candy.createObject(this.exceptionHandler);
+        var handler = Y.createObject('' === this.exceptionHandler
+            ? this.defaultExceptionHandler
+            : this.exceptionHandler);
         
         handler.handlerException(response, exception);
     }
