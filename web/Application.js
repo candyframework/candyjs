@@ -50,7 +50,7 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     handlerException(response, exception) {
-        var handler = Y.createObject('' === this.exceptionHandler
+        var handler = Candy.createObject('' === this.exceptionHandler
             ? this.defaultExceptionHandler
             : this.exceptionHandler);
         

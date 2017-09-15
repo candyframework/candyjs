@@ -17,6 +17,20 @@ class Core {
      */
     constructor() {
         /**
+         * @property {String | Object} interceptAll 拦截所有路由
+         *
+         * 'app/some/Class'
+         *
+         * or a Object config
+         *
+         * {
+         *      'class': 'app/some/Class',
+         *      'property': 'value'
+         * }
+         *
+         */
+        this.interceptAll = null;
+        /**
          * @property {JSON} routesMap 实现路由到控制器转换配置
          *
          * {
@@ -88,6 +102,11 @@ class Core {
         // 检测非法
         if(!/^[\w\-\/]+$/.test(route) || route.indexOf('//') >= 0) {
             return null;
+        }
+        
+        // 拦截路由
+        if(null !== this.interceptAll) {
+            return Candy.createObject(this.interceptAll);
         }
         
         // 解析路由
