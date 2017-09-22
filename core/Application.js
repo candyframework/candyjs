@@ -6,7 +6,7 @@
 
 var Candy = require('../Candy');
 var Core = require('./Core');
-var InvalidConfigException = require('../core/InvalidConfigException');
+var InvalidConfigException = require('./InvalidConfigException');
 
 /**
  * 应用基类

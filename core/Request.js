@@ -17,7 +17,7 @@ class Request {
     constructor(request) {
         this.request = request;
         
-        this._scriptFile = null;
+        this._scriptFile = '';
     }
     
     /**
@@ -26,7 +26,7 @@ class Request {
      * @return {String}
      */
     getScriptFile() {
-        if (null === this._scriptFile) {
+        if ('' === this._scriptFile) {
             this._scriptFile = process.mainModule.filename;
         }
         
