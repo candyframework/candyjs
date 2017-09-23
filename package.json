@@ -17,6 +17,6 @@
   "bin": {
       "_candy": "./bin/_candy"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "homepage": "https://github.com/candy-js"
 }
