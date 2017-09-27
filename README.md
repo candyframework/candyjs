@@ -4,6 +4,10 @@
 
 + 大于等于 6.0.0
 
+###### 网站
+
++ http://candyjs.org
+
 ###### 源码 source code
 
 + https://github.com/candy-js
