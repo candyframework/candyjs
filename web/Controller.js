@@ -33,11 +33,9 @@ class Controller extends CoreController {
      * @inheritdoc
      */
     getView() {
-        if(null !== this.view) {
-            return this.view;
+        if(null === this.view) {
+            this.view = Candy.createObject(this.viewHandler, this.context);
         }
-        
-        this.view = Candy.createObject(this.viewHandler, this.context);
         
         return this.view;
     }
