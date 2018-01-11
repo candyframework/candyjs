@@ -1,6 +1,6 @@
 /**
- * @author
- * @license MIT
+ * @author yu
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 'use strict';
 
@@ -20,6 +20,8 @@ class LinkedQueue extends Queue {
         this.headNode = null;
         this.tailNode = null;
         this.size = 0;
+        
+        this.currentIteratorNode = null;
     }
     
     [Symbol.iterator]() {
@@ -27,16 +29,29 @@ class LinkedQueue extends Queue {
     }
     
     next() {
-        if(undefined === this.currentIteratorNode) {
+        if(null === this.currentIteratorNode) {
             this.currentIteratorNode = this.headNode;
             
         } else {
             this.currentIteratorNode = this.currentIteratorNode.next;
         }
         
-        return null === this.currentIteratorNode ?
-            (this.currentIteratorNode = undefined, {done: true}) :
-            {done: false, value: this.currentIteratorNode.data};
+        return null === this.currentIteratorNode
+            ? (this.currentIteratorNode = null, {done: true})
+            : {done: false, value: this.currentIteratorNode.data};
+    }
+    
+    iterator() {
+        if(null === this.currentIteratorNode) {
+            this.currentIteratorNode = this.headNode;
+            
+        } else {
+            this.currentIteratorNode = this.currentIteratorNode.next;
+        }
+        
+        return null === this.currentIteratorNode
+            ? (this.currentIteratorNode = null, null)
+            : this.currentIteratorNode.data;
     }
     
     /**
@@ -87,6 +102,43 @@ class LinkedQueue extends Queue {
     /**
      * @inheritdoc
      */
+    remove(data) {
+        var current = this.headNode;
+        var previous = null;
+        
+        for(; null !== current; previous = current, current = current.next) {
+            if(data !== current.data) {
+                continue;
+            }
+            
+            // 删除头结点
+            if(null === previous) {
+                this.headNode = current.next;
+            }
+            
+            // 删除非头结点
+            if(null !== previous) {
+                previous.next = current.next;
+            }
+            
+            // 尾节点
+            if(null === current.next) {
+                this.tailNode = previous;
+            }
+            
+            // 清楚当前节点
+            current.next = null;
+            current = null;
+            
+            this.size--;
+            
+            break;
+        }
+    }
+    
+    /**
+     * @inheritdoc
+     */
     clear() {
         while(0 !== this.size) {
             this.take();
@@ -94,7 +146,7 @@ class LinkedQueue extends Queue {
     }
     
     /**
-     * toString
+     * @inheritdoc
      */
     toString() {
         var str = '[ ';

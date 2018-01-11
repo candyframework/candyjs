@@ -4,6 +4,12 @@
 
 + 大于等于 6.0.0
 
+###### 变更
+
++ 2018-01-11
+
+    * util/LinkedQueue 添加 ```iterator()``` 和 ```remove(data)``` 方法
+
 ###### 网站
 
 + http://candyjs.org
