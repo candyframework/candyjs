@@ -24,23 +24,9 @@ class LinkedQueue extends Queue {
         this.currentIteratorNode = null;
     }
     
-    [Symbol.iterator]() {
-        return this;
-    }
-    
-    next() {
-        if(null === this.currentIteratorNode) {
-            this.currentIteratorNode = this.headNode;
-            
-        } else {
-            this.currentIteratorNode = this.currentIteratorNode.next;
-        }
-        
-        return null === this.currentIteratorNode
-            ? (this.currentIteratorNode = null, {done: true})
-            : {done: false, value: this.currentIteratorNode.data};
-    }
-    
+    /**
+     * @inheritdoc
+     */
     iterator() {
         if(null === this.currentIteratorNode) {
             this.currentIteratorNode = this.headNode;
@@ -52,6 +38,17 @@ class LinkedQueue extends Queue {
         return null === this.currentIteratorNode
             ? (this.currentIteratorNode = null, null)
             : this.currentIteratorNode.data;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    each(callback) {
+        for(let current = this.headNode; null !== current; current = current.next) {
+            if(false === callback(current.data)) {
+                break;
+            }
+        }
     }
     
     /**
@@ -116,7 +113,7 @@ class LinkedQueue extends Queue {
                 this.headNode = current.next;
             }
             
-            // 删除非头结点
+            // 非头结点需要移动 previous
             if(null !== previous) {
                 previous.next = current.next;
             }
@@ -126,7 +123,7 @@ class LinkedQueue extends Queue {
                 this.tailNode = previous;
             }
             
-            // 清楚当前节点
+            // 清除当前节点
             current.next = null;
             current = null;
             
@@ -151,13 +148,8 @@ class LinkedQueue extends Queue {
     toString() {
         var str = '[ ';
         
-        /*
         for(let current = this.headNode; null !== current; current = current.next) {
             str += current.data + ' ';
-        }
-        */
-        for(let data of this) {
-            str = str + data + ' ';
         }
         
         return str + ' ]';

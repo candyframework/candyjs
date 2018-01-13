@@ -6,9 +6,13 @@
 
 ###### 变更
 
++ 2018-01-12
+
+    * npm 包 1.1.0 util/LinkedQueue 添加 ```each()``` 方法
+
 + 2018-01-11
 
-    * util/LinkedQueue 添加 ```iterator()``` 和 ```remove(data)``` 方法
+    * npm 包 1.0.9 util/LinkedQueue 添加 ```iterator()``` 和 ```remove(data)``` 方法
 
 ###### 网站
 

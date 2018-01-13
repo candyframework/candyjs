@@ -7,11 +7,18 @@
 class Queue {
     
     /**
-     * 遍历队列
+     * 迭代队列
      *
      * @return {Object | null}
      */
     iterator() {}
+    
+    /**
+     * 遍历队列 callback 返回值为 false 可结束循环
+     *
+     * @param {Function} callback
+     */
+    each(callback) {}
     
     /**
      * 列表添加元素
