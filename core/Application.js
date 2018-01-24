@@ -74,7 +74,7 @@ class Application extends Core {
             delete config.rootPath;
             
         } else {
-            this.setRootPath(process.env.pwd);
+            this.setRootPath(process.env.PWD);
         }
     }
     
