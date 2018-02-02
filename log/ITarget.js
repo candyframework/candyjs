@@ -18,11 +18,6 @@ class ITarget extends Event {
         super();
         
         /**
-         * @property {String} fileExtension 文件扩展名
-         */
-        this.fileExtension = '.log';
-        
-        /**
          * @property {String} EVENT_FLUSH 事件
          */
         this.EVENT_FLUSH = 'flush';

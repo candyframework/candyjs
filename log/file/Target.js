@@ -36,21 +36,21 @@ class Target extends ITarget {
         super();
         
         /**
-         * @var String 日志路径
+         * @property {String} fileExtension 文件扩展名
+         */
+        this.fileExtension = '.log';
+        
+        /**
+         * @property {String} 日志路径
          */
         this.logPath = undefined === config.logPath
             ? Candy.getPathAlias('@runtime/logs')
             : config.logPath;
         
         /**
-         * @var String 日志文件名
+         * @property {String} 日志文件名
          */
         this.logFile = this.generateTimeLogFile();
-        
-        // 目录不存在就创建
-        if(!fs.existsSync(this.logPath)) {
-            FileHelper.createDirectorySync(this.logPath);
-        }
     }
     
     /**
@@ -60,7 +60,18 @@ class Target extends ITarget {
         var msg = this.formatMessage(messages);
         var file = this.logPath + '/' + this.logFile;
         
-        fs.appendFile(file, msg, Candy.app.encoding, (err) => {});
+        // 检查目录
+        fs.access(this.logPath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+            if(null === err) {
+                fs.appendFile(file, msg, Candy.app.encoding, (err) => {});
+                
+                return;
+            }
+            
+            FileHelper.createDirectory(this.logPath, 0o777, (err) => {
+                fs.appendFile(file, msg, Candy.app.encoding, (err) => {});
+            });
+        });
     }
     
     /**

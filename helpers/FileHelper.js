@@ -75,7 +75,7 @@ class FileHelper {
             }
             
             let parentDir = FileHelper.getDirname(dir);
-            FileHelper.createDirectory(parentDir, mode, () => {
+            FileHelper.createDirectory(parentDir, mode, (err) => {
                 fs.mkdir(dir, mode, callback);
             });
         });
