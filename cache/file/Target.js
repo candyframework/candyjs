@@ -33,9 +33,9 @@ class Target extends ITarget {
         super();
         
         /**
-         * @property {String} cacheFileSuffix 缓存文件后缀
+         * @property {String} fileExtension 缓存文件后缀
          */
-        this.cacheFileSuffix = '.bin';
+        this.fileExtension = '.bin';
         
         /**
          * @property {String} cachePath 缓存目录
@@ -43,15 +43,10 @@ class Target extends ITarget {
         this.cachePath = undefined === config.cachePath
             ? Candy.getPathAlias('@runtime/caches')
             : config.cachePath;
-        
-        // 目录不存在就创建
-        if(!fs.existsSync(this.cachePath)) {
-            FileHelper.createDirectorySync(this.cachePath);
-        }
     }
     
     getCacheFile(key) {
-        return this.cachePath + '/' + key + this.cacheFileSuffix;
+        return this.cachePath + '/' + key + this.fileExtension;
     }
     
     /**
@@ -61,6 +56,11 @@ class Target extends ITarget {
         var cacheFile = this.getCacheFile(key);
         
         var life = (Date.now() + duration) / 1000;
+        
+        // 目录不存在就创建
+        if(!fs.existsSync(this.cachePath)) {
+            FileHelper.createDirectorySync(this.cachePath);
+        }
         
         fs.writeFileSync(cacheFile, value, Candy.app.encoding);
         
@@ -75,13 +75,31 @@ class Target extends ITarget {
         
         var life = (Date.now() + duration) / 1000;
         
-        fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
-            if(null !== err) {
-                callback(err);
+        // 检查目录
+        fs.access(this.cachePath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+            if(null === err) {
+                fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
+                    if(null !== err) {
+                        callback(err);
+                        return;
+                    }
+                    
+                    fs.utimes(cacheFile, life, life, callback);
+                });
+                
                 return;
             }
             
-            fs.utimes(cacheFile, life, life, callback);
+            FileHelper.createDirectory(this.cachePath, 0o777, (err) => {
+                fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
+                    if(null !== err) {
+                        callback(err);
+                        return;
+                    }
+                    
+                    fs.utimes(cacheFile, life, life, callback);
+                });
+            });
         });
     }
     
