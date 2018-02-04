@@ -38,7 +38,9 @@ class Target extends ITarget {
         /**
          * @property {String} fileExtension 文件扩展名
          */
-        this.fileExtension = '.log';
+        this.fileExtension = undefined === config.fileExtension
+            ? '.log'
+            : config.fileExtension;
         
         /**
          * @property {String} 日志路径

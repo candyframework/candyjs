@@ -35,7 +35,9 @@ class Target extends ITarget {
         /**
          * @property {String} fileExtension 缓存文件后缀
          */
-        this.fileExtension = '.bin';
+        this.fileExtension = undefined === config.fileExtension
+            ? '.bin'
+            : config.fileExtension;
         
         /**
          * @property {String} cachePath 缓存目录
