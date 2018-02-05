@@ -35,6 +35,8 @@ class Target extends ITarget {
     constructor(config) {
         super();
         
+        this.config = config;
+        
         /**
          * @property {String} fileExtension 文件扩展名
          */
@@ -48,13 +50,26 @@ class Target extends ITarget {
         this.logPath = undefined === config.logPath
             ? Candy.getPathAlias('@runtime/logs')
             : config.logPath;
+    }
+    
+    /**
+     * 生成日志文件名
+     */
+    generateFile() {
+        if(undefined !== this.config.logFile) {
+            return this.logPath + '/' + this.config.logFile;
+        }
         
-        /**
-         * @property {String} 日志文件名
-         */
-        this.logFile = undefined === config.logFile
-            ? this.generateTimeLogFile()
-            : config.logFile;
+        var date = new Date();
+        
+        return this.logPath
+            + '/'
+            + date.getFullYear()
+            + '-'
+            + (date.getMonth() + 1)
+            + '-'
+            + date.getDate()
+            + this.fileExtension;
     }
     
     /**
@@ -62,7 +77,7 @@ class Target extends ITarget {
      */
     flush(messages) {
         var msg = this.formatMessage(messages);
-        var file = this.logPath + '/' + this.logFile;
+        var file = this.generateFile();
         
         // 检查目录
         fs.access(this.logPath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
@@ -76,14 +91,6 @@ class Target extends ITarget {
                 fs.appendFile(file, msg, Candy.app.encoding, (err) => {});
             });
         });
-    }
-    
-    /**
-     * 生成日志文件名
-     */
-    generateTimeLogFile() {
-        var date = new Date();
-        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + this.fileExtension;
     }
     
     /**
