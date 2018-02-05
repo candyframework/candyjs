@@ -52,7 +52,9 @@ class Target extends ITarget {
         /**
          * @property {String} 日志文件名
          */
-        this.logFile = this.generateTimeLogFile();
+        this.logFile = undefined === config.logFile
+            ? this.generateTimeLogFile()
+            : config.logFile;
     }
     
     /**
