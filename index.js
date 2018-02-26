@@ -16,42 +16,42 @@ var InvalidConfigException = require('./core/InvalidConfigException');
  * 入口
  */
 class CandyJs {
-    
+
     /**
      * constructor
      *
-     * @param {JSON} config 配置信息
+     * @param {any} config 配置信息
      */
     constructor(config) {
         if(undefined === config) {
             throw new InvalidConfigException('The app config is required');
         }
-        
+
         this.config = config;
         this.server = null;
         this.app = new WebApp(config);
     }
-    
+
     // web
     requestListenerWeb(req, res) {
         try {
             this.app.requestListener(req, res);
-            
+
         } catch(e) {
             this.app.handlerException(res, e);
         }
     }
-    
+
     // restful
     requestListenerRestful(req, res) {
         try {
             WebRestful.requestListener(req, res);
-            
+
         } catch(e) {
             this.app.handlerException(res, e);
         }
     }
-    
+
     // handler
     handler(req, res) {
         Hook.getInstance().trigger(req, res, () => {
@@ -59,11 +59,11 @@ class CandyJs {
                 this.requestListenerRestful(req, res);
                 return;
             }
-            
+
             this.requestListenerWeb(req, res);
         });
     }
-    
+
     /**
      * 获取 http server
      *
@@ -72,7 +72,7 @@ class CandyJs {
     getServer() {
         return http.createServer(this.handler.bind(this));
     }
-    
+
     /**
      * listen
      *
@@ -91,7 +91,7 @@ class CandyJs {
         this.server = this.getServer();
         this.server.listen(port, callback);
     }
-    
+
 }
 
 /**

@@ -17,7 +17,7 @@ class Component {
      */
     constructor() {
         /**
-         * @property {JSON} eventsMap the attached event handlers
+         * @property {Object} eventsMap the attached event handlers
          *
          * {
          *     'eventName': [fn1, fn2...]
@@ -28,7 +28,7 @@ class Component {
         this.eventsMap = {};
         
         /**
-         * @property {JSON} behaviorsMap the attached behaviors
+         * @property {Object} behaviorsMap the attached behaviors
          *
          * {
          *     'behaviorName': BehaviorInstance

@@ -52,7 +52,7 @@ class Response extends CoreResponse {
         this.statusText = 'OK';
         
         /**
-         * @property {JSON} headers HTTP headers
+         * @property {Object} headers HTTP headers
          */
         this.headers = {};
         
@@ -151,7 +151,7 @@ class Response extends CoreResponse {
      *
      * @param {String} name cookie name
      * @param {String} value cookie value
-     * @param {JSON} options other config
+     * @param {Object} options other config
      */
     setCookie(name, value, options) {
         if(undefined === options) {

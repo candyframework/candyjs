@@ -176,7 +176,7 @@ class Restful extends CoreRouter {
     /**
      * 合并路由
      *
-     * @param {JSON} routes
+     * @param {Object} routes
      *
      * { pattern: any ... }
      *
@@ -217,7 +217,7 @@ class Restful extends CoreRouter {
     /**
      * 查找匹配的路由的位置
      *
-     * @param {JSON} combinedRoute 合并的路由
+     * @param {Object} combinedRoute 合并的路由
      * @param {Number} subPatternPosition 匹配的子模式位置
      * @return {Number}
      */

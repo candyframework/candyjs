@@ -73,7 +73,7 @@ class URL {
      * url.to('index/index', {id: 1, '#': 'anchor'})
      *
      * @param {String} url
-     * @param {JSON} params
+     * @param {Object} params
      * @return {String}
      */
     to(url, params = null) {

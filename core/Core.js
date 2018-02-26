@@ -31,7 +31,7 @@ class Core {
          */
         this.interceptAll = null;
         /**
-         * @property {JSON} routesMap 实现路由到控制器转换配置
+         * @property {Object} routesMap 实现路由到控制器转换配置
          *
          * {
          *     'u': 'app/controllers/user/IndexController',
@@ -45,7 +45,7 @@ class Core {
         this.routesMap = null;
         
         /**
-         * @property {JSON} modules 注册的模块
+         * @property {Object} modules 注册的模块
          *
          * 'modules': {
          *     'bbs': 'app/modules/bbs'

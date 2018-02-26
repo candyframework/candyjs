@@ -15,6 +15,7 @@ var TimeHelper = require('../../helpers/TimeHelper');
 /**
  * 文件日志
  *
+ * ```
  * 'log': {
  *     'targets': {
  *         'file': {
@@ -25,25 +26,26 @@ var TimeHelper = require('../../helpers/TimeHelper');
  *     },
  *     'flushInterval': 10
  * }
+ * ```
  *
  */
 class Target extends ITarget {
-    
+
     /**
      * constructor
      */
     constructor(config) {
         super();
-        
+
         this.config = config;
-        
+
         /**
          * @property {String} fileExtension 文件扩展名
          */
         this.fileExtension = undefined === config.fileExtension
             ? '.log'
             : config.fileExtension;
-        
+
         /**
          * @property {String} 日志路径
          */
@@ -51,7 +53,7 @@ class Target extends ITarget {
             ? Candy.getPathAlias('@runtime/logs')
             : config.logPath;
     }
-    
+
     /**
      * 生成日志文件名
      */
@@ -59,9 +61,9 @@ class Target extends ITarget {
         if(undefined !== this.config.logFile) {
             return this.logPath + '/' + this.config.logFile;
         }
-        
+
         var date = new Date();
-        
+
         return this.logPath
             + '/'
             + date.getFullYear()
@@ -71,28 +73,28 @@ class Target extends ITarget {
             + date.getDate()
             + this.fileExtension;
     }
-    
+
     /**
      * @inheritdoc
      */
     flush(messages) {
         var msg = this.formatMessage(messages);
         var file = this.generateFile();
-        
+
         // 检查目录
         fs.access(this.logPath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
             if(null === err) {
                 fs.appendFile(file, msg, Candy.app.encoding, (err) => {});
-                
+
                 return;
             }
-            
+
             FileHelper.createDirectory(this.logPath, 0o777, (err) => {
                 fs.appendFile(file, msg, Candy.app.encoding, (err) => {});
             });
         });
     }
-    
+
     /**
      * 格式化内容
      */
@@ -106,7 +108,7 @@ class Target extends ITarget {
                 + messages[i][0]
                 + '\n';
         }
-        
+
         return msg;
     }
 }

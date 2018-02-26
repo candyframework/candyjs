@@ -11,7 +11,7 @@ var InvalidConfigException = require('../core/InvalidConfigException');
  * 日志
  */
 class Logger {
-    
+
     /**
      * constructor
      */
@@ -27,17 +27,17 @@ class Logger {
          * ]
          */
         this.messages = [];
-        
+
         /**
          * @property {Number} flushInterval how many messages should be logged before they are flushed from memory
          */
         this.flushInterval = 10;
-        
+
         /**
          * @property {Array} targets the targets class
          */
         this.targets = [];
-        
+
         // init
         if(undefined === settings || undefined === settings.targets) {
             throw new InvalidConfigException('No log targets found');
@@ -50,25 +50,25 @@ class Logger {
                 let clazz = Candy.createObject(settings.targets[target]['class'],
                     settings.targets[target]);
                 clazz.on(clazz.EVENT_FLUSH, clazz);
-                
+
                 this.targets.push(clazz);
             }
         }
     }
-    
+
     /**
      * 获取日志类实例
-     * 
+     *
      * @return {Object}
      */
     static getLogger() {
         if(null === Logger._logger) {
             Logger._logger = new Logger(Candy.app.log);
         }
-        
+
         return Logger._logger;
     }
-    
+
     /**
      * 创建新日志对象
      *
@@ -77,7 +77,7 @@ class Logger {
     static newInstance(settings) {
         return new Logger(settings);
     }
-    
+
     /**
      * 记录日志
      *
@@ -86,24 +86,24 @@ class Logger {
      */
     log(message, level) {
         this.messages.push([message, level, Date.now()]);
-        
+
         if(this.flushInterval > 0 && this.messages.length >= this.flushInterval) {
             this.flush();
         }
     }
-    
+
     /**
      * 清空 log 并写入目的地
      */
     flush() {
         var messages = this.messages;
         this.messages = [];
-        
+
         for(let target of this.targets) {
             target.trigger(target.EVENT_FLUSH, messages);
         }
     }
-    
+
     /**
      * Logs a error message
      *
@@ -112,7 +112,7 @@ class Logger {
     error(message) {
         this.log(message, Logger.LEVEL_ERROR);
     }
-    
+
     /**
      * Logs a warning message
      *
@@ -121,7 +121,7 @@ class Logger {
     warning(message) {
         this.log(message, Logger.LEVEL_WARNING);
     }
-    
+
     /**
      * Logs a info message
      *
@@ -130,7 +130,7 @@ class Logger {
     info(message) {
         this.log(message, Logger.LEVEL_INFO);
     }
-    
+
     /**
      * Logs a trace message
      *
@@ -139,7 +139,7 @@ class Logger {
     trace(message) {
         this.log(message, Logger.LEVEL_TRACE);
     }
-    
+
     /**
      * 获取日志级别描述
      *
@@ -167,7 +167,7 @@ class Logger {
 
         return name;
     }
-    
+
 }
 
 /**

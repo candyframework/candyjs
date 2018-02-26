@@ -14,7 +14,7 @@ class Event {
      */
     constructor() {
         /**
-         * @property {JSON} handlers
+         * @property {Object} handlers
          * 
          * {
          *     'eventName': [fn1, fn2...]

@@ -17,7 +17,7 @@ class Resource {
      * constructor
      *
      * @param {String} root 静态资源目录
-     * @param {JSON} options 配置参数
+     * @param {Object} options 配置参数
      *
      * {
      *    mime: { ... },

@@ -10,7 +10,7 @@ var StringHelper = require('./helpers/StringHelper');
  * 辅助类
  */
 class Candy {
-    
+
     /**
      * @ 别名路径转换真实路径
      *
@@ -33,7 +33,7 @@ class Candy {
 
         return '';
     }
-    
+
     /**
      * 设置路径别名
      *
@@ -47,13 +47,13 @@ class Candy {
 
         if(null === path) {
             delete Candy.pathAliases[alias];
-            
+
             return;
         }
-        
+
         Candy.pathAliases[alias] = StringHelper.rTrimChar(path, '/');
     }
-    
+
     /**
      * 创建对象 系统类路径约定以 y 开头 应用类以项目目录开头
      *
@@ -70,30 +70,30 @@ class Candy {
     static createObject(clazz, ...params) {
         var realClass = '';
         var properties = null;
-        
+
         if('string' === typeof clazz) {
             realClass = Candy.getPathAlias('@' + clazz);
-            
+
         } else if('object' === typeof clazz && undefined !== clazz['class']) {
             realClass = Candy.getPathAlias('@' + clazz['class']);
-            
+
             properties = Candy.config({}, clazz);
             delete properties['class'];
         }
-        
+
         // 文件不存在抛出异常
         // todo
-        
+
         var ClassName = require(realClass + Candy.fileExtention);
         var instance = new ClassName(...params);
-        
+
         if(null !== properties) {
             Candy.config(instance, properties);
         }
-        
+
         return instance;
     }
-    
+
     /**
      * 导入一个类文件
      *
@@ -101,28 +101,28 @@ class Candy {
      */
     static include(clazz) {
         var realClass = Candy.getPathAlias('@' + clazz);
-        
+
         // 文件不存在抛出异常
         // todo
-        
+
         return require(realClass + Candy.fileExtention);
     }
-    
+
     /**
      * 对象配置
      *
      * @param {Object} object 需要配置的对象
-     * @param {JSON} properties 配置项
+     * @param {Object} properties 配置项
      * @return {Object} 源对象
      */
     static config(object, properties) {
         for(let key in properties) {
             object[key] = properties[key];
         }
-        
+
         return object;
     }
-    
+
 }
 
 /**
@@ -131,7 +131,7 @@ class Candy {
 Candy.app = null;
 
 /**
- * @property {JSON} pathAliases 路径别名
+ * @property {Object} pathAliases 路径别名
  */
 Candy.pathAliases = {'@candy': __dirname};
 

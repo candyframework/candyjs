@@ -62,7 +62,7 @@ class ServiceLocator {
     /**
      * 以定义方式设置服务
      *
-     * @param {JSON} definition
+     * @param {Object} definition
      *
      * {
      *     'service1': {...},

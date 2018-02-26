@@ -10,26 +10,26 @@ var Event = require('../core/Event');
  * base target
  */
 class ITarget extends Event {
-    
+
     /**
      * constructor
      */
     constructor() {
         super();
-        
+
         /**
          * @property {String} EVENT_FLUSH 事件
          */
         this.EVENT_FLUSH = 'flush';
     }
-    
+
     /**
      * flush log
      *
      * @param {Array} message the message to be logged
      */
     flush(messages) {}
-    
+
     /**
      * 触发事件
      *
@@ -43,7 +43,7 @@ class ITarget extends Event {
             }
         }
     }
-    
+
 }
 
 module.exports = ITarget;
