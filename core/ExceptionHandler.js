@@ -8,7 +8,7 @@
  * 异常错误处理基类
  */
 class ExceptionHandler {
-    
+
     /**
      * 异常处理
      *
@@ -16,7 +16,7 @@ class ExceptionHandler {
      * @param {Error} exception 异常类
      */
     handlerException(response, exception) {}
-    
+
 }
 
 module.exports = ExceptionHandler;

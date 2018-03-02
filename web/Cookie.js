@@ -10,7 +10,7 @@
  * name=value; Expires=expires; Path=path; Domain=domain[; secure][; httponly]
  */
 class Cookie {
-    
+
     /**
      * constructor
      *
@@ -31,10 +31,10 @@ class Cookie {
         this.secure = secure;
         this.httpOnly = httpOnly;
     }
-    
+
     toString() {
         var ret = [this.name + '=' + this.value];
-        
+
         if(0 !== this.expires) {
             ret.push('Expires=' + new Date(this.expires).toUTCString());
         }
@@ -48,10 +48,10 @@ class Cookie {
         if(this.httpOnly) {
             ret.push('HttpOnly');
         }
-        
+
         return ret.join('; ');
     }
-    
+
     /**
      * 获取 cookie
      *
@@ -63,10 +63,10 @@ class Cookie {
         if(undefined === request.headers.cookie) {
             return null;
         }
-        
+
         var ret = null, tmp = null;
         var list = request.headers.cookie.split('; ');
-        
+
         for(let i=0,len=list.length; i<len; i++) {
             tmp = list[i].split('=');
 
@@ -78,7 +78,7 @@ class Cookie {
 
         return ret;
     }
-    
+
     /**
      * 设置 cookie
      *
@@ -88,7 +88,7 @@ class Cookie {
     static setCookie(response, cookies) {
         response.setHeader('Set-Cookie', cookies);
     }
-    
+
 }
 
 module.exports = Cookie;

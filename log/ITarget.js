@@ -16,11 +16,6 @@ class ITarget extends Event {
      */
     constructor() {
         super();
-
-        /**
-         * @property {String} EVENT_FLUSH 事件
-         */
-        this.EVENT_FLUSH = 'flush';
     }
 
     /**
@@ -45,5 +40,10 @@ class ITarget extends Event {
     }
 
 }
+
+/**
+ * @property {String} EVENT_FLUSH 事件
+ */
+ITarget.EVENT_FLUSH = 'flush';
 
 module.exports = ITarget;

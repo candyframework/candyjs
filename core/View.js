@@ -8,7 +8,7 @@
  * 视图
  */
 class View {
-    
+
     /**
      * constructor
      */
@@ -18,7 +18,7 @@ class View {
          */
         this.context = context;
     }
-    
+
     /**
      * 获取视图文件路径
      *
@@ -26,7 +26,7 @@ class View {
      * @return {String}
      */
     getTemplateFilePath(view) {}
-    
+
     /**
      * 读取视图文件
      *
@@ -35,7 +35,7 @@ class View {
      * @return {String}
      */
     getTemplate(view, callback) {}
-    
+
     /**
      * 从指定路径读取视图文件
      *
@@ -44,7 +44,7 @@ class View {
      * @return {String}
      */
     getTemplateFromPath(path, callback) {}
-    
+
 }
 
 /**

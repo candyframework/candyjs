@@ -11,43 +11,43 @@ var StringHelper = require('../helpers/StringHelper');
 var InvalidCallException = require('../core/InvalidCallException');
 
 class Restful extends CoreRouter {
-    
+
     /**
      * listen request
      */
     static requestListener(request, response) {
         var route = Request.parseUrl(request).pathname;
-        
+
         // 检测非法
         if(!Restful.isValidRoute(route)) {
             throw new InvalidCallException('The route: '+ route +' is invalid');
         }
-        
+
         // {paramValues, handler}
         var ret = true === Candy.app.combineRoutes ?
             Restful.resolveRoutesCombine(route, request.method) :
             Restful.resolveRoutesOneByOne(route, request.method);
-        
+
         if(null === ret) {
             throw new InvalidCallException('The REST route: ' + route + ' not found');
         }
-        
+
         var args = null === ret.paramValues ? [null] : ret.paramValues;
-        
+
         // handler is function
         if('function' === typeof ret.handler) {
             ret.handler(request, response, ...args);
-            
-            return;    
+
+            return;
         }
-        
+
         // handler is string
         var pos = ret.handler.indexOf(Restful.separator);
         var obj = null;
         if(-1 === pos) {
             obj = Candy.createObject(ret.handler);
             obj.index(request, response, ...args);
-            
+
         } else {
             obj = Candy.createObject( ret.handler.substring(0, pos) );
             obj[ ret.handler.substring(pos + 1) ](
@@ -56,7 +56,7 @@ class Restful extends CoreRouter {
                 ...args);
         }
     }
-    
+
     /**
      * 合并解析路由
      *
@@ -66,7 +66,7 @@ class Restful extends CoreRouter {
      */
     static resolveRoutesCombine(route, httpMethod) {
         var ret = null;
-        
+
         // [ {pattern, handler} ... ]
         var handlers = Restful.methods[httpMethod];
         var tmp = {};
@@ -75,13 +75,13 @@ class Restful extends CoreRouter {
         }
         // {pattern, params, handler}
         var combinedRoute = Restful.combineRoutes(tmp);
-        
+
         var matches = route.match( new RegExp('(?:' + combinedRoute.pattern + ')$') );
-        
+
         // 路由成功匹配
         if(null !== matches) {
             ret = {};
-            
+
             var subPatternPosition = -1;
             // matches: [ 'xyz/other', undefined, undefined, undefined, 'xyz/other']
             for(let i=1,len=matches.length; i<len; i++) {
@@ -90,13 +90,13 @@ class Restful extends CoreRouter {
                     break;
                 }
             }
-            
+
             var matchedRouteSegment = Restful.getMatchedSegmentBySubPatternPosition(
                 combinedRoute, subPatternPosition);
-            
+
             ret.handler = combinedRoute.handler[matchedRouteSegment];
             ret.paramValues = null;
-            
+
             // 有参数
             if(null !== combinedRoute.params[matchedRouteSegment]) {
                 ret.paramValues = new Array(combinedRoute.params[matchedRouteSegment].length);
@@ -105,10 +105,10 @@ class Restful extends CoreRouter {
                 }
             }
         }
-        
+
         return ret;
     }
-    
+
     /**
      * 依次解析路由
      *
@@ -119,45 +119,45 @@ class Restful extends CoreRouter {
     static resolveRoutesOneByOne(route, httpMethod) {
         // {pattern, handler, paramKeys, paramValues}
         var matchedHandler = null;
-        
+
         var handlers = Restful.methods[httpMethod];  // [ {pattern, handler} ... ]
         var parsedRoute = null;
         var matches = null;
-        
+
         for(let i=0,len=handlers.length; i<len; i++) {
             parsedRoute = Restful.parse(handlers[i].pattern);
-            
+
             handlers[i].paramKeys = parsedRoute.params;  // null or array
             handlers[i].paramValues = null;
-            
+
             // end with $ 精确匹配
             matches = route.match( new RegExp(parsedRoute.pattern + '$') );
-            
+
             // 匹配到路由
             if(null !== matches) {
                 matchedHandler = handlers[i];
-                
+
                 // 存储参数
                 if(null !== matchedHandler.paramKeys) {
                     let requestInstance = new Request(request);
                     matchedHandler.paramValues = new Array(matchedHandler.paramKeys.length);
-                    
+
                     for(let j=0,l=matchedHandler.paramKeys.length; j<l; j++) {
                         requestInstance.setQueryString(matchedHandler.paramKeys[j],
                             matches[j+1]);
-                            
+
                         matchedHandler.paramValues[j] = matches[j+1];
                     }
                 }
-                
+
                 // 匹配到就退出
                 break;
             }
         }
-        
+
         return matchedHandler;
     }
-    
+
     /**
      * 检测路由合法性
      *
@@ -169,10 +169,10 @@ class Restful extends CoreRouter {
         if(!/^[\w\-\/]+$/.test(route) || route.indexOf('//') >= 0) {
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * 合并路由
      *
@@ -196,24 +196,24 @@ class Restful extends CoreRouter {
         var patternArray = [];
         var paramArray = [];
         var handler = [];  // 路由配置
-        
+
         var parsedRoute = null;
         for(let reg in routes) {
             parsedRoute = Restful.parse(reg);
-            
+
             // 为每个模式添加一个括号 用于定位匹配到的是哪一个模式
             patternArray.push( '(' + parsedRoute.pattern + ')' );
             paramArray.push(parsedRoute.params);
             handler.push(routes[reg]);
         }
-        
+
         ret.pattern = patternArray.join('|');
         ret.params = paramArray;
         ret.handler = handler;
-        
+
         return ret;
     }
-    
+
     /**
      * 查找匹配的路由的位置
      *
@@ -228,10 +228,10 @@ class Restful extends CoreRouter {
         var tmpLine = combinedRoute.pattern.substring(0, segment).match(/\|/g);
         // 没有匹配到竖线 说明匹配的是第一部分
         segment = null === tmpLine ? 0 : tmpLine.length;
-        
+
         return segment;
     }
-    
+
     /**
      * Adds a route to the collection
      *
@@ -244,54 +244,54 @@ class Restful extends CoreRouter {
             Restful.methods[httpMethod].push( {pattern: pattern, handler: handler} );
             return;
         }
-        
+
         for(let i=0,len=httpMethod.length; i<len; i++) {
             Restful.methods[httpMethod[i]].push( {pattern: pattern, handler: handler} );
         }
     }
-    
+
     /**
      * get
      */
     static get(pattern, handler) {
         Restful.addRoute('GET', pattern, handler);
     }
-    
+
     /**
      * post
      */
     static post(pattern, handler) {
         Restful.addRoute('POST', pattern, handler);
     }
-    
+
     /**
      * put
      */
     static put(pattern, handler) {
         Restful.addRoute('PUT', pattern, handler);
     }
-    
+
     /**
      * delete
      */
     static delete(pattern, handler) {
         Restful.addRoute('DELETE', pattern, handler);
     }
-    
+
     /**
      * patch
      */
     static patch(pattern, handler) {
         Restful.addRoute('PATCH', pattern, handler);
     }
-    
+
     /**
      * head
      */
     static head(pattern, handler) {
         Restful.addRoute('HEAD', pattern, handler);
     }
-    
+
     /**
      * options
      */

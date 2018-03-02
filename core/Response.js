@@ -8,7 +8,7 @@
  * server response
  */
 class Response {
-    
+
     /**
      * constructor
      *
@@ -17,14 +17,14 @@ class Response {
     constructor(response) {
         this.response = response;
     }
-    
+
     /**
      * sends data to client and end response
      *
      * @param {String | Buffer} content
      */
     send(content) {}
-    
+
 }
 
 module.exports = Response;

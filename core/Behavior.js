@@ -14,14 +14,14 @@
  * 行为类还能够监听组件的事件并作出响应
  */
 class Behavior {
-    
+
     constructor() {
         /**
          * @property {Component} component 拥有行为的组件
          */
         this.component = null;
     }
-    
+
     /**
      * 声明要监听的组件的事件和对应事件的处理程序
      *
@@ -33,7 +33,7 @@ class Behavior {
     events() {
         return {};
     }
-    
+
     /**
      * 监听组件的事件
      *
@@ -41,29 +41,29 @@ class Behavior {
      */
     listen(component) {
         this.component = component;
-        
+
         var events = this.events();
-        
+
         for(let eventName in events) {
             this.component.on(eventName, events[eventName]);
         }
     }
-    
+
     /**
      * 取消监听组件的事件
      */
     unListen() {
         if(null !== this.component) {
             var events = this.events();
-            
+
             for(let eventName in events) {
                 this.component.off(eventName, events[eventName]);
             }
-            
+
             this.component = null;
         }
     }
-    
+
 }
 
 module.exports = Behavior;

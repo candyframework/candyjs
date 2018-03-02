@@ -11,7 +11,7 @@ var Behavior = require('./Behavior');
  * 组件是实现 属性 (property) 行为 (behavior) 事件 (event) 的基类
  */
 class Component {
-    
+
     /**
      * constructor
      */
@@ -26,7 +26,7 @@ class Component {
          *
          */
         this.eventsMap = {};
-        
+
         /**
          * @property {Object} behaviorsMap the attached behaviors
          *
@@ -37,16 +37,16 @@ class Component {
          *
          */
         this.behaviorsMap = {};
-        
+
         this.ensureDeclaredBehaviorsAttached();
     }
-    
+
     // 行为注入组件
     inject() {
         var keys = Object.keys(this.behaviorsMap);
-        
+
         if(0 === keys.length) return;
-        
+
         // 相对于其他编程语言来说这种处理方式并不是很好
         // 但在 javascript 中没找到更好的解决方式 暂时写成这样了
         var ret = null;
@@ -57,22 +57,22 @@ class Component {
                 if(undefined !== this[ret[x]]) {
                     continue;
                 }
-                
+
                 this[ret[x]] = this.behaviorsMap[keys[i]][ret[x]];
             }
-            
+
             // 原型链
             ret = Object.getOwnPropertyNames(Object.getPrototypeOf(this.behaviorsMap[keys[i]]));
             for(let x=0,len=ret.length; x<len; x++) {
                 if('constructor' === ret[x] || undefined !== this[ret[x]]) {
                     continue;
                 }
-                
+
                 this[ret[x]] = this.behaviorsMap[keys[i]][ret[x]];
             }
         }
     }
-    
+
     /**
      * 声明该组件的行为列表
      *
@@ -94,7 +94,7 @@ class Component {
     behaviors() {
         return {};
     }
-    
+
     /**
      * 确保 behaviors() 声明的行为已保存到组件
      */
@@ -104,7 +104,7 @@ class Component {
             this.attachBehaviorInternal(name, behaviors[name]);
         }
     }
-    
+
     /**
      * 向组件附加一个行为
      *
@@ -114,7 +114,7 @@ class Component {
     attachBehavior(name, behavior) {
         this.attachBehaviorInternal(name, behavior);
     }
-    
+
     /**
      * 删除组件的行为
      *
@@ -124,16 +124,16 @@ class Component {
     detachBehavior(name) {
         if(undefined !== this.behaviorsMap[name]) {
             var behavior = this.behaviorsMap[name];
-            
+
             delete this.behaviorsMap[name];
             behavior.unListen();
-            
+
             return behavior;
         }
-        
+
         return null;
     }
-    
+
     /**
      * 保存行为类到组件
      *
@@ -144,16 +144,16 @@ class Component {
         if(!(behavior instanceof Behavior)) {
             behavior = Candy.createObject(behavior);
         }
-        
+
         if(undefined !== this.behaviorsMap[name]) {
             this.behaviorsMap[name].unListen();
         }
-        
+
         // 行为类可以监听组件的事件并处理
         behavior.listen(this);
         this.behaviorsMap[name] = behavior;
     }
-    
+
     /**
      * 注册事件
      *
@@ -164,10 +164,10 @@ class Component {
         if(undefined === this.eventsMap[eventName]) {
             this.eventsMap[eventName] = [];
         }
-        
+
         this.eventsMap[eventName].push(handler);
     }
-    
+
     /**
      * 注销事件
      *
@@ -178,7 +178,7 @@ class Component {
         if(undefined !== this.eventsMap[eventName]) {
             if(undefined === handler) {
                 delete this.eventsMap[eventName];
-                
+
             } else {
                 for(let i=0,len=this.eventsMap[eventName].length; i<len; i++) {
                     if(handler === this.eventsMap[eventName][i]) {
@@ -188,7 +188,7 @@ class Component {
             }
         }
     }
-    
+
     /**
      * 触发
      *
@@ -203,7 +203,7 @@ class Component {
             }
         }
     }
-    
+
     /**
      * 触发
      *
@@ -217,7 +217,7 @@ class Component {
             }
         }
     }
-    
+
 }
 
 module.exports = Component;

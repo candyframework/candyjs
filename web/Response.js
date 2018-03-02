@@ -24,49 +24,49 @@ var HttpException = require('../core/HttpException');
  *
  */
 class Response extends CoreResponse {
-    
+
     /**
      * constructor
      */
     constructor(response) {
         super(response);
-        
+
         /**
          * @property {String} encoding 编码
          */
         this.encoding = Candy.app.encoding;
-        
+
         /**
          * @property {String} version HTTP protocol version
          */
         //this.version = '1.1';
-        
+
         /**
          * @property {Number} statusCode the HTTP status code
          */
         this.statusCode = 200;
-        
+
         /**
          * @property {String} statusText the HTTP status description that comes together with the status code.
          */
         this.statusText = 'OK';
-        
+
         /**
          * @property {Object} headers HTTP headers
          */
         this.headers = {};
-        
+
         /**
          * @property {String | Buffer} content HTTP content
          */
         this.content = '';
-        
+
         /**
          * @property {Array} cookies HTTP cookies
          */
         this.cookies = [];
     }
-    
+
     /**
      * 得到 http status code
      *
@@ -75,7 +75,7 @@ class Response extends CoreResponse {
     getStatusCode() {
         return this.statusCode;
     }
-    
+
     /**
      * 设置 http status code
      *
@@ -86,20 +86,20 @@ class Response extends CoreResponse {
         if(value < 100 || value >= 600) {
             throw new HttpException('The HTTP status code is invalid');
         }
-        
+
         this.statusCode = value;
-        
+
         if(undefined === text) {
             this.statusText = undefined !== Response.httpStatuses[String(value)] ?
                 Response.httpStatuses[String(value)] : '';
-                
+
         } else {
             this.statusText = text;
         }
-        
+
         return this;
     }
-    
+
     /**
      * 获取 header
      *
@@ -110,10 +110,10 @@ class Response extends CoreResponse {
         if(undefined !== this.headers[name]) {
             return this.headers[name];
         }
-        
+
         return null;
     }
-    
+
     /**
      * 设置 header
      *
@@ -122,10 +122,10 @@ class Response extends CoreResponse {
      */
     setHeader(name, value) {
         this.headers[name] = value;
-        
+
         return this;
     }
-    
+
     /**
      * 获取实体内容
      *
@@ -134,7 +134,7 @@ class Response extends CoreResponse {
     getContent() {
         return this.content;
     }
-    
+
     /**
      * 设置实体内容
      *
@@ -142,10 +142,10 @@ class Response extends CoreResponse {
      */
     setContent(content) {
         this.content = content;
-        
+
         return this;
     }
-    
+
     /**
      * 设置一条 cookie
      *
@@ -157,7 +157,7 @@ class Response extends CoreResponse {
         if(undefined === options) {
             options = {};
         }
-        
+
         var cookie = new Cookie(name,
             encodeURIComponent(value),
             options.expires,
@@ -165,12 +165,12 @@ class Response extends CoreResponse {
             options.domain,
             options.secure,
             options.httpOnly);
-        
+
         this.cookies.push(cookie.toString());
-        
+
         return this;
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -178,13 +178,13 @@ class Response extends CoreResponse {
         if(undefined !== content) {
             this.setContent(content);
         }
-        
+
         this.sendHeaders();
         this.sendContent();
-        
+
         this.response.end();
     }
-    
+
     /**
      * 发送 header
      */
@@ -192,25 +192,25 @@ class Response extends CoreResponse {
         if(this.response.headersSent) {
             return;
         }
-        
+
         for(let name in this.headers) {
             this.response.setHeader(name, this.headers[name]);
         }
-        
+
         if(this.cookies.length > 0) {
             Cookie.setCookie(this.response, this.cookies);
         }
-        
+
         this.response.writeHead(this.statusCode, this.statusText);
     }
-    
+
     /**
      * 发送内容
      */
     sendContent() {
         this.response.write(this.content, this.encoding);
     }
-    
+
     /**
      * 重定向
      *
@@ -219,12 +219,12 @@ class Response extends CoreResponse {
      */
     redirect(url, statusCode = 302) {
         this.setHeader('Location', url);
-        
+
         this.setStatusCode(statusCode);
-        
+
         this.send();
     }
-    
+
 }
 
 /**
@@ -236,7 +236,7 @@ Response.httpStatuses = {
     '101': 'Switching Protocols',
     '102': 'Processing',
     '118': 'Connection timed out',
-    
+
     // Success
     '200': 'OK',
     '201': 'Created',
@@ -249,7 +249,7 @@ Response.httpStatuses = {
     '208': 'Already Reported',
     '210': 'Content Different',
     '226': 'IM Used',
-    
+
     // Redirection
     '300': 'Multiple Choices',
     '301': 'Moved Permanently',
@@ -261,7 +261,7 @@ Response.httpStatuses = {
     '307': 'Temporary Redirect',
     '308': 'Permanent Redirect',
     '310': 'Too many Redirect',
-    
+
     // Client error
     '400': 'Bad Request',
     '401': 'Unauthorized',
@@ -292,7 +292,7 @@ Response.httpStatuses = {
     '431': 'Request Header Fields Too Large',
     '449': 'Retry With',
     '450': 'Blocked by Windows Parental Controls',
-    
+
     // Server error
     '500': 'Internal Server Error',
     '501': 'Not Implemented',

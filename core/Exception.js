@@ -8,7 +8,7 @@
  * 异常
  */
 class Exception extends Error {
-    
+
     /**
      * constructor
      *
@@ -16,10 +16,10 @@ class Exception extends Error {
      */
     constructor(message) {
         super(message);
-        
+
         this.name = this.constructor.name;
     }
-    
+
     /**
      * 获得错误名
      *
@@ -28,7 +28,7 @@ class Exception extends Error {
     getName() {
         return this.name;
     }
-    
+
 }
 
 module.exports = Exception;

@@ -8,7 +8,7 @@
  * 时间工具
  */
 class TimeHelper {
-    
+
     /**
      * 字符串左侧填充
      *
@@ -21,10 +21,10 @@ class TimeHelper {
         while(str.length < length) {
             str = pad + str;
         }
-        
+
         return str;
     }
-    
+
     /**
      * 字符串右侧填充
      *
@@ -37,10 +37,10 @@ class TimeHelper {
         while(str.length < length) {
             str = str + pad;
         }
-        
+
         return str;
     }
-    
+
     /**
      * 格式化时间
      *
@@ -62,14 +62,14 @@ class TimeHelper {
             ,i: () => TimeHelper.stringLPad(String(d.getMinutes()), '0', 2)
             ,s: () => TimeHelper.stringLPad(String(d.getSeconds()), '0', 2)
         };
-        
+
         return formats.replace(/(.?)/ig, (match, p/* , offset, string */) => {
             return undefined !== funs[match] ?
                 funs[match]() :
                 p;
         });
     }
-    
+
 }
 
 module.exports = TimeHelper;
