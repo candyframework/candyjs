@@ -17,7 +17,7 @@ class StringHelper {
      * @param {Number} n 第几次出现
      * @return {Number} 位置值
      */
-    static indexOfN(str, find, n) {
+    static nIndexOf(str, find, n) {
         var x = str.indexOf(find);
         for(let i = 1; i < n; i++) {
             x = str.indexOf(find, x + 1);

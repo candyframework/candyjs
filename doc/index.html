@@ -6,7 +6,7 @@
     <title>CandyJs js DOC</title>
     <meta name="keywords" content="CandyJs MVC Framework Restful API">
     <meta name="description" content="一个面向对象的高效 node.js MVC and REST 框架">
-    
+
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
     blockquote {font-size: 14px;}
@@ -38,9 +38,9 @@
 <h1>
 一个面向对象的高效 MVC and REST 框架
 </h1>
-            
+
             <h1 class="page-header">入门</h1>
-            
+
             <h4><b>安装程序</b></h4>
             <p>
                 可以通过两种方式安装<code>CandyJs</code>
@@ -49,12 +49,12 @@
                     <li>下载源代码手动部署</li>
                 </ol>
             </p>
-            
+
             <h4><b>使用<code>npm</code>安装</b></h4>
             <p>
                 <pre><code>npm install candyjs</code></pre>
             </p>
-            
+
             <h4><b>下载源代码手动部署</b></h4>
             <p>
                 <pre>通过<a target="_blank" href="https://github.com/candy-js"><b>GitHub</b></a>下载源码放置到 node_modules 目录即可</pre>
@@ -63,7 +63,7 @@
                     否则 npm 安装其他包可能会有问题
                 </blockquote>
             </p>
-            
+
             <h1 class="page-header" id="firstrun"><b>第一次运行程序</b></h1>
             <p>本例输出一个 Hello word 程序</p>
             <p>首先需要创建一个基本应用框架</p>
@@ -75,7 +75,7 @@
             <p>
                 <pre><code>./node_modules/.bin/_candy PROJECT_NAME 使用自己想用的应用名字替换掉 PROJECT_NAME 变量即可</code></pre>
             </p>
-            
+
             <p>这样就会创建一个简单的应用如下</p>
 <p>
     <pre><code>
@@ -103,9 +103,9 @@ PROJECT_NAME
             <p><pre><code>node index.js</code></pre></p>
             <p>访问程序</p>
             <p><pre><code><a href="http://localhost:8090" target="_blank">http://localhost:8090</a></code></pre></p>
-            
+
             <h1 class="page-header" id="appstruct">应用结构</h1>
-            
+
             <h4><b>一个比较完整的应用目录结构如下</b></h4>
 <p>
 <pre><code>
@@ -161,7 +161,7 @@ PROJECT_NAME
 |
 </pre></code>
 </p>
-            
+
             <h4><b>入口脚本<code>index.js</code></b></h4>
             <p>
                 入口脚本是应用启动流程中的第一环 一个应用只有一个入口脚本
@@ -181,18 +181,18 @@ var CandyJs = require('candyjs');
 
 new CandyJs({
     'id': 1,
-    
+
     // 定义调试应用
     'debug': true,
-    
+
     // 定义应用路径
     'appPath': __dirname + '/app',
-    
+
     // 注册模块
     'modules': {
         'bbs': 'app/modules/bbs'
     },
-    
+
     // 配置日志
     'log': {
         'targets': {
@@ -201,21 +201,21 @@ new CandyJs({
             }
         }
     }
-    
+
 }).listen(8090, function(){
     console.log('listen on 8090');
 });
 </pre></code>
 </p>
-        
+
             <h4><b>应用</b></h4>
             <p>
                 一般的框架都包含两种应用<code>Web 应用</code>和<code>控制台应用</code>但是<code>CandyJs</code>只有一种<code>Web 应用</code>
             </p>
-            
+
             <h4><b>应用属性</b></h4>
             <p>在入口文件中可以传入各种参数 这些参数最终会被赋值到应用对象上</p>
-            
+
             <h6><b>必要属性</b></h6>
             <ul>
                 <li>
@@ -225,7 +225,7 @@ new CandyJs({
                     <p><code>candy/web/Application.appPath</code> 该属性用于指明应用所在的目录</p>
                 </li>
             </ul>
-            
+
             <h6><b>重要属性</b></h6>
             <ul>
                 <li>
@@ -258,13 +258,13 @@ new CandyJs({
                     <p><code>candy/web/Application.debug</code> 是否开启调试</p>
                 </li>
             </ul>
-            
+
             <h4><b>自定义属性</b></h4>
             <p>其他在入口文件中传入的参数都会作为自定义参数传入应用对象</p>
-            
+
             <h1 class="page-header" id="controller"><b>应用控制器</b></h1>
             <p>控制器是<code>MVC</code>模式中的一部分 是继承<code>candy/core/Controller</code>类的对象 负责处理请求和生成响应</p>
-        
+
             <h4><b>动作</b></h4>
             <p>控制器由<code>动作</code>组成 它是执行终端用户请求的最基础的单元 一个控制器有且只有一个入口动作叫做<code>run</code></p>
 <p>
@@ -286,7 +286,7 @@ class IndexController extends Controller {
 module.exports = IndexController;
 </pre></code>
 </p>
-        
+
             <h4><b>动作切面</b></h4>
             <p>
                 如果控制器从<code>candy/web/Controller</code>继承而来<mark>（在 CandyJs 中控制器可以不从<code>candy/web/Controller</code>继承）</mark>
@@ -323,7 +323,7 @@ module.exports = IndexController;
             <blockquote class="bg-danger">
                 注意 由于项目代码中可能存在异步操作<code>afterActionCall()</code>并不能保证在 run() 执行完成后再执行
             </blockquote>
-        
+
             <h4><b>路由与控制器</b></h4>
             <p>一般一个路由对应一个控制器 路由格式如下</p>
             <p><pre><code>[route_prefix]/[controllerId]</code></pre></p>
@@ -331,27 +331,27 @@ module.exports = IndexController;
             <p><pre><code>[moduleId]/[controllerId]</code></pre></p>
             <p>如果用户的请求地址为<code>http://hostname/index</code>会执行<code>index</code>控制器的<code>run</code>入口动作</p>
             <p>如果用户的请求地址为<code>http://hostname/bbs/index</code>会执行<code>bbs</code>模块的<code>index</code>控制器的<code>run</code>入口动作 或者执行普通控制器的<code>bbs</code>目录下的<code>index</code>控制器的<code>run</code>入口动作</p>
-            
+
             <p>控制器查找顺序 优先查找模块下的控制器<code>模块控制器 --> 普通控制器</code></p>
-        
+
             <h1 class="page-header" id="model"><b>模型</b></h1>
             <p>模型是<code>MVC</code>模式中的一部分 是代表业务数据的对象</p>
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时没有提供读取数据库的类
             </blockquote>
-            
+
             <h1 class="page-header" id="view"><b>视图</b></h1>
             <p>视图是<code>MVC</code>模式中的一部分 它用于给终端用户展示页面</p>
             <blockquote class="bg-info">
                 视图类一般把模型层提供的数据与静态页面结合生成一个最终的页面展示给用户
                 <code>CandyJs</code>暂时只在控制器层提供了功能有限的<code>API</code>
             </blockquote>
-            
+
             <h4><b>模板引擎</b></h4>
             <blockquote class="bg-info">
                 一般视图类与模板引擎结合使用 但是<code>CandyJs</code>并没有实现一个模板引擎 用户需要使用已有的模板引擎来实现自己的业务
             </blockquote>
-            
+
             <h4><b>控制器层的视图 API</b></h4>
             <p>
                 如果用户的控制器从<code>candy/web/Controller</code>继承而来
@@ -371,19 +371,19 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     run(req, res) {
         this.getView().getTemplate('index', (err, str) => {
             res.end(str);
         });
     }
-    
+
 }
 
 module.exports = IndexController;
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="module"><b>模块</b></h1>
             <p>
                 模块是独立的软件单元<code>由模型 视图 控制器</code>和其他组件组成
@@ -393,7 +393,7 @@ module.exports = IndexController;
             <blockquote class="bg-info">
                 注意 和普通项目目录不同的是 模块中的<code>控制器和视图</code>没有子目录
             </blockquote>
-            
+
             <h4><b>创建模块</b></h4>
             <p>在应用目录的<code>modules</code>目录中建立单独目录创建模块 如下</p>
 <p>
@@ -413,7 +413,7 @@ modules 模块目录
     |   |-- 其他目录
 </code></pre>
 </p>
-            
+
             <h4><b>注册模块</b></h4>
             <p>创建完成的模块还不能被系统识别 需要手动注册一下</p>
 <p>
@@ -422,22 +422,22 @@ var CandyJs = require('candyjs');
 
 new CandyJs({
     ...
-    
+
     // 注册模块
     'modules': {
         'bbs': 'app/modules/bbs'
     },
-    
+
     ...
-    
+
 }).listen(8090, function(){
     console.log('listen on 8090');
 });
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="component"><b>组件 & 行为</b></h1>
-            
+
             <h4><b>组件</b></h4>
             <p>组件是实现<code>属性 (property) 行为 (behavior) 事件 (event)</code>的基类 如果一个类继承自组件类 那么这个类就拥有组件类的特性</p>
             <p>
@@ -445,7 +445,7 @@ new CandyJs({
                 <code>CandyJs</code>中<code>candy/core/Controller</code>类继承自<code>candy/core/Component</code>
             </p>
             <p>行为类一般与组件类同时使用</p>
-            
+
             <h4><b>行为</b></h4>
             <p>
                 行为是<code>candy/core/Behavior</code>类或其子类的实例<br />
@@ -453,10 +453,10 @@ new CandyJs({
                 当行为附加到组件后它将 注入 它的方法和属性到组件中 然后就可以像访问组件自己的方法和属性一样访问它们<br />
                 行为类还能够监听组件的事件并作出响应
             </p>
-            
+
             <h4><b>属性</b></h4>
             <p>javascript 类的成员变量也被称为属性 properties</p>
-            
+
             <h4><b>事件</b></h4>
             <p><code>CandyJs</code>中实现了一个观察者模式</p>
 <p>
@@ -467,29 +467,29 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     constructor(context) {
         super(context);
-        
+
         this.on('myevent', function() {
             console.log('myevent fired');
         });
     }
-    
+
     run(req, res) {
         this.trigger('myevent');
-        
+
         res.end('hello');
     }
-    
+
 }
 
 module.exports = IndexController;
 </code></pre>
 </p>
-            
+
             <h4><b>行为的使用</b></h4>
-            
+
             <h6><b>定义行为</b></h6>
             <p>要定义行为 通过继承<code>candy/core/Behavior</code>或其子类来建立一个类</p>
 <p>
@@ -502,11 +502,11 @@ var Behavior = CandyJs.Candy.include('candy/core/Behavior');
 class MyBehavior extends Behavior {
     constructor() {
         super();
-        
+
         this.props1 = 1;
         this.props2 = 2;
     }
-    
+
     myFun() {
         // todo
     }
@@ -515,12 +515,12 @@ class MyBehavior extends Behavior {
 module.exports = MyBehavior;
 </code></pre>
 </p>
-            
+
             <p>以上代码定义了行为类<code>MyBehavior</code>并为要附加行为的组件提供了两个属性<code>prop1 prop2</code>和一个方法<code>myFun()</code></p>
-            
+
             <h6><b>附加行为到组件</b></h6>
             <p>可以通过<code>静态配置</code>或者<code>动态方法</code>形式附加行为到组件</p>
-            
+
             <p>要使用静态配置附加行为 重写组件类的<code>behaviors()</code>方法即可<code>behaviors()</code>方法应该返回行为配置列表</p>
 <p>
 <pre><code>
@@ -530,20 +530,20 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     // 重写方法
     behaviors() {
-    
+
         // 返回要附加的行为
         return {
             myBehavior: 'app/controllers/index/MyBehavior'
         };
     }
-    
+
     run(req, res) {
         res.end('hello');
     }
-    
+
 }
 
 module.exports = IndexController;
@@ -559,24 +559,24 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     constructor(context) {
         super(context);
-        
+
         // 附加组件
         this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
     }
-    
+
     run(req, res) {
         res.end('hello');
     }
-    
+
 }
 
 module.exports = IndexController;
 </code></pre>
 </p>
-            
+
             <h6><b>使用</b></h6>
             <p>一旦行为附加到组件 就可以直接使用它</p>
             <blockquote class="bg-info">
@@ -590,31 +590,31 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     constructor(context) {
         super(context);
-        
+
         this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
     }
-    
+
     run(req, res) {
         // 手动调用
         this.inject();
-        
+
         // 使用行为类的功能
         this.myFun();
         console.log(this.props1);
         console.log(this.props2);
-        
+
         res.end('hello');
     }
-    
+
 }
 
 module.exports = IndexController;
 </code></pre>
 </p>
-            
+
             <h6><b>行为中处理事件</b></h6>
             <p>行为类可以处理组件触发的事件 只需要重写行为类的<code>events()</code>方法即可</p>
 <p>
@@ -641,14 +641,14 @@ class MyBehavior extends Behavior {
 module.exports = MyBehavior;
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="midware"><b>中间件</b></h1>
             <p>中间件是处理请求的第一个环节 可以对请求做过滤处理并调用下一个中间件</p>
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时只提供了一个处理静态资源的中间件
                 理论上<code>CandyJs</code>兼容任何<code>express</code>的中间件
             </blockquote>
-            
+
             <h1 class="page-header" id="static"><b>静态资源</b></h1>
             <p>
                 <code>CandyJs</code>默认是不处理静态资源的 需要使用中间件
@@ -666,18 +666,18 @@ Hook.getInstance().addHook(new R(__dirname + '/public').serve());
 new CandyJs({
 
     ...
-    
+
 }).listen(8090, function(){
     console.log('listen on 8090');
 });
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="url"><b>URI & URL 类</b></h1>
             <p>
                 <code>candy/web/URI 及 candy/web/URL</code>类提供了对 uri 和 url 操作的方法
             </p>
-            
+
             <h4><b>candy/web/URI</b></h4>
             <ul>
                 <li><code>parseUrl()</code> 解析 url</li>
@@ -704,7 +704,7 @@ var uri = new URI();
 uri.parseUrl('http://xxx.com:8080/abc?q=1#anchor');
 </code></pre>
 </p>
-            
+
             <h4><b>candy/web/URL</b></h4>
             <ul>
                 <li><code>getReferer()</code> 获取先前网页的地址</li>
@@ -725,13 +725,13 @@ url.to('index/index');
 url.to('index/index', {id: 1, '#': 'anchor'})
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="reqres"><b>请求与响应</b></h1>
             <p>
                 <code>CandyJs</code>提供了处理请求和响应的类
                 <code>candy/web/Request</code>和<code>candy/web/Response</code>
             </p>
-            
+
             <h4><b>HTTP 请求 candy/web/Request 类</b></h4>
             <p>
                 用于处理 http 请求
@@ -761,7 +761,7 @@ var id = request.getQueryString('id');
 ...
 </code></pre>
 </p>
-            
+
             <h4><b>HTTP 响应 candy/web/Response 类</b></h4>
             <p>
                 主要用户向客户端输出响应消息
@@ -777,7 +777,7 @@ var id = request.getQueryString('id');
                 <li><code>send([content])</code> 发送 HTTP 响应到客户端</li>
                 <li><code>redirect(url[, statusCode = 302])</code> 页面重定向</li>
             </ul>
-            
+
             <h6><b>使用 response 输出内容</b></h6>
 <p>
 <pre><code>
@@ -787,7 +787,7 @@ response.setContent('some data from server');
 response.send();
 </code></pre>
 </p>
-            
+
             <h6><b>使用 response 重定向</b></h6>
 <p>
 <pre><code>
@@ -796,10 +796,10 @@ var response = new Response(res);
 response.redirect('http://foo.com');
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="helper"><b>助手类</b></h1>
             <p>助手类封装了一些常用操作</p>
-            
+
             <h4><b>文件助手类<code>FileHelper</code></b></h4>
             <ul>
                 <li><code>getDirname(dir)</code> 获取路径的 dir 部分</li>
@@ -807,10 +807,10 @@ response.redirect('http://foo.com');
                 <li><code>createDirectory(dir[, mode = 0o777[, callback = null]])</code> 异步创建文件夹</li>
                 <li><code>createDirectorySync(dir[, mode = 0o777])</code> 同步创建文件夹</li>
             </ul>
-            
+
             <h4><b>字符串助手类<code>StringHelper</code></b></h4>
             <ul>
-                <li><code>indexOfN(str, find, n)</code> 查找某字符串在另一个字符串中第 N 次出现的位置</li>
+                <li><code>nIndexOf(str, find, n)</code> 查找某字符串在另一个字符串中第 N 次出现的位置</li>
                 <li><code>trimChar(str, character)</code> 删除两端字符</li>
                 <li><code>lTrimChar(str, character)</code> 删除左侧字符</li>
                 <li><code>rTrimChar(str, character)</code> 删除右侧字符</li>
@@ -818,12 +818,12 @@ response.redirect('http://foo.com');
                 <li><code>htmlSpecialChars(str[, flag = 0[, doubleEncode = true]])</code> 转化特殊 html 字符到实体</li>
                 <li><code>filterTags(str[, allowed = ''])</code> 过滤 html 标签</li>
             </ul>
-            
+
             <h4><b>时间助手类<code>TimeHelper</code></b></h4>
             <ul>
                 <li><code>format(formats[, timestamp = Date.now()])</code> 格式化时间</li>
             </ul>
-            
+
 <p>
 <pre><code>
 var Response = CandyJs.Candy.include('candy/helpers/FileHelper');
@@ -839,16 +839,16 @@ var str = StringHelper.htmlSpecialChars('&lt;script&gt;');
 // return abcxyz
 var strTag = StringHelper.filterTags('&lt;a&gt;abc&lt;/a&gt;xyz');
 
-// 格式化当前时间 return xxxx-xx-xx xx:xx:xx 
+// 格式化当前时间 return xxxx-xx-xx xx:xx:xx
 var time = TimeHelper.format('y-m-d h:i:s');
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="alias"><b>别名系统</b></h1>
             <p>为了方便类的管理 实现自动加载 初始化等<code>CandyJs</code>提供了一套别名系统</p>
             <p>别名是一个以<code>@</code>符号开头的字符串 每一个别名对应一个真实的物理路径</p>
             <p><code>CandyJs</code>中加载类以及创建类的实例都是用的别名</p>
-            
+
             <h4><b>系统内置别名</b></h4>
             <ul>
                 <li><code>@candy</code> 指向 CandyJs 目录</li>
@@ -856,7 +856,7 @@ var time = TimeHelper.format('y-m-d h:i:s');
                 <li><code>@runtime</code> 缓存目录 默认指向<code>@app/runtime CandyJs.Candy.app.getRuntimePath()</code>可得到该值</li>
                 <li><code>@root</code> 网站根目录<code>CandyJs.Candy.app.getRootPath()</code>可得到该值</li>
             </ul>
-            
+
             <h4><b>自定义别名</b></h4>
             <p>用户可以自定义别名</p>
 <p>
@@ -868,7 +868,7 @@ CandyJs.Candy.setPathAlias('@lib', '/home/www/library');
 var obj = CandyJs.Candy.createObject('lib/MyClass');
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="restful"><b>RESTful</b></h1>
             <blockquote class="bg-danger">暂时 RESTful 模式和 MVC 模式不能共存</blockquote>
             <p>在 RESTful 模式中可用的请求方法如下</p>
@@ -888,7 +888,7 @@ var app = new CandyJs({
     'id': 1,
     'debug': true,
     'appPath': __dirname + '/app',
-    
+
     'useRestful': true
 });
 app.listen(8090, function(){
@@ -900,10 +900,10 @@ var Restful = CandyJs.Candy.include('candy/web/Restful');
 Restful.get('/abc/{id:\\d+}', function(req, res, id){
     var Request = CandyJs.Candy.include('candy/web/Request');
     var r = new Request(req);
-    
+
     console.log(r.getQueryString('id'));
     console.log(id);
-    
+
     res.end('api get');
 });
 
@@ -925,12 +925,12 @@ class User {
 module.exports = User;
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="log"><b>日志</b></h1>
             <p>
                 <code>CandyJs</code>提供了对日志处理的功能 目前只支持文件日志
             </p>
-            
+
             <h4><b>使用日志</b></h4>
             <p>使用日志功能前 需要在入口文件注册</p>
 <p>
@@ -947,14 +947,14 @@ module.exports = User;
 }
 </code></pre>
 </p>
-            
+
             <p>
                 <code>targets</code>用于配置日志处理程序
                 现在只支持文件日志 所以上面配置了<code>file</code>字段 用于配置文件日志所需要的环境 其中配置了所用的日志类和日志路径
             </p>
             <p><code>flushInterval</code>表示日志写入硬盘的频率 这里指定每调用 10 次日志接口向硬盘同步一次</p>
             <p>用户手动调用 flush() 也会触发同步日志到硬盘的操作</p>
-            
+
             <h4><b>日志接口</b></h4>
             <ul>
                 <li><code>error(message)</code> 记录错误日志</li>
@@ -973,17 +973,17 @@ log.error('This is a error message');
 log.flush();  // 写入硬盘
 </code></pre>
 </p>
-            
+
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时只提供了文件日志功能 如果想实现诸如数据库日志等的功能必须自己进行日志扩展
                 <code>CandyJs</code>完善的代码设计使得进行日志扩展非常容易 只需要让扩展的日志类继承<code>candy/log/ITarget</code>并实现其中的<code>flush()</code>方法即可
             </blockquote>
-            
+
             <h1 class="page-header" id="cache"><b>缓存</b></h1>
             <p>
                 <code>CandyJs</code>提供了数据缓存处理的功能 目前只支持文件缓存
             </p>
-            
+
             <h4><b>使用缓存</b></h4>
             <p>使用缓存功能前 需要在入口文件注册</p>
 <p>
@@ -996,9 +996,9 @@ log.flush();  // 写入硬盘
 }
 </code></pre>
 </p>
-            
+
             <p><code>file</code>用于指定使用文件缓存</p>
-            
+
             <h4><b>缓存接口</b></h4>
             <ul>
                 <li><code>setSync(key, value, duration)</code> 同步写入缓存</li>
@@ -1027,12 +1027,12 @@ c.set('key2', 'value2', undefined, (err) => {
 });
 </code></pre>
 </p>
-            
+
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时只提供了文件缓存功能 如果想实现诸如数据库缓存等的功能必须自己进行缓存扩展
                 <code>CandyJs</code>完善的代码设计使得进行缓存扩展非常容易 只需要让扩展的缓存类继承<code>candy/cache/ITarget</code>并实现其中的方法即可
             </blockquote>
-            
+
         </div>
         <div class="col-md-3" style="background-color: #f5f5f5">
             <ul class="nav nav-pills nav-stacked">

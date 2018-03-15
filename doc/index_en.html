@@ -6,7 +6,7 @@
     <title>CandyJs js DOC</title>
     <meta name="keywords" content="CandyJs MVC Framework Restful API">
     <meta name="description" content="An object-oriented efficient node.js MVC and REST framework">
-    
+
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
     blockquote {font-size: 14px;}
@@ -39,9 +39,9 @@
 <h1>
 An object-oriented efficient MVC and REST framework
 </h1>
-            
+
             <h1 class="page-header">Getting started</h1>
-            
+
             <h4><b>Install the program</b></h4>
             <p>
                 You can install<code>CandyJs</code>two ways
@@ -50,12 +50,12 @@ An object-oriented efficient MVC and REST framework
                     <li>Download the source code for manual deployment</li>
                 </ol>
             </p>
-            
+
             <h4><b>Use<code>npm</code>install</b></h4>
             <p>
                 <pre><code>npm install candyjs</code></pre>
             </p>
-            
+
             <h4><b>Download the source code for manual deployment</b></h4>
             <p>
                 <pre>Through<a target="_blank" href="https://github.com/yulipu/candyjs"><b>GitHub</b></a>download source code and place it to the node_modules directory</pre>
@@ -63,7 +63,7 @@ An object-oriented efficient MVC and REST framework
                     Note that the source code downloaded by github may need to remove the git repository information from it otherwise the npm installs other packages may be problematic
                 </blockquote>
             </p>
-            
+
             <h1 class="page-header" id="firstrun"><b>Run the program for the first time</b></h1>
             <p>This example outputs a Hello word program</p>
             <p>First need to create a basic application framework as follows</p>
@@ -73,7 +73,7 @@ An object-oriented efficient MVC and REST framework
             <p>
                 <pre><code>./node_modules/.bin/_candy PROJECT_NAME</code></pre>
             </p>
-            
+
             <p>This will create a simple application as follows</p>
 <p>
     <pre><code>
@@ -101,9 +101,9 @@ PROJECT_NAME
             <p><pre><code>node index.js</code></pre></p>
             <p>Access</p>
             <p><pre><code><a href="http://localhost:8090" target="_blank">http://localhost:8090</a></code></pre></p>
-            
+
             <h1 class="page-header" id="appstruct">Application structure</h1>
-            
+
             <h4><b>An application directory structure is as follows</b></h4>
 <p>
 <pre><code>
@@ -159,7 +159,7 @@ PROJECT_NAME
 |
 </pre></code>
 </p>
-            
+
             <h4><b>Entry script<code>index.js</code></b></h4>
             <p>
                 The entry script is the first loop in the application startup process.
@@ -179,17 +179,17 @@ var CandyJs = require('candyjs');
 
 new CandyJs({
     'id': 1,
-    
+
     'debug': true,
-    
+
     // application path
     'appPath': __dirname + '/app',
-    
+
     // register modules
     'modules': {
         'bbs': 'app/modules/bbs'
     },
-    
+
     // log setting
     'log': {
         'targets': {
@@ -198,25 +198,25 @@ new CandyJs({
             }
         }
     }
-    
+
 }).listen(8090, function(){
     console.log('listen on 8090');
 });
 </pre></code>
 </p>
-        
+
             <h4><b>Application</b></h4>
             <p>
                 Applications are objects that govern the overall structure and lifecycle of<code>CandyJs</code>application systems.
                 Usually a framework contains two applications the<code>Web Application</code>and the<code>Console Application</code>but<code>CandyJs</code>only has a<code>Web Application</code>
             </p>
-            
+
             <h4><b>Application properties</b></h4>
             <p>
                 Various parameters can be introduced in the entry file.
                 These parameters will eventually be assigned to the application object
             </p>
-            
+
             <h6><b>Required properties</b></h6>
             <ul>
                 <li>
@@ -226,7 +226,7 @@ new CandyJs({
                     <p><code>candy/web/Application.appPath</code>This property used to specified application directory</p>
                 </li>
             </ul>
-            
+
             <h6><b>Important attributes</b></h6>
             <ul>
                 <li>
@@ -258,13 +258,13 @@ new CandyJs({
                     <p><code>candy/web/Application.debug</code>Whether debugging is on</p>
                 </li>
             </ul>
-            
+
             <h4><b>Custom properties</b></h4>
             <p>Other parameters passed in the entry file are passed to the application as a custom parameter</p>
-            
+
             <h1 class="page-header" id="controller"><b>Application controller</b></h1>
             <p>The controller is part of the<code>MVC</code>schema that inherits the object of<code>candy/core/Controller</code>class responsible for handling the request and generating the response</p>
-        
+
             <h4><b>Action</b></h4>
             <p>
                 The controller consists of<code>actions</code>that is the most basic unit for executing the end user's request.
@@ -288,7 +288,7 @@ class IndexController extends Controller {
 module.exports = IndexController;
 </pre></code>
 </p>
-        
+
             <h4><b>Action aspect</b></h4>
             <p>
                 If the controller inherits from<code>candy/web/Controller</code>
@@ -325,34 +325,34 @@ module.exports = IndexController;
                 Note that there may be asynchronous operations in the project code.
                 <code>afterActionCall()</code>does not guarantee execution after run() execution is complete
             </blockquote>
-        
+
             <h4><b>Routing and controller</b></h4>
             <p>Generally a route corresponds to a controller</p>
             <p><pre><code>[route_prefix]/[controllerId]</code></pre></p>
             <p>If the controller belongs to the module then the routing format is as follows</p>
             <p><pre><code>[moduleId]/[controllerId]</code></pre></p>
-            
+
             <p>Controller search order<code>module controller --> common controller</code></p>
-        
+
             <h1 class="page-header" id="model"><b>Model</b></h1>
             <p>The model is part of the<code>MVC</code>pattern that represents the object of the business data</p>
             <blockquote class="bg-info">
                 Temporarily<code>CandyJs</code>does not provide a class to read the database
             </blockquote>
-            
+
             <h1 class="page-header" id="view"><b>View</b></h1>
             <p>The view is part of the<code>MVC</code>pattern that is used to present the page to the end user</p>
             <blockquote class="bg-info">
                 The view class typically combines the data provided by the model layer with the static page to generate a final page display to the user.
                 <code>CandyJs</code>temporarily provides only a limited API at the controller level
             </blockquote>
-            
+
             <h4><b>Template engine</b></h4>
             <blockquote class="bg-info">
                  <code>CandyJs</code>does not implement a template engine.
                  User needs to use the existing template engine to implement his own business
             </blockquote>
-            
+
             <h4><b>Controller level view API</b></h4>
             <p>
                 If the user's controller inherits from the<code>candy/web/Controller</code>
@@ -372,19 +372,19 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     run(req, res) {
         this.getView().getTemplate('index', (err, str) => {
             res.end(str);
         });
     }
-    
+
 }
 
 module.exports = IndexController;
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="module"><b>Module</b></h1>
             <p>
                 Module is independent software unit.
@@ -393,7 +393,7 @@ module.exports = IndexController;
             <blockquote class="bg-info">
                 Note that unlike the common project directory, the controllers and views in the module do not have a subdirectory
             </blockquote>
-            
+
             <h4><b>Create a module</b></h4>
             <p>In the<code>modules</code>directory create a separate directory eg. bbs</p>
 <p>
@@ -413,7 +413,7 @@ modules
     |   |-- other directory
 </code></pre>
 </p>
-            
+
             <h4><b>Register the module</b></h4>
             <p>The module created can not be recognized by the system, we need to manually register</p>
 <p>
@@ -422,36 +422,36 @@ var CandyJs = require('candyjs');
 
 new CandyJs({
     ...
-    
+
     // register module bbs
     'modules': {
         'bbs': 'app/modules/bbs'
     },
-    
+
     ...
-    
+
 }).listen(8090, function(){
     console.log('listen on 8090');
 });
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="component"><b>Component & Behavior</b></h1>
-            
+
             <h4><b>Component</b></h4>
             <p>Component is the base class of<code>Property Behavior and Event</code></p>
             <p>Components are instances of<code>candy/core/Controller</code>, or an extended class</p>
             <p>Behavior classes are typically used in conjunction with component classes</p>
-            
+
             <h4><b>Behavior</b></h4>
             <p>Behavior is instances of<code>candy/core/Behavior</code>, or an extended class</p>
             <p>A behavior class can be used to enhance its functionality without changing the original component code</p>
             <p>When a behavior is attached to a component, it will inject its methods and properties into the component and then access them as if they were to access the component's own methods and properties</p>
             <p>The behavior class also can listen to the component's events and respond</p>
-            
+
             <h4><b>Properties</b></h4>
             <p>Membership variables for the javascript class are also known as properties</p>
-            
+
             <h4><b>Event</b></h4>
             <p><code>CandyJs</code>implements an observer pattern</p>
 <p>
@@ -462,29 +462,29 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     constructor(context) {
         super(context);
-        
+
         this.on('myevent', function() {
             console.log('myevent fired');
         });
     }
-    
+
     run(req, res) {
         this.trigger('myevent');
-        
+
         res.end('hello');
     }
-    
+
 }
 
 module.exports = IndexController;
 </code></pre>
 </p>
-            
+
             <h4><b>Use behavior</b></h4>
-            
+
             <h6><b>Define behavior</b></h6>
             <p>Create a class by inheriting<code>candy/core/Behavior</code>or its subclasses</p>
 <p>
@@ -497,11 +497,11 @@ var Behavior = CandyJs.Candy.include('candy/core/Behavior');
 class MyBehavior extends Behavior {
     constructor() {
         super();
-        
+
         this.props1 = 1;
         this.props2 = 2;
     }
-    
+
     myFun() {
         // todo
     }
@@ -510,12 +510,12 @@ class MyBehavior extends Behavior {
 module.exports = MyBehavior;
 </code></pre>
 </p>
-            
+
             <p>The above code defines the behavior class<code>MyBehavior</code>and provides two properties<code>prop1 prop2</code>and a method for the component to attach the behavior<code>myFun()</code></p>
-            
+
             <h6><b>Attach behavior to component</b></h6>
             <p>You can attach a behavior to a component either statically or dynamically</p>
-            
+
             <p>To attach a behavior statically, override the<code>behaviors()</code>method of the component class to which the behavior is being attached</p>
             <p>The<code>behaviors()</code>method should return a list of behavior configurations</p>
 <p>
@@ -526,19 +526,19 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     // override
     behaviors() {
-    
+
         return {
             myBehavior: 'app/controllers/index/MyBehavior'
         };
     }
-    
+
     run(req, res) {
         res.end('hello');
     }
-    
+
 }
 
 module.exports = IndexController;
@@ -554,23 +554,23 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     constructor(context) {
         super(context);
-        
+
         this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
     }
-    
+
     run(req, res) {
         res.end('hello');
     }
-    
+
 }
 
 module.exports = IndexController;
 </code></pre>
 </p>
-            
+
             <h6><b>Using behaviors</b></h6>
             <p>Once a behavior is attached to a component, its usage is straightforward</p>
             <blockquote class="bg-info">
@@ -585,31 +585,31 @@ var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
-    
+
     constructor(context) {
         super(context);
-        
+
         this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
     }
-    
+
     run(req, res) {
         // manually call
         this.inject();
-        
+
         // using behaviors
         this.myFun();
         console.log(this.props1);
         console.log(this.props2);
-        
+
         res.end('hello');
     }
-    
+
 }
 
 module.exports = IndexController;
 </code></pre>
 </p>
-            
+
             <h6><b>Handling events</b></h6>
             <p>The behavior class can handle events that the component triggers only to override the event class's<code>events()</code>method</p>
 <p>
@@ -635,13 +635,13 @@ class MyBehavior extends Behavior {
 module.exports = MyBehavior;
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="midware"><b>Middleware</b></h1>
             <p>The middleware is the first part of the request to process the request and do the filtering and call the next middleware</p>
             <blockquote class="bg-info">
                 <code>CandyJs</code>temporarily only provides a middleware for handling static resources
             </blockquote>
-            
+
             <h1 class="page-header" id="static"><b>Static resource</b></h1>
             <p>
                 <code>CandyJs</code>defaults to non-processing of static resources that require the use of middleware
@@ -658,18 +658,18 @@ Hook.getInstance().addHook(new R(__dirname + '/public').serve());
 new CandyJs({
 
     ...
-    
+
 }).listen(8090, function(){
     console.log('listen on 8090');
 });
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="url"><b>URI & URL</b></h1>
             <p>
                 <code>candy/web/URI and candy/web/URL</code>classes provide methods for uri and url operations
             </p>
-            
+
             <h4><b>candy/web/URI</b></h4>
             <ul>
                 <li><code>parseUrl()</code>Used for parse url</li>
@@ -696,7 +696,7 @@ var uri = new URI();
 uri.parseUrl('http://xxx.com:8080/abc?q=1#anchor');
 </code></pre>
 </p>
-            
+
             <h4><b>candy/web/URL</b></h4>
             <ul>
                 <li><code>getReferer()</code>Used to get the referer url</li>
@@ -717,12 +717,12 @@ url.to('index/index');
 url.to('index/index', {id: 1, '#': 'anchor'})
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="reqres"><b>Request and Response</b></h1>
             <p>
                 <code>CandyJs</code>provides classes<code>candy/web/Request</code>and<code>candy/web/Response</code>that handle requests and responses
             </p>
-            
+
             <h4><b>HTTP Request</b></h4>
             <p>Used to handle http requests</p>
             <p>
@@ -749,7 +749,7 @@ var id = request.getQueryString('id');
 ...
 </code></pre>
 </p>
-            
+
             <h4><b>HTTP Response</b></h4>
             <p>Outputs a response message to the client</p>
             <p>
@@ -763,7 +763,7 @@ var id = request.getQueryString('id');
                 <li><code>send([content])</code>Send an HTTP response to the client</li>
                 <li><code>redirect(url[, statusCode = 302])</code>Page redirection</li>
             </ul>
-            
+
             <h6><b>Use the Response to output data</b></h6>
 <p>
 <pre><code>
@@ -773,7 +773,7 @@ response.setContent('some data from server');
 response.send();
 </code></pre>
 </p>
-            
+
             <h6><b>Use the Response to redirection</b></h6>
 <p>
 <pre><code>
@@ -782,10 +782,10 @@ var response = new Response(res);
 response.redirect('http://foo.com');
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="helper"><b>Assistant class</b></h1>
             <p>The assistant class encapsulates some common operations</p>
-            
+
             <h4><b>File Assistant class<code>FileHelper</code></b></h4>
             <ul>
                 <li><code>getDirname(dir)</code></li>
@@ -793,10 +793,10 @@ response.redirect('http://foo.com');
                 <li><code>createDirectory(dir[, mode = 0o777[, callback = null]])</code></li>
                 <li><code>createDirectorySync(dir[, mode = 0o777])</code></li>
             </ul>
-            
+
             <h4><b>String helper class<code>StringHelper</code></b></h4>
             <ul>
-                <li><code>indexOfN(str, find, n)</code>Find the position where a string appears at the Nth occurrence in another string</li>
+                <li><code>nIndexOf(str, find, n)</code>Find the position where a string appears at the Nth occurrence in another string</li>
                 <li><code>trimChar(str, character)</code></li>
                 <li><code>lTrimChar(str, character)</code></li>
                 <li><code>rTrimChar(str, character)</code></li>
@@ -804,12 +804,12 @@ response.redirect('http://foo.com');
                 <li><code>htmlSpecialChars(str[, flag = 0[, doubleEncode = true]])</code></li>
                 <li><code>filterTags(str[, allowed = ''])</code>Filter html tags</li>
             </ul>
-            
+
             <h4><b>Time Assistant class<code>TimeHelper</code></b></h4>
             <ul>
                 <li><code>format(formats[, timestamp = Date.now()])</code></li>
             </ul>
-            
+
 <p>
 <pre><code>
 var Response = CandyJs.Candy.include('candy/helpers/FileHelper');
@@ -825,16 +825,16 @@ var str = StringHelper.htmlSpecialChars('&lt;script&gt;');
 // return abcxyz
 var strTag = StringHelper.filterTags('&lt;a&gt;abc&lt;/a&gt;xyz');
 
-// return xxxx-xx-xx xx:xx:xx 
+// return xxxx-xx-xx xx:xx:xx
 var time = TimeHelper.format('y-m-d h:i:s');
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="alias"><b>Alias ​​system</b></h1>
             <p><code>CandyJs</code>provides a alias system</p>
             <p>An alias is a string beginning with an<code>@</code>sign. Each alias corresponds to a real physical path</p>
             <p>In<code>CandyJs</code>either create class or load class used alias</p>
-            
+
             <h4><b>System built-in alias</b></h4>
             <ul>
                 <li><code>@candy</code>Points to the CandyJs directory</li>
@@ -842,7 +842,7 @@ var time = TimeHelper.format('y-m-d h:i:s');
                 <li><code>@runtime</code>Cache directory</li>
                 <li><code>@root</code>Website root directory</li>
             </ul>
-            
+
             <h4><b>Custom alias</b></h4>
             <p>Users can customize aliases</p>
 <p>
@@ -854,7 +854,7 @@ CandyJs.Candy.setPathAlias('@lib', '/home/www/library');
 var obj = CandyJs.Candy.createObject('lib/MyClass');
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="restful"><b>RESTful</b></h1>
             <blockquote class="bg-danger">Temporary RESTful mode and MVC mode can not coexist</blockquote>
             <p>The methods available in RESTful mode is as follows</p>
@@ -874,7 +874,7 @@ var app = new CandyJs({
     'id': 1,
     'debug': true,
     'appPath': __dirname + '/app',
-    
+
     'useRestful': true
 });
 app.listen(8090, function(){
@@ -886,10 +886,10 @@ var Restful = CandyJs.Candy.include('candy/web/Restful');
 Restful.get('/abc/{id:\\d+}', function(req, res, id){
     var Request = CandyJs.Candy.include('candy/web/Request');
     var r = new Request(req);
-    
+
     console.log(r.getQueryString('id'));
     console.log(id);
-    
+
     res.end('api get');
 });
 
@@ -910,12 +910,12 @@ class User {
 module.exports = User;
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="log"><b>Log</b></h1>
             <p>
                 <code>CandyJs</code>provides the ability to log processing but currently only supports file logs
             </p>
-            
+
             <h4><b>Use the log</b></h4>
             <p>Before using the log, you need to register in entry file</p>
 <p>
@@ -932,7 +932,7 @@ module.exports = User;
 }
 </code></pre>
 </p>
-            
+
             <h4><b>Log interface</b></h4>
             <ul>
                 <li><code>error(message)</code></li>
@@ -951,12 +951,12 @@ log.error('This is a error message');
 log.flush();  // flush data to disk
 </code></pre>
 </p>
-            
+
             <h1 class="page-header" id="cache"><b>Cache</b></h1>
             <p>
                 <code>CandyJs</code> provides the ability to cache data processing but currently only supports file caching
             </p>
-            
+
             <h4><b>Use caching</b></h4>
             <p>Before using the cache, you need to register in entry file</p>
 <p>
@@ -969,7 +969,7 @@ log.flush();  // flush data to disk
 }
 </code></pre>
 </p>
-            
+
             <h4><b>Cache interface</b></h4>
             <ul>
                 <li><code>setSync(key, value, duration)</code></li>
@@ -998,7 +998,7 @@ c.set('key2', 'value2', undefined, (err) => {
 });
 </code></pre>
 </p>
-            
+
         </div>
         <div class="col-md-3" style="background-color: #f5f5f5">
             <ul class="nav nav-pills nav-stacked">

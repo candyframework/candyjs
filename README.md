@@ -6,6 +6,10 @@
 
 ###### 变更
 
++ 2018-03-15
+
+    * npm 包 1.1.5 StringHelper.indexOfN() 方法名字修改为 StringHelper.nIndexOf()
+
 + 2018-03-02
 
     * npm 包 1.1.4 系统所用的事件变量从实例变量修改为静态变量
