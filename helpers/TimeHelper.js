@@ -52,8 +52,8 @@ class TimeHelper {
      *
      * @return {String}
      */
-    static format(formats, timestamp) {
-        var d = undefined === timestamp ? new Date() : new Date(timestamp);
+    static format(formats, timestamp = Date.now()) {
+        var d = new Date(timestamp);
         var funs = {
             y: () => d.getFullYear()
             ,m: () => TimeHelper.stringLPad(String(d.getMonth() + 1), '0', 2)
