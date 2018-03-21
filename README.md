@@ -6,6 +6,10 @@
 
 ###### 变更
 
++ 2018-03-21
+
+    * npm 包 1.2.0 修改 rest 模式不能正常运行 bug
+
 + 2018-03-15
 
     * npm 包 1.1.5 StringHelper.indexOfN() 方法名字修改为 StringHelper.nIndexOf()
