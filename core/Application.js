@@ -5,13 +5,13 @@
 'use strict';
 
 var Candy = require('../Candy');
-var Core = require('./Core');
+var Fate = require('./Fate');
 var InvalidConfigException = require('./InvalidConfigException');
 
 /**
  * 应用基类
  */
-class Application extends Core {
+class Application extends Fate {
 
     /**
      * constructor

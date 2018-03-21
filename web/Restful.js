@@ -26,7 +26,7 @@ class Restful extends CoreRouter {
         // {paramValues, handler}
         var ret = true === Candy.app.combineRoutes ?
             Restful.resolveRoutesCombine(route, request.method) :
-            Restful.resolveRoutesOneByOne(route, request.method);
+            Restful.resolveRoutesOneByOne(request, route, request.method);
 
         if(null === ret) {
             throw new InvalidCallException('The REST route: ' + route + ' not found');
@@ -112,11 +112,12 @@ class Restful extends CoreRouter {
     /**
      * 依次解析路由
      *
+     * @param {Object} request 请求对象
      * @param {String} route 路由
      * @param {String} httpMethod 请求方法
      * @return {JSON | null}
      */
-    static resolveRoutesOneByOne(route, httpMethod) {
+    static resolveRoutesOneByOne(request, route, httpMethod) {
         // {pattern, handler, paramKeys, paramValues}
         var matchedHandler = null;
 
@@ -224,7 +225,7 @@ class Restful extends CoreRouter {
     static getMatchedSegmentBySubPatternPosition(combinedRoute, subPatternPosition) {
         // '(' 在 pattern 中第 subPatternPosition 次出现的位置
         // 用于确定当前路由匹配的是第几部分
-        var segment = StringHelper.indexOfN(combinedRoute.pattern, '(', subPatternPosition);
+        var segment = StringHelper.nIndexOf(combinedRoute.pattern, '(', subPatternPosition);
         var tmpLine = combinedRoute.pattern.substring(0, segment).match(/\|/g);
         // 没有匹配到竖线 说明匹配的是第一部分
         segment = null === tmpLine ? 0 : tmpLine.length;

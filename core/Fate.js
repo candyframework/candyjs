@@ -8,9 +8,9 @@ var Candy = require('../Candy');
 var StringHelper = require('../helpers/StringHelper');
 
 /**
- * MVC 基类
+ * 核心
  */
-class Core {
+class Fate {
 
     /**
      * constructor
@@ -177,4 +177,4 @@ class Core {
 
 }
 
-module.exports = Core;
+module.exports = Fate;
