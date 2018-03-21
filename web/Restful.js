@@ -24,9 +24,9 @@ class Restful extends CoreRouter {
         }
 
         // {paramValues, handler}
-        var ret = true === Candy.app.combineRoutes ?
-            Restful.resolveRoutesCombine(route, request.method) :
-            Restful.resolveRoutesOneByOne(request, route, request.method);
+        var ret = true === Candy.app.combineRoutes
+            ? Restful.resolveRoutesCombine(route, request.method)
+            : Restful.resolveRoutesOneByOne(request, route, request.method);
 
         if(null === ret) {
             throw new InvalidCallException('The REST route: ' + route + ' not found');
@@ -144,7 +144,8 @@ class Restful extends CoreRouter {
                     matchedHandler.paramValues = new Array(matchedHandler.paramKeys.length);
 
                     for(let j=0,l=matchedHandler.paramKeys.length; j<l; j++) {
-                        requestInstance.setQueryString(matchedHandler.paramKeys[j],
+                        requestInstance.setQueryString(
+                            matchedHandler.paramKeys[j],
                             matches[j+1]);
 
                         matchedHandler.paramValues[j] = matches[j+1];
@@ -243,6 +244,7 @@ class Restful extends CoreRouter {
     static addRoute(httpMethod, pattern, handler) {
         if('string' === typeof httpMethod) {
             Restful.methods[httpMethod].push( {pattern: pattern, handler: handler} );
+            
             return;
         }
 
