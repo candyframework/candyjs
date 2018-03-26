@@ -926,6 +926,22 @@ module.exports = User;
 </code></pre>
 </p>
 
+            <h4><b>RESTful 中的路由问题</b></h4>
+            <p>
+                RESTful 中的路由是用正则表达式来实现的 它可以实现非常灵活的路由配置
+                但是相对于 MVC 中的路由性能要差 ( mvc 模式中的路由不是用正则实现的 )
+            </p>
+            <p>
+                想要提高正则表达式的性能 需要对路由进行合并或分组合并
+                <code>CandyJs</code>暂时只提供了一种简单的合并路由的方式来提高系统运行效率
+                可以在初始化应用的时候传入一个<code>combineRoutes: true</code>配置即可
+                但是在大量 RESTful 路由存在的情况下性能不是很好
+            </p>
+            <p>
+                关于优化正则路由的思路可以参看这里
+                <a target="_blank" href="http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html">http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html</a>
+            </p>
+
             <h1 class="page-header" id="log"><b>日志</b></h1>
             <p>
                 <code>CandyJs</code>提供了对日志处理的功能 目前只支持文件日志

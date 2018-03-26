@@ -911,6 +911,22 @@ module.exports = User;
 </code></pre>
 </p>
 
+            <h4><b>Routing issues in RESTful patterns</b></h4>
+            <p>
+                The routes in RESTful are implemented using regular expressions. It can achieve very flexible routing configuration
+                However, the routing performance is poor relative to MVC. ( Routing in the MVC pattern is not implemented in regular expressions. )
+            </p>
+            <p>
+                To improve the performance of a regular expression, need to merge or group merge the routes
+                <code>CandyJs</code>temporarily provides only a simple way to merge routes to improve system operating efficiency
+                You can pass in a parameter when initializing the application<code>combineRoutes: true</code>
+                However, the performance is not good in the presence of a large number of routes
+            </p>
+            <p>
+                The idea of optimizing regular routing can be found here
+                <a target="_blank" href="http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html">http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html</a>
+            </p>
+
             <h1 class="page-header" id="log"><b>Log</b></h1>
             <p>
                 <code>CandyJs</code>provides the ability to log processing but currently only supports file logs
