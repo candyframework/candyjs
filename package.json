@@ -1,6 +1,6 @@
 {
   "name": "candyjs",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "An Object-Oriented node mvc and REST framework",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,5 @@
       "_candy": "./bin/_candy"
   },
   "license": "MIT",
-  "homepage": "https://github.com/candy-js"
+  "homepage": "https://github.com/douyu-beijing/candyjs"
 }

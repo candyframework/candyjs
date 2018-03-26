@@ -44,7 +44,7 @@
 
 ###### 源码 source code
 
-+ https://github.com/candy-js
++ https://github.com/douyu-beijing/candyjs
 
 ###### 系统内置别名
 
