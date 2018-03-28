@@ -29,6 +29,7 @@ class Router {
         var matches = pattern.match(/\(\w+:/g);
         // replace params
         if(null !== matches) {
+            // https://v8project.blogspot.com/2017/09/elements-kinds-in-v8.html
             // ret = new Array(matches.length);
             ret = [];
 
