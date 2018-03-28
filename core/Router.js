@@ -29,13 +29,15 @@ class Router {
         var matches = pattern.match(/\(\w+:/g);
         // replace params
         if(null !== matches) {
-            ret = new Array(matches.length);
+            // ret = new Array(matches.length);
+            ret = [];
 
             for(let i=0,len=matches.length; i<len; i++) {
                 pattern = pattern.replace(matches[i], '(');
                 pattern = pattern.replace('()', '(\\w+)');
 
-                ret[i] = matches[i].substring(1, matches[i].indexOf(':'));
+                // ret[i] = matches[i].substring(1, matches[i].indexOf(':'));
+                ret.push( matches[i].substring(1, matches[i].indexOf(':')) );
             }
         }
 
