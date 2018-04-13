@@ -38,7 +38,7 @@ describe('MVC', function() {
             .end(function(err, res){
                 if (err) return done(err);
                 
-                assert.equal(res.text, 'module ok');
+                assert.equal(res.text, 'module\n');
                 
                 done();
             });
