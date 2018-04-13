@@ -25,7 +25,7 @@ describe('MVC', function() {
             .end(function(err, res){
                 if (err) return done(err);
                 
-                assert.equal(res.text, 'mvc ok');
+                assert.equal(res.text, 'mvc\n');
                 
                 done();
             });

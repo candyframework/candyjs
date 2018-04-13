@@ -27,23 +27,19 @@ class View extends CoreView {
     getTemplateFilePath(view) {
         var app = Candy.app;
         var context = this.context;
-        var path = '';
 
         // 模块无子目录 普通控制器有子目录
         if('' !== context.moduleId) {
-            path = app.modules[context.moduleId]
+            return app.modules[context.moduleId]
                 + '/views/'
-                + view + View.defaultViewExtension;
-
-        } else {
-            path = app.getAppPath()
-                + '/views/'
-                + ('' === context.subRoute ? '.' : context.subRoute)
-                + '/'
                 + view + View.defaultViewExtension;
         }
-
-        return path;
+        
+        return app.getAppPath()
+            + '/views/'
+            + context.subRoute
+            + '/'
+            + view + View.defaultViewExtension;
     }
 
     /**

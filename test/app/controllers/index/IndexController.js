@@ -1,12 +1,14 @@
 'use strict';
 
-var CandyJs = require('CandyJs');
+var CandyJs = require('candyjs');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
     
     run(req, res) {
-        res.end('mvc ok');
+        this.getView().getTemplate('index', (err, str) => {
+            res.end(str);
+        });
     }
     
 }
