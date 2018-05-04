@@ -78,7 +78,7 @@ class Component {
      *
      * 子类组件可以重写该方法去指定要附加的行为类
      *
-     * @return {JSON}
+     * @return {Object}
      *
      * {
      *     'behaviorName': {
@@ -109,7 +109,7 @@ class Component {
      * 向组件附加一个行为
      *
      * @param {String} name 行为的名称
-     * @param {String | Object | JSON} behavior
+     * @param {String | Object} behavior
      */
     attachBehavior(name, behavior) {
         this.attachBehaviorInternal(name, behavior);
@@ -138,7 +138,7 @@ class Component {
      * 保存行为类到组件
      *
      * @param {String} name 行为的名称
-     * @param {String | Object | JSON} behavior
+     * @param {String | Object} behavior
      */
     attachBehaviorInternal(name, behavior) {
         if(!(behavior instanceof Behavior)) {

@@ -228,7 +228,7 @@ class Response extends CoreResponse {
 }
 
 /**
- * @var JSON list of HTTP status codes and the corresponding texts
+ * @var Object list of HTTP status codes and the corresponding texts
  */
 Response.httpStatuses = {
     // Informational

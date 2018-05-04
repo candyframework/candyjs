@@ -39,7 +39,7 @@ class ServiceLocator {
         this.services = new Map();
 
         /**
-         * @property {Map<String, JSON>} definitions
+         * @property {Map<String, Object>} definitions
          */
         this.definitions = new Map();
     }

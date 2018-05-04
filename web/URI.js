@@ -175,7 +175,7 @@ class URI {
      * 解析 url
      *
      * @param {String} url
-     * @return {JSON}
+     * @return {Object}
      */
     parseUrl(url) {
         var ret = {};

@@ -18,7 +18,7 @@ class Router {
      * pattern: /abc/{\w+} -> /abc/(\w+) -> abc\/(\w+)
      * pattern: /abc/def -> abc\/def
      *
-     * @return {JSON}
+     * @return {Object}
      */
     static parse(pattern) {
         var ret = null;

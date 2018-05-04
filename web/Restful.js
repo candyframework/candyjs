@@ -62,7 +62,7 @@ class Restful extends CoreRouter {
      *
      * @param {String} route 路由
      * @param {String} httpMethod 请求方法
-     * @return {JSON | null}
+     * @return {Object | null}
      */
     static resolveRoutesCombine(route, httpMethod) {
         var ret = null;
@@ -116,7 +116,7 @@ class Restful extends CoreRouter {
      * @param {Object} request 请求对象
      * @param {String} route 路由
      * @param {String} httpMethod 请求方法
-     * @return {JSON | null}
+     * @return {Object | null}
      */
     static resolveRoutesOneByOne(request, route, httpMethod) {
         // {pattern, handler, paramKeys, paramValues}
@@ -185,7 +185,7 @@ class Restful extends CoreRouter {
      *
      * { pattern: any ... }
      *
-     * @return {JSON}
+     * @return {Object}
      *
      * eg.
      *

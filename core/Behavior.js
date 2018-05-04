@@ -25,7 +25,7 @@ class Behavior {
     /**
      * 声明要监听的组件的事件和对应事件的处理程序
      *
-     * @return {JSON}
+     * @return {Object}
      *
      * {eventName: handler, ...}
      *
