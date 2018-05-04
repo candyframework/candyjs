@@ -4,13 +4,13 @@
  */
 'use strict';
 
-var http = require('http');
+const http = require('http');
 
-var Candy = require('./Candy');
-var Hook = require('./core/Hook');
-var WebRestful = require('./web/Restful');
-var WebApp = require('./web/Application');
-var InvalidConfigException = require('./core/InvalidConfigException');
+const Candy = require('./Candy');
+const Hook = require('./core/Hook');
+const WebRestful = require('./web/Restful');
+const WebApp = require('./web/Application');
+const InvalidConfigException = require('./core/InvalidConfigException');
 
 /**
  * 入口
@@ -81,10 +81,12 @@ class CandyJs {
      *
      * If you want to create HTTPS server you can do so as shown here
      *
+     * ```
      * var https = require('https');
      * var CandyJs = require('candyjs');
      * var app = new CandyJs({ ... });
      * https.createServer({ ... }, app.handler.bind(app)).listen(443);
+     * ```
      *
      */
     listen(port, callback) {

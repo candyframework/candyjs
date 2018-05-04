@@ -4,10 +4,10 @@
  */
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var Candy = require('../Candy');
-var CoreView = require('../core/View');
+const Candy = require('../Candy');
+const CoreView = require('../core/View');
 
 /**
  * 视图
@@ -34,7 +34,7 @@ class View extends CoreView {
                 + '/views/'
                 + view + View.defaultViewExtension;
         }
-        
+
         return app.getAppPath()
             + '/views/'
             + context.subRoute

@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var Exception = require('./Exception');
+const Exception = require('./Exception');
 
 /**
  * 缓存异常

@@ -4,9 +4,9 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var InvalidConfigException = require('../core/InvalidConfigException');
-var ITarget = require('./ITarget');
+const Candy = require('../Candy');
+const InvalidConfigException = require('../core/InvalidConfigException');
+const ITarget = require('./ITarget');
 
 /**
  * 日志

@@ -4,11 +4,11 @@
  */
 'use strict';
 
-var url = require('url');
-var querystring = require('querystring');
+const url = require('url');
+const querystring = require('querystring');
 
-var Cookie = require('./Cookie');
-var CoreRequest = require('../core/Request');
+const Cookie = require('./Cookie');
+const CoreRequest = require('../core/Request');
 
 /**
  * 请求

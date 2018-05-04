@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var Queue = require('./Queue');
+const Queue = require('./Queue');
 
 /**
  * 链表

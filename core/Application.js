@@ -4,9 +4,9 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var Fate = require('./Fate');
-var InvalidConfigException = require('./InvalidConfigException');
+const Candy = require('../Candy');
+const Fate = require('./Fate');
+const InvalidConfigException = require('./InvalidConfigException');
 
 /**
  * 应用基类

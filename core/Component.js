@@ -4,8 +4,8 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var Behavior = require('./Behavior');
+const Candy = require('../Candy');
+const Behavior = require('./Behavior');
 
 /**
  * 组件是实现 属性 (property) 行为 (behavior) 事件 (event) 的基类

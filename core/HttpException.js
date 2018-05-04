@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var Exception = require('./Exception');
+const Exception = require('./Exception');
 
 /**
  * HTTP 异常

@@ -4,8 +4,8 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var StringHelper = require('../helpers/StringHelper');
+const Candy = require('../Candy');
+const StringHelper = require('../helpers/StringHelper');
 
 /**
  * 核心

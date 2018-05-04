@@ -4,13 +4,13 @@
  */
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var Candy = require('../../Candy');
-var Logger = require('../Logger');
-var ITarget = require('../ITarget');
-var FileHelper = require('../../helpers/FileHelper');
-var TimeHelper = require('../../helpers/TimeHelper');
+const Candy = require('../../Candy');
+const Logger = require('../Logger');
+const ITarget = require('../ITarget');
+const FileHelper = require('../../helpers/FileHelper');
+const TimeHelper = require('../../helpers/TimeHelper');
 
 /**
  * 文件日志

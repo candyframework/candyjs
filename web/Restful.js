@@ -4,11 +4,11 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var Request = require('./Request');
-var CoreRouter = require('../core/Router');
-var StringHelper = require('../helpers/StringHelper');
-var InvalidCallException = require('../core/InvalidCallException');
+const Candy = require('../Candy');
+const Request = require('./Request');
+const CoreRouter = require('../core/Router');
+const StringHelper = require('../helpers/StringHelper');
+const InvalidCallException = require('../core/InvalidCallException');
 
 class Restful extends CoreRouter {
 

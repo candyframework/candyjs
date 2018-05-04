@@ -4,11 +4,11 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var CoreApp = require('../core/Application');
-var CoreController = require('../core/Controller');
-var Request = require('./Request');
-var InvalidRouteException = require('../core/InvalidRouteException');
+const Candy = require('../Candy');
+const CoreApp = require('../core/Application');
+const CoreController = require('../core/Controller');
+const Request = require('./Request');
+const InvalidRouteException = require('../core/InvalidRouteException');
 
 /**
  * web 应用

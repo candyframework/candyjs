@@ -4,10 +4,10 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var CoreResponse = require('../core/Response');
-var Cookie = require('./Cookie');
-var HttpException = require('../core/HttpException');
+const Candy = require('../Candy');
+const CoreResponse = require('../core/Response');
+const Cookie = require('./Cookie');
+const HttpException = require('../core/HttpException');
 
 /**
  * HTTP response

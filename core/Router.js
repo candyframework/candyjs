@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var StringHelper = require('../helpers/StringHelper');
+const StringHelper = require('../helpers/StringHelper');
 
 class Router {
 

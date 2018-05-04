@@ -4,12 +4,12 @@
  */
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var Candy = require('../../Candy');
-var ITarget = require('../ITarget');
-var FileHelper = require('../../helpers/FileHelper');
-var CacheException = require('../../core/CacheException');
+const Candy = require('../../Candy');
+const ITarget = require('../ITarget');
+const FileHelper = require('../../helpers/FileHelper');
+const CacheException = require('../../core/CacheException');
 
 /**
  * 文件缓存

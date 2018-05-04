@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var Component = require('./Component');
+const Component = require('./Component');
 
 /**
  * 控制器基类

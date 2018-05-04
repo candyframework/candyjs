@@ -4,8 +4,8 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var CoreController = require('../core/Controller');
+const Candy = require('../Candy');
+const CoreController = require('../core/Controller');
 
 /**
  * 控制器

@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var Event = require('../core/Event');
+const Event = require('../core/Event');
 
 /**
  * 日志接口层 所有日志类都需要实现这个接口中定义的方法

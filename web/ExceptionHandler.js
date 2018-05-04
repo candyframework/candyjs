@@ -4,8 +4,8 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var CoreExceptionHandler = require('../core/ExceptionHandler');
+const Candy = require('../Candy');
+const CoreExceptionHandler = require('../core/ExceptionHandler');
 
 /**
  * web 异常错误处理

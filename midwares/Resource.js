@@ -4,9 +4,9 @@
  */
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var Request = require('../web/Request');
+const Request = require('../web/Request');
 
 /**
  * 静态资源处理
