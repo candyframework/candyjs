@@ -23,10 +23,10 @@ class Restful extends CoreRouter {
             throw new InvalidCallException('The route: '+ route +' is invalid');
         }
 
-        // {paramValues, handler}
-        var ret = true === Candy.app.combineRoutes
-            ? Restful.resolveRoutesCombine(route, request.method)
-            : Restful.resolveRoutesOneByOne(request, route, request.method);
+        // {paramValues, handler} 默认合并路由
+        var ret = false === Candy.app.combineRoutes
+            ? Restful.resolveRoutesOneByOne(request, route, request.method)
+            : Restful.resolveRoutesCombine(route, request.method);
 
         if(null === ret) {
             throw new InvalidCallException('The REST route: ' + route + ' not found');
