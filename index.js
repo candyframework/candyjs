@@ -55,12 +55,14 @@ class CandyJs {
     // handler
     handler(req, res) {
         Hook.getInstance().trigger(req, res, () => {
-            if(true === this.config.useRestful) {
-                this.requestListenerRestful(req, res);
-                return;
-            }
-
             this.requestListenerWeb(req, res);
+        });
+    }
+    
+    // handler restful
+    handlerRest(req, res) {
+        Hook.getInstance().trigger(req, res, () => {
+            this.requestListenerRestful(req, res);
         });
     }
 
@@ -70,7 +72,9 @@ class CandyJs {
      * @return http server
      */
     getServer() {
-        return http.createServer(this.handler.bind(this));
+        return http.createServer(true === this.config.useRestful
+            ? this.handlerRest.bind(this)
+            : this.handler.bind(this));
     }
 
     /**

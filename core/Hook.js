@@ -74,7 +74,7 @@ class Hook {
 
     triggerHook(req, res, next) {
         next(req, res, () => {
-            var nextHandler = this.getHook();
+            let nextHandler = this.getHook();
 
             if(null !== nextHandler && 'function' === typeof nextHandler) {
                 this.triggerHook(req, res, nextHandler);

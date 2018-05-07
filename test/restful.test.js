@@ -10,7 +10,7 @@ var app = new CandyJs({
     'appPath': __dirname + '/app',
     'debug': true,
     'useRestful': true
-    ,'combineRoutes': false
+    ,'combineRoutes': true
 });
 var server = app.getServer();
 

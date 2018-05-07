@@ -25,7 +25,7 @@ describe('MVC', function() {
             .end(function(err, res){
                 if (err) return done(err);
                 
-                assert.equal(res.text, 'mvc\n');
+                assert.equal(res.text.trim(), 'mvc');
                 
                 done();
             });
@@ -38,7 +38,7 @@ describe('MVC', function() {
             .end(function(err, res){
                 if (err) return done(err);
                 
-                assert.equal(res.text, 'module\n');
+                assert.equal(res.text.trim(), 'module');
                 
                 done();
             });

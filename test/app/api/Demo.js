@@ -1,9 +1,6 @@
 'use strict';
 
-var CandyJs = require('CandyJs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
-
-class Demo extends Controller {
+class Demo {
     
     index(req, res) {
         res.end('restful class ok');
