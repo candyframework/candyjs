@@ -1,4 +1,4 @@
-# 一个面向对象的高效 node.js mvc and REST 框架
+# 一个面向对象的高效 node.js mvc and REST 框架。CandyJs 不是第三方框架的扩展，而是一个全新的框架。
 
 ###### Node 版本
 
