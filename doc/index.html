@@ -876,8 +876,12 @@ var obj = CandyJs.Candy.createObject('lib/MyClass');
 </p>
 
             <h1 class="page-header" id="restful"><b>RESTful</b></h1>
-            <blockquote class="bg-danger">暂时 RESTful 模式和 MVC 模式不能共存</blockquote>
-            <p>在 RESTful 模式中可用的请求方法如下</p>
+            <blockquote class="bg-danger">
+                由于设计不够优雅 npm 包从 2.0.0 开始重构了 REST 模式架构 此部分可能还会持续更新
+            </blockquote>
+            
+            <h4><b>npm 包 2.0.0 之前用法</b></h4>
+            <p>在 RESTful 模式中可用的请求方法如下<code>以下方法都是静态的</code></p>
             <ul>
                 <li><code>get(route, handler)</code></li>
                 <li><code>post(route, handler)</code></li>
@@ -932,20 +936,39 @@ module.exports = User;
 </code></pre>
 </p>
 
+            <h4><b>npm 包 2.0.0 之后用法</b></h4>
+            <p><code>以下方法都改为了实例方法</code></p>
+            <ul>
+                <li><code>get(route, handler)</code></li>
+                <li><code>post(route, handler)</code></li>
+                <li><code>put(route, handler)</code></li>
+                <li><code>delete(route, handler)</code></li>
+                <li><code>patch(route, handler)</code></li>
+                <li><code>head(route, handler)</code></li>
+                <li><code>options(route, handler)</code></li>
+            </ul>
+<p>
+<pre><code>
+var Rest = require('candyjs/Rest');
+
+var rest = new Rest({
+    appPath: __dirname + '/app'
+});
+
+rest.get('/abc/{id:\\d+}', function(req, res, id){
+    res.end(String(id));
+});
+
+rest.listen('8090', () => {
+    console.log('listen on 8090')
+});
+</code></pre>
+</p>
+
             <h4><b>RESTful 中的路由问题</b></h4>
             <p>
                 RESTful 中的路由是用正则表达式来实现的 它可以实现非常灵活的路由配置
                 但是相对于 MVC 中的路由性能要差 ( mvc 模式中的路由不是用正则实现的 )
-            </p>
-            <p>
-                想要提高正则表达式的性能 需要对路由进行合并或分组合并
-                <code>CandyJs</code>暂时只提供了一种简单的合并路由的方式来提高系统运行效率
-                可以在初始化应用的时候传入一个<code>combineRoutes: true</code>配置即可
-                但是在大量 RESTful 路由存在的情况下性能不是很好
-            </p>
-            <p>
-                关于优化正则路由的思路可以参看这里
-                <a target="_blank" href="http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html">http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html</a>
             </p>
 
             <h1 class="page-header" id="log"><b>日志</b></h1>

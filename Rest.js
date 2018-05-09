@@ -4,29 +4,94 @@
  */
 'use strict';
 
-const Candy = require('../Candy');
-const Request = require('./Request');
-const CoreRouter = require('../core/Router');
-const StringHelper = require('../helpers/StringHelper');
-const InvalidCallException = require('../core/InvalidCallException');
+const http = require('http');
 
-class Restful extends CoreRouter {
+const Candy = require('./Candy');
+const Hook = require('./core/Hook');
+const Router = require('./core/Router');
+const Request = require('./web/Request');
+const StringHelper = require('./helpers/StringHelper');
+const InvalidCallException = require('./core/InvalidCallException');
+
+class Rest {
+    
+    /**
+     * constructor
+     */
+    constructor(config) {
+        /**
+         * 请求方法
+         *
+         * each method has the follow structure
+         *
+         * [ {pattern: pattern, handler: handler} ... ]
+         *
+         */
+        this.methods = {
+            GET: [],
+            POST: [],
+            PUT: [],
+            DELETE: [],
+            PATCH: [],
+            HEAD: [],
+            OPTIONS: []
+        };
+        
+        this.server = null;
+        this.config = config;
+        
+        Candy.setPathAlias('@app', config.appPath);
+    }
+    
+    handlerException(response, exception) {
+        response.setHeader('Content-Type', 'text/plain');
+        response.writeHead(500);
+
+        response.end(true === this.config.debug
+            ? exception.message + '\n' + exception.stack
+            : 'The server encountered an internal error');
+    }
+    
+    // handler
+    handler(req, res) {
+        Hook.getInstance().trigger(req, res, () => {
+            try {
+                this.requestListener(req, res);
+                
+            } catch(e) {
+                this.handlerException(res, e);
+            }
+        });
+    }
+    
+    /**
+     * 获取 http server
+     *
+     * @return http server
+     */
+    getServer() {
+        return http.createServer(this.handler.bind(this));
+    }
+    
+    /**
+     * listen
+     *
+     * @param {Number} port
+     * @param {Function} callback
+     */
+    listen(port, callback) {
+        this.server = this.getServer();
+        this.server.listen(port, callback);
+    }
 
     /**
      * listen request
      */
-    static requestListener(request, response) {
+    requestListener(request, response) {
         var route = Request.parseUrl(request).pathname;
 
-        // 检测非法
-        if(!Restful.isValidRoute(route)) {
-            throw new InvalidCallException('The route: '+ route +' is invalid');
-        }
-
-        // {paramValues, handler} 默认合并路由
-        var ret = false === Candy.app.combineRoutes
-            ? Restful.resolveRoutesOneByOne(request, route, request.method)
-            : Restful.resolveRoutesCombine(route, request.method);
+        // {paramValues, handler} 合并路由
+        var ret = this.resolveRoutesCombine(route, request.method);
 
         if(null === ret) {
             throw new InvalidCallException('The REST route: ' + route + ' not found');
@@ -40,9 +105,9 @@ class Restful extends CoreRouter {
 
             return;
         }
-
+        
         // handler is string
-        var pos = ret.handler.indexOf(Restful.separator);
+        var pos = ret.handler.indexOf(Rest.separator);
         var obj = null;
         if(-1 === pos) {
             obj = Candy.createObject(ret.handler);
@@ -64,17 +129,17 @@ class Restful extends CoreRouter {
      * @param {String} httpMethod 请求方法
      * @return {Object | null}
      */
-    static resolveRoutesCombine(route, httpMethod) {
+    resolveRoutesCombine(route, httpMethod) {
         var ret = null;
 
         // [ {pattern, handler} ... ]
-        var handlers = Restful.methods[httpMethod];
+        var handlers = this.methods[httpMethod];
         var tmp = {};
         for(let i=0,len=handlers.length; i<len; i++) {
             tmp[handlers[i].pattern] = handlers[i].handler;
         }
         // {pattern, params, handler}
-        var combinedRoute = Restful.combineRoutes(tmp);
+        var combinedRoute = this.combineRoutes(tmp);
 
         var matches = route.match( new RegExp('(?:' + combinedRoute.pattern + ')$') );
 
@@ -91,7 +156,7 @@ class Restful extends CoreRouter {
                 }
             }
 
-            var matchedRouteSegment = Restful.getMatchedSegmentBySubPatternPosition(
+            var matchedRouteSegment = this.getMatchedSegmentBySubPatternPosition(
                 combinedRoute, subPatternPosition);
 
             ret.handler = combinedRoute.handler[matchedRouteSegment];
@@ -108,74 +173,6 @@ class Restful extends CoreRouter {
         }
 
         return ret;
-    }
-
-    /**
-     * 依次解析路由
-     *
-     * @param {Object} request 请求对象
-     * @param {String} route 路由
-     * @param {String} httpMethod 请求方法
-     * @return {Object | null}
-     */
-    static resolveRoutesOneByOne(request, route, httpMethod) {
-        // {pattern, handler, paramKeys, paramValues}
-        var matchedHandler = null;
-
-        var handlers = Restful.methods[httpMethod];  // [ {pattern, handler} ... ]
-        var parsedRoute = null;
-        var matches = null;
-
-        for(let i=0,len=handlers.length; i<len; i++) {
-            parsedRoute = Restful.parse(handlers[i].pattern);
-
-            handlers[i].paramKeys = parsedRoute.params;  // null or array
-            handlers[i].paramValues = null;
-
-            // end with $ 精确匹配
-            matches = route.match( new RegExp(parsedRoute.pattern + '$') );
-
-            // 匹配到路由
-            if(null !== matches) {
-                matchedHandler = handlers[i];
-
-                // 存储参数
-                if(null !== matchedHandler.paramKeys) {
-                    let requestInstance = new Request(request);
-                    // matchedHandler.paramValues = new Array(matchedHandler.paramKeys.length);
-                    matchedHandler.paramValues = [];
-
-                    for(let j=0,l=matchedHandler.paramKeys.length; j<l; j++) {
-                        requestInstance.setQueryString(
-                            matchedHandler.paramKeys[j],
-                            matches[j+1]);
-
-                        // matchedHandler.paramValues[j] = matches[j+1];
-                        matchedHandler.paramValues.push(matches[j+1]);
-                    }
-                }
-
-                // 匹配到就退出
-                break;
-            }
-        }
-
-        return matchedHandler;
-    }
-
-    /**
-     * 检测路由合法性
-     *
-     * @param {String} route 路由
-     * @return {Boolean}
-     */
-    static isValidRoute(route) {
-        // 检测非法 与 路径中不能有双斜线 '//'
-        if(!/^[\w\-\/]+$/.test(route) || route.indexOf('//') >= 0) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -196,7 +193,7 @@ class Restful extends CoreRouter {
      * }
      *
      */
-    static combineRoutes(routes) {
+    combineRoutes(routes) {
         var ret = {};
         var patternArray = [];
         var paramArray = [];
@@ -204,7 +201,7 @@ class Restful extends CoreRouter {
 
         var parsedRoute = null;
         for(let reg in routes) {
-            parsedRoute = Restful.parse(reg);
+            parsedRoute = Router.parse(reg);
 
             // 为每个模式添加一个括号 用于定位匹配到的是哪一个模式
             patternArray.push( '(' + parsedRoute.pattern + ')' );
@@ -226,7 +223,7 @@ class Restful extends CoreRouter {
      * @param {Number} subPatternPosition 匹配的子模式位置
      * @return {Number}
      */
-    static getMatchedSegmentBySubPatternPosition(combinedRoute, subPatternPosition) {
+    getMatchedSegmentBySubPatternPosition(combinedRoute, subPatternPosition) {
         // '(' 在 pattern 中第 subPatternPosition 次出现的位置
         // 用于确定当前路由匹配的是第几部分
         var segment = StringHelper.nIndexOf(combinedRoute.pattern, '(', subPatternPosition);
@@ -244,90 +241,72 @@ class Restful extends CoreRouter {
      * @param {String} pattern
      * @param {Function | String} handler
      */
-    static addRoute(httpMethod, pattern, handler) {
+    addRoute(httpMethod, pattern, handler) {
         if('string' === typeof httpMethod) {
-            Restful.methods[httpMethod].push( {pattern: pattern, handler: handler} );
+            this.methods[httpMethod].push( {pattern: pattern, handler: handler} );
 
             return;
         }
 
         for(let i=0,len=httpMethod.length; i<len; i++) {
-            Restful.methods[httpMethod[i]].push( {pattern: pattern, handler: handler} );
+            this.methods[httpMethod[i]].push( {pattern: pattern, handler: handler} );
         }
     }
 
     /**
      * get
      */
-    static get(pattern, handler) {
-        Restful.addRoute('GET', pattern, handler);
+    get(pattern, handler) {
+        this.addRoute('GET', pattern, handler);
     }
 
     /**
      * post
      */
-    static post(pattern, handler) {
-        Restful.addRoute('POST', pattern, handler);
+    post(pattern, handler) {
+        this.addRoute('POST', pattern, handler);
     }
 
     /**
      * put
      */
-    static put(pattern, handler) {
-        Restful.addRoute('PUT', pattern, handler);
+    put(pattern, handler) {
+        this.addRoute('PUT', pattern, handler);
     }
 
     /**
      * delete
      */
-    static delete(pattern, handler) {
-        Restful.addRoute('DELETE', pattern, handler);
+    delete(pattern, handler) {
+        this.addRoute('DELETE', pattern, handler);
     }
 
     /**
      * patch
      */
-    static patch(pattern, handler) {
-        Restful.addRoute('PATCH', pattern, handler);
+    patch(pattern, handler) {
+        this.addRoute('PATCH', pattern, handler);
     }
 
     /**
      * head
      */
-    static head(pattern, handler) {
-        Restful.addRoute('HEAD', pattern, handler);
+    head(pattern, handler) {
+        this.addRoute('HEAD', pattern, handler);
     }
 
     /**
      * options
      */
-    static options(pattern, handler) {
-        Restful.addRoute('OPTIONS', pattern, handler);
+    options(pattern, handler) {
+        this.addRoute('OPTIONS', pattern, handler);
     }
 
 }
 
 /**
- * 请求方法
- *
- * each method has the follow structure
- *
- * [ {pattern: pattern, handler: handler} ... ]
- *
- */
-Restful.methods = {
-    GET: [],
-    POST: [],
-    PUT: [],
-    DELETE: [],
-    PATCH: [],
-    HEAD: [],
-    OPTIONS: []
-};
-
-/**
  * class and method separate
  */
-Restful.separator = '@';
+Rest.separator = '@';
 
-module.exports = Restful;
+module.exports = Rest;

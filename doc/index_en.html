@@ -856,7 +856,11 @@ var obj = CandyJs.Candy.createObject('lib/MyClass');
 </p>
 
             <h1 class="page-header" id="restful"><b>RESTful</b></h1>
-            <blockquote class="bg-danger">Temporary RESTful mode and MVC mode can not coexist</blockquote>
+            <blockquote class="bg-danger">
+                Because the design is not elegant, RESTful model Redesigned since npm package 2.0.0
+            </blockquote>
+            
+            <h4><b>The usage before npm package 2.0.0</b></h4>
             <p>The methods available in RESTful mode is as follows</p>
             <ul>
                 <li><code>get(route, handler)</code></li>
@@ -911,20 +915,39 @@ module.exports = User;
 </code></pre>
 </p>
 
+            <h4><b>The usage after npm package 2.0.0</b></h4>
+            <p><code>The methods below changed into instance method</code></p>
+            <ul>
+                <li><code>get(route, handler)</code></li>
+                <li><code>post(route, handler)</code></li>
+                <li><code>put(route, handler)</code></li>
+                <li><code>delete(route, handler)</code></li>
+                <li><code>patch(route, handler)</code></li>
+                <li><code>head(route, handler)</code></li>
+                <li><code>options(route, handler)</code></li>
+            </ul>
+<p>
+<pre><code>
+var Rest = require('candyjs/Rest');
+
+var rest = new Rest({
+    appPath: __dirname + '/app'
+});
+
+rest.get('/abc/{id:\\d+}', function(req, res, id){
+    res.end(String(id));
+});
+
+rest.listen('8090', () => {
+    console.log('listen on 8090')
+});
+</code></pre>
+</p>
+
             <h4><b>Routing issues in RESTful patterns</b></h4>
             <p>
                 The routes in RESTful are implemented using regular expressions. It can achieve very flexible routing configuration
                 However, the routing performance is poor relative to MVC. ( Routing in the MVC pattern is not implemented in regular expressions. )
-            </p>
-            <p>
-                To improve the performance of a regular expression, need to merge or group merge the routes
-                <code>CandyJs</code>temporarily provides only a simple way to merge routes to improve system operating efficiency
-                You can pass in a parameter when initializing the application<code>combineRoutes: true</code>
-                However, the performance is not good in the presence of a large number of routes
-            </p>
-            <p>
-                The idea of optimizing regular routing can be found here
-                <a target="_blank" href="http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html">http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html</a>
             </p>
 
             <h1 class="page-header" id="log"><b>Log</b></h1>

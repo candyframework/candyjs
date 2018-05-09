@@ -115,7 +115,11 @@ class Resource {
 
         var pathname = Request.parseUrl(request).pathname;
         var mimeType = this.getMimeType(pathname);
-        pathname = (this.root + pathname).replace(/\.\.\//g, '');
+        
+        pathname = (this.root + pathname).replace(/\.\./g, '');
+        while(pathname.indexOf('//') >= 0) {
+            pathname = pathname.replace('//', '/');
+        }
 
         fs.stat(pathname, (err, stats) => {
             if(null !== err) {

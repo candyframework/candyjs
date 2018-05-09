@@ -8,7 +8,6 @@ const http = require('http');
 
 const Candy = require('./Candy');
 const Hook = require('./core/Hook');
-const WebRestful = require('./web/Restful');
 const WebApp = require('./web/Application');
 const InvalidConfigException = require('./core/InvalidConfigException');
 
@@ -33,19 +32,9 @@ class CandyJs {
     }
 
     // web
-    requestListenerWeb(req, res) {
+    requestListener(req, res) {
         try {
             this.app.requestListener(req, res);
-
-        } catch(e) {
-            this.app.handlerException(res, e);
-        }
-    }
-
-    // restful
-    requestListenerRestful(req, res) {
-        try {
-            WebRestful.requestListener(req, res);
 
         } catch(e) {
             this.app.handlerException(res, e);
@@ -55,14 +44,7 @@ class CandyJs {
     // handler
     handler(req, res) {
         Hook.getInstance().trigger(req, res, () => {
-            this.requestListenerWeb(req, res);
-        });
-    }
-    
-    // handler restful
-    handlerRest(req, res) {
-        Hook.getInstance().trigger(req, res, () => {
-            this.requestListenerRestful(req, res);
+            this.requestListener(req, res);
         });
     }
 
@@ -72,9 +54,7 @@ class CandyJs {
      * @return http server
      */
     getServer() {
-        return http.createServer(true === this.config.useRestful
-            ? this.handlerRest.bind(this)
-            : this.handler.bind(this));
+        return http.createServer(this.handler.bind(this));
     }
 
     /**
