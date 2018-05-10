@@ -131,6 +131,11 @@ class Candy {
 Candy.app = null;
 
 /**
+ * @property {Rest} rest
+ */
+Candy.rest = null;
+
+/**
  * @property {Object} pathAliases 路径别名
  */
 Candy.pathAliases = {'@candy': __dirname};

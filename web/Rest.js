@@ -1,24 +1,23 @@
 /**
- * @author
- * @license MIT
+ * @author yu
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 'use strict';
 
-const http = require('http');
+var Candy = require('../Candy');
+var StringHelper = require('../helpers/StringHelper');
+var Router = require('../core/Router');
+var CoreRest = require('../core/Rest');
+var InvalidCallException = require('../core/InvalidCallException');
+var Request = require('./Request');
 
-const Candy = require('./Candy');
-const Hook = require('./core/Hook');
-const Router = require('./core/Router');
-const Request = require('./web/Request');
-const StringHelper = require('./helpers/StringHelper');
-const InvalidCallException = require('./core/InvalidCallException');
-
-class Rest {
+class Rest extends CoreRest {
     
-    /**
-     * constructor
-     */
     constructor(config) {
+        super(config);
+        
+        this.defaultExceptionHandler = 'candy/web/ExceptionHandler';
+        
         /**
          * 请求方法
          *
@@ -39,71 +38,31 @@ class Rest {
         
         this.server = null;
         this.config = config;
-        
-        Candy.setPathAlias('@app', config.appPath);
-    }
-    
-    handlerException(response, exception) {
-        response.setHeader('Content-Type', 'text/plain');
-        response.writeHead(500);
-
-        response.end(true === this.config.debug
-            ? exception.message + '\n' + exception.stack
-            : 'The server encountered an internal error');
-    }
-    
-    // handler
-    handler(req, res) {
-        Hook.getInstance().trigger(req, res, () => {
-            try {
-                this.requestListener(req, res);
-                
-            } catch(e) {
-                this.handlerException(res, e);
-            }
-        });
     }
     
     /**
-     * 获取 http server
+     * 请求处理
      *
-     * @return http server
-     */
-    getServer() {
-        return http.createServer(this.handler.bind(this));
-    }
-    
-    /**
-     * listen
-     *
-     * @param {Number} port
-     * @param {Function} callback
-     */
-    listen(port, callback) {
-        this.server = this.getServer();
-        this.server.listen(port, callback);
-    }
-
-    /**
-     * listen request
+     * @param {Object} request
+     * @param {Object} response
      */
     requestListener(request, response) {
         var route = Request.parseUrl(request).pathname;
-
-        // {paramValues, handler} 合并路由
+        
+        // {paramValues, handler}
         var ret = this.resolveRoutesCombine(route, request.method);
-
+        
         if(null === ret) {
             throw new InvalidCallException('The REST route: ' + route + ' not found');
         }
-
+        
         var args = null === ret.paramValues ? [null] : ret.paramValues;
-
+        
         // handler is function
         if('function' === typeof ret.handler) {
             ret.handler(request, response, ...args);
-
-            return;
+            
+            return;    
         }
         
         // handler is string
@@ -112,7 +71,7 @@ class Rest {
         if(-1 === pos) {
             obj = Candy.createObject(ret.handler);
             obj.index(request, response, ...args);
-
+            
         } else {
             obj = Candy.createObject( ret.handler.substring(0, pos) );
             obj[ ret.handler.substring(pos + 1) ](
@@ -121,7 +80,7 @@ class Rest {
                 ...args);
         }
     }
-
+    
     /**
      * 合并解析路由
      *
@@ -131,7 +90,7 @@ class Rest {
      */
     resolveRoutesCombine(route, httpMethod) {
         var ret = null;
-
+        
         // [ {pattern, handler} ... ]
         var handlers = this.methods[httpMethod];
         var tmp = {};
@@ -140,13 +99,13 @@ class Rest {
         }
         // {pattern, params, handler}
         var combinedRoute = this.combineRoutes(tmp);
-
+        
         var matches = route.match( new RegExp('(?:' + combinedRoute.pattern + ')$') );
-
+        
         // 路由成功匹配
         if(null !== matches) {
             ret = {};
-
+            
             var subPatternPosition = -1;
             // matches: [ 'xyz/other', undefined, undefined, undefined, 'xyz/other']
             for(let i=1,len=matches.length; i<len; i++) {
@@ -155,26 +114,27 @@ class Rest {
                     break;
                 }
             }
-
+            
             var matchedRouteSegment = this.getMatchedSegmentBySubPatternPosition(
                 combinedRoute, subPatternPosition);
-
+            
             ret.handler = combinedRoute.handler[matchedRouteSegment];
             ret.paramValues = null;
-
+            
             // 有参数
             if(null !== combinedRoute.params[matchedRouteSegment]) {
                 // ret.paramValues = new Array(combinedRoute.params[matchedRouteSegment].length);
                 ret.paramValues = [];
                 for(let i=0,len=combinedRoute.params[matchedRouteSegment].length; i<len; i++) {
+                    // ret.paramValues[i] = matches[subPatternPosition + i + 1];
                     ret.paramValues.push( matches[subPatternPosition + i + 1] );
                 }
             }
         }
-
+        
         return ret;
     }
-
+    
     /**
      * 合并路由
      *
@@ -198,24 +158,24 @@ class Rest {
         var patternArray = [];
         var paramArray = [];
         var handler = [];  // 路由配置
-
+        
         var parsedRoute = null;
         for(let reg in routes) {
             parsedRoute = Router.parse(reg);
-
+            
             // 为每个模式添加一个括号 用于定位匹配到的是哪一个模式
             patternArray.push( '(' + parsedRoute.pattern + ')' );
             paramArray.push(parsedRoute.params);
             handler.push(routes[reg]);
         }
-
+        
         ret.pattern = patternArray.join('|');
         ret.params = paramArray;
         ret.handler = handler;
-
+        
         return ret;
     }
-
+    
     /**
      * 查找匹配的路由的位置
      *
@@ -230,10 +190,10 @@ class Rest {
         var tmpLine = combinedRoute.pattern.substring(0, segment).match(/\|/g);
         // 没有匹配到竖线 说明匹配的是第一部分
         segment = null === tmpLine ? 0 : tmpLine.length;
-
+        
         return segment;
     }
-
+    
     /**
      * Adds a route to the collection
      *
@@ -244,64 +204,26 @@ class Rest {
     addRoute(httpMethod, pattern, handler) {
         if('string' === typeof httpMethod) {
             this.methods[httpMethod].push( {pattern: pattern, handler: handler} );
-
+            
             return;
         }
-
+        
         for(let i=0,len=httpMethod.length; i<len; i++) {
             this.methods[httpMethod[i]].push( {pattern: pattern, handler: handler} );
         }
     }
 
     /**
-     * get
+     * @inheritdoc
      */
-    get(pattern, handler) {
-        this.addRoute('GET', pattern, handler);
+    handlerException(response, exception) {
+        var handler = Candy.createObject('' === this.exceptionHandler
+            ? this.defaultExceptionHandler
+            : this.exceptionHandler);
+        
+        handler.handlerException(response, exception);
     }
-
-    /**
-     * post
-     */
-    post(pattern, handler) {
-        this.addRoute('POST', pattern, handler);
-    }
-
-    /**
-     * put
-     */
-    put(pattern, handler) {
-        this.addRoute('PUT', pattern, handler);
-    }
-
-    /**
-     * delete
-     */
-    delete(pattern, handler) {
-        this.addRoute('DELETE', pattern, handler);
-    }
-
-    /**
-     * patch
-     */
-    patch(pattern, handler) {
-        this.addRoute('PATCH', pattern, handler);
-    }
-
-    /**
-     * head
-     */
-    head(pattern, handler) {
-        this.addRoute('HEAD', pattern, handler);
-    }
-
-    /**
-     * options
-     */
-    options(pattern, handler) {
-        this.addRoute('OPTIONS', pattern, handler);
-    }
-
+    
 }
 
 /**

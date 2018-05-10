@@ -3,7 +3,7 @@
 var request = require('supertest');
 var assert = require('assert');
 
-var Rest = require('../Rest.js');
+var Rest = require('../restful.js');
 
 var rest = new Rest({
     appPath: __dirname + '/app'
