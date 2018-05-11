@@ -928,10 +928,11 @@ module.exports = User;
             </ul>
 <p>
 <pre><code>
-var Rest = require('candyjs/Rest');
+var Rest = require('candyjs/restful');
 
 var rest = new Rest({
-    appPath: __dirname + '/app'
+    appPath: __dirname + '/app',
+    debug: true
 });
 
 rest.get('/abc/{id:\\d+}', function(req, res, id){
