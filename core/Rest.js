@@ -1,6 +1,6 @@
 /**
- * @author yu
- * @license http://www.apache.org/licenses/LICENSE-2.0
+ * @author
+ * @license MIT
  */
 'use strict';
 
@@ -11,7 +11,7 @@ var InvalidConfigException = require('./InvalidConfigException');
  * RESTful 基类
  */
 class Rest {
-    
+
     constructor(config) {
         /**
          * @property {Boolean} debug 调试
@@ -22,12 +22,12 @@ class Rest {
          * @property {String} exceptionHandler 异常处理类
          */
         this.exceptionHandler = '';
-        
+
         Candy.rest = this;
         this.init(config);
         Candy.config(this, config);
     }
-    
+
     /**
      * 初始化应用
      *
@@ -38,11 +38,11 @@ class Rest {
         if(undefined === config.appPath) {
             throw new InvalidConfigException('The "appPath" configuration is required');
         }
-        
+
         this.setAppPath(config.appPath);
         delete config.appPath;
     }
-    
+
     /**
      * 设置应用路径
      *
@@ -51,7 +51,7 @@ class Rest {
     setAppPath(path) {
         Candy.setPathAlias('@app', path);
     }
-    
+
     /**
      * handler request
      *
@@ -59,7 +59,7 @@ class Rest {
      * @param {Object} response
      */
     requestListener(request, response) {}
-    
+
     /**
      * 异常处理
      *
@@ -67,7 +67,7 @@ class Rest {
      * @param {Exception} exception 异常类
      */
     handlerException(response, exception) {}
-    
+
 }
 
 module.exports = Rest;
