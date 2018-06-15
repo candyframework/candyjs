@@ -4,6 +4,7 @@
  */
 'use strict';
 
+const Request = require('./Request');
 const StringHelper = require('../helpers/StringHelper');
 
 /**
@@ -12,54 +13,6 @@ const StringHelper = require('../helpers/StringHelper');
  * @see https://tools.ietf.org/html/rfc1738
  */
 class URL {
-
-    /**
-     * constructor
-     */
-    constructor(request) {
-        /**
-         * @property {Object} request
-         */
-        this.request = request;
-    }
-
-    /**
-     * 获取引用网址
-     *
-     * @return {String}
-     */
-    getReferer() {
-        if(undefined !== this.request.headers.referer) {
-            return this.request.headers.referer;
-        }
-
-        return '';
-    }
-
-    /**
-     * 获取 URI 协议和主机部分
-     *
-     * @return {String}
-     */
-    getHostInfo() {
-        var protocol = undefined !== this.request.socket.encrypted
-                || this.request.headers['x-forwarded-protocol'] === 'https'
-            ? 'https'
-            : 'http';
-
-        var host = protocol + '://' + this.request.headers.host;
-
-        return host;
-    }
-
-    /**
-     * 获取当前网址 不包含锚点部分
-     *
-     * @return {String}
-     */
-    getCurrent() {
-        return this.getHostInfo() + this.request.url;
-    }
 
     /**
      * 创建一个 url
@@ -72,12 +25,13 @@ class URL {
      * // scheme://host/index/index?id=1#anchor
      * url.to('index/index', {id: 1, '#': 'anchor'})
      *
+     * @param {Object} request
      * @param {String} url
      * @param {Object} params
      * @return {String}
      */
-    to(url, params = null) {
-        var host = this.getHostInfo();
+    static to(request, url, params = null) {
+        var host = new Request(request).getHostInfo();
         var query = '';
         var anchor = '';
 

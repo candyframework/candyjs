@@ -6,6 +6,10 @@
 
 ###### 变更
 
++ 2018-06-15
+
+    * npm 包 3.0.0 更新了 web/Request 和 web/URL 两个类 web/URL 类中的大部分方法移动到了 web/Request 中
+
 + 2018-05-09
 
     * npm 包 2.0.0 重构 rest 模式
