@@ -85,14 +85,14 @@ class Request extends CoreRequest {
      *
      * @param {Object} request 请求对象
      * @param {String} param 参数名
-     * @return {String | null | undefined}
+     * @return {String | null}
      */
     static getParameter(request, param) {
         if(undefined === request.body) {
             return null;
         }
 
-        return request.body[param];
+        return undefined === request.body[param] ? null : request.body[param];
     }
 
     /**
@@ -110,24 +110,10 @@ class Request extends CoreRequest {
      * 获取 get 参数
      *
      * @param {String} param 参数名
-     * @return {String | null}
+     * @see Request.getQueryString
      */
     getQueryString(param) {
-        var parsed = Request.parseUrl(this.request);
-
-        // 查找参数
-        if(null !== parsed.query &&
-            (0 === parsed.query.indexOf(param) ||
-                parsed.query.indexOf('&' + param) > 0)) {
-
-            return querystring.parse(parsed.query)[param];
-        }
-
-        if(null !== parsed.additionalQuery) {
-            return parsed.additionalQuery[param];
-        }
-
-        return null;
+        return Request.getQueryString(this.request, param);
     }
 
     /**
@@ -148,24 +134,20 @@ class Request extends CoreRequest {
      * 获取 post 参数
      *
      * @param {String} param 参数名
-     * @return {String | null | undefined}
+     * @see Request.getParameter
      */
     getParameter(param) {
-        if(undefined === this.request.body) {
-            return null;
-        }
-
-        return this.request.body[param];
+        return Request.getParameter(this.request, param);
     }
 
     /**
      * 获取 cookie
      *
      * @param {String} name cookie name
-     * @see Cookie.getCookie
+     * @see Request.getCookie
      */
     getCookie(name) {
-        return Cookie.getCookie(this.request, name);
+        return Request.getCookie(this.request, name);
     }
 
     /**
