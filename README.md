@@ -72,6 +72,8 @@ js 的一些超集的实现 (eg. typescript) 也可以让 js 拥有强类型特�
 
 + http://candyjs.org
 
++ https://douyu-beijing.github.io/candyjs-guide
+
 ###### 源码 source code
 
 + https://github.com/douyu-beijing/candyjs
