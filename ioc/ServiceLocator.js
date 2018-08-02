@@ -79,8 +79,8 @@ class ServiceLocator {
                 continue;
             }
 
-            if(undefined === definition[key]['class']) {
-                throw new InvalidConfigException('The service configuration must contain a "class" key');
+            if(undefined === definition[key].classPath) {
+                throw new InvalidConfigException('The service configuration must contain a "classPath" key');
             }
 
             this.definitions.set(key, definition[key]);

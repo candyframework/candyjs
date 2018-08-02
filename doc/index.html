@@ -203,7 +203,7 @@ new CandyJs({
     'log': {
         'targets': {
             'file': {
-                'class': 'candy/log/file/Target'
+                'classPath': 'candy/log/file/Target'
             }
         }
     }
@@ -240,7 +240,7 @@ new CandyJs({
 <pre><code>
 // account 路由使用 app/controllers/user/IndexController 做处理 并传入了一个参数 property
 'account': {
-    'class': 'app/controllers/user/IndexController',
+    'classPath': 'app/controllers/user/IndexController',
     'property': 'value'
 }
 </code></pre>
@@ -879,7 +879,7 @@ var obj = CandyJs.Candy.createObject('lib/MyClass');
             <blockquote class="bg-danger">
                 由于设计不够优雅 npm 包从 2.0.0 开始重构了 REST 模式架构 此部分可能还会持续更新
             </blockquote>
-            
+
             <h4><b>npm 包 2.0.0 之前用法</b></h4>
             <p>在 RESTful 模式中可用的请求方法如下<code>以下方法都是静态的</code></p>
             <ul>
@@ -984,7 +984,7 @@ rest.listen('8090', () => {
 'log': {
     'targets': {
         'file': {
-            'class': 'candy/log/file/Target',
+            'classPath': 'candy/log/file/Target',
             'logPath': __dirname + '/logs'
         },
         'other': {...}
@@ -1036,7 +1036,7 @@ log.flush();  // 写入硬盘
 <pre><code>
 'cache': {
     'file': {
-        'class': 'candy/cache/file/Target',
+        'classPath': 'candy/cache/file/Target',
         'cachePath': '...'
     }
 }

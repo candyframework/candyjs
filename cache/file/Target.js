@@ -17,7 +17,7 @@ const CacheException = require('../../core/CacheException');
  * ```
  * 'cache': {
  *      'file': {
- *          'class': 'candy/cache/file/Target',
+ *          'classPath': 'candy/cache/file/Target',
  *          'cachePath': '...'
  *      }
  * }

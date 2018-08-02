@@ -57,12 +57,12 @@ class Candy {
     /**
      * 创建对象 系统类路径约定以 candy 开头 应用类以项目目录开头
      *
-     * @param {String | Object} clazz 以某个已经定义的别名开头的类全名或带 'class' 键的配置
+     * @param {String | Object} clazz 以某个已经定义的别名开头的类全名或带 'classPath' 键的配置
      *
      * eg.
      * candy/log/file/Target
      * or
-     * {class: '...', ...}
+     * {classPath: '...', ...}
      *
      * @param {any} params 构造函数参数
      * @return {Object} 类实例
@@ -74,11 +74,11 @@ class Candy {
         if('string' === typeof clazz) {
             realClass = Candy.getPathAlias('@' + clazz);
 
-        } else if('object' === typeof clazz && undefined !== clazz['class']) {
-            realClass = Candy.getPathAlias('@' + clazz['class']);
+        } else if('object' === typeof clazz && undefined !== clazz.classPath) {
+            realClass = Candy.getPathAlias('@' + clazz.classPath);
 
             properties = Candy.config({}, clazz);
-            delete properties['class'];
+            delete properties.classPath;
         }
 
         // 文件不存在抛出异常

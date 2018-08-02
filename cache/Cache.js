@@ -17,12 +17,12 @@ class Cache {
         if(undefined === Candy.app.cache || undefined === Candy.app.cache[cacheFlag]) {
             throw new InvalidConfigException('No cache config found');
         }
-        if(undefined === Candy.app.cache[cacheFlag]['class']) {
-            throw new InvalidConfigException('The cache config lost key: class');
+        if(undefined === Candy.app.cache[cacheFlag].classPath) {
+            throw new InvalidConfigException('The cache config lost key: classPath');
         }
 
         if(undefined === Cache._caches[cacheFlag] || null === Cache._caches[cacheFlag]) {
-            Cache._caches[cacheFlag] = Candy.createObject(Candy.app.cache[cacheFlag]['class'],
+            Cache._caches[cacheFlag] = Candy.createObject(Candy.app.cache[cacheFlag].classPath,
                 Candy.app.cache[cacheFlag]);
 
             Cache._caches[cacheFlag].init();

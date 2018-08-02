@@ -194,7 +194,7 @@ new CandyJs({
     'log': {
         'targets': {
             'file': {
-                'class': 'candy/log/file/Target'
+                'classPath': 'candy/log/file/Target'
             }
         }
     }
@@ -234,7 +234,7 @@ new CandyJs({
 <p>
 <pre><code>
 'account': {
-    'class': 'app/controllers/user/IndexController',
+    'classPath': 'app/controllers/user/IndexController',
     'property': 'value'
 }
 </code></pre>
@@ -859,7 +859,7 @@ var obj = CandyJs.Candy.createObject('lib/MyClass');
             <blockquote class="bg-danger">
                 Because the design is not elegant, RESTful model Redesigned since npm package 2.0.0
             </blockquote>
-            
+
             <h4><b>The usage before npm package 2.0.0</b></h4>
             <p>The methods available in RESTful mode is as follows</p>
             <ul>
@@ -963,7 +963,7 @@ rest.listen('8090', () => {
 'log': {
     'targets': {
         'file': {
-            'class': 'candy/log/file/Target',
+            'classPath': 'candy/log/file/Target',
             'logPath': __dirname + '/logs'
         },
         'other': {...}
@@ -1003,7 +1003,7 @@ log.flush();  // flush data to disk
 <pre><code>
 'cache': {
     'file': {
-        'class': 'candy/cache/file/Target',
+        'classPath': 'candy/cache/file/Target',
         'cachePath': '...'
     }
 }
