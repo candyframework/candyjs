@@ -37,7 +37,7 @@ class View extends CoreView {
 
         return app.getAppPath()
             + '/views/'
-            + context.subRoute
+            + context.viewPath
             + '/'
             + view + View.defaultViewExtension;
     }
