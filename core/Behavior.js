@@ -31,7 +31,7 @@ class Behavior {
      *
      */
     events() {
-        return {};
+        return null;
     }
 
     /**
@@ -43,6 +43,10 @@ class Behavior {
         this.component = component;
 
         var events = this.events();
+        
+        if(null === events) {
+            return;
+        }
 
         for(let eventName in events) {
             this.component.on(eventName, events[eventName]);
@@ -53,15 +57,21 @@ class Behavior {
      * 取消监听组件的事件
      */
     unListen() {
-        if(null !== this.component) {
-            var events = this.events();
-
-            for(let eventName in events) {
-                this.component.off(eventName, events[eventName]);
-            }
-
-            this.component = null;
+        if(null === this.component) {
+            return;
         }
+        
+        var events = this.events();
+        
+        if(null === events) {
+            return;
+        }
+
+        for(let eventName in events) {
+            this.component.off(eventName, events[eventName]);
+        }
+
+        this.component = null;
     }
 
 }
