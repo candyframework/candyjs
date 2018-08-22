@@ -33,10 +33,11 @@ class Request extends CoreRequest {
         return {
             protocol: obj.protocol,
             host: obj.host,
-            hash: obj.hash,
+            port: obj.port,
+            path: obj.path,
+            pathname: obj.pathname,
             query: obj.query,
-            additionalQuery: undefined === request.additionalQuery ? null : request.additionalQuery,
-            pathname: obj.pathname
+            hash: obj.hash
         };
     }
 
@@ -64,19 +65,18 @@ class Request extends CoreRequest {
      */
     static getQueryString(request, param) {
         var parsed = Request.parseUrl(request);
-
+        
+        if(null === parsed.query) {
+            return null;
+        }
+        
         // 查找参数
-        if(null !== parsed.query &&
-            (0 === parsed.query.indexOf(param) ||
-                parsed.query.indexOf('&' + param) > 0)) {
-
+        if(0 === parsed.query.indexOf(param + '=')
+            || parsed.query.indexOf('&' + param + '=') > 0) {
+            
             return querystring.parse(parsed.query)[param];
         }
-
-        if(null !== parsed.additionalQuery) {
-            return parsed.additionalQuery[param];
-        }
-
+        
         return null;
     }
 
@@ -115,21 +115,7 @@ class Request extends CoreRequest {
     getQueryString(param) {
         return Request.getQueryString(this.request, param);
     }
-
-    /**
-     * 设置 get 参数
-     *
-     * @param {String} param 参数名
-     * @param {String} value 参数值
-     */
-    setQueryString(param, value) {
-        if(undefined === this.request.additionalQuery) {
-            this.request.additionalQuery = {};
-        }
-
-        this.request.additionalQuery[param] = value;
-    }
-
+    
     /**
      * 获取 post 参数
      *
