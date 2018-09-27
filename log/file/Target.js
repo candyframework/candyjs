@@ -20,7 +20,9 @@ const TimeHelper = require('../../helpers/TimeHelper');
  *     'targets': {
  *         'file': {
  *             'classPath': 'candy/log/file/Target',
- *             'logPath': __dirname + '/logs'
+ *             'logPath': '@runtime/logs',
+ *             'logFile': 'system.log',
+ *             'maxFileSize': 10240
  *         },
  *         'other': {...}
  *     },
@@ -123,7 +125,7 @@ class Target extends ITarget {
                     let newFile = file + TimeHelper.format('ymdhis');
 
                     fs.rename(file, newFile, (err) => {
-                        fs.writeFile(file, msg, (err) => {});
+                        fs.appendFile(file, msg, (err) => {});
                     });
 
                     return;

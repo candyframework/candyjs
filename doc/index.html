@@ -985,11 +985,12 @@ rest.listen('8090', () => {
     'targets': {
         'file': {
             'classPath': 'candy/log/file/Target',
-            'logPath': __dirname + '/logs'
-        },
-        'other': {...}
+            'logPath': __dirname + '/logs',
+            'logFile': 'system.log',
+            'maxFileSize': 10240  // 10 MB
+        }
     },
-    'flushInterval': 10
+    'flushInterval': 10  // 每 10 次向文件写一次 log
 }
 </code></pre>
 </p>

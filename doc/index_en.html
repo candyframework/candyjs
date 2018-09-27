@@ -964,11 +964,12 @@ rest.listen('8090', () => {
     'targets': {
         'file': {
             'classPath': 'candy/log/file/Target',
-            'logPath': __dirname + '/logs'
-        },
-        'other': {...}
+            'logPath': __dirname + '/logs',
+            'logFile': 'system.log',
+            'maxFileSize': 10240  // 10 MB
+        }
     },
-    'flushInterval': 10
+    'flushInterval': 10  // flush to disk every 10 times
 }
 </code></pre>
 </p>
