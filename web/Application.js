@@ -6,8 +6,8 @@
 
 const Candy = require('../Candy');
 const CoreApp = require('../core/Application');
-const CoreController = require('../core/Controller');
 const Request = require('./Request');
+const WebController = require('./Controller');
 const InvalidRouteException = require('../core/InvalidRouteException');
 
 /**
@@ -37,7 +37,7 @@ class Application extends CoreApp {
         }
 
         // 是否继承自框架控制器
-        if( !(controller instanceof CoreController) ) {
+        if( !(controller instanceof WebController) ) {
             controller.run(request, response);
 
             return;
