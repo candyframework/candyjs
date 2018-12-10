@@ -70,7 +70,7 @@
 
     * npm 包 1.0.9 util/LinkedQueue 添加 ```iterator()``` 和 ```remove(data)``` 方法
 
-###### 网站
+###### 文档
 
 + http://candyjs.org
 
