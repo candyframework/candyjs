@@ -10,11 +10,21 @@
 
 + CandyJs 的代码简洁优雅 这是它的编程哲学
 
-###### Node 版本
+### 文档
+
++ http://candyjs.org
+
++ https://douyu-beijing.github.io/candyjs-guide
+
+### 源码 source code
+
++ https://github.com/douyu-beijing/candyjs
+
+### Node 版本
 
 + 大于等于 6.0.0
 
-###### 变更
+### 变更
 
 + 2018-09-27
 
@@ -76,24 +86,14 @@
 
     * npm 包 1.0.9 util/LinkedQueue 添加 ```iterator()``` 和 ```remove(data)``` 方法
 
-###### 文档
-
-+ http://candyjs.org
-
-+ https://douyu-beijing.github.io/candyjs-guide
-
-###### 源码 source code
-
-+ https://github.com/douyu-beijing/candyjs
-
-###### 系统内置别名
+### 系统内置别名
 
 + @candy  系统目录
 + @app  项目目录 由 appPath 指定 ```CandyJs.Candy.app.getAppPath()``` 可得到该值
 + @runtime  缓存目录 默认指向 @app/runtime ```CandyJs.Candy.app.getRuntimePath()``` 可得到该值
 + @root  网站根目录 ```CandyJs.Candy.app.getRootPath()``` 可得到该值
 
-###### 项目目录示例
+### 项目目录示例
 
 <pre>
 |- index.js
