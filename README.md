@@ -1,8 +1,14 @@
-# 一个面向对象的高效 node.js mvc and REST 框架。CandyJs 不是第三方框架的扩展，而是一个全新的框架。
+# 一个面向对象的高效 node.js mvc and REST 框架。 CandyJs 不是第三方框架的扩展，而是一个全新的框架。
 
-### 为什么写 candyjs
+### 为什么是 CandyJs
 
-解决一个问题的思路有多种，没有最好的，只有合适的。
++ CandyJs 实现了 MVC (Model-View-Controller) 设计模式并基于该模式组织代码
+
++ CandyJs 实现了自动路由映射
+
++ CandyJs 高可扩展和高可配置
+
++ CandyJs 的代码简洁优雅 这是它的编程哲学
 
 ###### Node 版本
 
