@@ -10,6 +10,8 @@
 
 + CandyJs 的代码简洁优雅 这是它的编程哲学
 
++ CandyJs 采用 MIT 许可 这意味着您可以免费的使用 CandyJs 来开发 WEB 应用
+
 ### 文档
 
 + http://candyjs.org
