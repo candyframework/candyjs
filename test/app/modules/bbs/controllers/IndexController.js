@@ -1,6 +1,6 @@
 'use strict';
 
-var CandyJs = require('candyjs');
+var CandyJs = require('../../../../../index');
 var Controller = CandyJs.Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {

@@ -32,10 +32,12 @@ class ITarget extends Event {
      * @param {Array} param 参数
      */
     trigger(eventName, param) {
-        if(undefined !== this.handlers[eventName]) {
-            for(let handler of this.handlers[eventName]) {
-                handler.flush(param);
-            }
+        if(undefined === this.handlers[eventName]) {
+            return;
+        }
+        
+        for(let handler of this.handlers[eventName]) {
+            handler.flush(param);
         }
     }
 

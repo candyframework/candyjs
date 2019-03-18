@@ -45,15 +45,17 @@ class Event {
      * @param {Function} handler 回调函数
      */
     off(eventName, handler) {
-        if(undefined !== this.handlers[eventName]) {
-            if(undefined === handler) {
-                delete this.handlers[eventName];
+        if(undefined === this.handlers[eventName]) {
+            return;
+        }
+        
+        if(undefined === handler) {
+            delete this.handlers[eventName];
 
-            } else {
-                for(let i=0,len=this.handlers[eventName].length; i<len; i++) {
-                    if(handler === this.handlers[eventName][i]) {
-                        this.handlers[eventName].splice(i, 1);
-                    }
+        } else {
+            for(let i=0,len=this.handlers[eventName].length; i<len; i++) {
+                if(handler === this.handlers[eventName][i]) {
+                    this.handlers[eventName].splice(i, 1);
                 }
             }
         }
@@ -66,11 +68,13 @@ class Event {
      * @param {Array} param 参数
      */
     trigger(eventName, param) {
-        if(undefined !== this.handlers[eventName]) {
-            for(let i=0,len=this.handlers[eventName].length; i<len; i++) {
-                undefined === param ? this.handlers[eventName][i]() :
-                    this.handlers[eventName][i].apply(null, param);
-            }
+        if(undefined === this.handlers[eventName]) {
+            return;
+        }
+        
+        for(let i=0,len=this.handlers[eventName].length; i<len; i++) {
+            undefined === param ? this.handlers[eventName][i]() :
+                this.handlers[eventName][i].apply(null, param);
         }
     }
 
@@ -81,10 +85,12 @@ class Event {
      * @param {any} params 参数
      */
     triggerWithRestParams(eventName, ...params) {
-        if(undefined !== this.handlers[eventName]) {
-            for(let i=0,len=this.handlers[eventName].length; i<len; i++) {
-                this.handlers[eventName][i](...params);
-            }
+        if(undefined === this.handlers[eventName]) {
+            return;
+        }
+        
+        for(let i=0,len=this.handlers[eventName].length; i<len; i++) {
+            this.handlers[eventName][i](...params);
         }
     }
 
