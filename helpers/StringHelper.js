@@ -18,7 +18,7 @@ class StringHelper {
      * @return {Number} 位置值
      */
     static nIndexOf(str, find, n) {
-        var x = str.indexOf(find);
+        let x = str.indexOf(find);
         for(let i = 1; i < n; i++) {
             x = str.indexOf(find, x + 1);
         }
@@ -81,7 +81,7 @@ class StringHelper {
      * @return {String} 处理后的字符串
      */
     static ucFirst(str) {
-        var ret = str.charAt(0).toUpperCase();
+        let ret = str.charAt(0).toUpperCase();
 
         return ret + str.substring(1);
     }
@@ -95,7 +95,7 @@ class StringHelper {
      * @return {String} 处理后的字符串
      */
     static htmlSpecialChars(str, flag = 0, doubleEncode = true) {
-        var OPTIONS = {
+        let OPTIONS = {
             'ALL_QUOTES': 0,
             'SINGLE_QUOTE': 1,
             'DOUBLE_QUOTE': 2
@@ -134,8 +134,8 @@ class StringHelper {
      * @return {String}
      */
     static filterTags(str, allowed = '') {
-        var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-        var comments = /<!--[\s\S]*?-->/gi;
+        let tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+        let comments = /<!--[\s\S]*?-->/gi;
 
         str = str.replace(comments, '');
 

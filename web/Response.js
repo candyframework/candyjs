@@ -14,7 +14,7 @@ const HttpException = require('../core/HttpException');
  *
  * 使用 response 输出内容
  *
- * var response = new Response(res);
+ * const response = new Response(res);
  * response.setContent('some data from server');
  * response.send();
  *
@@ -158,7 +158,7 @@ class Response extends CoreResponse {
             options = {};
         }
 
-        var cookie = new Cookie(name,
+        let cookie = new Cookie(name,
             encodeURIComponent(value),
             options.expires,
             options.path,

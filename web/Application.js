@@ -28,9 +28,9 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     requestListener(request, response) {
-        var route = Request.parseUrl(request).pathname;
+        let route = Request.parseUrl(request).pathname;
 
-        var controller = this.createController(route);
+        let controller = this.createController(route);
 
         if(null === controller) {
             throw new InvalidRouteException('The route requested is invalid');
@@ -50,7 +50,7 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     handlerException(response, exception) {
-        var handler = Candy.createObject('' === this.exceptionHandler
+        let handler = Candy.createObject('' === this.exceptionHandler
             ? this.defaultExceptionHandler
             : this.exceptionHandler);
 

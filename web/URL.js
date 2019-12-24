@@ -31,9 +31,9 @@ class URL {
      * @return {String}
      */
     static to(request, url, params = null) {
-        var host = new Request(request).getHostInfo();
-        var query = '';
-        var anchor = '';
+        let host = new Request(request).getHostInfo();
+        let query = '';
+        let anchor = '';
 
         url = host + '/' + url;
 

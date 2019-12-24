@@ -6,10 +6,7 @@
 
 const http = require('http');
 
-const Candy = require('./Candy');
 const Hook = require('./core/Hook');
-const WebApp = require('./web/Application');
-const InvalidConfigException = require('./core/InvalidConfigException');
 
 /**
  * 入口
@@ -19,16 +16,11 @@ class CandyJs {
     /**
      * constructor
      *
-     * @param {any} config 配置信息
+     * @param {any} application 应用实例
      */
-    constructor(config) {
-        if(undefined === config) {
-            throw new InvalidConfigException('The app config is required');
-        }
-
-        this.config = config;
+    constructor(application) {
         this.server = null;
-        this.app = new WebApp(config);
+        this.app = application;
     }
 
     // web
@@ -66,9 +58,10 @@ class CandyJs {
      * If you want to create HTTPS server you can do so as shown here
      *
      * ```
-     * var https = require('https');
-     * var CandyJs = require('candyjs');
-     * var app = new CandyJs({ ... });
+     * const https = require('https');
+     * const CandyJs = require('candyjs');
+     *
+     * const app = new CandyJs({ ... });
      * https.createServer({ ... }, app.handler.bind(app)).listen(443);
      * ```
      *
@@ -79,10 +72,5 @@ class CandyJs {
     }
 
 }
-
-/**
- * handler
- */
-CandyJs.Candy = Candy;
 
 module.exports = CandyJs;

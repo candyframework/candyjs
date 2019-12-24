@@ -78,11 +78,11 @@ class Fate {
         /**
          * @var {String} moduleId 当前的模块
          */
-        var moduleId = '';
+        let moduleId = '';
         /**
          * @var {String} controllerId 当前的控制器
          */
-        var controllerId = '';
+        let controllerId = '';
         /**
          * @var {String} viewPath 子目录
          *
@@ -90,7 +90,7 @@ class Fate {
          * eg. viewPath = 'subdir'  ->  app/views/subdir/xxx.html
          *
          */
-        var viewPath = '';
+        let viewPath = '';
 
         route = StringHelper.lTrimChar(route, '/');
 
@@ -111,8 +111,8 @@ class Fate {
 
         // 解析路由
         // 目录前缀或模块 id
-        var id = '';
-        var pos = route.indexOf('/');
+        let id = '';
+        let pos = route.indexOf('/');
         if(-1 !== pos) {
             id = route.substring(0, pos);
             route = route.substring(pos + 1);
@@ -138,7 +138,7 @@ class Fate {
 
         // 搜索顺序 用户配置 -> 模块控制器 -> 普通控制器
         // 模块没有前缀目录
-        var clazz = null;
+        let clazz = null;
         if(null !== this.routesMap && undefined !== this.routesMap[id]) {
 
             return Candy.createObject(this.routesMap[id], {

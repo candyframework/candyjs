@@ -46,10 +46,10 @@ class Resource {
      * @return {Boolean}
      */
     isStatic(request) {
-        var ret = false;
-        var pathname = Request.parseUrl(request).pathname;
-        var ext = this.getExtName(pathname).substring(1);
-        var mime = undefined === this.options.mime ?
+        let ret = false;
+        let pathname = Request.parseUrl(request).pathname;
+        let ext = this.getExtName(pathname).substring(1);
+        let mime = undefined === this.options.mime ?
             Resource.mime :
             Object.assign({}, Resource.mime, this.options.mime);
 
@@ -74,9 +74,9 @@ class Resource {
      * @return {String}
      */
     getMimeType(pathName) {
-        var ret = '';
-        var ext = this.getExtName(pathName).substring(1);
-        var mime = undefined === this.options.mime ?
+        let ret = '';
+        let ext = this.getExtName(pathName).substring(1);
+        let mime = undefined === this.options.mime ?
             Resource.mime :
             Object.assign({}, Resource.mime, this.options.mime);
 
@@ -113,9 +113,9 @@ class Resource {
             return;
         }
 
-        var pathname = Request.parseUrl(request).pathname;
-        var mimeType = this.getMimeType(pathname);
-        
+        let pathname = Request.parseUrl(request).pathname;
+        let mimeType = this.getMimeType(pathname);
+
         pathname = (this.root + pathname).replace(/\.\./g, '');
         while(pathname.indexOf('//') >= 0) {
             pathname = pathname.replace('//', '/');

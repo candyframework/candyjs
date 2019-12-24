@@ -42,8 +42,8 @@ class Behavior {
     listen(component) {
         this.component = component;
 
-        var events = this.events();
-        
+        let events = this.events();
+
         if(null === events) {
             return;
         }
@@ -60,9 +60,9 @@ class Behavior {
         if(null === this.component) {
             return;
         }
-        
-        var events = this.events();
-        
+
+        let events = this.events();
+
         if(null === events) {
             return;
         }

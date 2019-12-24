@@ -112,7 +112,7 @@ class URI {
      * @return {String}
      */
     createURIString(scheme = '', authority = '', path = '', query = '', fragment = '') {
-        var uri = '';
+        let uri = '';
 
         if('' !== scheme) {
             uri += scheme + '://';
@@ -143,7 +143,7 @@ class URI {
      * @param {String} uri
      */
     setURI(uri) {
-        var ret = this.parseUrl(uri);
+        let ret = this.parseUrl(uri);
 
         if(undefined !== ret.scheme) {
             this.scheme = ret.scheme;
@@ -178,9 +178,9 @@ class URI {
      * @return {Object}
      */
     parseUrl(url) {
-        var ret = {};
+        let ret = {};
 
-        var matches = url.match(this.uriRegExp);
+        let matches = url.match(this.uriRegExp);
 
         if(null !== matches) {
             for(let i=0,len=this.uriRegExpKeys.length; i<len; i++) {
@@ -197,7 +197,7 @@ class URI {
      * @return {String}
      */
     getAuthority() {
-        var authority = '';
+        let authority = '';
 
         if('' !== this.user) {
             authority += this.user + ':' + this.password + '@';

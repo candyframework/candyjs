@@ -18,7 +18,7 @@ class Component extends Event {
      */
     constructor() {
         super();
-        
+
         /**
          * @property {Object} eventsMap the attached event handlers
          *
@@ -46,14 +46,14 @@ class Component extends Event {
 
     // 行为注入组件
     inject() {
-        var keys = Object.keys(this.behaviorsMap);
+        let keys = Object.keys(this.behaviorsMap);
 
         if(0 === keys.length) return;
 
         // 相对于其他编程语言来说这种处理方式并不是很好
         // 但在 javascript 中没找到更好的解决方式 暂时写成这样了
-        var ret = null;
-        for(var i=0,length=keys.length; i<length; i++) {
+        let ret = null;
+        for(let i=0,length=keys.length; i<length; i++) {
             // 本身
             ret = Object.getOwnPropertyNames(this.behaviorsMap[keys[i]]);
             for(let x=0,len=ret.length; x<len; x++) {
@@ -102,12 +102,12 @@ class Component extends Event {
      * 确保 behaviors() 声明的行为已保存到组件
      */
     ensureDeclaredBehaviorsAttached() {
-        var behaviors = this.behaviors();
-        
+        let behaviors = this.behaviors();
+
         if(null === behaviors) {
             return;
         }
-        
+
         for(let name in behaviors) {
             this.attachBehaviorInternal(name, behaviors[name]);
         }
@@ -131,7 +131,7 @@ class Component extends Event {
      */
     detachBehavior(name) {
         if(undefined !== this.behaviorsMap[name]) {
-            var behavior = this.behaviorsMap[name];
+            let behavior = this.behaviorsMap[name];
 
             delete this.behaviorsMap[name];
             behavior.unListen();

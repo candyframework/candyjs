@@ -1,8 +1,6 @@
-var fs = require('fs');
+const Candy = require('../Candy');
 
-var CandyJs = require('../index.js');
-
-var config = {
+const config = {
     'targets': {
         'file': {
             'classPath': 'candy/log/file/Target',
@@ -13,8 +11,8 @@ var config = {
     },
     'flushInterval': 1
 };
-var Logger = CandyJs.Candy.include('candy/log/Logger');
-var log = Logger.newInstance(config);
+const Logger = Candy.include('candy/log/Logger');
+const log = Logger.newInstance(config);
 
 // 写日志
 log.error('这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容 这是一条超过 1 KB 的内容');

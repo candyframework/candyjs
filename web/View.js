@@ -25,8 +25,8 @@ class View extends CoreView {
      * @inheritdoc
      */
     getTemplateFilePath(view) {
-        var app = Candy.app;
-        var context = this.context;
+        let app = Candy.app;
+        let context = this.context;
 
         // 模块无子目录 普通控制器有子目录
         if('' !== context.moduleId) {
@@ -46,7 +46,7 @@ class View extends CoreView {
      * @inheritdoc
      */
     getTemplate(view, callback) {
-        var path = this.getTemplateFilePath(view);
+        let path = this.getTemplateFilePath(view);
 
         fs.readFile(path, Candy.app.encoding, callback);
     }

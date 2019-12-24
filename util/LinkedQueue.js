@@ -55,7 +55,7 @@ class LinkedQueue extends Queue {
      * @inheritdoc
      */
     add(data) {
-        var node = new LinkedQueue.Node(data, null);
+        let node = new LinkedQueue.Node(data, null);
 
         if(0 === this.size) {
             this.headNode = node;
@@ -78,8 +78,8 @@ class LinkedQueue extends Queue {
             return null;
         }
 
-        var data = this.headNode.data;
-        var tmpHeadNode = this.headNode;
+        let data = this.headNode.data;
+        let tmpHeadNode = this.headNode;
 
         // 从队列去除头节点
         this.headNode = tmpHeadNode.next;
@@ -100,8 +100,8 @@ class LinkedQueue extends Queue {
      * @inheritdoc
      */
     remove(data) {
-        var current = this.headNode;
-        var previous = null;
+        let current = this.headNode;
+        let previous = null;
 
         for(; null !== current; previous = current, current = current.next) {
             if(data !== current.data) {
@@ -146,7 +146,7 @@ class LinkedQueue extends Queue {
      * @inheritdoc
      */
     toString() {
-        var str = '[ ';
+        let str = '[ ';
 
         for(let current = this.headNode; null !== current; current = current.next) {
             str += current.data + ' ';

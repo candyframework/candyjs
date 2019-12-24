@@ -90,7 +90,7 @@ class Target extends ITarget {
      * 格式化内容
      */
     formatMessage(messages) {
-        var msg = '';
+        let msg = '';
         for(let i=0,len=messages.length; i<len; i++) {
             msg += TimeHelper.format('y-m-d h:i:s', messages[i][2])
                 + ' [ '
@@ -102,13 +102,13 @@ class Target extends ITarget {
 
         return msg;
     }
-    
+
     /**
      * 写日志
      */
     writeLog(messages) {
-        var msg = this.formatMessage(messages);
-        var file = this.logPath + '/' + this.logFile;
+        let msg = this.formatMessage(messages);
+        let file = this.logPath + '/' + this.logFile;
 
         // check file exists
         fs.access(file, fs.constants.F_OK, (err) => {
@@ -135,7 +135,7 @@ class Target extends ITarget {
             });
         });
     }
-    
+
 }
 
 module.exports = Target;

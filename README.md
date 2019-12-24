@@ -12,17 +12,7 @@
 
 + CandyJs 采用 MIT 许可 这意味着您可以免费的使用 CandyJs 来开发 WEB 应用
 
-### 下一步计划
-
-拥抱 ES6 新特性，积极使用高版本 Node.js
-
-计划切换一个全新分支来重构 CandyJs ，使其尽量靠近 ES6 规范。
-
-旧版本 CandyJs 也将会在另外一个分支继续维护
-
 ### 文档
-
-+ http://candyjs.org
 
 + https://douyu-beijing.github.io/candyjs-guide
 
@@ -45,13 +35,13 @@ var CandyJs = require('candyjs');
 
 new CandyJs({
     'id': 1,
-    
+
     // 定义调试应用
     'debug': true,
-    
+
     // 定义应用路径
     'appPath': __dirname + '/app'
-    
+
 }).listen(8090, function(){
     console.log('listen on 8090');
 });

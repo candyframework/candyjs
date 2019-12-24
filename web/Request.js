@@ -28,7 +28,7 @@ class Request extends CoreRequest {
      * @param {Object} request 请求对象
      */
     static parseUrl(request) {
-        var obj = url.parse(request.url);
+        let obj = url.parse(request.url);
 
         return {
             protocol: obj.protocol,
@@ -48,7 +48,7 @@ class Request extends CoreRequest {
      * @return {String}
      */
     static getClientIp(request) {
-        var forward = request.headers['x-forwarded-for'];
+        let forward = request.headers['x-forwarded-for'];
         if(undefined !== forward) {
             return forward.substring(0, forward.indexOf(','));
         }
@@ -64,19 +64,19 @@ class Request extends CoreRequest {
      * @return {String | null}
      */
     static getQueryString(request, param) {
-        var parsed = Request.parseUrl(request);
-        
+        let parsed = Request.parseUrl(request);
+
         if(null === parsed.query) {
             return null;
         }
-        
+
         // 查找参数
         if(0 === parsed.query.indexOf(param + '=')
             || parsed.query.indexOf('&' + param + '=') > 0) {
-            
+
             return querystring.parse(parsed.query)[param];
         }
-        
+
         return null;
     }
 
@@ -105,7 +105,7 @@ class Request extends CoreRequest {
     static getCookie(request, name) {
         return Cookie.getCookie(request, name);
     }
-    
+
     /**
      * 获取 get 参数
      *
@@ -115,7 +115,7 @@ class Request extends CoreRequest {
     getQueryString(param) {
         return Request.getQueryString(this.request, param);
     }
-    
+
     /**
      * 获取 post 参数
      *
@@ -155,16 +155,16 @@ class Request extends CoreRequest {
      * @return {String}
      */
     getHostInfo() {
-        var protocol = undefined !== this.request.socket.encrypted
+        let protocol = undefined !== this.request.socket.encrypted
             || 'https' === this.request.headers['x-forwarded-protocol']
                 ? 'https'
                 : 'http';
 
-        var host = protocol + '://' + this.request.headers.host;
+        let host = protocol + '://' + this.request.headers.host;
 
         return host;
     }
-    
+
     /**
      * 获取当前网址 不包含锚点部分
      *
@@ -173,7 +173,7 @@ class Request extends CoreRequest {
     getCurrent() {
         return this.getHostInfo() + this.request.url;
     }
-    
+
 }
 
 module.exports = Request;

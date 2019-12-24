@@ -23,8 +23,8 @@ class Candy {
         }
 
         // 截取开头作为别名
-        var pos = alias.indexOf('/');
-        var root = -1 === pos ? alias : alias.substring(0, pos);
+        let pos = alias.indexOf('/');
+        let root = -1 === pos ? alias : alias.substring(0, pos);
         if(undefined !== Candy.pathAliases[root]) {
             return -1 === pos ?
                 Candy.pathAliases[root] :
@@ -68,8 +68,8 @@ class Candy {
      * @return {Object} 类实例
      */
     static createObject(clazz, ...params) {
-        var realClass = '';
-        var properties = null;
+        let realClass = '';
+        let properties = null;
 
         if('string' === typeof clazz) {
             realClass = Candy.getPathAlias('@' + clazz);
@@ -84,8 +84,8 @@ class Candy {
         // 文件不存在抛出异常
         // todo
 
-        var ClassName = require(realClass + Candy.fileExtention);
-        var instance = new ClassName(...params);
+        let ClassName = require(realClass + Candy.fileExtention);
+        let instance = new ClassName(...params);
 
         if(null !== properties) {
             Candy.config(instance, properties);
@@ -100,7 +100,7 @@ class Candy {
      * @param {String} clazz 类全名
      */
     static include(clazz) {
-        var realClass = Candy.getPathAlias('@' + clazz);
+        let realClass = Candy.getPathAlias('@' + clazz);
 
         // 文件不存在抛出异常
         // todo

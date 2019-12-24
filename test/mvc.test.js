@@ -1,20 +1,21 @@
 // node >= 6.0.0
 
-var request = require('supertest');
-var assert = require('assert');
+const request = require('supertest');
+const assert = require('assert');
 
-var CandyJs = require('../index.js');
+const CandyJs = require('../index');
+const App = require('../web/Application');
 
-var app = new CandyJs({
+const app = new App({
     'id': 1,
     'appPath': __dirname + '/app',
     'debug': true,
-    
+
     'modules': {
         'bbs': 'app/modules/bbs'
     }
 });
-var server = app.getServer();
+const server = new CandyJs(app).getServer();
 
 // test mvc
 describe('MVC', function() {
@@ -24,24 +25,24 @@ describe('MVC', function() {
             .expect(200)
             .end(function(err, res){
                 if (err) return done(err);
-                
+
                 assert.equal(res.text.trim(), 'mvc');
-                
+
                 done();
             });
     });
-    
+
     it('module get', function(done) {
         request(server)
             .get('/bbs')
             .expect(200)
             .end(function(err, res){
                 if (err) return done(err);
-                
+
                 assert.equal(res.text.trim(), 'module');
-                
+
                 done();
             });
     });
-    
+
 });

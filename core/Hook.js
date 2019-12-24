@@ -45,7 +45,7 @@ class Hook {
             return null;
         }
 
-        var ret = this.handlers[this.index];
+        let ret = this.handlers[this.index];
         this.index++;
 
         return ret;
@@ -59,7 +59,7 @@ class Hook {
      * @param {Function} callback
      */
     trigger(req, res, callback) {
-        var first = this.getHook();
+        let first = this.getHook();
 
         this.callback = callback;
 

@@ -21,12 +21,12 @@ class Router {
      * @return {Object}
      */
     static parse(pattern) {
-        var ret = null;
+        let ret = null;
 
         // format
         pattern = pattern.replace(/\{/g, '(').replace(/\}/g, ')');
         // search params
-        var matches = pattern.match(/\(\w+:/g);
+        let matches = pattern.match(/\(\w+:/g);
         // replace params
         if(null !== matches) {
             // https://v8project.blogspot.com/2017/09/elements-kinds-in-v8.html

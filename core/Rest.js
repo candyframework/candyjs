@@ -4,8 +4,8 @@
  */
 'use strict';
 
-var Candy = require('../Candy');
-var InvalidConfigException = require('./InvalidConfigException');
+const Candy = require('../Candy');
+const InvalidConfigException = require('./InvalidConfigException');
 
 /**
  * RESTful 基类

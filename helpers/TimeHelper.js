@@ -48,13 +48,13 @@ class TimeHelper {
      * @param {Number} timestamp 时间戳
      *
      * 用法
-     * var str = TimeHelper.format('y-m-d h:i:s');
+     * let str = TimeHelper.format('y-m-d h:i:s');
      *
      * @return {String}
      */
     static format(formats, timestamp = Date.now()) {
-        var d = new Date(timestamp);
-        var funs = {
+        let d = new Date(timestamp);
+        let funs = {
             y: () => d.getFullYear()
             ,m: () => TimeHelper.stringLPad(String(d.getMonth() + 1), '0', 2)
             ,d: () => TimeHelper.stringLPad(String(d.getDate()), '0', 2)

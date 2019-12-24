@@ -12,7 +12,7 @@ const InvalidConfigException = require('../core/InvalidConfigException');
  *
  * ```
  * eg.
- * var serviceLocator = new ServiceLocator();
+ * const serviceLocator = new ServiceLocator();
  * serviceLocator.setServicesAsDefinition({
  *     service1: {
  *         "class": "somePath/Service1",
@@ -24,7 +24,7 @@ const InvalidConfigException = require('../core/InvalidConfigException');
  *     }
  * });
  *
- * var instanceService1 = serviceLocator.getService('service1');
+ * const instanceService1 = serviceLocator.getService('service1');
  * ```
  */
 class ServiceLocator {

@@ -36,7 +36,7 @@ class FileHelper {
      * @return {String} 转换后的路径
      */
     static normalizePath(path, directorySeparator = '/') {
-        var ret = [];
+        let ret = [];
 
         path = path.replace(/\\+/g, directorySeparator);
         if(directorySeparator === path.charAt(path.length - 1)) {
