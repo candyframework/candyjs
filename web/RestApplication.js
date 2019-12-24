@@ -11,7 +11,7 @@ const CoreRest = require('../core/Rest');
 const InvalidCallException = require('../core/InvalidCallException');
 const Request = require('./Request');
 
-class Rest extends CoreRest {
+class RestApplication extends CoreRest {
 
     constructor(config) {
         super(config);
@@ -66,7 +66,7 @@ class Rest extends CoreRest {
         }
 
         // handler is string
-        let pos = ret.handler.indexOf(Rest.separator);
+        let pos = ret.handler.indexOf(RestApplication.separator);
         let obj = null;
         if(-1 === pos) {
             obj = Candy.createObject(ret.handler);
@@ -229,6 +229,6 @@ class Rest extends CoreRest {
 /**
  * class and method separate
  */
-Rest.separator = '@';
+RestApplication.separator = '@';
 
-module.exports = Rest;
+module.exports = RestApplication;

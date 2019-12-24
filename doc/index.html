@@ -184,8 +184,9 @@ PROJECT_NAME
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
+var App = require('candyjs/web/Application');
 
-new CandyJs({
+var app = new App({
     'id': 1,
 
     // 定义调试应用
@@ -208,7 +209,8 @@ new CandyJs({
         }
     }
 
-}).listen(8090, function(){
+});
+new CandyJs(app).listen(8090, function(){
     console.log('listen on 8090');
 });
 </pre></code>
@@ -278,7 +280,8 @@ new CandyJs({
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -303,7 +306,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -374,7 +378,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -425,8 +430,9 @@ modules 模块目录
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
+var App = require('candyjs/web/Application');
 
-new CandyJs({
+new CandyJs(new App({
     ...
 
     // 注册模块
@@ -436,7 +442,7 @@ new CandyJs({
 
     ...
 
-}).listen(8090, function(){
+})).listen(8090, function(){
     console.log('listen on 8090');
 });
 </code></pre>
@@ -470,7 +476,8 @@ new CandyJs({
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -503,7 +510,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Behavior = CandyJs.Candy.include('candy/core/Behavior');
+var Candy = require('candyjs/Candy');
+var Behavior = Candy.include('candy/core/Behavior');
 
 class MyBehavior extends Behavior {
     constructor() {
@@ -533,7 +541,8 @@ module.exports = MyBehavior;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -562,7 +571,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -593,7 +603,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -629,7 +640,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Behavior = CandyJs.Candy.include('candy/core/Behavior');
+var Candy = require('candyjs/Candy');
+var Behavior = Candy.include('candy/core/Behavior');
 
 class MyBehavior extends Behavior {
     events() {
@@ -663,17 +675,19 @@ module.exports = MyBehavior;
 <pre><code>
 // 入口文件
 var CandyJs = require('candyjs');
+var Candy = require('candyjs/Candy');
+var App = require('candyjs/web/Application');
 
-var Hook = CandyJs.Candy.include('candy/core/Hook');
-var R = CandyJs.Candy.include('candy/midwares/Resource');
+var Hook = Candy.include('candy/core/Hook');
+var R = Candy.include('candy/midwares/Resource');
 
 Hook.getInstance().addHook(new R(__dirname + '/public').serve());
 
-new CandyJs({
+new CandyJs(new App({
 
     ...
 
-}).listen(8090, function(){
+})).listen(8090, function(){
     console.log('listen on 8090');
 });
 </code></pre>
@@ -690,7 +704,7 @@ new CandyJs({
             </ul>
 <p>
 <pre><code>
-var URI = CandyJs.Candy.include('candy/web/URI');
+var URI = Candy.include('candy/web/URI');
 
 var uri = new URI();
 
@@ -720,7 +734,7 @@ uri.parseUrl('http://xxx.com:8080/abc?q=1#anchor');
             </ul>
 <p>
 <pre><code>
-var URL = CandyJs.Candy.include('candy/web/URL');
+var URL = Candy.include('candy/web/URL');
 
 var url = new URL(req);
 
@@ -761,7 +775,7 @@ url.to('index/index', {id: 1, '#': 'anchor'})
             </blockquote>
 <p>
 <pre><code>
-var Request = CandyJs.Candy.include('candy/web/Request');
+var Request = Candy.include('candy/web/Request');
 var request = new Request(req);
 var id = request.getQueryString('id');
 ...
@@ -787,7 +801,7 @@ var id = request.getQueryString('id');
             <h6><b>使用 response 输出内容</b></h6>
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('candy/web/Response');
+var Response = Candy.include('candy/web/Response');
 var response = new Response(res);
 response.setContent('some data from server');
 response.send();
@@ -797,7 +811,7 @@ response.send();
             <h6><b>使用 response 重定向</b></h6>
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('candy/web/Response');
+var Response = Candy.include('candy/web/Response');
 var response = new Response(res);
 response.redirect('http://foo.com');
 </code></pre>
@@ -832,9 +846,9 @@ response.redirect('http://foo.com');
 
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('candy/helpers/FileHelper');
-var Response = CandyJs.Candy.include('candy/helpers/StringHelper');
-var Response = CandyJs.Candy.include('candy/helpers/TimeHelper');
+var Response = Candy.include('candy/helpers/FileHelper');
+var Response = Candy.include('candy/helpers/StringHelper');
+var Response = Candy.include('candy/helpers/TimeHelper');
 
 // return /a/c
 var path = FileHelper.normalizePath('/a/./b/../c');
@@ -858,9 +872,9 @@ var time = TimeHelper.format('y-m-d h:i:s');
             <h4><b>系统内置别名</b></h4>
             <ul>
                 <li><code>@candy</code> 指向 CandyJs 目录</li>
-                <li><code>@app</code> 项目目录 由<code>appPath</code>指定<code>CandyJs.Candy.app.getAppPath()</code>可得到该值</li>
-                <li><code>@runtime</code> 缓存目录 默认指向<code>@app/runtime CandyJs.Candy.app.getRuntimePath()</code>可得到该值</li>
-                <li><code>@root</code> 网站根目录<code>CandyJs.Candy.app.getRootPath()</code>可得到该值</li>
+                <li><code>@app</code> 项目目录 由<code>appPath</code>指定<code>Candy.app.getAppPath()</code>可得到该值</li>
+                <li><code>@runtime</code> 缓存目录 默认指向<code>@app/runtime Candy.app.getRuntimePath()</code>可得到该值</li>
+                <li><code>@root</code> 网站根目录<code>Candy.app.getRootPath()</code>可得到该值</li>
             </ul>
 
             <h4><b>自定义别名</b></h4>
@@ -868,10 +882,10 @@ var time = TimeHelper.format('y-m-d h:i:s');
 <p>
 <pre><code>
 // 注册别名
-CandyJs.Candy.setPathAlias('@lib', '/home/www/library');
+Candy.setPathAlias('@lib', '/home/www/library');
 
 // 加载并创建 /home/www/library/MyClass 类
-var obj = CandyJs.Candy.createObject('lib/MyClass');
+var obj = Candy.createObject('lib/MyClass');
 </code></pre>
 </p>
 
@@ -879,62 +893,6 @@ var obj = CandyJs.Candy.createObject('lib/MyClass');
             <blockquote class="bg-danger">
                 由于设计不够优雅 npm 包从 2.0.0 开始重构了 REST 模式架构 此部分可能还会持续更新
             </blockquote>
-
-            <h4><b>npm 包 2.0.0 之前用法</b></h4>
-            <p>在 RESTful 模式中可用的请求方法如下<code>以下方法都是静态的</code></p>
-            <ul>
-                <li><code>get(route, handler)</code></li>
-                <li><code>post(route, handler)</code></li>
-                <li><code>put(route, handler)</code></li>
-                <li><code>delete(route, handler)</code></li>
-                <li><code>patch(route, handler)</code></li>
-                <li><code>head(route, handler)</code></li>
-                <li><code>options(route, handler)</code></li>
-            </ul>
-<p>
-<pre><code>
-// 增加 useRestful 参数启用 RESTful
-var app = new CandyJs({
-    'id': 1,
-    'debug': true,
-    'appPath': __dirname + '/app',
-
-    'useRestful': true
-});
-app.listen(8090, function(){
-    console.log(8090)
-});
-
-var Restful = CandyJs.Candy.include('candy/web/Restful');
-// get 路由 并指定 id 参数必须为数字
-Restful.get('/abc/{id:\\d+}', function(req, res, id){
-    var Request = CandyJs.Candy.include('candy/web/Request');
-    var r = new Request(req);
-
-    console.log(r.getQueryString('id'));
-    console.log(id);
-
-    res.end('api get');
-});
-
-// 多方法路由 id 参数可为字母或数字
-Restful.addRoute(['GET', 'POST'], '/def/{id:}', function(req, res, id){
-    res.end(id);
-});
-
-// 使用 app/api/User 类的 index 方法处理请求
-Restful.get('/xyz/{id:}', 'app/apis/User@index');
-
-// 其中 User 的定义如下
-'use strict';
-class User {
-    index(req, res, id) {
-        res.end(id);
-    }
-}
-module.exports = User;
-</code></pre>
-</p>
 
             <h4><b>npm 包 2.0.0 之后用法</b></h4>
             <p><code>以下方法都改为了实例方法</code></p>
@@ -949,12 +907,13 @@ module.exports = User;
             </ul>
 <p>
 <pre><code>
-var Rest = require('candyjs/restful');
+var Rest = require('candyjs/Restful');
+var App = require('candyjs/web/RestApplication');
 
-var rest = new Rest({
+var rest = new Rest(new App({
     appPath: __dirname + '/app',
     debug: true
-});
+}));
 
 rest.get('/abc/{id:\\d+}', function(req, res, id){
     res.end(String(id));
@@ -1012,8 +971,9 @@ rest.listen('8090', () => {
             </ul>
 <p>
 <pre><code>
-var CandyJs = require('candyjs')
-var Logger = CandyJs.Candy.include('candy/log/Logger');
+var CandyJs = require('candyjs');
+var Candy = require('candyjs/Candy');
+var Logger = Candy.include('candy/log/Logger');
 
 var log = Logger.getLogger();
 log.error('This is a error message');
@@ -1058,7 +1018,8 @@ log.flush();  // 写入硬盘
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
-var Cache = CandyJs.Candy.include('candy/cache/Cache');
+var Candy = require('candyjs/Candy');
+var Cache = Candy.include('candy/cache/Cache');
 
 var c = Cache.getCache('file');
 

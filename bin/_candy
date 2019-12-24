@@ -18,15 +18,15 @@ if(undefined === appName) {
 
 function createDirectorySync(dir, mode) {
     undefined === mode && (mode = 0o777);
-    
+
     if(fs.existsSync(dir)) {
         return true;
     }
-        
+
     if(createDirectorySync(path.dirname(dir))) {
         fs.mkdirSync(dir, mode);
     }
-    
+
     return true;
 }
 
@@ -56,7 +56,8 @@ fs.writeFile(controllerPath + '/IndexController.js',
 `'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -94,13 +95,14 @@ fs.writeFile(viewPath + '/index.html',
 // main file
 fs.writeFile(mainFile,
 `var CandyJs = require('candyjs');
+var App = require('candyjs/web/Application');
 
-new CandyJs({
+new CandyJs(new App({
     'id': 1,
     'debug': true,
     'appPath': __dirname + '/app'
-    
-}).listen(8090, function(){
+
+})).listen(8090, function(){
     console.log('listen on 8090');
 });
 `,

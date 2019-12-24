@@ -39,8 +39,15 @@ class Logger {
          */
         this.targets = [];
 
-        // init
-        if(undefined === settings || undefined === settings.targets) {
+        this.init(settings);
+    }
+
+    init(settings) {
+        if(undefined === settings) {
+            return;
+        }
+
+        if(undefined === settings.targets) {
             throw new InvalidConfigException('No log targets found');
         }
         if(undefined !== settings.flushInterval) {

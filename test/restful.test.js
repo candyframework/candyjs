@@ -3,11 +3,12 @@
 const request = require('supertest');
 const assert = require('assert');
 
-const Rest = require('../restful.js');
+const Restful = require('../Restful');
+const App = require('../web/RestApplication');
 
-const rest = new Rest({
+const rest = new Restful(new App({
     appPath: __dirname + '/app'
-});
+}));
 const server = rest.getServer();
 
 // api

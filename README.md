@@ -32,8 +32,9 @@
 // 入口文件 index.js
 
 var CandyJs = require('candyjs');
+var App = require('candyjs/web/Application');
 
-new CandyJs({
+var app = new App({
     'id': 1,
 
     // 定义调试应用
@@ -42,7 +43,9 @@ new CandyJs({
     // 定义应用路径
     'appPath': __dirname + '/app'
 
-}).listen(8090, function(){
+});
+
+new CandyJs(app).listen(8090, function(){
     console.log('listen on 8090');
 });
 ```
@@ -50,9 +53,9 @@ new CandyJs({
 ### 系统内置别名
 
 + @candy  系统目录
-+ @app  项目目录 由 appPath 指定 ```CandyJs.Candy.app.getAppPath()``` 可得到该值
-+ @runtime  缓存目录 默认指向 @app/runtime ```CandyJs.Candy.app.getRuntimePath()``` 可得到该值
-+ @root  网站根目录 ```CandyJs.Candy.app.getRootPath()``` 可得到该值
++ @app  项目目录 由 appPath 指定 `Candy.app.getAppPath()` 可得到该值
++ @runtime  缓存目录 默认指向 @app/runtime `Candy.app.getRuntimePath()` 可得到该值
++ @root  网站根目录 `Candy.app.getRootPath()` 可得到该值
 
 ### 项目目录示例
 
@@ -111,6 +114,10 @@ new CandyJs({
 
 ### 变更
 
++ 2019-12-24
+
+    * npm 包 4.0.0 移除了 `CandyJs.Candy` 属性
+
 + 2019-03-18
 
     * npm 包 3.1.4 优化代码 修改测试用例
@@ -125,7 +132,7 @@ new CandyJs({
 
 + 2018-08-20
 
-    * npm 包 3.0.5 移除 y/web/Request 类的 ```setQueryString()``` 方法
+    * npm 包 3.0.5 移除 y/web/Request 类的 `setQueryString()` 方法
 
 + 2018-08-20
 
@@ -173,8 +180,8 @@ new CandyJs({
 
 + 2018-01-12
 
-    * npm 包 1.1.0 util/LinkedQueue 添加 ```each()``` 方法
+    * npm 包 1.1.0 util/LinkedQueue 添加 `each()` 方法
 
 + 2018-01-11
 
-    * npm 包 1.0.9 util/LinkedQueue 添加 ```iterator()``` 和 ```remove(data)``` 方法
+    * npm 包 1.0.9 util/LinkedQueue 添加 `iterator()` 和 `remove(data)` 方法

@@ -176,8 +176,9 @@ PROJECT_NAME
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
+var App = require('candyjs/web/Application');
 
-new CandyJs({
+new CandyJs(new App({
     'id': 1,
 
     'debug': true,
@@ -199,7 +200,7 @@ new CandyJs({
         }
     }
 
-}).listen(8090, function(){
+})).listen(8090, function(){
     console.log('listen on 8090');
 });
 </pre></code>
@@ -275,7 +276,8 @@ new CandyJs({
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -299,7 +301,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -369,7 +372,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -419,8 +423,9 @@ modules
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
+var App = require('candyjs/web/Application');
 
-new CandyJs({
+new CandyJs(new App({
     ...
 
     // register module bbs
@@ -430,7 +435,7 @@ new CandyJs({
 
     ...
 
-}).listen(8090, function(){
+})).listen(8090, function(){
     console.log('listen on 8090');
 });
 </code></pre>
@@ -459,7 +464,8 @@ new CandyJs({
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -492,7 +498,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Behavior = CandyJs.Candy.include('candy/core/Behavior');
+var Candy = require('candyjs/Candy');
+var Behavior = Candy.include('candy/core/Behavior');
 
 class MyBehavior extends Behavior {
     constructor() {
@@ -523,7 +530,8 @@ module.exports = MyBehavior;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -551,7 +559,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -582,7 +591,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Controller = CandyJs.Candy.include('candy/web/Controller');
+var Candy = require('candyjs/Candy');
+var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
@@ -617,7 +627,8 @@ module.exports = IndexController;
 'use strict';
 
 var CandyJs = require('candyjs');
-var Behavior = CandyJs.Candy.include('candy/core/Behavior');
+var Candy = require('candyjs/Candy');
+var Behavior = Candy.include('candy/core/Behavior');
 
 class MyBehavior extends Behavior {
     events() {
@@ -649,17 +660,19 @@ module.exports = MyBehavior;
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
+var Candy = require('candyjs/Candy');
+var App = require('candyjs/web/Application');
 
-var Hook = CandyJs.Candy.include('candy/core/Hook');
-var R = CandyJs.Candy.include('candy/midwares/Resource');
+var Hook = Candy.include('candy/core/Hook');
+var R = Candy.include('candy/midwares/Resource');
 
 Hook.getInstance().addHook(new R(__dirname + '/public').serve());
 
-new CandyJs({
+new CandyJs(new App({
 
     ...
 
-}).listen(8090, function(){
+})).listen(8090, function(){
     console.log('listen on 8090');
 });
 </code></pre>
@@ -676,7 +689,7 @@ new CandyJs({
             </ul>
 <p>
 <pre><code>
-var URI = CandyJs.Candy.include('candy/web/URI');
+var URI = Candy.include('candy/web/URI');
 
 var uri = new URI();
 
@@ -706,7 +719,7 @@ uri.parseUrl('http://xxx.com:8080/abc?q=1#anchor');
             </ul>
 <p>
 <pre><code>
-var URL = CandyJs.Candy.include('candy/web/URL');
+var URL = Candy.include('candy/web/URL');
 
 var url = new URL(req);
 
@@ -743,7 +756,7 @@ url.to('index/index', {id: 1, '#': 'anchor'})
             </blockquote>
 <p>
 <pre><code>
-var Request = CandyJs.Candy.include('candy/web/Request');
+var Request = Candy.include('candy/web/Request');
 var request = new Request(req);
 var id = request.getQueryString('id');
 ...
@@ -767,7 +780,7 @@ var id = request.getQueryString('id');
             <h6><b>Use the Response to output data</b></h6>
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('candy/web/Response');
+var Response = Candy.include('candy/web/Response');
 var response = new Response(res);
 response.setContent('some data from server');
 response.send();
@@ -777,7 +790,7 @@ response.send();
             <h6><b>Use the Response to redirection</b></h6>
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('candy/web/Response');
+var Response = Candy.include('candy/web/Response');
 var response = new Response(res);
 response.redirect('http://foo.com');
 </code></pre>
@@ -812,9 +825,9 @@ response.redirect('http://foo.com');
 
 <p>
 <pre><code>
-var Response = CandyJs.Candy.include('candy/helpers/FileHelper');
-var Response = CandyJs.Candy.include('candy/helpers/StringHelper');
-var Response = CandyJs.Candy.include('candy/helpers/TimeHelper');
+var Response = Candy.include('candy/helpers/FileHelper');
+var Response = Candy.include('candy/helpers/StringHelper');
+var Response = Candy.include('candy/helpers/TimeHelper');
 
 // return /a/c
 var path = FileHelper.normalizePath('/a/./b/../c');
@@ -848,10 +861,10 @@ var time = TimeHelper.format('y-m-d h:i:s');
 <p>
 <pre><code>
 // register alias
-CandyJs.Candy.setPathAlias('@lib', '/home/www/library');
+Candy.setPathAlias('@lib', '/home/www/library');
 
 // create /home/www/library/MyClass class instance
-var obj = CandyJs.Candy.createObject('lib/MyClass');
+var obj = Candy.createObject('lib/MyClass');
 </code></pre>
 </p>
 
@@ -859,61 +872,6 @@ var obj = CandyJs.Candy.createObject('lib/MyClass');
             <blockquote class="bg-danger">
                 Because the design is not elegant, RESTful model Redesigned since npm package 2.0.0
             </blockquote>
-
-            <h4><b>The usage before npm package 2.0.0</b></h4>
-            <p>The methods available in RESTful mode is as follows</p>
-            <ul>
-                <li><code>get(route, handler)</code></li>
-                <li><code>post(route, handler)</code></li>
-                <li><code>put(route, handler)</code></li>
-                <li><code>delete(route, handler)</code></li>
-                <li><code>patch(route, handler)</code></li>
-                <li><code>head(route, handler)</code></li>
-                <li><code>options(route, handler)</code></li>
-            </ul>
-<p>
-<pre><code>
-// add useRestful configuration to use RESTful
-var app = new CandyJs({
-    'id': 1,
-    'debug': true,
-    'appPath': __dirname + '/app',
-
-    'useRestful': true
-});
-app.listen(8090, function(){
-    console.log(8090)
-});
-
-var Restful = CandyJs.Candy.include('candy/web/Restful');
-// get route
-Restful.get('/abc/{id:\\d+}', function(req, res, id){
-    var Request = CandyJs.Candy.include('candy/web/Request');
-    var r = new Request(req);
-
-    console.log(r.getQueryString('id'));
-    console.log(id);
-
-    res.end('api get');
-});
-
-Restful.addRoute(['GET', 'POST'], '/def/{id:}', function(req, res, id){
-    res.end(id);
-});
-
-// use app/api/User class's index method to handler request
-Restful.get('/xyz/{id:}', 'app/apis/User@index');
-
-// User definition
-'use strict';
-class User {
-    index(req, res, id) {
-        res.end(id);
-    }
-}
-module.exports = User;
-</code></pre>
-</p>
 
             <h4><b>The usage after npm package 2.0.0</b></h4>
             <p><code>The methods below changed into instance method</code></p>
@@ -928,12 +886,13 @@ module.exports = User;
             </ul>
 <p>
 <pre><code>
-var Rest = require('candyjs/restful');
+var Rest = require('candyjs/Restful');
+var App = require('candyjs/web/RestApplication');
 
-var rest = new Rest({
+var rest = new Rest(new App({
     appPath: __dirname + '/app',
     debug: true
-});
+}));
 
 rest.get('/abc/{id:\\d+}', function(req, res, id){
     res.end(String(id));
@@ -984,8 +943,9 @@ rest.listen('8090', () => {
             </ul>
 <p>
 <pre><code>
-var CandyJs = require('candyjs')
-var Logger = CandyJs.Candy.include('candy/log/Logger');
+var CandyJs = require('candyjs');
+var Candy = require('candyjs/Candy');
+var Logger = Candy.include('candy/log/Logger');
 
 var log = Logger.getLogger();
 log.error('This is a error message');
@@ -1023,7 +983,8 @@ log.flush();  // flush data to disk
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
-var Cache = CandyJs.Candy.include('candy/cache/Cache');
+var Candy = require('candyjs/Candy');
+var Cache = Candy.include('candy/cache/Cache');
 
 var c = Cache.getCache('file');
 
