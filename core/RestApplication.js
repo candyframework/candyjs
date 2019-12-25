@@ -10,7 +10,7 @@ const InvalidConfigException = require('./InvalidConfigException');
 /**
  * RESTful 基类
  */
-class Rest {
+class RestApplication {
 
     constructor(config) {
         /**
@@ -70,4 +70,4 @@ class Rest {
 
 }
 
-module.exports = Rest;
+module.exports = RestApplication;

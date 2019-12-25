@@ -7,7 +7,7 @@
 const Candy = require('../Candy');
 const StringHelper = require('../helpers/StringHelper');
 const Router = require('../core/Router');
-const CoreRest = require('../core/Rest');
+const CoreRest = require('../core/RestApplication');
 const InvalidCallException = require('../core/InvalidCallException');
 const Request = require('./Request');
 
