@@ -35,12 +35,12 @@ class Application extends Fate {
          * @property {String} exceptionHandler 异常处理类
          */
         this.exceptionHandler = '';
-        
+
         /**
          * @property {String} viewHandler 视图类
          */
         this.viewHandler = '';
-        
+
         Candy.app = this;
         this.init(config);
         Candy.config(this, config);

@@ -7,6 +7,7 @@
 const http = require('http');
 
 const Hook = require('./core/Hook');
+const Logger = require('./log/Logger');
 
 /**
  * 入口
@@ -21,6 +22,26 @@ class CandyJs {
     constructor(application) {
         this.server = null;
         this.app = application;
+    }
+
+    /**
+     * 后去日志对象
+     */
+    static getLogger() {
+        if(null === CandyJs._logger) {
+            CandyJs._logger = Logger.getLogger();
+        }
+
+        return CandyJs._logger;
+    }
+
+    /**
+     * 设置日志对象
+     *
+     * @param {any} logger 日志对象
+     */
+    static setLogger(logger) {
+        CandyJs._logger = logger;
     }
 
     // web
@@ -72,5 +93,10 @@ class CandyJs {
     }
 
 }
+
+/**
+ * logger
+ */
+CandyJs._logger = null;
 
 module.exports = CandyJs;

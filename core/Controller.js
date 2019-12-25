@@ -4,6 +4,7 @@
  */
 'use strict';
 
+const CandyJs = require('../index');
 const Component = require('./Component');
 
 /**
@@ -30,6 +31,7 @@ class Controller extends Component {
      * @param {Object} response
      */
     beforeActionCall(request, response) {
+        CandyJs.getLogger().trace('The beforeActionCall() method is called');
         this.triggerWithRestParams(Controller.EVENT_BEFORE_ACTIONCALL, request, response);
     }
 
@@ -40,6 +42,7 @@ class Controller extends Component {
      * @param {Object} response
      */
     afterActionCall(request, response) {
+        CandyJs.getLogger().trace('The afterActionCall() method is called');
         this.triggerWithRestParams(Controller.EVENT_AFTER_ACTIONCALL, request, response);
     }
 
@@ -52,6 +55,7 @@ class Controller extends Component {
     runControllerAction(request, response) {
         this.beforeActionCall(request, response);
 
+        CandyJs.getLogger().trace('Starting to run the run() method of: ' + this.constructor.name);
         this.run(request, response);
 
         this.afterActionCall(request, response);

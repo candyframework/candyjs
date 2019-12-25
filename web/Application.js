@@ -5,6 +5,7 @@
 'use strict';
 
 const Candy = require('../Candy');
+const CandyJS = require('../index');
 const CoreApp = require('../core/Application');
 const Request = require('./Request');
 const WebController = require('./Controller');
@@ -30,6 +31,8 @@ class Application extends CoreApp {
     requestListener(request, response) {
         let route = Request.parseUrl(request).pathname;
 
+        CandyJS.getLogger().trace('Route requested: ' + route);
+
         let controller = this.createController(route);
 
         if(null === controller) {
@@ -38,11 +41,12 @@ class Application extends CoreApp {
 
         // 是否继承自框架控制器
         if( !(controller instanceof WebController) ) {
+            CandyJS.getLogger().trace('Starting to run the run() method of: ' + controller.constructor.name);
             controller.run(request, response);
-
             return;
         }
 
+        CandyJS.getLogger().trace('Starting to run the runControllerAction() method of: ' + controller.constructor.name);
         controller.runControllerAction(request, response);
     }
 

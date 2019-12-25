@@ -5,6 +5,7 @@
 'use strict';
 
 const Candy = require('../Candy');
+const CandyJS = require('../index');
 const StringHelper = require('../helpers/StringHelper');
 
 /**
@@ -106,6 +107,10 @@ class Fate {
 
         // 拦截路由
         if(null !== this.interceptAll) {
+            CandyJS.getLogger().trace('Starting to create controller: '
+                + ('string' === typeof this.interceptAll
+                    ? this.interceptAll : this.interceptAll.classPath));
+
             return Candy.createObject(this.interceptAll);
         }
 
@@ -140,6 +145,9 @@ class Fate {
         // 模块没有前缀目录
         let clazz = null;
         if(null !== this.routesMap && undefined !== this.routesMap[id]) {
+            CandyJS.getLogger().trace('Starting to create controller: '
+                + ('string' === typeof this.routesMap[id]
+                    ? this.routesMap[id] : this.routesMap[id].classPath));
 
             return Candy.createObject(this.routesMap[id], {
                 moduleId: moduleId,
@@ -155,6 +163,8 @@ class Fate {
                 + '/controllers/'
                 + StringHelper.ucFirst(controllerId) + 'Controller';
 
+            CandyJS.getLogger().trace('Starting to create controller: ' + this.modules[id]);
+
             return Candy.createObject(clazz, {
                 moduleId: moduleId,
                 controllerId: controllerId,
@@ -167,6 +177,8 @@ class Fate {
             + viewPath
             + '/'
             + StringHelper.ucFirst(controllerId) + 'Controller';
+
+        CandyJS.getLogger().trace('Starting to create controller: ' + clazz);
 
         return Candy.createObject(clazz, {
             moduleId: moduleId,

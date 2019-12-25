@@ -145,7 +145,9 @@ class Logger {
      * @param {String} message the message to be logged
      */
     trace(message) {
-        this.log(message, Logger.LEVEL_TRACE);
+        if(Candy.app.debug) {
+            this.log(message, Logger.LEVEL_TRACE);
+        }
     }
 
     /**
