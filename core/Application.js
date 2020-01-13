@@ -5,13 +5,13 @@
 'use strict';
 
 const Candy = require('../Candy');
-const Fate = require('./Fate');
+const Event = require('./Event');
 const InvalidConfigException = require('./InvalidConfigException');
 
 /**
  * 应用基类
  */
-class Application extends Fate {
+class Application extends Event {
 
     /**
      * constructor
@@ -34,16 +34,10 @@ class Application extends Fate {
         /**
          * @property {String} exceptionHandler 异常处理类
          */
-        this.exceptionHandler = '';
-
-        /**
-         * @property {String} viewHandler 视图类
-         */
-        this.viewHandler = '';
+        this.exceptionHandler = 'candy/web/ExceptionHandler';
 
         Candy.app = this;
         this.init(config);
-        Candy.config(this, config);
     }
 
     /**

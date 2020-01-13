@@ -886,19 +886,20 @@ var obj = Candy.createObject('lib/MyClass');
             </ul>
 <p>
 <pre><code>
-var Rest = require('candyjs/Restful');
+var CandyJs = require('candyjs');
 var App = require('candyjs/web/RestApplication');
 
-var rest = new Rest(new App({
+var app = new App({
+    id: 1,
     appPath: __dirname + '/app',
     debug: true
-}));
-
-rest.get('/abc/{id:\\d+}', function(req, res, id){
+});
+app.get('/abc/{id:\\d+}', function(req, res, id){
     res.end(String(id));
 });
 
-rest.listen('8090', () => {
+var candyJs = new CandyJs(app);
+candyJs.listen('8090', () => {
     console.log('listen on 8090')
 });
 </code></pre>

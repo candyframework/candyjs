@@ -7,16 +7,14 @@
 const Candy = require('../Candy');
 const StringHelper = require('../helpers/StringHelper');
 const Router = require('../core/Router');
-const CoreRest = require('../core/RestApplication');
+const CoreApp = require('../core/Application');
 const InvalidCallException = require('../core/InvalidCallException');
 const Request = require('./Request');
 
-class RestApplication extends CoreRest {
+class RestApplication extends CoreApp {
 
     constructor(config) {
         super(config);
-
-        this.defaultExceptionHandler = 'candy/web/ExceptionHandler';
 
         /**
          * 请求方法
@@ -36,8 +34,7 @@ class RestApplication extends CoreRest {
             OPTIONS: []
         };
 
-        this.server = null;
-        this.config = config;
+        Candy.config(this, config);
     }
 
     /**
@@ -217,11 +214,58 @@ class RestApplication extends CoreRest {
      * @inheritdoc
      */
     handlerException(response, exception) {
-        let handler = Candy.createObject('' === this.exceptionHandler
-            ? this.defaultExceptionHandler
-            : this.exceptionHandler);
+        let handler = Candy.createObject(this.exceptionHandler);
 
         handler.handlerException(response, exception);
+    }
+
+    /**
+     * get
+     */
+    get(pattern, handler) {
+        this.addRoute('GET', pattern, handler);
+    }
+
+    /**
+     * post
+     */
+    post(pattern, handler) {
+        this.addRoute('POST', pattern, handler);
+    }
+
+    /**
+     * put
+     */
+    put(pattern, handler) {
+        this.addRoute('PUT', pattern, handler);
+    }
+
+    /**
+     * delete
+     */
+    delete(pattern, handler) {
+        this.addRoute('DELETE', pattern, handler);
+    }
+
+    /**
+     * patch
+     */
+    patch(pattern, handler) {
+        this.addRoute('PATCH', pattern, handler);
+    }
+
+    /**
+     * head
+     */
+    head(pattern, handler) {
+        this.addRoute('HEAD', pattern, handler);
+    }
+
+    /**
+     * options
+     */
+    options(pattern, handler) {
+        this.addRoute('OPTIONS', pattern, handler);
     }
 
 }
