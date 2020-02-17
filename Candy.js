@@ -4,8 +4,6 @@
  */
 'use strict';
 
-const StringHelper = require('./helpers/StringHelper');
-
 /**
  * 辅助类
  */
@@ -51,7 +49,11 @@ class Candy {
             return;
         }
 
-        Candy.pathAliases[alias] = StringHelper.rTrimChar(path, '/');
+        if('/' === path.charAt(path.length - 1)) {
+            path = path.substring(0, path.length - 1);
+        }
+
+        Candy.pathAliases[alias] = path;
     }
 
     /**
@@ -129,11 +131,6 @@ class Candy {
  * @property {Application} app 应用实例
  */
 Candy.app = null;
-
-/**
- * @property {Rest} rest
- */
-Candy.rest = null;
 
 /**
  * @property {Object} pathAliases 路径别名

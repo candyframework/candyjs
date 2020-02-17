@@ -55,8 +55,6 @@ class Application extends Event {
             this.setAppPath(config.appPath);
             delete config.appPath;
 
-        } else {
-            throw new InvalidConfigException('The "appPath" configuration is required');
         }
 
         if(undefined !== config.runtimePath) {

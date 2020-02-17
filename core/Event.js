@@ -48,7 +48,7 @@ class Event {
         if(undefined === this.handlers[eventName]) {
             return;
         }
-        
+
         if(undefined === handler) {
             delete this.handlers[eventName];
 
@@ -65,16 +65,15 @@ class Event {
      * 触发
      *
      * @param {String} eventName 事件名称
-     * @param {Array} param 参数
+     * @param {any} param 参数
      */
     trigger(eventName, param) {
         if(undefined === this.handlers[eventName]) {
             return;
         }
-        
+
         for(let i=0,len=this.handlers[eventName].length; i<len; i++) {
-            undefined === param ? this.handlers[eventName][i]() :
-                this.handlers[eventName][i].apply(null, param);
+            this.handlers[eventName][i](param);
         }
     }
 
@@ -88,7 +87,7 @@ class Event {
         if(undefined === this.handlers[eventName]) {
             return;
         }
-        
+
         for(let i=0,len=this.handlers[eventName].length; i<len; i++) {
             this.handlers[eventName][i](...params);
         }
