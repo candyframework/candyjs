@@ -20,60 +20,41 @@ class Component extends Event {
         super();
 
         /**
-         * @property {Object} eventsMap the attached event handlers
+         * @property {Map} behaviorsMap the attached behaviors
          *
          * {
-         *     'eventName': [fn1, fn2...]
-         *     'eventName2': [fn1, fn2...]
+         *     'behaviorName1': BehaviorInstance1,
+         *     'behaviorNameN': BehaviorInstanceN
          * }
          *
          */
-        this.eventsMap = {};
-
-        /**
-         * @property {Object} behaviorsMap the attached behaviors
-         *
-         * {
-         *     'behaviorName': BehaviorInstance
-         *     ...
-         * }
-         *
-         */
-        this.behaviorsMap = {};
-
-        this.ensureDeclaredBehaviorsAttached();
+        this.behaviorsMap = new Map();
     }
 
-    // 行为注入组件
-    inject() {
-        let keys = Object.keys(this.behaviorsMap);
+    /**
+     * 注入行为 只能注入实例变量和实例方法
+     */
+    injectBehaviors() {
+        this.ensureDeclaredBehaviorsAttached();
 
-        if(0 === keys.length) return;
-
-        // 相对于其他编程语言来说这种处理方式并不是很好
-        // 但在 javascript 中没找到更好的解决方式 暂时写成这样了
-        let ret = null;
-        for(let i=0,length=keys.length; i<length; i++) {
-            // 本身
-            ret = Object.getOwnPropertyNames(this.behaviorsMap[keys[i]]);
-            for(let x=0,len=ret.length; x<len; x++) {
-                if(undefined !== this[ret[x]]) {
-                    continue;
+        this.behaviorsMap.forEach((v) => {
+            // 自有属性
+            let keys = Object.keys(v);
+            for(let i=0, len=keys.length; i<len; i++) {
+                // 不覆盖已有属性
+                if(undefined === this[ keys[i] ]) {
+                    this[ keys[i] ] = v[ keys[i] ];
                 }
-
-                this[ret[x]] = this.behaviorsMap[keys[i]][ret[x]];
             }
 
-            // 原型链
-            ret = Object.getOwnPropertyNames(Object.getPrototypeOf(this.behaviorsMap[keys[i]]));
-            for(let x=0,len=ret.length; x<len; x++) {
-                if('constructor' === ret[x] || undefined !== this[ret[x]]) {
-                    continue;
+            // 原型属性 类的方法不可枚举 所以这里用了特殊 api
+            keys = Object.getOwnPropertyNames(Object.getPrototypeOf(v));
+            for(let i=0, len=keys.length; i<len; i++) {
+                if('constructor' !== keys[i] && undefined === this[ keys[i]]) {
+                    this[ keys[i] ] = v[ keys[i] ];
                 }
-
-                this[ret[x]] = this.behaviorsMap[keys[i]][ret[x]];
             }
-        }
+        });
     }
 
     /**
@@ -130,16 +111,16 @@ class Component extends Event {
      * @return {Object | null}
      */
     detachBehavior(name) {
-        if(undefined !== this.behaviorsMap[name]) {
-            let behavior = this.behaviorsMap[name];
+        let behavior = this.behaviorsMap.get(name);
 
-            delete this.behaviorsMap[name];
-            behavior.unListen();
-
-            return behavior;
+        if(undefined === behavior) {
+            return null;
         }
 
-        return null;
+        this.behaviorsMap.delete(name);
+        behavior.unListen();
+
+        return behavior;
     }
 
     /**
@@ -150,16 +131,16 @@ class Component extends Event {
      */
     attachBehaviorInternal(name, behavior) {
         if(!(behavior instanceof Behavior)) {
-            behavior = Candy.createObject(behavior);
+            behavior = Y.createObject(behavior);
         }
 
-        if(undefined !== this.behaviorsMap[name]) {
-            this.behaviorsMap[name].unListen();
+        if(undefined !== this.behaviorsMap.get(name)) {
+            this.behaviorsMap.get(name).unListen();
         }
 
         // 行为类可以监听组件的事件并处理
         behavior.listen(this);
-        this.behaviorsMap[name] = behavior;
+        this.behaviorsMap.set(name, behavior);
     }
 
 }

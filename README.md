@@ -114,6 +114,11 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2020-04-03
+
+    * npm 包 4.1.0 将 `Component` 的 `inject` 方法改名为 `injectBehaviors`
+    * 对 rest 路由系统进行了重构
+
 + 2019-12-24
 
     * npm 包 4.0.0 移除了 `CandyJs.Candy` 属性

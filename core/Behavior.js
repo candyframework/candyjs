@@ -27,7 +27,10 @@ class Behavior {
      *
      * @return {Object}
      *
-     * {eventName: handler, ...}
+     * {
+     *      eventName1: handler1,
+     *      eventNameN: handlerN
+     * }
      *
      */
     events() {

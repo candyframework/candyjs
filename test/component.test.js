@@ -9,13 +9,13 @@ class EventController extends Controller {
     constructor(context) {
         super(context);
 
-        this.on('myevent', function() {
-            EventController.eventFlag = 'simple';
+        this.on('myevent', function(data) {
+            EventController.eventFlag = data;
         });
     }
 
     run(req, res) {
-        this.trigger('myevent');
+        this.trigger('myevent', 'this is data');
     }
 }
 EventController.eventFlag = '';
@@ -24,14 +24,13 @@ describe('simple-event', function() {
     it('simple', function(done) {
         new EventController().run();
 
-        assert.equal(EventController.eventFlag, 'simple');
+        assert.equal(EventController.eventFlag, 'this is data');
 
         done();
     });
 });
 
 
-// 静态行为测试
 const Behavior = Candy.include('candy/core/Behavior');
 class MyBehavior extends Behavior {
     constructor() {
@@ -46,6 +45,8 @@ class MyBehavior extends Behavior {
     }
 }
 
+
+// 静态行为测试
 class StaticBehaviorController extends Controller {
     // 重写方法
     behaviors() {
@@ -56,7 +57,7 @@ class StaticBehaviorController extends Controller {
 
     run(req, res) {
         // 注入行为类
-        this.inject();
+        this.injectBehaviors();
     }
 }
 
@@ -89,7 +90,7 @@ class DynamicBehaviorController extends Controller {
 
     run(req, res) {
         // 注入行为类
-        this.inject();
+        this.injectBehaviors();
     }
 }
 

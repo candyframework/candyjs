@@ -584,7 +584,7 @@ module.exports = IndexController;
             <p>Once a behavior is attached to a component, its usage is straightforward</p>
             <blockquote class="bg-info">
                 For unnecessary performance overhead<code>CandyJs</code>does not really perform the injection operation.
-                To use the function of the behavior class, you must manually call the<code>inject()</code>method before calling the function of the behavior class
+                To use the function of the behavior class, you must manually call the<code>injectBehaviors()</code>method before calling the function of the behavior class
             </blockquote>
 <p>
 <pre><code>
@@ -604,7 +604,7 @@ class IndexController extends Controller {
 
     run(req, res) {
         // manually call
-        this.inject();
+        this.injectBehaviors();
 
         // using behaviors
         this.myFun();
@@ -870,11 +870,10 @@ var obj = Candy.createObject('lib/MyClass');
 
             <h1 class="page-header" id="restful"><b>RESTful</b></h1>
             <blockquote class="bg-danger">
-                Because the design is not elegant, RESTful model Redesigned since npm package 2.0.0
+                This function was experimental before 4.0.0
             </blockquote>
 
-            <h4><b>The usage after npm package 2.0.0</b></h4>
-            <p><code>The methods below changed into instance method</code></p>
+            <h4><b>Usage</b></h4>
             <ul>
                 <li><code>get(route, handler)</code></li>
                 <li><code>post(route, handler)</code></li>
@@ -894,9 +893,25 @@ var app = new App({
     appPath: __dirname + '/app',
     debug: true
 });
-app.get('/abc/{id:\\d+}', function(req, res, id){
-    res.end(String(id));
+
+// simple get
+app.get('/homepage', (req, res) => {
+    res.end('homepage');
 });
+
+// get with params
+app.get('/posts/{id}', (req, res, params) => {
+    res.end(params.id);
+});
+
+// limit param type
+app.get('/user/{id:\\d+}', (req, res, params) => {
+    res.end(params.id);
+});
+
+// process request with a class
+// the code below means /xyz req will process with new Demo().index method
+app.get('/xyz', 'app/api/Demo@index');
 
 var candyJs = new CandyJs(app);
 candyJs.listen('8090', () => {

@@ -10,18 +10,25 @@ const app = new App({
     id: 1,
     appPath: __dirname + '/app'
 });
+
 // api
 app.get('/abc', function(req, res){
     res.end('get ok');
 });
-app.get('/abc/{id:\\d+}', function(req, res, id){
-    res.end(String(id));
+app.get('/user/{id:\\d+}', function(req, res, params){
+    res.end( 'number_' + params.id );
 });
-app.post('/def', function(req, res){
+app.get('/user/{name}', function(req, res, params){
+    res.end( 'str_' + params.name );
+});
+app.get('/user/{name}/{page}', function(req, res, params){
+    res.end( params.name + '_' + params.page );
+});
+app.post('/posts/add', function(req, res){
     res.end('post ok');
 });
 app.get('/xyz', 'app/api/Demo@index');
-
+app.get('/xyz/{id}', 'app/api/Demo@testParam');
 
 const candyJs = new CandyJs(app);
 const server = candyJs.getServer();
@@ -42,14 +49,40 @@ describe('RESTful api', function() {
             });
     });
 
-    it('get with param', function(done) {
+    it('get with number param', function(done) {
         request(server)
-            .get('/abc/123')
-            .expect(200)
+            .get('/user/123')
+            //.expect(200)
             .end(function(err, res){
                 if (err) return done(err);
 
-                assert.equal(res.text, '123');
+                assert.equal(res.text, 'number_123');
+
+                done();
+            });
+    });
+
+    it('get with string param', function(done) {
+        request(server)
+            .get('/user/zhangsan')
+            //.expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+
+                assert.equal(res.text, 'str_zhangsan');
+
+                done();
+            });
+    });
+
+    it('get with multi params', function(done) {
+        request(server)
+            .get('/user/zhangsan/1')
+            //.expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+
+                assert.equal(res.text, 'zhangsan_1');
 
                 done();
             });
@@ -57,8 +90,8 @@ describe('RESTful api', function() {
 
     it('simple post', function(done) {
         request(server)
-            .post('/def')
-            .expect(200)
+            .post('/posts/add')
+            //.expect(200)
             .end(function(err, res){
                 if (err) return done(err);
 
@@ -67,52 +100,28 @@ describe('RESTful api', function() {
                 done();
             });
     });
-        // request(server)
-            // .get('/abc')
-            // .expect(200)
-            // .end(function(err, res){
-                // if (err) return done(err);
 
-                // assert.equal(res.text, 'get ok');
-
-                // done();
-            // });
-    // });
-
-    // it('get with param', function(done) {
-        // request(server)
-            // .get('/abc/123')
-            // .expect(200)
-            // .end(function(err, res){
-                // if (err) return done(err);
-
-                // assert.equal(res.text, '123');
-
-                // done();
-            // });
-    // });
-
-    // it('simple post', function(done) {
-        // request(server)
-            // .post('/def')
-            // .expect(200)
-            // .end(function(err, res){
-                // if (err) return done(err);
-
-                // assert.equal(res.text, 'post ok');
-
-                // done();
-            // });
-    // }); */
-
-    it('simple class get', function(done) {
+    it('class get', function(done) {
         request(server)
             .get('/xyz')
-            .expect(200)
+            //.expect(200)
             .end(function(err, res){
                 if (err) return done(err);
 
                 assert.equal(res.text, 'restful class ok');
+
+                done();
+            });
+    });
+
+    it('class get with param', function(done) {
+        request(server)
+            .get('/xyz/123')
+            //.expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+
+                assert.equal(res.text, '123');
 
                 done();
             });

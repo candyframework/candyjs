@@ -596,7 +596,7 @@ module.exports = IndexController;
             <h6><b>使用</b></h6>
             <p>一旦行为附加到组件 就可以直接使用它</p>
             <blockquote class="bg-info">
-                为了不必要的性能开销<code>CandyJs</code>不会真的执行注入操作 要想使用行为类的功能 必须在调用行为类的功能之前手动调用一下<code>inject()</code>方法
+                为了不必要的性能开销<code>CandyJs</code>不会真的执行注入操作 要想使用行为类的功能 必须在调用行为类的功能之前手动调用一下<code>injectBehaviors()</code>方法
             </blockquote>
 <p>
 <pre><code>
@@ -616,7 +616,7 @@ class IndexController extends Controller {
 
     run(req, res) {
         // 手动调用
-        this.inject();
+        this.injectBehaviors();
 
         // 使用行为类的功能
         this.myFun();
@@ -891,11 +891,10 @@ var obj = Candy.createObject('lib/MyClass');
 
             <h1 class="page-header" id="restful"><b>RESTful</b></h1>
             <blockquote class="bg-danger">
-                由于设计不够优雅 npm 包从 2.0.0 开始重构了 REST 模式架构 此部分可能还会持续更新
+                在 4.0.0 之前此功能一直是实验性质的
             </blockquote>
 
-            <h4><b>npm 包 2.0.0 之后用法</b></h4>
-            <p><code>以下方法都改为了实例方法</code></p>
+            <h4><b>用法</b></h4>
             <ul>
                 <li><code>get(route, handler)</code></li>
                 <li><code>post(route, handler)</code></li>
@@ -915,9 +914,27 @@ var app = new App({
     appPath: __dirname + '/app',
     debug: true
 });
-app.get('/abc/{id:\\d+}', function(req, res, id){
-    res.end(String(id));
+
+// 简单的请求
+app.get('/homepage', (req, res) => {
+    res.end('homepage');
 });
+
+// 含参数的请求
+// id 参数为转译成正则表达式
+app.get('/posts/{id}', (req, res, params) => {
+    res.end(params.id);
+});
+
+// 限制参数类型
+// 由于转译字符的解析问题 类型限制需要传入两个反斜线
+app.get('/user/{id:\\d+}', (req, res, params) => {
+    res.end(params.id);
+});
+
+// 使用一个类处理回调
+// 这个请求会使用 app/api/Demo 类的 index 方法处理
+app.get('/xyz', 'app/api/Demo@index');
 
 var candyJs = new CandyJs(app);
 candyJs.listen('8090', () => {

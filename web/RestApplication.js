@@ -5,11 +5,11 @@
 'use strict';
 
 const Candy = require('../Candy');
-const StringHelper = require('../helpers/StringHelper');
-const Router = require('../core/Router');
-const CoreApp = require('../core/Application');
-const InvalidCallException = require('../core/InvalidCallException');
 const Request = require('./Request');
+const Router = require('../utils/Router');
+const CoreApp = require('../core/Application');
+const StringHelper = require('../helpers/StringHelper');
+const InvalidCallException = require('../core/InvalidCallException');
 
 class RestApplication extends CoreApp {
 
@@ -21,7 +21,10 @@ class RestApplication extends CoreApp {
          *
          * each method has the follow structure
          *
-         * [ {pattern: pattern, handler: handler} ... ]
+         * [
+         *      { route: route1, handler: callbackFunction1 },
+         *      { route: route2, handler: callbackFunction2 }
+         * ]
          *
          */
         this.methods = {
@@ -45,19 +48,15 @@ class RestApplication extends CoreApp {
      */
     requestListener(request, response) {
         let route = Request.parseUrl(request).pathname;
-
-        // {paramValues, handler}
-        let ret = this.resolveRoutesCombine(route, request.method);
+        let ret = this.resolveRoutes(route, request.method);
 
         if(null === ret) {
             throw new InvalidCallException('The REST route: ' + route + ' not found');
         }
 
-        let args = null === ret.paramValues ? [null] : ret.paramValues;
-
         // handler is function
         if('function' === typeof ret.handler) {
-            ret.handler(request, response, ...args);
+            ret.handler(request, response, ret.paramValues);
 
             return;
         }
@@ -67,147 +66,165 @@ class RestApplication extends CoreApp {
         let obj = null;
         if(-1 === pos) {
             obj = Candy.createObject(ret.handler);
-            obj.index(request, response, ...args);
+            obj.run(request, response, ret.paramValues);
 
         } else {
             obj = Candy.createObject( ret.handler.substring(0, pos) );
-            obj[ ret.handler.substring(pos + 1) ](
-                request,
-                response,
-                ...args);
+            obj[ ret.handler.substring(pos + 1) ](request, response, ret.paramValues);
         }
     }
 
     /**
-     * 合并解析路由
+     * 解析路由
      *
      * @param {String} route 路由
      * @param {String} httpMethod 请求方法
      * @return {Object | null}
      */
-    resolveRoutesCombine(route, httpMethod) {
-        let ret = null;
-
-        // [ {pattern, handler} ... ]
-        let handlers = this.methods[httpMethod];
-        let tmp = {};
-        for(let i=0,len=handlers.length; i<len; i++) {
-            tmp[handlers[i].pattern] = handlers[i].handler;
+    resolveRoutes(route, httpMethod) {
+        let routesMap = this.methods[httpMethod];
+        if(0 === routesMap.length) {
+            return null;
         }
-        // {pattern, params, handler}
-        let combinedRoute = this.combineRoutes(tmp);
 
-        let matches = route.match( new RegExp('(?:' + combinedRoute.pattern + ')$') );
+        let routes = [];
+        for(let i=0,len=routesMap.length; i<len; i++) {
+            routes.push(routesMap[i].route);
+        }
+        let combinedRoute = Router.combineRoutes(routes);
+        let matches = new RegExp(combinedRoute.pattern).exec(route);
+        // 没有匹配到路由
+        if(null === matches) {
+            return null;
+        }
 
-        // 路由成功匹配
-        if(null !== matches) {
-            ret = {};
-
-            let subPatternPosition = -1;
-            // matches: [ 'xyz/other', undefined, undefined, undefined, 'xyz/other']
-            for(let i=1,len=matches.length; i<len; i++) {
-                if(undefined !== matches[i]) {
-                    subPatternPosition = i;
-                    break;
-                }
+        // 匹配到路由
+        let subPatternPosition = -1;
+        // matches: [ '/path/123', undefined, '/path/123', 123]
+        for(let i=1,len=matches.length; i<len; i++) {
+            if(undefined !== matches[i]) {
+                subPatternPosition = i;
+                break;
             }
+        }
+        let segmentPosition = this.getMatchedSegmentPosition(combinedRoute, subPatternPosition);
+        let handler = routesMap[segmentPosition].handler;
+        let paramValues = null;
 
-            let matchedRouteSegment = this.getMatchedSegmentBySubPatternPosition(
-                combinedRoute, subPatternPosition);
+        // 有参数
+        let paramNames = combinedRoute.params[segmentPosition];
+        if(null !== paramNames) {
+            paramValues = {};
 
-            ret.handler = combinedRoute.handler[matchedRouteSegment];
-            ret.paramValues = null;
-
-            // 有参数
-            if(null !== combinedRoute.params[matchedRouteSegment]) {
-                // ret.paramValues = new Array(combinedRoute.params[matchedRouteSegment].length);
-                ret.paramValues = [];
-                for(let i=0,len=combinedRoute.params[matchedRouteSegment].length; i<len; i++) {
-                    // ret.paramValues[i] = matches[subPatternPosition + i + 1];
-                    ret.paramValues.push( matches[subPatternPosition + i + 1] );
-                }
+            for(let i=0,len=paramNames.length; i<len; i++) {
+                paramValues[ paramNames[i] ] = matches[subPatternPosition + i + 1];
             }
         }
 
-        return ret;
+        return {
+            handler: handler,
+            paramValues: paramValues
+        };
     }
 
     /**
-     * 合并路由
-     *
-     * @param {Object} routes
-     *
-     * { pattern: any ... }
-     *
-     * @return {Object}
-     *
-     * eg.
-     *
-     * {
-     *   pattern: '(abc\\/(\\d+))|(abc)|(xyz\\/other)',
-     *   params: [ [ 'id' ], null, null ],
-     *   handler: any
-     * }
-     *
-     */
-    combineRoutes(routes) {
-        let ret = {};
-        let patternArray = [];
-        let paramArray = [];
-        let handler = [];  // 路由配置
-
-        let parsedRoute = null;
-        for(let reg in routes) {
-            parsedRoute = Router.parse(reg);
-
-            // 为每个模式添加一个括号 用于定位匹配到的是哪一个模式
-            patternArray.push( '(' + parsedRoute.pattern + ')' );
-            paramArray.push(parsedRoute.params);
-            handler.push(routes[reg]);
-        }
-
-        ret.pattern = patternArray.join('|');
-        ret.params = paramArray;
-        ret.handler = handler;
-
-        return ret;
-    }
-
-    /**
-     * 查找匹配的路由的位置
+     * 查找匹配的路由位置
      *
      * @param {Object} combinedRoute 合并的路由
      * @param {Number} subPatternPosition 匹配的子模式位置
      * @return {Number}
      */
-    getMatchedSegmentBySubPatternPosition(combinedRoute, subPatternPosition) {
-        // '(' 在 pattern 中第 subPatternPosition 次出现的位置
-        // 用于确定当前路由匹配的是第几部分
-        let segment = StringHelper.nIndexOf(combinedRoute.pattern, '(', subPatternPosition);
-        let tmpLine = combinedRoute.pattern.substring(0, segment).match(/\|/g);
-        // 没有匹配到竖线 说明匹配的是第一部分
-        segment = null === tmpLine ? 0 : tmpLine.length;
+    getMatchedSegmentPosition(combinedRoute, subPatternPosition) {
+        // 用 '(' 出现的位置确定匹配的是哪部分
+        let index = StringHelper.nIndexOf(combinedRoute.pattern, '(', subPatternPosition);
 
-        return segment;
+        if(0 === index) {
+            return 0;
+        }
+
+        let str = combinedRoute.pattern.substring(0, index);
+        index = 0;
+        for(let i=0, len=str.length; i<len; i++) {
+            if('|' === str[i]) {
+                index += 1;
+            }
+        }
+
+        return index;
     }
 
     /**
      * Adds a route to the collection
      *
      * @param {String | Array} httpMethod
-     * @param {String} pattern
+     * @param {String} route
      * @param {Function | String} handler
      */
-    addRoute(httpMethod, pattern, handler) {
+    addRoute(httpMethod, route, handler) {
         if('string' === typeof httpMethod) {
-            this.methods[httpMethod].push( {pattern: pattern, handler: handler} );
+            this.methods[httpMethod].push({
+                route: route,
+                handler: handler
+            });
 
             return;
         }
 
         for(let i=0,len=httpMethod.length; i<len; i++) {
-            this.methods[httpMethod[i]].push( {pattern: pattern, handler: handler} );
+            this.methods[httpMethod[i]].push({
+                route: route,
+                handler: handler
+            });
         }
+    }
+
+    /**
+     * get
+     */
+    get(route, handler) {
+        this.addRoute('GET', route, handler);
+    }
+
+    /**
+     * post
+     */
+    post(route, handler) {
+        this.addRoute('POST', route, handler);
+    }
+
+    /**
+     * put
+     */
+    put(route, handler) {
+        this.addRoute('PUT', route, handler);
+    }
+
+    /**
+     * delete
+     */
+    delete(route, handler) {
+        this.addRoute('DELETE', route, handler);
+    }
+
+    /**
+     * patch
+     */
+    patch(route, handler) {
+        this.addRoute('PATCH', route, handler);
+    }
+
+    /**
+     * head
+     */
+    head(route, handler) {
+        this.addRoute('HEAD', route, handler);
+    }
+
+    /**
+     * options
+     */
+    options(route, handler) {
+        this.addRoute('OPTIONS', route, handler);
     }
 
     /**
@@ -217,55 +234,6 @@ class RestApplication extends CoreApp {
         let handler = Candy.createObject(this.exceptionHandler);
 
         handler.handlerException(response, exception);
-    }
-
-    /**
-     * get
-     */
-    get(pattern, handler) {
-        this.addRoute('GET', pattern, handler);
-    }
-
-    /**
-     * post
-     */
-    post(pattern, handler) {
-        this.addRoute('POST', pattern, handler);
-    }
-
-    /**
-     * put
-     */
-    put(pattern, handler) {
-        this.addRoute('PUT', pattern, handler);
-    }
-
-    /**
-     * delete
-     */
-    delete(pattern, handler) {
-        this.addRoute('DELETE', pattern, handler);
-    }
-
-    /**
-     * patch
-     */
-    patch(pattern, handler) {
-        this.addRoute('PATCH', pattern, handler);
-    }
-
-    /**
-     * head
-     */
-    head(pattern, handler) {
-        this.addRoute('HEAD', pattern, handler);
-    }
-
-    /**
-     * options
-     */
-    options(pattern, handler) {
-        this.addRoute('OPTIONS', pattern, handler);
     }
 
 }
