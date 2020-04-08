@@ -6,7 +6,10 @@
 
 const StringHelper = require('../helpers/StringHelper');
 
-class Router {
+/**
+ * 正则路由
+ */
+class RegExpRouter {
 
     /**
      * 解析正则路由
@@ -22,7 +25,7 @@ class Router {
      *
      * @return {Object}
      */
-    static toRegexpString(patternString) {
+    toRegExpString(patternString) {
         let params = null;
 
         // format /home/(uid)
@@ -60,17 +63,22 @@ class Router {
      *
      * [ 'route1', 'route2' ]
      *
-     * @return {Object} eg. [ null, ['uid'] ]
+     * @return {Object}
+     *
+     * eg.
+     * {
+     *      pattern: '(?:xxx\\/?$)|(?:(\\d+)\\/?$)',
+     *      params: [ null, ['uid'] ]
+     * }
      */
-    static combineRoutes(routes) {
+    combineRoutes(routes) {
         let patterns = [];
         let params = [];
 
         for(let parsedRoute=null, i=0, len=routes.length; i<len; i++) {
-            parsedRoute = Router.toRegexpString(routes[i]);
+            parsedRoute = this.toRegExpString(routes[i]);
 
-            // 为每个模式添加一个括号 用于定位匹配到的是哪一个模式
-            patterns.push( '(' + parsedRoute.pattern + ')' );
+            patterns.push( '(?:' + parsedRoute.pattern + ')' );
             params.push(parsedRoute.params);
         }
 
@@ -82,4 +90,4 @@ class Router {
 
 }
 
-module.exports = Router;
+module.exports = RegExpRouter;

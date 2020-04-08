@@ -6,7 +6,7 @@
 
 const Candy = require('../Candy');
 const Request = require('./Request');
-const Router = require('../utils/Router');
+const RegExpRouter = require('../utils/RegExpRouter');
 const CoreApp = require('../core/Application');
 const StringHelper = require('../helpers/StringHelper');
 const InvalidCallException = require('../core/InvalidCallException');
@@ -91,7 +91,8 @@ class RestApplication extends CoreApp {
         for(let i=0,len=routesMap.length; i<len; i++) {
             routes.push(routesMap[i].route);
         }
-        let combinedRoute = Router.combineRoutes(routes);
+
+        let combinedRoute = new RegExpRouter().combineRoutes(routes);
         let matches = new RegExp(combinedRoute.pattern).exec(route);
         // 没有匹配到路由
         if(null === matches) {
@@ -99,7 +100,34 @@ class RestApplication extends CoreApp {
         }
 
         // 匹配到路由
+        let matchedPosition = this.getMatchedSubPatternPosition(matches);
+        let segmentPosition = -1 === matchedPosition
+            ? this.getMatchedRoutePositionByInput(routes, matches.input)
+            : this.getMatchedRoutePositionBySubPattern(combinedRoute.pattern, matchedPosition);
+
+        let paramValues = null;
+        let paramNames = combinedRoute.params[segmentPosition];
+        if(null !== paramNames) {
+            paramValues = {};
+
+            for(let i=0,len=paramNames.length; i<len; i++) {
+                paramValues[ paramNames[i] ] =
+                    matches[matchedPosition + i];
+            }
+        }
+
+        return {
+            handler: routesMap[segmentPosition].handler,
+            paramValues: paramValues
+        };
+    }
+
+    /**
+     * 获取子模式位置
+     */
+    getMatchedSubPatternPosition(matches) {
         let subPatternPosition = -1;
+
         // matches: [ '/path/123', undefined, '/path/123', 123]
         for(let i=1,len=matches.length; i<len; i++) {
             if(undefined !== matches[i]) {
@@ -107,50 +135,57 @@ class RestApplication extends CoreApp {
                 break;
             }
         }
-        let segmentPosition = this.getMatchedSegmentPosition(combinedRoute, subPatternPosition);
-        let handler = routesMap[segmentPosition].handler;
-        let paramValues = null;
 
-        // 有参数
-        let paramNames = combinedRoute.params[segmentPosition];
-        if(null !== paramNames) {
-            paramValues = {};
+        return subPatternPosition;
+    }
 
-            for(let i=0,len=paramNames.length; i<len; i++) {
-                paramValues[ paramNames[i] ] = matches[subPatternPosition + i + 1];
+    /**
+     * 查找匹配的路由位置
+     */
+    getMatchedRoutePositionByInput(routes, input) {
+        let index = 0;
+
+        let str = StringHelper.trimChar(input, '/');
+        for(let i=0, len=routes.length; i<len; i++) {
+            if( str === StringHelper.trimChar(routes[i], '/') ) {
+                index = i;
+                break;
             }
         }
 
-        return {
-            handler: handler,
-            paramValues: paramValues
-        };
+        return index;
     }
 
     /**
      * 查找匹配的路由位置
      *
-     * @param {Object} combinedRoute 合并的路由
+     * @param {String} pattern 合并的模式路由
      * @param {Number} subPatternPosition 匹配的子模式位置
      * @return {Number}
      */
-    getMatchedSegmentPosition(combinedRoute, subPatternPosition) {
-        // 用 '(' 出现的位置确定匹配的是哪部分
-        let index = StringHelper.nIndexOf(combinedRoute.pattern, '(', subPatternPosition);
+    getMatchedRoutePositionBySubPattern(pattern, subPatternPosition) {
+        let find = 0;
+        let str = '';
 
-        if(0 === index) {
-            return 0;
-        }
+        for(let i=0, len=pattern.length - 1; i<len; i++) {
+            if('(' === pattern[i] && '?' !== pattern[i + 1]) {
+                find += 1;
+            }
 
-        let str = combinedRoute.pattern.substring(0, index);
-        index = 0;
-        for(let i=0, len=str.length; i<len; i++) {
-            if('|' === str[i]) {
-                index += 1;
+            if(find === subPatternPosition) {
+                str = pattern.substring(0, i);
+                break;
             }
         }
 
-        return index;
+        find = 0;
+        for(let i=0, len=str.length; i<len; i++) {
+            if('|' === str[i]) {
+                find += 1;
+            }
+        }
+
+        return find;
     }
 
     /**
