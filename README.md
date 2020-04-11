@@ -114,6 +114,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2020-04-11
+
+    * npm 包 4.1.2 修复系统 Hook bug
+
 + 2020-04-03
 
     * npm 包 4.1.0 将 `Component` 的 `inject` 方法改名为 `injectBehaviors`

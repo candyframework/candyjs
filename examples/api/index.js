@@ -9,7 +9,7 @@ const app = new App({
 });
 
 // api
-Hook.getInstance().addHook((req, res, next) => {
+Hook.addHook((req, res, next) => {
     // The favicon.ico request may also be here
     console.log('filter request here');
 

@@ -666,7 +666,7 @@ var App = require('candyjs/web/Application');
 var Hook = Candy.include('candy/core/Hook');
 var R = Candy.include('candy/midwares/Resource');
 
-Hook.getInstance().addHook(new R(__dirname + '/public').serve());
+Hook.addHook(new R(__dirname + '/public').serve());
 
 new CandyJs(new App({
 

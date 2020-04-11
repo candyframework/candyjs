@@ -4,6 +4,9 @@
  */
 'use strict';
 
+/**
+ * 中间件
+ */
 class Hook {
 
     /**
@@ -11,41 +14,23 @@ class Hook {
      */
     constructor() {
         this.index = 0;
-        this.handlers = [];
+
+        this.req = null;
+        this.res = null;
         this.callback = null;
-    }
-
-    /**
-     * 获取 Hook 实例
-     */
-    static getInstance() {
-        if(null === Hook._instance) {
-            Hook._instance = new Hook();
-        }
-
-        return Hook._instance;
-    }
-
-    /**
-     * 注册
-     *
-     * @param {Function} handler
-     */
-    addHook(handler) {
-        this.handlers.push(handler);
     }
 
     /**
      * 获取一个 handler
      */
     getHook() {
-        if(this.index === this.handlers.length) {
+        if(this.index === Hook._handlers.length) {
             this.index = 0;
 
             return null;
         }
 
-        let ret = this.handlers[this.index];
+        let ret = Hook._handlers[this.index];
         this.index++;
 
         return ret;
@@ -59,37 +44,47 @@ class Hook {
      * @param {Function} callback
      */
     trigger(req, res, callback) {
-        let first = this.getHook();
-
+        this.req = req;
+        this.res = res;
         this.callback = callback;
 
+        let first = this.getHook();
         // 没有插件
         if(null === first || 'function' !== typeof first) {
-            callback(req, res, null);
+            callback(req, res);
             return;
         }
 
-        this.triggerHook(req, res, first);
+        this.triggerHook(first);
     }
 
-    triggerHook(req, res, next) {
-        next(req, res, () => {
+    triggerHook(next) {
+        next(this.req, this.res, () => {
             let nextHandler = this.getHook();
 
             if(null !== nextHandler && 'function' === typeof nextHandler) {
-                this.triggerHook(req, res, nextHandler);
+                this.triggerHook(nextHandler);
                 return;
             }
 
-            this.callback(req, res, null);
+            this.callback(this.req, this.res);
         });
     }
 
 }
 
 /**
- * instance
+ * 中间件
  */
-Hook._instance = null;
+Hook._handlers = [];
+
+/**
+ * 注册中间件
+ *
+ * @param {Function} handler
+ */
+Hook.addHook = (handler) => {
+    Hook._handlers.push(handler);
+};
 
 module.exports = Hook;
