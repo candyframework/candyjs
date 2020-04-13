@@ -1,4 +1,4 @@
-const TestModel = require('../../models/Test');
+const User = require('../../models/User');
 const Candy = require('../../../../../Candy');
 
 // 加载系统控制器
@@ -9,8 +9,15 @@ class IndexController extends Controller {
     run(req, res) {
         let uid = Request.getQueryString(req, 'uid');
 
+        this.fetchUser(res, parseInt(uid, 10));
+    }
+    
+    async fetchUser(res, uid) {
+        const user = new User();
+        let data = await user.getUserById(uid);
+        
         this.getView().getTemplate('index', (err, temp) => {
-            temp = temp.replace('{uid}', uid);
+            temp = temp.replace('{info}', JSON.stringify(data));
 
             res.end(temp);
         });
