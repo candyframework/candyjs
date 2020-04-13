@@ -49,29 +49,11 @@
 
             <h4><b>安装程序</b></h4>
             <p>
-                可以通过两种方式安装<code>CandyJs</code>
-                <ol>
-                    <li>使用<code>npm</code></li>
-                    <li>下载源代码手动部署</li>
-                </ol>
-            </p>
-
-            <h4><b>使用<code>npm</code>安装</b></h4>
-            <p>
                 <pre><code>npm install candyjs</code></pre>
             </p>
 
-            <h4><b>下载源代码手动部署</b></h4>
-            <p>
-                <pre>通过<a target="_blank" href="https://github.com/douyu-beijing/candyjs"><b>GitHub</b></a>下载源码放置到 node_modules 目录即可</pre>
-                <blockquote class="bg-info">
-                    注意 通过 github 下载的源码可能需要删除其中的 git 仓库信息
-                    否则 npm 安装其他包可能会有问题
-                </blockquote>
-            </p>
-
             <h1 class="page-header" id="firstrun"><b>第一次运行程序</b></h1>
-            <p>本例输出一个 Hello word 程序</p>
+            <p>本例输出一个 MVC 模式 Hello word 程序， 如果只想要写一些接口程序，请看<a href="#restful">这里</a></p>
             <p>首先需要创建一个基本应用框架</p>
             <p>在<code>CandyJs</code>的<code>bin</code>目录提供了一个创建应用的工具<code>_candy 可以使用该工具初始化应用</code></p>
             <p>
@@ -108,7 +90,7 @@ PROJECT_NAME
             <p>进入应用目录启动程序</p>
             <p><pre><code>node index.js</code></pre></p>
             <p>访问程序</p>
-            <p><pre><code><a href="http://localhost:8090" target="_blank">http://localhost:8090</a></code></pre></p>
+            <p><pre><code><a href="http://localhost:2333" target="_blank">http://localhost:2333</a></code></pre></p>
 
             <h1 class="page-header" id="appstruct">应用结构</h1>
 
@@ -170,7 +152,7 @@ PROJECT_NAME
 
             <h4><b>入口脚本<code>index.js</code></b></h4>
             <p>
-                入口脚本是应用启动流程中的第一环 一个应用只有一个入口脚本
+                入口脚本是应用启动流程中的第一环，一个应用只有一个入口脚本。
                 入口脚本包含启动脚本 程序启动后就会监听客户端的连接
             </p>
             <p>
@@ -210,19 +192,19 @@ var app = new App({
     }
 
 });
-new CandyJs(app).listen(8090, function(){
-    console.log('listen on 8090');
+new CandyJs(app).listen(2333, function(){
+    console.log('listen on 2333');
 });
 </pre></code>
 </p>
 
             <h4><b>应用</b></h4>
             <p>
-                一般的框架都包含两种应用<code>Web 应用</code>和<code>控制台应用</code>但是<code>CandyJs</code>只有一种<code>Web 应用</code>
+                <code>CandyJs</code>包含两种应用：<code>Web 应用</code>和<code>Rest 应用</code>
             </p>
 
             <h4><b>应用属性</b></h4>
-            <p>在入口文件中可以传入各种参数 这些参数最终会被赋值到应用对象上</p>
+            <p>在入口文件中可以传入各种参数，这些参数最终会被赋值到应用对象上</p>
 
             <h6><b>必要属性</b></h6>
             <ul>
@@ -271,10 +253,10 @@ new CandyJs(app).listen(8090, function(){
             <p>其他在入口文件中传入的参数都会作为自定义参数传入应用对象</p>
 
             <h1 class="page-header" id="controller"><b>应用控制器</b></h1>
-            <p>控制器是<code>MVC</code>模式中的一部分 是继承<code>candy/core/Controller</code>类的对象 负责处理请求和生成响应</p>
+            <p>控制器是<code>MVC</code>模式中的一部分，是继承<code>candy/core/Controller</code>类的对象，负责处理请求和生成响应</p>
 
             <h4><b>动作</b></h4>
-            <p>控制器由<code>动作</code>组成 它是执行终端用户请求的最基础的单元 一个控制器有且只有一个入口动作叫做<code>run</code></p>
+            <p>控制器由<code>动作</code>组成，它是执行终端用户请求的最基础的单元，一个控制器有且只有一个入口动作叫做<code>run</code></p>
 <p>
 <pre><code>
 'use strict';
@@ -442,8 +424,8 @@ new CandyJs(new App({
 
     ...
 
-})).listen(8090, function(){
-    console.log('listen on 8090');
+})).listen(2333, function(){
+    console.log('listen on 2333');
 });
 </code></pre>
 </p>
@@ -661,7 +643,37 @@ module.exports = MyBehavior;
 </p>
 
             <h1 class="page-header" id="midware"><b>中间件</b></h1>
-            <p>中间件是处理请求的第一个环节 可以对请求做过滤处理并调用下一个中间件</p>
+            <p>中间件是处理请求的第一个环节，可以对请求做过滤处理并调用下一个中间件</p>
+            <p><code>CandyJs</code>中的中间件需要通过<code>Hook</code>进行注册，每一个中间件是一个可以接受三个参数的函数</p>
+<p>
+<pre><code>
+// 入口文件
+var CandyJs = require('candyjs');
+var Candy = require('candyjs/Candy');
+var App = require('candyjs/web/Application');
+
+var Hook = Candy.include('candy/core/Hook');
+
+Hook.addHook((req, res, next) => {
+    // do something
+    next();
+});
+Hook.addHook((req, res, next) => {
+    setTimeout(() => {
+        next();
+    }, 2000);
+});
+
+new CandyJs(new App({
+
+    ...
+
+})).listen(2333, function(){
+    console.log('listen on 2333');
+});
+</code></pre>
+</p>
+
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时只提供了一个处理静态资源的中间件
                 理论上<code>CandyJs</code>兼容任何<code>express</code>的中间件
@@ -669,7 +681,7 @@ module.exports = MyBehavior;
 
             <h1 class="page-header" id="static"><b>静态资源</b></h1>
             <p>
-                <code>CandyJs</code>默认是不处理静态资源的 需要使用中间件
+                <code>CandyJs</code>默认是不处理静态资源的，需要使用中间件
             </p>
 <p>
 <pre><code>
@@ -687,8 +699,8 @@ new CandyJs(new App({
 
     ...
 
-})).listen(8090, function(){
-    console.log('listen on 8090');
+})).listen(2333, function(){
+    console.log('listen on 2333');
 });
 </code></pre>
 </p>
@@ -771,7 +783,7 @@ url.to('index/index', {id: 1, '#': 'anchor'})
                 <li><code>getCookie(name)</code> 实例方法获取 COOKIE</li>
             </ul>
             <blockquote class="bg-danger">
-                <code>CandyJs</code>中使用 getParameter() 获取 POST 参数暂时需要依赖第三方解析 body 的中间件 否则将反回 null
+                <code>CandyJs</code>中使用 getParameter() 获取 POST 参数需要依赖第三方解析 body 的中间件，否则将反回 null
             </blockquote>
 <p>
 <pre><code>
@@ -779,6 +791,14 @@ var Request = Candy.include('candy/web/Request');
 var request = new Request(req);
 var id = request.getQueryString('id');
 ...
+</code></pre>
+</p>
+
+<p>
+<pre><code>
+const bodyParser = require('body-parser');
+
+Hook.addHook(bodyParser.json());
 </code></pre>
 </p>
 
@@ -865,7 +885,7 @@ var time = TimeHelper.format('y-m-d h:i:s');
 </p>
 
             <h1 class="page-header" id="alias"><b>别名系统</b></h1>
-            <p>为了方便类的管理 实现自动加载 初始化等<code>CandyJs</code>提供了一套别名系统</p>
+            <p>为了方便类的管理，实现自动加载、初始化等，<code>CandyJs</code>提供了一套别名系统</p>
             <p>别名是一个以<code>@</code>符号开头的字符串 每一个别名对应一个真实的物理路径</p>
             <p><code>CandyJs</code>中加载类以及创建类的实例都是用的别名</p>
 
@@ -937,8 +957,8 @@ app.get('/user/{id:\\d+}', (req, res, params) => {
 app.get('/xyz', 'app/api/Demo@index');
 
 var candyJs = new CandyJs(app);
-candyJs.listen('8090', () => {
-    console.log('listen on 8090')
+candyJs.listen('2333', () => {
+    console.log('listen on 2333')
 });
 </code></pre>
 </p>
@@ -951,18 +971,21 @@ candyJs.listen('8090', () => {
 
             <h1 class="page-header" id="log"><b>日志</b></h1>
             <p>
-                <code>CandyJs</code>提供了对日志处理的功能 目前只支持文件日志
+                <code>CandyJs</code>提供了对日志处理的功能，目前只支持文件日志
             </p>
 
             <h4><b>使用日志</b></h4>
-            <p>使用日志功能前 需要在入口文件注册</p>
+            <p>使用日志功能前，需要在入口文件注册，<code>CandyJs</code>可以同时配置多种日志，只需要在<code>targets</code>项目中配置即可</p>
 <p>
 <pre><code>
 'log': {
     'targets': {
         'file': {
+            // 必须参数，表示类的路径，支持别名路径
             'classPath': 'candy/log/file/Target',
+            // 日志输出目录
             'logPath': __dirname + '/logs',
+            // 文件名
             'logFile': 'system.log',
             'maxFileSize': 10240  // 10 MB
         }
@@ -974,9 +997,9 @@ candyJs.listen('8090', () => {
 
             <p>
                 <code>targets</code>用于配置日志处理程序
-                现在只支持文件日志 所以上面配置了<code>file</code>字段 用于配置文件日志所需要的环境 其中配置了所用的日志类和日志路径
+                现在只支持文件日志，所以上面配置了<code>file</code>字段
             </p>
-            <p><code>flushInterval</code>表示日志写入硬盘的频率 这里指定每调用 10 次日志接口向硬盘同步一次</p>
+            <p><code>flushInterval</code>表示日志写入硬盘的频率。这里指定每调用 10 次日志接口向硬盘同步一次</p>
             <p>用户手动调用 flush() 也会触发同步日志到硬盘的操作</p>
 
             <h4><b>日志接口</b></h4>
@@ -999,10 +1022,42 @@ log.flush();  // 写入硬盘
 </code></pre>
 </p>
 
+            <h4><b>扩展日志</b></h4>
             <blockquote class="bg-info">
-                <code>CandyJs</code>暂时只提供了文件日志功能 如果想实现诸如数据库日志等的功能必须自己进行日志扩展
-                <code>CandyJs</code>完善的代码设计使得进行日志扩展非常容易 只需要让扩展的日志类继承<code>candy/log/ITarget</code>并实现其中的<code>flush()</code>方法即可
+                <code>CandyJs</code>暂时只提供了文件日志功能，如果想实现诸如数据库日志等的功能必须自己进行日志扩展。
+                <code>CandyJs</code>完善的代码设计使得进行日志扩展非常容易，只需要让扩展的日志类继承<code>candy/log/ITarget</code>并实现其中的<code>flush()</code>方法即可
             </blockquote>
+<p>
+<pre><code>
+// 1. 定义日志类
+var Candy = require('candyjs/Candy');
+var Interface = Candy.include('candy/log/ITarget');
+
+class MyDbLog extends Interface {
+    flush(messages) {
+        console.log(messages);
+    }
+}
+
+// 2. 在入口文件配置自己的日志类
+'log': {
+    'targets': {
+        'dblog': {
+            'classPath': 'mypath/MyDbLog'
+        }
+    },
+    'flushInterval': 10
+}
+
+// 3. 使用日志
+var log = Logger.getLogger();
+log.error('This is a error message');
+log.flush();
+</code></pre>
+</p>
+
+            <h4><b>第三方日志</b></h4>
+            <p>如果上述方式不能满足你的需求，你也可以使用第三方日志，如<code>log4js</code>，只需要按照第三方库的文档使用即可</p>
 
             <h1 class="page-header" id="cache"><b>缓存</b></h1>
             <p>

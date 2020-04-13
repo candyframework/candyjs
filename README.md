@@ -8,11 +8,13 @@
 
 + CandyJs 高可扩展和高可配置
 
-+ CandyJs 的代码简洁优雅 这是它的编程哲学
++ CandyJs 的代码简约而不简单，每一个 api 、配置参数名字都是经过深思熟虑决定的，这是它的编程哲学
 
 + CandyJs 采用 MIT 许可 这意味着您可以免费的使用 CandyJs 来开发 WEB 应用
 
 ### 文档
+
++ 最新文档请参阅源码的 doc 目录
 
 + https://douyu-beijing.github.io/candyjs-guide
 

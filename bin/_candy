@@ -102,8 +102,8 @@ new CandyJs(new App({
     'debug': true,
     'appPath': __dirname + '/app'
 
-})).listen(8090, function(){
-    console.log('listen on 8090');
+})).listen(2333, function(){
+    console.log('listen on 2333');
 });
 `,
     function(err){

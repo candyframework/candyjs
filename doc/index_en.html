@@ -100,7 +100,7 @@ PROJECT_NAME
             <p>Go to the application directory to start the program</p>
             <p><pre><code>node index.js</code></pre></p>
             <p>Access</p>
-            <p><pre><code><a href="http://localhost:8090" target="_blank">http://localhost:8090</a></code></pre></p>
+            <p><pre><code><a href="http://localhost:2333" target="_blank">http://localhost:2333</a></code></pre></p>
 
             <h1 class="page-header" id="appstruct">Application structure</h1>
 
@@ -200,8 +200,8 @@ new CandyJs(new App({
         }
     }
 
-})).listen(8090, function(){
-    console.log('listen on 8090');
+})).listen(2333, function(){
+    console.log('listen on 2333');
 });
 </pre></code>
 </p>
@@ -435,8 +435,8 @@ new CandyJs(new App({
 
     ...
 
-})).listen(8090, function(){
-    console.log('listen on 8090');
+})).listen(2333, function(){
+    console.log('listen on 2333');
 });
 </code></pre>
 </p>
@@ -672,8 +672,8 @@ new CandyJs(new App({
 
     ...
 
-})).listen(8090, function(){
-    console.log('listen on 8090');
+})).listen(2333, function(){
+    console.log('listen on 2333');
 });
 </code></pre>
 </p>
@@ -914,8 +914,8 @@ app.get('/user/{id:\\d+}', (req, res, params) => {
 app.get('/xyz', 'app/api/Demo@index');
 
 var candyJs = new CandyJs(app);
-candyJs.listen('8090', () => {
-    console.log('listen on 8090')
+candyJs.listen('2333', () => {
+    console.log('listen on 2333')
 });
 </code></pre>
 </p>
