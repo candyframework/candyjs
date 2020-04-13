@@ -26,19 +26,10 @@ class Request extends CoreRequest {
      * 解析 request url
      *
      * @param {Object} request 请求对象
+     * @return {Object}
      */
     static parseUrl(request) {
-        let obj = url.parse(request.url);
-
-        return {
-            protocol: obj.protocol,
-            host: obj.host,
-            port: obj.port,
-            path: obj.path,
-            pathname: obj.pathname,
-            query: obj.query,
-            hash: obj.hash
-        };
+        return url.parse(request.url);
     }
 
     /**
@@ -61,13 +52,14 @@ class Request extends CoreRequest {
      *
      * @param {Object} request 请求对象
      * @param {String} param 参数名
+     * @param {String} defaultValue 默认值
      * @return {String | null}
      */
-    static getQueryString(request, param) {
-        let parsed = Request.parseUrl(request);
+    static getQueryString(request, param, defaultValue = null) {
+        let parsed = url.parse(request.url);
 
         if(null === parsed.query) {
-            return null;
+            return defaultValue;
         }
 
         // 查找参数
@@ -77,7 +69,7 @@ class Request extends CoreRequest {
             return querystring.parse(parsed.query)[param];
         }
 
-        return null;
+        return defaultValue;
     }
 
     /**
@@ -85,14 +77,15 @@ class Request extends CoreRequest {
      *
      * @param {Object} request 请求对象
      * @param {String} param 参数名
+     * @param {String} defaultValue 默认值
      * @return {String | null}
      */
-    static getParameter(request, param) {
+    static getParameter(request, param, defaultValue = null) {
         if(undefined === request.body) {
-            return null;
+            return defaultValue;
         }
 
-        return undefined === request.body[param] ? null : request.body[param];
+        return undefined === request.body[param] ? defaultValue : request.body[param];
     }
 
     /**

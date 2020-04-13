@@ -1,4 +1,4 @@
-const TestModel = require('../../models/Test');
+const User = require('../../models/User');
 const Candy = require('../../../../../Candy');
 
 // 加载系统控制器
@@ -10,13 +10,14 @@ class IndexController extends Controller {
     }
 
     async fetchList(res) {
-        const model = new TestModel();
-        let data = await model.getData();
+        const user = new User();
+        let data = await user.getUserList();
 
         this.getView().getTemplate('index', (err, temp) => {
+            // 这里可以使用第三方的模板引擎进行处理
             let str = '';
             for(let i=0, len=data.length; i<len; i++) {
-                str += `<a href="/user?uid=${data[i].id}">${data[i].name}</a><br />`;
+                str += `<p><a href="/user?uid=${data[i].id}">${data[i].name}</a></p>`;
             }
             temp = temp.replace('{data}', str);
 
