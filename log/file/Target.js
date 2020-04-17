@@ -42,30 +42,23 @@ class Target extends ITarget {
         /**
          * @property {String} absolute path of log file. default at runtime directory of the application
          */
-        this.logPath = '@runtime/logs';
+        this.logPath = undefined === config.logPath
+            ? Candy.getPathAlias('@runtime/logs')
+            : config.logPath;
 
         /**
          * @property {String} log file name
          */
-        this.logFile = 'system.log';
+        this.logFile = undefined === config.logFile
+            ? 'system.log'
+            : config.logFile;
 
         /**
          * @property {Number} maxFileSize maximum log file size in KB
          */
-        this.maxFileSize = 10240;
-
-        // init
-        this.logPath = undefined !== config.logPath
-            ? config.logPath
-            : Candy.getPathAlias(this.logPath);
-
-        if(undefined !== config.logFile) {
-            this.logFile = config.logFile;
-        }
-
-        if(undefined !== config.maxFileSize) {
-            this.maxFileSize = config.maxFileSize;
-        }
+        this.maxFileSize = undefined === config.maxFileSize
+            ? 10240
+            : config.maxFileSize;
     }
 
     /**
