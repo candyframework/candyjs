@@ -1,6 +1,6 @@
 /**
- * @author yu
- * @license http://www.apache.org/licenses/LICENSE-2.0
+ * @author
+ * @license MIT
  */
 'use strict';
 
@@ -14,11 +14,19 @@ class RegExpRouter {
     /**
      * @param {Array} routesMap
      *
-     * [ {route: xxx, handler: xxx} ]
+     * [
+     *      {route: '/home', handler: func1},
+     *      {route: '/user/{uid}', handler: func2},
+     * ]
      *
      */
     constructor(routesMap) {
         this.routesMap = routesMap;
+        
+        /**
+         * pattern: string
+         * parameters: array
+         */
         this.combinedRoute = null;
     }
 
@@ -27,29 +35,26 @@ class RegExpRouter {
      *
      * @return {Object}
      *
-     * eg.
      * {
-     *      pattern: '(?:xxx\\/?$)|(?:(\\d+)\\/?$)',
-     *      params: [ null, ['uid'] ]
+     *      pattern: '(?:\\/home\\/?$)|(?:\\/user\\/(\\d+)\\/?$)',
+     *      parameters: [ null, ['uid'] ]
      * }
      */
     combineRoutes() {
         let patterns = [];
         let parameters = [];
 
-        for(let parsedRoute=null, i=0, len=this.routesMap.length; i<len; i++) {
-            parsedRoute = this.toRegExpString(this.routesMap[i].route);
+        for(let regExp=null, i=0, len=this.routesMap.length; i<len; i++) {
+            regExp = this.toRegExpRouter(this.routesMap[i].route);
 
-            patterns.push( '(?:' + parsedRoute.pattern + ')' );
-            parameters.push(parsedRoute.parameters);
+            patterns.push( '(?:' + regExp.pattern + ')' );
+            parameters.push(regExp.parameters);
         }
 
         this.combinedRoute = {
             pattern: patterns.join('|'),
             parameters: parameters
         };
-
-        return this.combinedRoute;
     }
 
     /**
@@ -66,7 +71,7 @@ class RegExpRouter {
      *
      * @return {Object}
      */
-    toRegExpString(patternString) {
+    toRegExpRouter(patternString) {
         let params = null;
 
         // format /home/(uid)
@@ -97,6 +102,12 @@ class RegExpRouter {
         };
     }
 
+    /**
+     * 执行路由匹配
+     *
+     * @param {String} route 路由
+     * @return null | Object
+     */
     exec(route) {
         let matches = new RegExp(this.combinedRoute.pattern).exec(route);
 
@@ -106,49 +117,55 @@ class RegExpRouter {
         }
 
         // 匹配到路由
-        let matchedPosition = this.getMatchedSubPatternPosition(matches);
-        let segmentPosition = -1 === matchedPosition
-            ? this.getMatchedRoutePositionByInput(matches.input)
-            : this.getMatchedRoutePositionBySubPattern(matchedPosition);
+        let subPatternPosition = this.getSubPatternPosition(matches);
+        let routeIndex = -1 === subPatternPosition
+            ? this.getMatchedRouteIndexByPath(matches.input)
+            : this.getMatchedRouteIndexBySubPattern(subPatternPosition);
 
         let parameters = null;
-        let parameterNames = this.combinedRoute.parameters[segmentPosition];
+        let parameterNames = this.combinedRoute.parameters[routeIndex];
         if(null !== parameterNames) {
             parameters = {};
 
             for(let i=0,len=parameterNames.length; i<len; i++) {
                 parameters[ parameterNames[i] ] =
-                    matches[matchedPosition + i];
+                    matches[subPatternPosition + i];
             }
         }
 
         return {
-            handler: this.routesMap[segmentPosition].handler,
+            handler: this.routesMap[routeIndex].handler,
             parameters: parameters
         };
     }
 
-    getMatchedSubPatternPosition(matches) {
-        let subPatternPosition = -1;
+    /**
+     * 查找匹配到的子模式位置
+     */
+    getSubPatternPosition(matches) {
+        let position = -1;
 
         // matches: [ '/path/123', undefined, '/path/123', 123]
         for(let i=1,len=matches.length; i<len; i++) {
             if(undefined !== matches[i]) {
-                subPatternPosition = i;
+                position = i;
                 break;
             }
         }
 
-        return subPatternPosition;
+        return position;
     }
 
     /**
-     * 查找匹配的路由位置
+     * find route position which has no parameters
+     *
+     * @param {String} path
+     * @return {Number}
      */
-    getMatchedRoutePositionByInput(input) {
+    getMatchedRouteIndexByPath(path) {
         let index = 0;
 
-        let str = StringHelper.trimChar(input, '/');
+        let str = StringHelper.trimChar(path, '/');
         for(let i=0, len=this.routesMap.length; i<len; i++) {
             if( str === StringHelper.trimChar(this.routesMap[i].route, '/') ) {
                 index = i;
@@ -162,11 +179,10 @@ class RegExpRouter {
     /**
      * 查找匹配的路由位置
      *
-     * @param {String} pattern 合并的模式路由
      * @param {Number} subPatternPosition 匹配的子模式位置
      * @return {Number}
      */
-    getMatchedRoutePositionBySubPattern(subPatternPosition) {
+    getMatchedRouteIndexBySubPattern(subPatternPosition) {
         let find = 0;
         let str = '';
         let pattern = this.combinedRoute.pattern;

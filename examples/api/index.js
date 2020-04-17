@@ -11,7 +11,7 @@ const app = new App({
 // api
 Hook.addHook((req, res, next) => {
     // The favicon.ico request may also be here
-    console.log('filter request here');
+    //console.log('filter request here');
 
     next();
 });
@@ -20,6 +20,9 @@ app.get('/', function(req, res){
 });
 app.get('/user/{uid}', (req, res, params) => {
     res.end('user page: ' + params.uid);
+});
+app.get('/admin/{uid}/list/{page}', (req, res, params) => {
+    res.end('admin');
 });
 // The 'app' segment of 'app/Posts@getData' based on the appPath config
 app.get('/posts/{id}', 'app/Posts@getData');

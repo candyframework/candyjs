@@ -36,6 +36,8 @@ class RestApplication extends CoreApp {
             HEAD: [],
             OPTIONS: []
         };
+        
+        // this.cachedRegExp = {};
 
         Candy.config(this, config);
     }
@@ -86,77 +88,16 @@ class RestApplication extends CoreApp {
         if(0 === routesMap.length) {
             return null;
         }
+        
+        // if(this.cachedRegExp[httpMethod]) {
+        //     return this.cachedRegExp[httpMethod].exec(route);
+        // }
 
         let regExpRouter = new RegExpRouter(routesMap);
         regExpRouter.combineRoutes();
+        // this.cachedRegExp[httpMethod] = regExpRouter;
 
         return regExpRouter.exec(route);
-    }
-
-    /**
-     * 获取子模式位置
-     */
-    getMatchedSubPatternPosition(matches) {
-        let subPatternPosition = -1;
-
-        // matches: [ '/path/123', undefined, '/path/123', 123]
-        for(let i=1,len=matches.length; i<len; i++) {
-            if(undefined !== matches[i]) {
-                subPatternPosition = i;
-                break;
-            }
-        }
-
-        return subPatternPosition;
-    }
-
-    /**
-     * 查找匹配的路由位置
-     */
-    getMatchedRoutePositionByInput(routes, input) {
-        let index = 0;
-
-        let str = StringHelper.trimChar(input, '/');
-        for(let i=0, len=routes.length; i<len; i++) {
-            if( str === StringHelper.trimChar(routes[i], '/') ) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
-    /**
-     * 查找匹配的路由位置
-     *
-     * @param {String} pattern 合并的模式路由
-     * @param {Number} subPatternPosition 匹配的子模式位置
-     * @return {Number}
-     */
-    getMatchedRoutePositionBySubPattern(pattern, subPatternPosition) {
-        let find = 0;
-        let str = '';
-
-        for(let i=0, len=pattern.length - 1; i<len; i++) {
-            if('(' === pattern[i] && '?' !== pattern[i + 1]) {
-                find += 1;
-            }
-
-            if(find === subPatternPosition) {
-                str = pattern.substring(0, i);
-                break;
-            }
-        }
-
-        find = 0;
-        for(let i=0, len=str.length; i<len; i++) {
-            if('|' === str[i]) {
-                find += 1;
-            }
-        }
-
-        return find;
     }
 
     /**
