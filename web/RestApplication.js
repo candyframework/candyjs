@@ -56,7 +56,7 @@ class RestApplication extends CoreApp {
 
         // handler is function
         if('function' === typeof ret.handler) {
-            ret.handler(request, response, ret.paramValues);
+            ret.handler(request, response, ret.parameters);
 
             return;
         }
@@ -66,11 +66,11 @@ class RestApplication extends CoreApp {
         let obj = null;
         if(-1 === pos) {
             obj = Candy.createObject(ret.handler);
-            obj.run(request, response, ret.paramValues);
+            obj.run(request, response, ret.parameters);
 
         } else {
             obj = Candy.createObject( ret.handler.substring(0, pos) );
-            obj[ ret.handler.substring(pos + 1) ](request, response, ret.paramValues);
+            obj[ ret.handler.substring(pos + 1) ](request, response, ret.parameters);
         }
     }
 
@@ -87,39 +87,10 @@ class RestApplication extends CoreApp {
             return null;
         }
 
-        let routes = [];
-        for(let i=0,len=routesMap.length; i<len; i++) {
-            routes.push(routesMap[i].route);
-        }
+        let regExpRouter = new RegExpRouter(routesMap);
+        regExpRouter.combineRoutes();
 
-        let combinedRoute = new RegExpRouter().combineRoutes(routes);
-        let matches = new RegExp(combinedRoute.pattern).exec(route);
-        // 没有匹配到路由
-        if(null === matches) {
-            return null;
-        }
-
-        // 匹配到路由
-        let matchedPosition = this.getMatchedSubPatternPosition(matches);
-        let segmentPosition = -1 === matchedPosition
-            ? this.getMatchedRoutePositionByInput(routes, matches.input)
-            : this.getMatchedRoutePositionBySubPattern(combinedRoute.pattern, matchedPosition);
-
-        let paramValues = null;
-        let paramNames = combinedRoute.params[segmentPosition];
-        if(null !== paramNames) {
-            paramValues = {};
-
-            for(let i=0,len=paramNames.length; i<len; i++) {
-                paramValues[ paramNames[i] ] =
-                    matches[matchedPosition + i];
-            }
-        }
-
-        return {
-            handler: routesMap[segmentPosition].handler,
-            paramValues: paramValues
-        };
+        return regExpRouter.exec(route);
     }
 
     /**
