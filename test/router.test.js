@@ -1,13 +1,27 @@
+const assert = require('assert');
+
 const RegExpRouter = require('../utils/RegExpRouter');
 
 const routes = [
-    {route: '/home', handler: (req, res) => {console.log('home')}},
-    {route: '/user/{uid}', handler: (req, res, params) => {console.log(params)}}
+    { route: '/home', handler: () => {} },
+    { route: '/user/{uid}', handler: (params) => {} }
 ];
 
 const reg = new RegExpRouter(routes);
 reg.combineRoutes();
 
-const ret = reg.exec('/user/1');
+describe('router test', function() {
+    it('no parameters', function(done) {
+        let ret = reg.exec('/home');
+        assert.equal(ret.parameters, null);
 
-console.log(ret);
+        done();
+    });
+
+    it('with parameters', function(done) {
+        let ret = reg.exec('/user/123');
+        assert.equal(ret.parameters.uid, '123');
+
+        done();
+    });
+});

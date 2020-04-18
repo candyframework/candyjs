@@ -22,12 +22,15 @@ class RegExpRouter {
      */
     constructor(routesMap) {
         this.routesMap = routesMap;
-        
+
         /**
-         * pattern: string
-         * parameters: array
+         * @property {String} combinedRoutePattern
          */
-        this.combinedRoute = null;
+        this.combinedRoutePattern = '';
+        /**
+         * @property {Array} combinedRouteParameters
+         */
+        this.combinedRouteParameters = null;
     }
 
     /**
@@ -51,10 +54,8 @@ class RegExpRouter {
             parameters.push(regExp.parameters);
         }
 
-        this.combinedRoute = {
-            pattern: patterns.join('|'),
-            parameters: parameters
-        };
+        this.combinedRoutePattern = patterns.join('|');
+        this.combinedRouteParameters = parameters;
     }
 
     /**
@@ -109,7 +110,7 @@ class RegExpRouter {
      * @return null | Object
      */
     exec(route) {
-        let matches = new RegExp(this.combinedRoute.pattern).exec(route);
+        let matches = new RegExp(this.combinedRoutePattern).exec(route);
 
         // 没有匹配到路由
         if(null === matches) {
@@ -123,7 +124,7 @@ class RegExpRouter {
             : this.getMatchedRouteIndexBySubPattern(subPatternPosition);
 
         let parameters = null;
-        let parameterNames = this.combinedRoute.parameters[routeIndex];
+        let parameterNames = this.combinedRouteParameters[routeIndex];
         if(null !== parameterNames) {
             parameters = {};
 
@@ -185,7 +186,7 @@ class RegExpRouter {
     getMatchedRouteIndexBySubPattern(subPatternPosition) {
         let find = 0;
         let str = '';
-        let pattern = this.combinedRoute.pattern;
+        let pattern = this.combinedRoutePattern;
 
         for(let i=0, len=pattern.length - 1; i<len; i++) {
             if('(' === pattern[i] && '?' !== pattern[i + 1]) {
