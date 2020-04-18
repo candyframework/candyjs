@@ -960,10 +960,8 @@ candyJs.listen('2333', () => {
 <p>
 <pre><code>
 var CandyJs = require('candyjs');
-var Candy = require('candyjs/Candy');
-var Logger = Candy.include('candy/log/Logger');
 
-var log = Logger.getLogger();
+var log = CandyJs.getLogger();
 log.error('This is a error message');
 log.flush();  // flush data to disk
 </code></pre>
@@ -998,7 +996,6 @@ log.flush();  // flush data to disk
             </ul>
 <p>
 <pre><code>
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Cache = Candy.include('candy/cache/Cache');
 

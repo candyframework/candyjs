@@ -24,7 +24,6 @@ app.get('/user/{uid}', (req, res, params) => {
 app.get('/admin/{uid}/list/{page}', (req, res, params) => {
     res.end('admin');
 });
-// The 'app' segment of 'app/Posts@getData' based on the appPath config
 app.get('/posts/{id}', 'app/Posts@getData');
 
 new CandyJs(app).listen(2333, () => {

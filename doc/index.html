@@ -436,17 +436,21 @@ new CandyJs(new App({
             <p>组件是实现<code>属性 (property) 行为 (behavior) 事件 (event)</code>的基类 如果一个类继承自组件类 那么这个类就拥有组件类的特性</p>
             <p>
                 组件是<code>candy/core/Component</code>或其子类的实例
-                <code>CandyJs</code>中<code>candy/core/Controller</code>类继承自<code>candy/core/Component</code>
+            </p>
+            <p>
+                <code>CandyJs</code>中<code>candy/web/Controller</code>类继承自<code>candy/core/Component</code>，所以控制器具有组件的特性
             </p>
             <p>行为类一般与组件类同时使用</p>
 
             <h4><b>行为</b></h4>
             <p>
-                行为是<code>candy/core/Behavior</code>类或其子类的实例<br />
-                一个行为类可以用于在不改变原组件代码的情况下增强其功能<br />
-                当行为附加到组件后它将 注入 它的方法和属性到组件中 然后就可以像访问组件自己的方法和属性一样访问它们<br />
-                行为类还能够监听组件的事件并作出响应
+                行为是<code>candy/core/Behavior</code>类或其子类的实例，具有如下作用
             </p>
+            <ul>
+                <li>一个行为类可以用于在不改变原组件代码的情况下增强其功能</li>
+                <li>当行为附加到组件后，它将<code>注入</code>它的方法和属性到组件中，然后就可以像访问组件自己的方法和属性一样访问它们</li>
+                <li>行为类还能够监听组件的事件并作出响应</li>
+            </ul>
 
             <h4><b>属性</b></h4>
             <p>javascript 类的成员变量也被称为属性 properties</p>
@@ -457,7 +461,6 @@ new CandyJs(new App({
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Controller = Candy.include('candy/web/Controller');
 
@@ -486,12 +489,11 @@ module.exports = IndexController;
             <h4><b>行为的使用</b></h4>
 
             <h6><b>定义行为</b></h6>
-            <p>要定义行为 通过继承<code>candy/core/Behavior</code>或其子类来建立一个类</p>
+            <p>要定义行为，可以通过继承<code>candy/core/Behavior</code>或其子类来建立一个类</p>
 <p>
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Behavior = Candy.include('candy/core/Behavior');
 
@@ -517,7 +519,7 @@ module.exports = MyBehavior;
             <h6><b>附加行为到组件</b></h6>
             <p>可以通过<code>静态配置</code>或者<code>动态方法</code>形式附加行为到组件</p>
 
-            <p>要使用静态配置附加行为 重写组件类的<code>behaviors()</code>方法即可<code>behaviors()</code>方法应该返回行为配置列表</p>
+            <p>要使用静态配置附加行为，只需要重写组件类的<code>behaviors()</code>方法即可。<code>behaviors()</code>方法应该返回行为配置列表</p>
 <p>
 <pre><code>
 'use strict';
@@ -547,7 +549,7 @@ module.exports = IndexController;
 </code></pre>
 </p>
 
-            <p>要使用动态方法附加行为 在组件里调用<code>attachBehavior()</code>方法即可</p>
+            <p>要使用动态方法附加行为，在组件里调用<code>attachBehavior()</code>方法即可</p>
 <p>
 <pre><code>
 'use strict';
@@ -578,7 +580,7 @@ module.exports = IndexController;
             <h6><b>使用</b></h6>
             <p>一旦行为附加到组件 就可以直接使用它</p>
             <blockquote class="bg-info">
-                为了不必要的性能开销<code>CandyJs</code>不会真的执行注入操作 要想使用行为类的功能 必须在调用行为类的功能之前手动调用一下<code>injectBehaviors()</code>方法
+                为了不必要的性能开销，<code>CandyJs</code>不会主动执行注入操作（或许后期会改动），要想使用行为类的功能，必须在调用行为类的功能之前手动调用一下<code>injectBehaviors()</code>方法
             </blockquote>
 <p>
 <pre><code>
@@ -594,12 +596,12 @@ class IndexController extends Controller {
         super(context);
 
         this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
+
+        // 手动调用
+        this.injectBehaviors();
     }
 
     run(req, res) {
-        // 手动调用
-        this.injectBehaviors();
-
         // 使用行为类的功能
         this.myFun();
         console.log(this.props1);
@@ -615,13 +617,13 @@ module.exports = IndexController;
 </p>
 
             <h6><b>行为中处理事件</b></h6>
-            <p>行为类可以处理组件触发的事件 只需要重写行为类的<code>events()</code>方法即可</p>
+            <p>行为类可以处理组件触发的事件，只需要重写行为类的<code>events()</code>方法即可</p>
 <p>
 <pre><code>
-// CandyJs 在调用控制器入口动作前后会触发 beforeActionCall afterActionCall 事件 可以使用行为类进行处理
+// CandyJs 在调用控制器入口动作前后会触发 beforeActionCall afterActionCall 事件
+// 可以使用行为类对此进行拦截处理
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Behavior = Candy.include('candy/core/Behavior');
 
@@ -886,16 +888,45 @@ var time = TimeHelper.format('y-m-d h:i:s');
 
             <h1 class="page-header" id="alias"><b>别名系统</b></h1>
             <p>为了方便类的管理，实现自动加载、初始化等，<code>CandyJs</code>提供了一套别名系统</p>
-            <p>别名是一个以<code>@</code>符号开头的字符串 每一个别名对应一个真实的物理路径</p>
+            <p><b>别名是一个以<code>@</code>符号开头的字符串，每一个别名对应一个真实的物理路径</b></p>
             <p><code>CandyJs</code>中加载类以及创建类的实例都是用的别名</p>
 
             <h4><b>系统内置别名</b></h4>
             <ul>
                 <li><code>@candy</code> 指向 CandyJs 目录</li>
-                <li><code>@app</code> 项目目录 由<code>appPath</code>指定<code>Candy.app.getAppPath()</code>可得到该值</li>
-                <li><code>@runtime</code> 缓存目录 默认指向<code>@app/runtime Candy.app.getRuntimePath()</code>可得到该值</li>
-                <li><code>@root</code> 网站根目录<code>Candy.app.getRootPath()</code>可得到该值</li>
+                <li><code>@app</code> 项目目录 由<code>appPath</code>在入口文件中指定</li>
+                <li><code>@runtime</code> 缓存目录 默认指向<code>@app/runtime</code></li>
+                <li><code>@root</code> 网站根目录</li>
             </ul>
+
+            <h4><b>类的加载及实例化</b></h4>
+            <h6><b>类的加载</b></h6>
+            <p><code>CandyJs</code>中可以方便的使用别名来加载类</p>
+<p>
+<pre><code>
+var Candy = require('candyjs/Candy');
+var App = Candy.include('candy/web/Application');
+</code></pre>
+</p>
+            <p>上面的<code>Candy.include('candy/web/Application');</code>可以实现加载系统的<code>Application</code>类</p>
+            <p>其中开头的<code>candy</code>就是一个系统内置别名。<code>CandyJs</code>在解析路径的时候，首先会尝试将路径的开始部分当做一个别名来解析</p>
+
+            <h6><b>类的实例化</b></h6>
+            <p><code>CandyJs</code>中很多类都是使用<code>Candy.createObject()</code>来进行实例化的，他的强大之处在于可以识别别名，自动加载和初始化一个类</p>
+
+<p>
+<pre><code>
+// 1. 以字符串方式加载并实例化类，这种方式比较简单
+Candy.createObject('candy/utils/LinkedQueue', '还可以传入一些构造函数参数');
+
+// 2. 通过配置进行类的加载和实例化，这种方式除了可以传入构造函数参数外，还能在配置中传入一些配置作为动态属性
+Candy.createObject({
+    classPath: 'candy/utils/LinkedQueue',
+    myProp1: '111',
+    myProp2: '222'
+}, '构造函数参数');
+</code></pre>
+</p>
 
             <h4><b>自定义别名</b></h4>
             <p>用户可以自定义别名</p>
@@ -980,6 +1011,7 @@ candyJs.listen('2333', () => {
 <pre><code>
 'log': {
     'targets': {
+        // 文件日志
         'file': {
             // 必须参数，表示类的路径，支持别名路径
             'classPath': 'candy/log/file/Target',
@@ -995,12 +1027,21 @@ candyJs.listen('2333', () => {
 </code></pre>
 </p>
 
+<p>
+<pre><code>
+var CandyJs = require('candyjs');
+
+var log = CandyJs.getLogger();
+log.error('This is a error message');
+log.flush();  // 写入硬盘
+</code></pre>
+</p>
+
             <p>
-                <code>targets</code>用于配置日志处理程序
-                现在只支持文件日志，所以上面配置了<code>file</code>字段
+                <code>targets</code>用于配置日志处理程序，现在只支持文件日志，所以上面配置了<code>file</code>字段
             </p>
             <p><code>flushInterval</code>表示日志写入硬盘的频率。这里指定每调用 10 次日志接口向硬盘同步一次</p>
-            <p>用户手动调用 flush() 也会触发同步日志到硬盘的操作</p>
+            <p>用户手动调用<code>flush()</code>也会触发同步日志到硬盘的操作</p>
 
             <h4><b>日志接口</b></h4>
             <ul>
@@ -1010,17 +1051,6 @@ candyJs.listen('2333', () => {
                 <li><code>trace(message)</code> 记录追踪日志</li>
                 <li><code>flush()</code> 输出日志</li>
             </ul>
-<p>
-<pre><code>
-var CandyJs = require('candyjs');
-var Candy = require('candyjs/Candy');
-var Logger = Candy.include('candy/log/Logger');
-
-var log = Logger.getLogger();
-log.error('This is a error message');
-log.flush();  // 写入硬盘
-</code></pre>
-</p>
 
             <h4><b>扩展日志</b></h4>
             <blockquote class="bg-info">
@@ -1030,27 +1060,38 @@ log.flush();  // 写入硬盘
 <p>
 <pre><code>
 // 1. 定义日志类
-var Candy = require('candyjs/Candy');
-var Interface = Candy.include('candy/log/ITarget');
+var Candy = require('candyjs/Candy');  // 助手类
+var Target = Candy.include('candy/log/ITarget');
 
-class MyDbLog extends Interface {
+// app/libs/MyDbLog.js
+class MyDbLog extends Target {
     flush(messages) {
         console.log(messages);
     }
 }
 
 // 2. 在入口文件配置自己的日志类
-'log': {
-    'targets': {
-        'dblog': {
-            'classPath': 'mypath/MyDbLog'
-        }
-    },
-    'flushInterval': 10
-}
+var App = require('candyjs/web/Application');
+
+var app = new App({
+    'id': 1,
+    'appPath': __dirname + '/app',
+    // 配置日志
+    'log': {
+        'targets': {
+            'dblog': {
+                'classPath': 'app/libs/MyDbLog'
+            }
+        },
+        'flushInterval': 10
+    }
+});
+
 
 // 3. 使用日志
-var log = Logger.getLogger();
+var CandyJs = require('candyjs');  // 框架入口类
+
+var log = CandyJs.getLogger();
 log.error('This is a error message');
 log.flush();
 </code></pre>
@@ -1090,7 +1131,6 @@ log.flush();
             </ul>
 <p>
 <pre><code>
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Cache = Candy.include('candy/cache/Cache');
 

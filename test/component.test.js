@@ -48,7 +48,14 @@ class MyBehavior extends Behavior {
 
 // 静态行为测试
 class StaticBehaviorController extends Controller {
-    // 重写方法
+    constructor(context) {
+        super(context);
+
+        // 2. 注入行为类
+        this.injectBehaviors();
+    }
+
+    // 1. 重写方法
     behaviors() {
         return {
             myBehavior: new MyBehavior()
@@ -56,8 +63,7 @@ class StaticBehaviorController extends Controller {
     }
 
     run(req, res) {
-        // 注入行为类
-        this.injectBehaviors();
+
     }
 }
 
@@ -81,16 +87,18 @@ describe('static-behavior', function() {
 
 // 动态行为测试
 class DynamicBehaviorController extends Controller {
-    constructor() {
-        super();
+    constructor(context) {
+        super(context);
 
-        // 附加组件
+        // 1. 附加组件
         this.attachBehavior('myBehavior', new MyBehavior());
+
+        // 2. 注入行为类
+        this.injectBehaviors();
     }
 
     run(req, res) {
-        // 注入行为类
-        this.injectBehaviors();
+
     }
 }
 
