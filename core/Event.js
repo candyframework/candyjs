@@ -85,9 +85,9 @@ class Event {
      * 触发
      *
      * @param {String} eventName 事件名称
-     * @param {any} params 参数
+     * @param {any} parameters 参数
      */
-    triggerWithRestParams(eventName, ...params) {
+    triggerWithRestParameters(eventName, ...parameters) {
         const handlers = this.eventsMap.get(eventName);
 
         if(undefined === handlers) {
@@ -95,7 +95,7 @@ class Event {
         }
 
         for(let i=0, len=handlers.length; i<len; i++) {
-            handlers[i](...params);
+            handlers[i](...parameters);
         }
     }
 

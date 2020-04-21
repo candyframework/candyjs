@@ -55,7 +55,8 @@ class Logger {
         }
         for(let target in settings.targets) {
             if(undefined !== settings.targets[target].classPath) {
-                let clazz = Candy.createObject(settings.targets[target].classPath,
+                let clazz = Candy.createObjectAsString(
+                    settings.targets[target].classPath,
                     settings.targets[target]);
                 clazz.on(ITarget.EVENT_FLUSH, clazz);
 

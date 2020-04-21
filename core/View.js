@@ -4,6 +4,10 @@
  */
 'use strict';
 
+const fs = require('fs');
+
+const Candy = require('../Candy');
+
 /**
  * 视图
  */
@@ -17,15 +21,40 @@ class View {
          * @property {Object} context 上下文环境
          */
         this.context = context;
+
+        /**
+         * @var {String} 默认视图文件后缀
+         */
+        this.defaultExtension = '.html';
     }
 
     /**
-     * 获取视图文件路径
+     * 查找视图文件路径
      *
      * @param {String} view 视图文件名
      * @return {String}
      */
-    getTemplateFilePath(view) {}
+    findViewFile(view) {
+        if('@' === view.charAt(0)) {
+            return Candy.getPathAlias(view) + this.defaultExtension;
+        }
+
+        let app = Candy.app;
+        let context = this.context;
+
+        // 模块无子目录 普通控制器有子目录
+        if('' !== context.moduleId) {
+            return app.modules[context.moduleId]
+                + '/views/'
+                + view + this.defaultExtension;
+        }
+
+        return app.getAppPath()
+            + '/views/'
+            + context.viewPath
+            + '/'
+            + view + this.defaultExtension;
+    }
 
     /**
      * 读取视图文件
@@ -34,22 +63,24 @@ class View {
      * @param {Function} callback 回调函数
      * @return {String}
      */
-    getTemplate(view, callback) {}
+    getTemplateContent(view, callback) {
+        let file = this.findViewFile(view);
+
+        fs.readFile(file, Candy.app.encoding, callback);
+    }
 
     /**
-     * 从指定路径读取视图文件
+     * 渲染视图文件
      *
-     * @param {String} path 文件路径
-     * @param {Function} callback 回调函数
-     * @return {String}
+     * @param {String} view 视图名
+     * @param {Object} parameters 参数
      */
-    getTemplateFromPath(path, callback) {}
+    render(view, parameters = null) {
+        let file = this.findViewFile(view);
+
+        this.renderFile(file, parameters);
+    }
 
 }
-
-/**
- * @var {String} 默认视图文件后缀
- */
-View.defaultViewExtension = '.html';
 
 module.exports = View;

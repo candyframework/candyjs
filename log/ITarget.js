@@ -29,9 +29,9 @@ class ITarget extends Event {
      * 触发事件
      *
      * @param {String} eventName 事件名称
-     * @param {Array} param 参数
+     * @param {Array} parameter 参数
      */
-    trigger(eventName, param) {
+    trigger(eventName, parameter) {
         const handlers = this.eventsMap.get(eventName);
 
         if(undefined === handlers) {
@@ -39,7 +39,7 @@ class ITarget extends Event {
         }
 
         for(let handler of handlers) {
-            handler.flush(param);
+            handler.flush(parameter);
         }
     }
 

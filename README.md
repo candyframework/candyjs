@@ -116,6 +116,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2020-04-21
+
+    * npm 包 4.2.0 对模板系统进行了重构
+
 + 2020-04-11
 
     * npm 包 4.1.2 修复系统 Hook bug

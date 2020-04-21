@@ -131,7 +131,7 @@ class Component extends Event {
      */
     attachBehaviorInternal(name, behavior) {
         if(!(behavior instanceof Behavior)) {
-            behavior = Y.createObject(behavior);
+            behavior = Candy.createObject(behavior);
         }
 
         if(undefined !== this.behaviorsMap.get(name)) {

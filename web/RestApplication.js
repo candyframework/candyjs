@@ -36,7 +36,7 @@ class RestApplication extends CoreApp {
             HEAD: [],
             OPTIONS: []
         };
-        
+
         // this.cachedRegExp = {};
 
         Candy.config(this, config);
@@ -67,11 +67,11 @@ class RestApplication extends CoreApp {
         let pos = ret.handler.indexOf(RestApplication.separator);
         let obj = null;
         if(-1 === pos) {
-            obj = Candy.createObject(ret.handler);
+            obj = Candy.createObjectAsString(ret.handler);
             obj.run(request, response, ret.parameters);
 
         } else {
-            obj = Candy.createObject( ret.handler.substring(0, pos) );
+            obj = Candy.createObjectAsString( ret.handler.substring(0, pos) );
             obj[ ret.handler.substring(pos + 1) ](request, response, ret.parameters);
         }
     }
@@ -88,7 +88,7 @@ class RestApplication extends CoreApp {
         if(0 === routesMap.length) {
             return null;
         }
-        
+
         // if(this.cachedRegExp[httpMethod]) {
         //     return this.cachedRegExp[httpMethod].exec(route);
         // }

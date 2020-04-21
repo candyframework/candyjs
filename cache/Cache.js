@@ -12,7 +12,7 @@ class Cache {
 
     static getCache(cacheFlag) {
         if(undefined === cacheFlag) {
-            throw new InvalidArgumentException('Invalid param: cacheFlag');
+            throw new InvalidArgumentException('Invalid parameter: cacheFlag');
         }
         if(undefined === Candy.app.cache || undefined === Candy.app.cache[cacheFlag]) {
             throw new InvalidConfigException('No cache config found');
@@ -22,7 +22,8 @@ class Cache {
         }
 
         if(undefined === Cache._caches[cacheFlag] || null === Cache._caches[cacheFlag]) {
-            Cache._caches[cacheFlag] = Candy.createObject(Candy.app.cache[cacheFlag].classPath,
+            Cache._caches[cacheFlag] = Candy.createObjectAsString(
+                Candy.app.cache[cacheFlag].classPath,
                 Candy.app.cache[cacheFlag]);
 
             Cache._caches[cacheFlag].init();

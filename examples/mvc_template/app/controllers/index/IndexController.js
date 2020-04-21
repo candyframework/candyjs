@@ -3,6 +3,7 @@ const Candy = require('../../../../../Candy');
 
 // 加载系统控制器
 const Controller = Candy.include('candy/web/Controller');
+const CandyTemplate = require('../../../../../../candy-template');
 
 class IndexController extends Controller {
     run(req, res) {
@@ -13,15 +14,9 @@ class IndexController extends Controller {
         const user = new User();
         let data = await user.getUserList();
 
-        this.getView().getTemplateContent('index', (err, temp) => {
-            // 这里可以使用第三方的模板引擎进行处理
-            let str = '';
-            for(let i=0, len=data.length; i<len; i++) {
-                str += `<p><a href="/user?uid=${data[i].id}">${data[i].name}</a></p>`;
-            }
-            temp = temp.replace('{data}', str);
-
-            res.end(temp);
+        this.setView(new CandyTemplate(this.context));
+        this.render('index', {
+            list: data
         });
     }
 }

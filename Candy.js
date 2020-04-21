@@ -66,28 +66,43 @@ class Candy {
      * or
      * {classPath: '...', ...}
      *
-     * @param {any} params 构造函数参数
+     * @param {any} parameters 构造函数参数
      * @return {Object} 类实例
      */
-    static createObject(clazz, ...params) {
-        let realClass = '';
-        let properties = null;
-
+    static createObject(clazz, ...parameters) {
         if('string' === typeof clazz) {
-            realClass = Candy.getPathAlias('@' + clazz);
-
-        } else if('object' === typeof clazz && undefined !== clazz.classPath) {
-            realClass = Candy.getPathAlias('@' + clazz.classPath);
-
-            properties = Candy.config({}, clazz);
-            delete properties.classPath;
+            return Candy.createObjectAsString(clazz, ...parameters);
         }
 
-        // 文件不存在抛出异常
-        // todo
+        return Candy.createObjectAsDefinition(clazz, ...parameters);
+    }
+
+    /**
+     * 字符串方式创建对象
+     *
+     * @param {String} classPath
+     */
+    static createObjectAsString(classPath, ...parameters) {
+        let realClass = Candy.getPathAlias('@' + classPath);
 
         let ClassName = require(realClass + Candy.fileExtention);
-        let instance = new ClassName(...params);
+
+        return new ClassName(...parameters);
+    }
+
+    /**
+     * 配置方式创建对象
+     *
+     * @param {Object} definition
+     */
+    static createObjectAsDefinition(definition, ...parameters) {
+        let realClass = Candy.getPathAlias('@' + definition.classPath);
+        let properties = Candy.config({}, definition);
+
+        let ClassName = require(realClass + Candy.fileExtention);
+        let instance = new ClassName(...parameters);
+
+        delete properties.classPath;
 
         if(null !== properties) {
             Candy.config(instance, properties);

@@ -4,13 +4,10 @@
  */
 'use strict';
 
-const fs = require('fs');
-
-const Candy = require('../Candy');
 const CoreView = require('../core/View');
 
 /**
- * 视图
+ * web 视图
  */
 class View extends CoreView {
 
@@ -22,41 +19,14 @@ class View extends CoreView {
     }
 
     /**
-     * @inheritdoc
+     * 渲染文件
+     *
+     * 这里是渲染模板的入口，模板引擎必须实现这个方法
+     *
+     * @param {String} file 文件路径
+     * @param {Object} parameters 参数
      */
-    getTemplateFilePath(view) {
-        let app = Candy.app;
-        let context = this.context;
-
-        // 模块无子目录 普通控制器有子目录
-        if('' !== context.moduleId) {
-            return app.modules[context.moduleId]
-                + '/views/'
-                + view + View.defaultViewExtension;
-        }
-
-        return app.getAppPath()
-            + '/views/'
-            + context.viewPath
-            + '/'
-            + view + View.defaultViewExtension;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    getTemplate(view, callback) {
-        let path = this.getTemplateFilePath(view);
-
-        fs.readFile(path, Candy.app.encoding, callback);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    getTemplateFromPath(path, callback) {
-        fs.readFile(path, Candy.app.encoding, callback);
-    }
+    renderFile(file, parameters) {}
 
 }
 

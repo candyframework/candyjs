@@ -1,4 +1,4 @@
-/**
++/**
  * @author
  * @license MIT
  */
@@ -25,14 +25,32 @@ class Controller extends CoreController {
     }
 
     /**
-     * @inheritdoc
+     * 获取视图类
+     *
+     * @return {Object}
      */
     getView() {
         if(null === this.view) {
-            this.view = Candy.createObject(Candy.app.viewHandler, this.context);
+            this.view = Candy.createObject(Candy.app.defaultView, this.context);
         }
 
         return this.view;
+    }
+
+    /**
+     * 设置视图类
+     *
+     * @param {Object} view
+     */
+    setView(view) {
+        this.view = view;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    render(view, parameters = null) {
+        this.getView().render(view, parameters);
     }
 
 }

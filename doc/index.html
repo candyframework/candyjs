@@ -351,9 +351,8 @@ module.exports = IndexController;
             </p>
             <p>视图类提供了如下<code>API</code>供用户使用</p>
             <ul>
-                <li><code>getTemplateFilePath(view)</code> 用于获取一个视图文件的绝对路径</li>
-                <li><code>getTemplate(view, callback)</code> 用于读取一个视图文件的内容</li>
-                <li><code>getTemplateFromPath(path, callback)</code> 用于从指定路径读取视图文件内容</li>
+                <li><code>findViewFile(view)</code> 用于获取一个视图文件的绝对路径</li>
+                <li><code>getTemplateContent(view, callback)</code> 用于读取一个视图文件的内容</li>
             </ul>
 <p>
 <pre><code>
@@ -366,7 +365,7 @@ var Controller = Candy.include('candy/web/Controller');
 class IndexController extends Controller {
 
     run(req, res) {
-        this.getView().getTemplate('index', (err, str) => {
+        this.getView().getTemplateContent('index', (err, str) => {
             res.end(str);
         });
     }
@@ -972,7 +971,7 @@ app.get('/homepage', (req, res) => {
 });
 
 // 含参数的请求
-// id 参数为转译成正则表达式
+// id 参数会转译成正则表达式
 app.get('/posts/{id}', (req, res, params) => {
     res.end(params.id);
 });
@@ -996,13 +995,13 @@ candyJs.listen('2333', () => {
 
             <h4><b>RESTful 中的路由问题</b></h4>
             <p>
-                RESTful 中的路由是用正则表达式来实现的 它可以实现非常灵活的路由配置
+                RESTful 中的路由是用正则表达式来实现的，它可以实现非常灵活的路由配置
                 但是相对于 MVC 中的路由性能要差 ( mvc 模式中的路由不是用正则实现的 )
             </p>
 
             <h1 class="page-header" id="log"><b>日志</b></h1>
             <p>
-                <code>CandyJs</code>提供了对日志处理的功能，目前只支持文件日志
+                <code>CandyJs</code>提供了日志处理功能，目前只支持文件日志
             </p>
 
             <h4><b>使用日志</b></h4>

@@ -4,6 +4,7 @@ const Candy = require('../../../../../Candy');
 // 加载系统控制器
 const Controller = Candy.include('candy/web/Controller');
 const Request = Candy.include('candy/web/Request');
+const CandyTemplate = require('../../../../../../candy-template');
 
 class IndexController extends Controller {
     run(req, res) {
@@ -16,11 +17,9 @@ class IndexController extends Controller {
         const user = new User();
         let data = await user.getUserById(uid);
 
-        // 手动输出内容
-        this.getView().getTemplateContent('index', (err, temp) => {
-            temp = temp.replace('{info}', JSON.stringify(data));
-
-            res.end(temp);
+        this.setView(new CandyTemplate(this.context));
+        this.render('index', {
+            info: JSON.stringify(data)
         });
     }
 }

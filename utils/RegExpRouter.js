@@ -73,24 +73,24 @@ class RegExpRouter {
      * @return {Object}
      */
     toRegExpRouter(patternString) {
-        let params = null;
+        let parameters = null;
 
         // format /home/(uid)
         let pattern = patternString.replace(/\{/g, '(').replace(/\}/g, ')');
 
-        // search params
+        // search parameters
         let matchedParams = pattern.match(/\([^:\)]+/g);
 
-        // replace params
+        // replace parameters
         if(null !== matchedParams) {
-            params = [];
+            parameters = [];
 
             for(let i=0,len=matchedParams.length; i<len; i++) {
                 pattern = pattern.replace(matchedParams[i], '(');
                 pattern = pattern.replace(':', '');
                 pattern = pattern.replace('()', '(\\w+)');
 
-                params.push( matchedParams[i].substring(1) );
+                parameters.push( matchedParams[i].substring(1) );
             }
         }
 
@@ -99,7 +99,7 @@ class RegExpRouter {
 
         return {
             pattern: pattern,
-            parameters: params
+            parameters: parameters
         };
     }
 

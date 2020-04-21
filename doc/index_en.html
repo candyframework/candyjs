@@ -363,9 +363,8 @@ module.exports = IndexController;
             </p>
             <p>The view class provides the following API for user to use</p>
             <ul>
-                <li><code>getTemplateFilePath(view)</code>Used to get absolute path of a view file</li>
-                <li><code>getTemplate(view, callback)</code>Used to read the content of a view file</li>
-                <li><code>getTemplateFromPath(path, callback)</code>Used to read the contents of a view file from the specified path</li>
+                <li><code>findViewFile(view)</code>Used to get absolute path of a view file</li>
+                <li><code>getTemplateContent(view, callback)</code>Used to read the content of a view file</li>
             </ul>
 <p>
 <pre><code>
@@ -378,7 +377,7 @@ var Controller = Candy.include('candy/web/Controller');
 class IndexController extends Controller {
 
     run(req, res) {
-        this.getView().getTemplate('index', (err, str) => {
+        this.getView().getTemplateContent('index', (err, str) => {
             res.end(str);
         });
     }

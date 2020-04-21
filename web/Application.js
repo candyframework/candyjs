@@ -62,14 +62,14 @@ class Application extends CoreApp {
         this.modules = null;
 
         /**
-         * @property {String} viewHandler 视图类
+         * @property {String} defaultView 视图类
          */
-        this.viewHandler = 'candy/web/View';
+        this.defaultView = 'candy/web/View';
 
         /**
-         * @property {String} controllerNamespace 默认控制器命名空间
+         * @property {String} defaultControllerNamespace 默认控制器命名空间
          */
-        this.controllerNamespace = 'app/controllers';
+        this.defaultControllerNamespace = 'app/controllers';
 
         /**
          * @property {String} defaultRoute 默认路由
@@ -96,6 +96,11 @@ class Application extends CoreApp {
 
         if(null === controller) {
             throw new InvalidRouteException('The route requested is invalid');
+        }
+
+        if(undefined !== controller.context) {
+            controller.context.request = request;
+            controller.context.response = response;
         }
 
         // 是否继承自框架控制器
@@ -155,10 +160,6 @@ class Application extends CoreApp {
 
         // 拦截路由
         if(null !== this.interceptAll) {
-            CandyJS.getLogger().trace('Starting to create controller: '
-                + ('string' === typeof this.interceptAll
-                    ? this.interceptAll : this.interceptAll.classPath));
-
             return Candy.createObject(this.interceptAll);
         }
 
@@ -213,14 +214,14 @@ class Application extends CoreApp {
 
             CandyJS.getLogger().trace('Starting to create controller: ' + this.modules[id]);
 
-            return Candy.createObject(clazz, {
+            return Candy.createObjectAsString(clazz, {
                 moduleId: moduleId,
                 controllerId: controllerId,
                 viewPath: viewPath
             });
         }
 
-        clazz = this.controllerNamespace
+        clazz = this.defaultControllerNamespace
             + '/'
             + viewPath
             + '/'
@@ -228,7 +229,7 @@ class Application extends CoreApp {
 
         CandyJS.getLogger().trace('Starting to create controller: ' + clazz);
 
-        return Candy.createObject(clazz, {
+        return Candy.createObjectAsString(clazz, {
             moduleId: moduleId,
             controllerId: controllerId,
             viewPath: viewPath

@@ -27,24 +27,24 @@ class URL {
      *
      * @param {Object} request
      * @param {String} url
-     * @param {Object} params
+     * @param {Object} parameters
      * @return {String}
      */
-    static to(request, url, params = null) {
+    static to(request, url, parameters = null) {
         let host = new Request(request).getHostInfo();
         let query = '';
         let anchor = '';
 
         url = host + '/' + url;
 
-        if(null !== params) {
-            if(undefined !== params['#']) {
-                anchor = params['#'];
-                delete params['#'];
+        if(null !== parameters) {
+            if(undefined !== parameters['#']) {
+                anchor = parameters['#'];
+                delete parameters['#'];
             }
 
-            for(let k in params) {
-                query = query + k + '=' + params[k] + '&';
+            for(let k in parameters) {
+                query = query + k + '=' + parameters[k] + '&';
             }
             query = StringHelper.rTrimChar(query, '&');
 
