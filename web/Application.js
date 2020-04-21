@@ -98,11 +98,6 @@ class Application extends CoreApp {
             throw new InvalidRouteException('The route requested is invalid');
         }
 
-        if(undefined !== controller.context) {
-            controller.context.request = request;
-            controller.context.response = response;
-        }
-
         // 是否继承自框架控制器
         if( !(controller instanceof WebController) ) {
             CandyJS.getLogger().trace('Starting to run the run() method of: ' + controller.constructor.name);
@@ -111,6 +106,9 @@ class Application extends CoreApp {
         }
 
         CandyJS.getLogger().trace('Starting to run the runControllerAction() method of: ' + controller.constructor.name);
+
+        controller.context.request = request;
+        controller.context.response = response;
         controller.runControllerAction(request, response);
     }
 
