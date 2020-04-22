@@ -343,18 +343,169 @@ module.exports = IndexController;
                 Temporarily<code>CandyJs</code>does not provide a class to read the database
             </blockquote>
 
-            <h1 class="page-header" id="view"><b>View</b></h1>
-            <p>The view is part of the<code>MVC</code>pattern that is used to present the page to the end user</p>
+            <h1 class="page-header" id="view"><b>视图</b></h1>
+            <p>视图是<code>MVC</code>模式中的一部分 它用于给终端用户展示页面</p>
             <blockquote class="bg-info">
-                The view class typically combines the data provided by the model layer with the static page to generate a final page display to the user.
-                <code>CandyJs</code>temporarily provides only a limited API at the controller level
+                视图类一般把模型层提供的数据与静态页面结合生成一个最终的页面展示给用户
+                <code>CandyJs</code>暂时只在控制器层提供了功能有限的<code>API</code>
             </blockquote>
 
-            <h4><b>Template engine</b></h4>
+            <h4><b>模板引擎</b></h4>
             <blockquote class="bg-info">
-                 <code>CandyJs</code>does not implement a template engine.
-                 User needs to use the existing template engine to implement his own business
+                一般视图类与模板引擎结合使用，<code>CandyJs</code>建议使用第三方模板引擎进行开发，当然使用方式也非常简单
             </blockquote>
+
+            <h4><b>使用模板引擎</b></h4>
+            <p>得益于<code>CandyJs</code>灵活的架构设计，使得模板引擎使用非常便捷，这里有如下几种方式：</p>
+            <ul>
+                <li>全局配置方式</li>
+                <li>局部注入方式</li>
+                <li>嵌入式</li>
+            </ul>
+            <p>下面将使用<code>Handlebars</code>对以上方式进行逐个讲解</p>
+
+            <h6><b>全局配置方式</b></h6>
+<p>
+<pre><code>
+// 全局配置方式是使用 candyjs 的别名系统实现的
+// 这里的代码可以从源代码 examples 目录中找到
+
+// 1. 在 app/libs 目录中建立一个模板引擎文件 CandyTemplate.js
+const fs = require('fs');
+const Handlebars = require('handlebars');
+// 加载系统视图类
+const View = require('candyjs/web/View');
+
+class CandyTemplate extends View {
+    constructor(context) {
+        super(context);
+        this.handlebars = Handlebars.create();
+    }
+
+    // 模板引擎必须实现这个方法，因为它是渲染模板的入口
+    renderFile(file, parameters) {
+        fs.readFile(file, 'UTF-8', (err, template) => {
+            let compiled = this.handlebars.compile(template);
+            this.context.response.end( compiled(parameters) );
+        });
+    }
+}
+module.exports = CandyTemplate;
+
+// 2. 经过第 1 步，我们的模板引擎就开发完了，是不是很简单
+// 接下来在入口注册我们编写的模板引擎
+const App = require('candyjs/web/Application');
+const app = new App({
+    'id': 'template_test',
+
+    // 配置模板引擎
+    'defaultView': 'app/libs/CandyTemplate',
+
+    'appPath': __dirname + '/app'
+});
+new CandyJs(app).listen(2333, function(){
+    console.log('listen on 2333');
+});
+
+// 3. 准备模板 html
+&lt;html>
+&lt;body>
+&lt;ul>
+{{#each list}}
+    &lt;li>&lt;a href="/user?uid={{ id }}">{{ name }}&lt;/a>&lt;/li>
+{{/each}}
+&lt;/ul>
+&lt;/body>
+&lt;/html>
+
+// 4. 在控制器中使用模板引擎渲染页面
+const Controller = require('candyjs/web/Controller');
+const User = require('somepath/models/User');
+
+class IndexController extends Controller {
+    run(req, res) {
+        this.fetchList(res);
+    }
+
+    async fetchList(res) {
+        const user = new User();
+        // 这里 data 是一个用户数组 [{id: xxx, name: xxx}]
+        let data = await user.getUserList();
+
+        // 可以获取到模板引擎实例
+        // 具体使用方式请参考 handlebars 模板引擎官方文档
+        // const handlebars = this.getView().handlebars;
+        // handlebars.todo
+
+        // 这里的 render 将使用我们制定的模板引擎渲染页面
+        this.render('index', {
+            list: data
+        });
+    }
+}
+</code></pre>
+</p>
+
+            <h6><b>局部注入方式</b></h6>
+<p>
+<pre><code>
+// 1. 局部注入方式第 1 步也需要编写我们的模板引擎，参考全局配置方式
+
+// 2. 在控制器中动态注入模板引擎
+const Controller = require('candyjs/web/Controller');
+const User = require('somepath/models/User');
+const CandyTemplate = require('somepath/CandyTemplate');
+
+class IndexController extends Controller {
+    run(req, res) {
+        this.fetchList(res);
+    }
+
+    async fetchList(res) {
+        const user = new User();
+        let data = await user.getUserList();
+
+        // 动态注入模板引擎
+        this.setView(new CandyTemplate(this.context));
+        this.render('index', {
+            list: data
+        });
+    }
+}
+
+module.exports = IndexController;
+</code></pre>
+</p>
+
+            <h6><b>嵌入式</b></h6>
+<p>
+<pre><code>
+// 这种方式比较灵活，不需要编写模板引擎
+
+const Controller = require('candyjs/web/Controller');
+const Handlebars = require('handlebars');
+const User = require('somepath/models/User');
+
+class IndexController extends Controller {
+    run(req, res) {
+        this.fetchList(res);
+    }
+
+    async fetchList(res) {
+        const user = new User();
+        let data = await user.getUserList();
+
+        this.getView().getTemplateContent('index', (err, str) => {
+            // 直接使用模板引擎对内容进行编译并输出
+            let compiled = Handlebars.compile(str);
+
+            res.end( compiled({ list: data }) );
+        });
+    }
+}
+module.exports = IndexController;
+</code></pre>
+</p>
 
             <h4><b>Controller level view API</b></h4>
             <p>
