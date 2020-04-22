@@ -85,7 +85,7 @@ class Candy {
     static createObjectAsString(classPath, ...parameters) {
         let realClass = Candy.getPathAlias('@' + classPath);
 
-        let ClassName = require(realClass + Candy.fileExtention);
+        let ClassName = require(realClass + Candy.defaultExtension);
 
         return new ClassName(...parameters);
     }
@@ -99,7 +99,7 @@ class Candy {
         let realClass = Candy.getPathAlias('@' + definition.classPath);
         let properties = Candy.config({}, definition);
 
-        let ClassName = require(realClass + Candy.fileExtention);
+        let ClassName = require(realClass + Candy.defaultExtension);
         let instance = new ClassName(...parameters);
 
         delete properties.classPath;
@@ -122,7 +122,7 @@ class Candy {
         // 文件不存在抛出异常
         // todo
 
-        return require(realClass + Candy.fileExtention);
+        return require(realClass + Candy.defaultExtension);
     }
 
     /**
@@ -153,8 +153,8 @@ Candy.app = null;
 Candy.pathAliases = {'@candy': __dirname};
 
 /**
- * @property {String} fileExtention 默认文件扩展名
+ * @property {String} defaultExtension 默认文件扩展名
  */
-Candy.fileExtention = '.js';
+Candy.defaultExtension = '.js';
 
 module.exports = Candy;

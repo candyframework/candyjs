@@ -17,10 +17,8 @@ class IndexController extends Controller {
         const user = new User();
         let data = await user.getUserById(uid);
 
-        this.getView().getTemplateContent('index', (err, template) => {
-            let compiled = Handlebars.compile(template);
-
-            res.end( compiled({ info: JSON.stringify(data) }) );
+        this.render('index', {
+            info: JSON.stringify(data)
         });
     }
 }
