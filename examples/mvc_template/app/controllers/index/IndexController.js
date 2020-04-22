@@ -3,7 +3,7 @@ const Candy = require('../../../../../Candy');
 
 // 加载系统控制器
 const Controller = Candy.include('candy/web/Controller');
-const CandyTemplate = require('../../../../../../candy-template');
+const Handlebars = require('handlebars');
 
 class IndexController extends Controller {
     run(req, res) {
@@ -14,9 +14,10 @@ class IndexController extends Controller {
         const user = new User();
         let data = await user.getUserList();
 
-        this.setView(new CandyTemplate(this.context));
-        this.render('index', {
-            list: data
+        this.getView().getTemplateContent('index', (err, template) => {
+            let compiled = Handlebars.compile(template);
+
+            res.end( compiled({ list: data }) );
         });
     }
 }

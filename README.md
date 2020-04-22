@@ -119,6 +119,9 @@ new CandyJs(app).listen(8090, function(){
 + 2020-04-21
 
     * npm 包 4.2.0 对模板系统进行了重构
+    * View 类的 `getTemplate(view, callback)` 更名为 `getTemplateContent(view, callback)`
+    * View 类的 `getTemplateFilePath(view)` 更名为 `findViewFile(view)`
+    * 去除 View 类的 `getTemplateFromPath()`
 
 + 2020-04-11
 

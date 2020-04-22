@@ -31,7 +31,7 @@ class Controller extends CoreController {
      */
     getView() {
         if(null === this.view) {
-            this.view = Candy.createObject(Candy.app.defaultView, this.context);
+            this.view = Candy.createObjectAsString(Candy.app.defaultView, this.context);
         }
 
         return this.view;
