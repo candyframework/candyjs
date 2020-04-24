@@ -495,7 +495,7 @@ class IndexController extends Controller {
         const user = new User();
         let data = await user.getUserList();
 
-        this.getView().getTemplateContent('index', (err, str) => {
+        this.getView().getViewContent('index', (err, str) => {
             // 直接使用模板引擎对内容进行编译并输出
             let compiled = Handlebars.compile(str);
 
@@ -515,7 +515,7 @@ module.exports = IndexController;
             <p>The view class provides the following API for user to use</p>
             <ul>
                 <li><code>findViewFile(view)</code>Used to get absolute path of a view file</li>
-                <li><code>getTemplateContent(view, callback)</code>Used to read the content of a view file</li>
+                <li><code>getViewContent(view, callback)</code>Used to read the content of a view file</li>
             </ul>
 <p>
 <pre><code>
@@ -528,7 +528,7 @@ var Controller = Candy.include('candy/web/Controller');
 class IndexController extends Controller {
 
     run(req, res) {
-        this.getView().getTemplateContent('index', (err, str) => {
+        this.getView().getViewContent('index', (err, str) => {
             res.end(str);
         });
     }

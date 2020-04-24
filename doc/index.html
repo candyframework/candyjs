@@ -484,7 +484,7 @@ class IndexController extends Controller {
         const user = new User();
         let data = await user.getUserList();
 
-        this.getView().getTemplateContent('index', (err, str) => {
+        this.getView().getViewContent('index', (err, str) => {
             // 直接使用模板引擎对内容进行编译并输出
             let compiled = Handlebars.compile(str);
 
@@ -504,7 +504,7 @@ module.exports = IndexController;
             <p>视图类提供了如下<code>API</code>供用户使用</p>
             <ul>
                 <li><code>findViewFile(view)</code> 用于获取一个视图文件的绝对路径</li>
-                <li><code>getTemplateContent(view, callback)</code> 用于读取一个视图文件的内容</li>
+                <li><code>getViewContent(view, callback)</code> 用于读取一个视图文件的内容</li>
             </ul>
 <p>
 <pre><code>
@@ -517,7 +517,7 @@ var Controller = Candy.include('candy/web/Controller');
 class IndexController extends Controller {
 
     run(req, res) {
-        this.getView().getTemplateContent('index', (err, str) => {
+        this.getView().getViewContent('index', (err, str) => {
             res.end(str);
         });
     }

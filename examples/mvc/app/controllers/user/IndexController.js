@@ -17,7 +17,7 @@ class IndexController extends Controller {
         let data = await user.getUserById(uid);
 
         // 手动输出内容
-        this.getView().getTemplateContent('index', (err, temp) => {
+        this.getView().getViewContent('index', (err, temp) => {
             temp = temp.replace('{info}', JSON.stringify(data));
 
             res.end(temp);

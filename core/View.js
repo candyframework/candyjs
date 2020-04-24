@@ -59,11 +59,24 @@ class View {
     /**
      * 读取视图文件
      *
+     * @deprecated since 4.2.1 请使用 getViewContent
      * @param {String} view 视图文件名
      * @param {Function} callback 回调函数
      * @return {String}
      */
     getTemplateContent(view, callback) {
+        this.getViewContent(view, callback);
+    }
+
+    /**
+     * 读取视图文件
+     *
+     * @since 4.2.1
+     * @param {String} view 视图文件名
+     * @param {Function} callback 回调函数
+     * @return {String}
+     */
+    getViewContent(view, callback) {
         let file = this.findViewFile(view);
 
         fs.readFile(file, Candy.app.encoding, callback);

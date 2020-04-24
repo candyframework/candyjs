@@ -13,7 +13,7 @@ class IndexController extends Controller {
         const user = new User();
         let data = await user.getUserList();
 
-        this.getView().getTemplateContent('index', (err, temp) => {
+        this.getView().getViewContent('index', (err, temp) => {
             // 这里可以使用第三方的模板引擎进行处理
             let str = '';
             for(let i=0, len=data.length; i<len; i++) {

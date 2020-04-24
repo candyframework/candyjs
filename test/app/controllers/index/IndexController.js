@@ -6,7 +6,7 @@ var Controller = Candy.include('candy/web/Controller');
 class IndexController extends Controller {
 
     run(req, res) {
-        this.getView().getTemplateContent('index', (err, str) => {
+        this.getView().getViewContent('index', (err, str) => {
             res.end(str);
         });
     }
