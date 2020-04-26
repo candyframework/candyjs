@@ -31,7 +31,7 @@ class Event {
      * @param {Function} handler 事件处理器
      */
     on(eventName, handler) {
-        if(undefined === this.eventsMap.get(eventName)) {
+        if(!this.eventsMap.has(eventName)) {
             this.eventsMap.set(eventName, []);
         }
 
@@ -45,9 +45,7 @@ class Event {
      * @param {Function} handler
      */
     off(eventName, handler) {
-        const handlers = this.eventsMap.get(eventName);
-
-        if(undefined === handlers) {
+        if(!this.eventsMap.has(eventName)) {
             return;
         }
 
@@ -56,6 +54,7 @@ class Event {
             return;
         }
 
+        const handlers = this.eventsMap.get(eventName);
         for(let i=0; i<handlers.length; i++) {
             if(handler === handlers[i]) {
                 handlers.splice(i, 1);
@@ -67,17 +66,16 @@ class Event {
      * 触发
      *
      * @param {String} eventName 事件名称
-     * @param {any} param 参数
+     * @param {any} parameter 参数
      */
-    trigger(eventName, param) {
-        const handlers = this.eventsMap.get(eventName);
-
-        if(undefined === handlers) {
+    trigger(eventName, parameter) {
+        if(!this.eventsMap.has(eventName)) {
             return;
         }
 
+        const handlers = this.eventsMap.get(eventName);
         for(let i=0, len=handlers.length; i<len; i++) {
-            handlers[i](param);
+            handlers[i](parameter);
         }
     }
 
@@ -88,12 +86,11 @@ class Event {
      * @param {any} parameters 参数
      */
     triggerWithRestParameters(eventName, ...parameters) {
-        const handlers = this.eventsMap.get(eventName);
-
-        if(undefined === handlers) {
+        if(!this.eventsMap.has(eventName)) {
             return;
         }
 
+        const handlers = this.eventsMap.get(eventName);
         for(let i=0, len=handlers.length; i<len; i++) {
             handlers[i](...parameters);
         }

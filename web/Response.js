@@ -52,9 +52,9 @@ class Response extends CoreResponse {
         this.statusText = 'OK';
 
         /**
-         * @property {Object} headers HTTP headers
+         * @property {Map<String, String>} headers HTTP headers
          */
-        this.headers = {};
+        this.headers = new Map();
 
         /**
          * @property {String | Buffer} content HTTP content
@@ -107,8 +107,8 @@ class Response extends CoreResponse {
      * @return {String | null}
      */
     getHeader(name) {
-        if(undefined !== this.headers[name]) {
-            return this.headers[name];
+        if(this.headers.has(name)) {
+            return this.headers.get(name);
         }
 
         return null;
@@ -121,7 +121,7 @@ class Response extends CoreResponse {
      * @param {String | Array} value of header
      */
     setHeader(name, value) {
-        this.headers[name] = value;
+        this.headers.set(name, value);
 
         return this;
     }
@@ -193,9 +193,9 @@ class Response extends CoreResponse {
             return;
         }
 
-        for(let name in this.headers) {
-            this.response.setHeader(name, this.headers[name]);
-        }
+        this.headers.forEach((v, k) => {
+            this.response.setHeader(k, v);
+        });
 
         if(this.cookies.length > 0) {
             Cookie.setCookie(this.response, this.cookies);

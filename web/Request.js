@@ -51,11 +51,11 @@ class Request extends CoreRequest {
      * 静态方法 获取 get 参数
      *
      * @param {Object} request 请求对象
-     * @param {String} param 参数名
+     * @param {String} parameter 参数名
      * @param {String} defaultValue 默认值
      * @return {String | null}
      */
-    static getQueryString(request, param, defaultValue = null) {
+    static getQueryString(request, parameter, defaultValue = null) {
         let parsed = url.parse(request.url);
 
         if(null === parsed.query) {
@@ -63,10 +63,10 @@ class Request extends CoreRequest {
         }
 
         // 查找参数
-        if(0 === parsed.query.indexOf(param + '=')
-            || parsed.query.indexOf('&' + param + '=') > 0) {
+        if(0 === parsed.query.indexOf(parameter + '=')
+            || parsed.query.indexOf('&' + parameter + '=') > 0) {
 
-            return querystring.parse(parsed.query)[param];
+            return querystring.parse(parsed.query)[parameter];
         }
 
         return defaultValue;
@@ -76,16 +76,16 @@ class Request extends CoreRequest {
      * 静态方法 获取 post 参数
      *
      * @param {Object} request 请求对象
-     * @param {String} param 参数名
+     * @param {String} parameter 参数名
      * @param {String} defaultValue 默认值
      * @return {String | null}
      */
-    static getParameter(request, param, defaultValue = null) {
+    static getParameter(request, parameter, defaultValue = null) {
         if(undefined === request.body) {
             return defaultValue;
         }
 
-        return undefined === request.body[param] ? defaultValue : request.body[param];
+        return undefined === request.body[parameter] ? defaultValue : request.body[parameter];
     }
 
     /**
@@ -102,21 +102,21 @@ class Request extends CoreRequest {
     /**
      * 获取 get 参数
      *
-     * @param {String} param 参数名
+     * @param {String} parameter 参数名
      * @see Request.getQueryString
      */
-    getQueryString(param) {
-        return Request.getQueryString(this.request, param);
+    getQueryString(parameter) {
+        return Request.getQueryString(this.request, parameter);
     }
 
     /**
      * 获取 post 参数
      *
-     * @param {String} param 参数名
+     * @param {String} parameter 参数名
      * @see Request.getParameter
      */
-    getParameter(param) {
-        return Request.getParameter(this.request, param);
+    getParameter(parameter) {
+        return Request.getParameter(this.request, parameter);
     }
 
     /**

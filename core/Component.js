@@ -111,11 +111,11 @@ class Component extends Event {
      * @return {Object | null}
      */
     detachBehavior(name) {
-        let behavior = this.behaviorsMap.get(name);
-
-        if(undefined === behavior) {
+        if(!this.behaviorsMap.has(name)) {
             return null;
         }
+
+        let behavior = this.behaviorsMap.get(name);
 
         this.behaviorsMap.delete(name);
         behavior.unListen();
@@ -134,7 +134,7 @@ class Component extends Event {
             behavior = Candy.createObject(behavior);
         }
 
-        if(undefined !== this.behaviorsMap.get(name)) {
+        if(this.behaviorsMap.has(name)) {
             this.behaviorsMap.get(name).unListen();
         }
 
