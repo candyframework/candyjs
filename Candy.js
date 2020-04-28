@@ -55,6 +55,19 @@ class Candy {
 
         Candy.pathAliases[alias] = path;
     }
+    
+    /**
+     * 删除路径别名
+     *
+     * @param {String} alias 路径别名
+     */
+    static deletePathAlias(alias) {
+        if('@' !== alias.charAt(0)) {
+            alias = '@' + alias;
+        }
+        
+        delete Candy.pathAliases[alias];
+    }
 
     /**
      * 创建对象 系统类路径约定以 candy 开头 应用类以项目目录开头
@@ -103,10 +116,7 @@ class Candy {
         let instance = new ClassName(...parameters);
 
         delete properties.classPath;
-
-        if(null !== properties) {
-            Candy.config(instance, properties);
-        }
+        Candy.config(instance, properties);
 
         return instance;
     }
