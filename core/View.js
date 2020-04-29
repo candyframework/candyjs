@@ -23,7 +23,7 @@ class View {
         this.context = context;
 
         /**
-         * @var {String} 默认视图文件后缀
+         * @property {String} 默认视图文件后缀
          */
         this.defaultExtension = '.html';
     }
