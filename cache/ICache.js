@@ -7,7 +7,7 @@
 /**
  * 缓存接口层 所有缓存类都需要实现这个接口中定义的方法
  */
-class ITarget {
+class ICache {
 
     /**
      * 进行初始化
@@ -65,4 +65,4 @@ class ITarget {
 
 }
 
-module.exports = ITarget;
+module.exports = ICache;

@@ -195,7 +195,7 @@ new CandyJs(new App({
     'log': {
         'targets': {
             'file': {
-                'classPath': 'candy/log/file/Target'
+                'classPath': 'candy/log/file/Log'
             }
         }
     }
@@ -1088,7 +1088,7 @@ candyJs.listen('2333', () => {
 'log': {
     'targets': {
         'file': {
-            'classPath': 'candy/log/file/Target',
+            'classPath': 'candy/log/file/Log',
             'logPath': __dirname + '/logs',
             'logFile': 'system.log',
             'maxFileSize': 10240  // 10 MB
@@ -1128,7 +1128,7 @@ log.flush();  // flush data to disk
 <pre><code>
 'cache': {
     'file': {
-        'classPath': 'candy/cache/file/Target',
+        'classPath': 'candy/cache/file/Cache',
         'cachePath': '...'
     }
 }

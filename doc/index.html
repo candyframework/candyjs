@@ -186,7 +186,7 @@ var app = new App({
     'log': {
         'targets': {
             'file': {
-                'classPath': 'candy/log/file/Target'
+                'classPath': 'candy/log/file/Log'
             }
         }
     }
@@ -1165,7 +1165,7 @@ candyJs.listen('2333', () => {
         // 文件日志
         'file': {
             // 必须参数，表示类的路径，支持别名路径
-            'classPath': 'candy/log/file/Target',
+            'classPath': 'candy/log/file/Log',
             // 日志输出目录
             'logPath': __dirname + '/logs',
             // 文件名
@@ -1262,7 +1262,7 @@ log.flush();
 <pre><code>
 'cache': {
     'file': {
-        'classPath': 'candy/cache/file/Target',
+        'classPath': 'candy/cache/file/Cache',
         'cachePath': '...'
     }
 }

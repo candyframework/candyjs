@@ -3,8 +3,8 @@ const Candy = require('../Candy');
 const config = {
     'targets': {
         'file': {
-            'classPath': 'candy/log/file/Target',
-            'logPath': __dirname + '/_logs',
+            'classPath': 'candy/log/file/Log',
+            'logPath': __dirname + '/tmp_logs',
             'logFile': 'system.log',
             'maxFileSize': 1  // 1KB
         }

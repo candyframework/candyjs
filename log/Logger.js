@@ -6,7 +6,7 @@
 
 const Candy = require('../Candy');
 const InvalidConfigException = require('../core/InvalidConfigException');
-const ITarget = require('./ITarget');
+const ILog = require('./ILog');
 
 /**
  * 日志
@@ -58,7 +58,7 @@ class Logger {
                 let clazz = Candy.createObjectAsString(
                     settings.targets[target].classPath,
                     settings.targets[target]);
-                clazz.on(ITarget.EVENT_FLUSH, clazz);
+                clazz.on(ILog.EVENT_FLUSH, clazz);
 
                 this.targets.push(clazz);
             }
@@ -109,7 +109,7 @@ class Logger {
         this.messages = [];
 
         for(let target of this.targets) {
-            target.trigger(ITarget.EVENT_FLUSH, messages);
+            target.trigger(ILog.EVENT_FLUSH, messages);
         }
     }
 
