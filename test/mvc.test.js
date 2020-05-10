@@ -11,6 +11,10 @@ const app = new App({
     'appPath': __dirname + '/app',
     'debug': true,
 
+    'routesMap': {
+        'myroute': 'app/MyRouteHandler'
+    },
+
     'modules': {
         'bbs': 'app/modules/bbs'
     }
@@ -27,6 +31,19 @@ describe('MVC', function() {
                 if (err) return done(err);
 
                 assert.equal(res.text.trim(), 'mvc');
+
+                done();
+            });
+    });
+
+    it('routesmap get', function(done) {
+        request(server)
+            .get('/myroute')
+            .expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+
+                assert.equal(res.text.trim(), 'myroute');
 
                 done();
             });
