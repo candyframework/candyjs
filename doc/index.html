@@ -1188,15 +1188,15 @@ log.flush();  // 写入硬盘
             <h4><b>扩展日志</b></h4>
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时只提供了文件日志功能，如果想实现诸如数据库日志等的功能必须自己进行日志扩展。
-                <code>CandyJs</code>完善的代码设计使得进行日志扩展非常容易，只需要让扩展的日志类继承<code>candy/log/ITarget</code>并实现其中的<code>flush()</code>方法即可
+                <code>CandyJs</code>完善的代码设计使得进行日志扩展非常容易，只需要让扩展的日志类继承<code>candy/log/ILog</code>并实现其中的<code>flush()</code>方法即可
             </blockquote>
 <pre><code>
 // 1. 定义日志类
 var Candy = require('candyjs/Candy');  // 助手类
-var Target = Candy.include('candy/log/ITarget');
+var ILog = Candy.include('candy/log/ILog');
 
 // app/libs/MyDbLog.js
-class MyDbLog extends Target {
+class MyDbLog extends ILog {
     flush(messages) {
         console.log(messages);
     }
@@ -1278,7 +1278,7 @@ c.set('key2', 'value2', undefined, (err) => {
 
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时只提供了文件缓存功能 如果想实现诸如数据库缓存等的功能必须自己进行缓存扩展
-                <code>CandyJs</code>完善的代码设计使得进行缓存扩展非常容易 只需要让扩展的缓存类继承<code>candy/cache/ITarget</code>并实现其中的方法即可
+                <code>CandyJs</code>完善的代码设计使得进行缓存扩展非常容易 只需要让扩展的缓存类继承<code>candy/cache/ICache</code>并实现其中的方法即可
             </blockquote>
 
         </div>
