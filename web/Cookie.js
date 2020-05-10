@@ -64,10 +64,10 @@ class Cookie {
             return null;
         }
 
-        let ret = null, tmp = null;
+        let ret = null;
         let list = request.headers.cookie.split('; ');
 
-        for(let i=0,len=list.length; i<len; i++) {
+        for(let tmp=null,i=0,len=list.length; i<len; i++) {
             tmp = list[i].split('=');
 
             if(name === tmp[0]) {

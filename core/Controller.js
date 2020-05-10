@@ -29,10 +29,14 @@ class Controller extends Component {
      *
      * @param {Object} request
      * @param {Object} response
+     * @return {Boolean}
      */
-    beforeActionCall(request, response) {
-        CandyJs.getLogger().trace('The beforeActionCall() method is called');
-        this.triggerWithRestParameters(Controller.EVENT_BEFORE_ACTIONCALL, request, response);
+    beforeAction(request, response) {
+        CandyJs.getLogger().trace('The beforeAction() method is called');
+
+        this.trigger(Controller.EVENT_BEFORE_ACTION, this.context);
+
+        return true;
     }
 
     /**
@@ -41,9 +45,10 @@ class Controller extends Component {
      * @param {Object} request
      * @param {Object} response
      */
-    afterActionCall(request, response) {
-        CandyJs.getLogger().trace('The afterActionCall() method is called');
-        this.triggerWithRestParameters(Controller.EVENT_AFTER_ACTIONCALL, request, response);
+    afterAction(request, response) {
+        CandyJs.getLogger().trace('The afterAction() method is called');
+
+        this.trigger(Controller.EVENT_AFTER_ACTION, this.context);
     }
 
     /**
@@ -53,12 +58,14 @@ class Controller extends Component {
      * @param {Object} response
      */
     runControllerAction(request, response) {
-        this.beforeActionCall(request, response);
+        if( true !== this.beforeAction(request, response) ) {
+            return;
+        }
 
         CandyJs.getLogger().trace('Starting to run the run() method of: ' + this.constructor.name);
         this.run(request, response);
 
-        this.afterActionCall(request, response);
+        this.afterAction(request, response);
     }
 
     /**
@@ -73,13 +80,13 @@ class Controller extends Component {
 }
 
 /**
- * @property {String} EVENT_BEFORE_ACTIONCALL
+ * @property {String} EVENT_BEFORE_ACTION
  */
-Controller.EVENT_BEFORE_ACTIONCALL = 'beforeActionCall';
+Controller.EVENT_BEFORE_ACTION = 'beforeAction';
 
 /**
- * @property {String} EVENT_AFTER_ACTIONCALL
+ * @property {String} EVENT_AFTER_ACTION
  */
-Controller.EVENT_AFTER_ACTIONCALL = 'afterActionCall';
+Controller.EVENT_AFTER_ACTION = 'afterAction';
 
 module.exports = Controller;

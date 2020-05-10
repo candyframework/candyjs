@@ -280,6 +280,15 @@ module.exports = IndexController;
                 If the controller inherits from<code>candy/web/Controller</code>
                 Then you can use the action aspect in the controller before or after action to perform some business logic
             </p>
+            <blockquote class="bg-danger">
+                <p>由于前期设计导致动作切面作用不是很大，从 4.3.0 开始，我们对动作切面进行了重构</p>
+                <p>并且对方法名进行了调整</p>
+                <ul>
+                    <li><code>beforeActionCall() 更名为 beforeAction()</code></li>
+                    <li><code>afterActionCall() 更名为 afterAction()</code></li>
+                </ul>
+                <p><code>beforeAction(req, res)</code> 方法必须同步返回一个布尔类型的值，以表明程序是否继续向后执行。<code>true</code>表示告诉程序向下执行，其他返回值则会阻止程序运行</p>
+            </blockquote>
 <pre><code>
 'use strict';
 
@@ -289,14 +298,22 @@ var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
-    beforeActionCall(req, res) {
-        console.log('beforeActionCall')
+    // 这里演示了如何阻止程序的运行
+    // 并手动控制程序走向
+    beforeAction(req, res) {
+        setTimeout(() => {
+            this.run(req, res);
+        }, 1000);
+
+        // 阻止程序的运行
+        return false;
     }
 
-    afterActionCall(req, res) {
+    afterAction(req, res) {
         console.log('afterActionCall')
     }
 
+    // 入口动作
     run(req, res) {
         res.end('hello');
     }
@@ -306,10 +323,6 @@ class IndexController extends Controller {
 module.exports = IndexController;
 </pre></code>
 
-            <blockquote class="bg-danger">
-                Note that there may be asynchronous operations in the project code.
-                <code>afterActionCall()</code>does not guarantee execution after run() execution is complete
-            </blockquote>
 
             <h4><b>Routing and controller</b></h4>
             <p>Generally a route corresponds to a controller</p>
@@ -730,30 +743,6 @@ class IndexController extends Controller {
 module.exports = IndexController;
 </code></pre>
 
-            <h6><b>Handling events</b></h6>
-            <p>The behavior class can handle events that the component triggers only to override the event class's<code>events()</code>method</p>
-<pre><code>
-'use strict';
-
-var CandyJs = require('candyjs');
-var Candy = require('candyjs/Candy');
-var Behavior = Candy.include('candy/core/Behavior');
-
-class MyBehavior extends Behavior {
-    events() {
-        return {
-            'beforeActionCall': function(){
-                console.log('before');
-            },
-            'afterActionCall': function() {
-                console.log('after');
-            }
-        }
-    }
-}
-
-module.exports = MyBehavior;
-</code></pre>
 
             <h1 class="page-header" id="midware"><b>Middleware</b></h1>
             <p>The middleware is the first part of the request to process the request and do the filtering and call the next middleware</p>

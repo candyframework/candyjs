@@ -266,9 +266,19 @@ module.exports = IndexController;
 
             <h4><b>动作切面</b></h4>
             <p>
-                如果控制器从<code>candy/web/Controller</code>继承而来<mark>（在 CandyJs 中控制器可以不从<code>candy/web/Controller</code>继承）</mark>
+                如果控制器从<code>candy/web/Controller</code>继承而来，
                 那么就可以使用动作切面在控制器的动作执行前后实现一些业务逻辑
             </p>
+            <blockquote class="bg-danger">
+                <p>由于前期设计导致动作切面作用不是很大，从 4.3.0 开始，我们对动作切面进行了重构</p>
+                <p>并且对方法名进行了调整</p>
+                <ul>
+                    <li><code>beforeActionCall() 更名为 beforeAction()</code></li>
+                    <li><code>afterActionCall() 更名为 afterAction()</code></li>
+                </ul>
+                <p><code>beforeAction(req, res)</code> 方法必须同步返回一个布尔类型的值，以表明程序是否继续向后执行。<code>true</code>表示告诉程序向下执行，其他返回值则会阻止程序运行</p>
+            </blockquote>
+
 <pre><code>
 'use strict';
 
@@ -278,11 +288,18 @@ var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
-    beforeActionCall(req, res) {
-        console.log('beforeActionCall')
+    // 这里演示了如何阻止程序的运行
+    // 并手动控制程序走向
+    beforeAction(req, res) {
+        setTimeout(() => {
+            this.run(req, res);
+        }, 1000);
+
+        // 阻止程序的运行
+        return false;
     }
 
-    afterActionCall(req, res) {
+    afterAction(req, res) {
         console.log('afterActionCall')
     }
 
@@ -296,9 +313,6 @@ class IndexController extends Controller {
 module.exports = IndexController;
 </pre></code>
 
-            <blockquote class="bg-danger">
-                注意 由于项目代码中可能存在异步操作<code>afterActionCall()</code>并不能保证在 run() 执行完成后再执行
-            </blockquote>
 
             <h1 class="page-header" id="router"><b>MVC 路由</b></h1>
             <p>路由是<code>MVC</code>模式中的一部分，实现控制器寻址</p>
@@ -774,31 +788,6 @@ class IndexController extends Controller {
 module.exports = IndexController;
 </code></pre>
 
-            <h6><b>行为中处理事件</b></h6>
-            <p>行为类可以处理组件触发的事件，只需要重写行为类的<code>events()</code>方法即可</p>
-<pre><code>
-// CandyJs 在调用控制器入口动作前后会触发 beforeActionCall afterActionCall 事件
-// 可以使用行为类对此进行拦截处理
-'use strict';
-
-var Candy = require('candyjs/Candy');
-var Behavior = Candy.include('candy/core/Behavior');
-
-class MyBehavior extends Behavior {
-    events() {
-        return {
-            'beforeActionCall': function(){
-                console.log('before');
-            },
-            'afterActionCall': function() {
-                console.log('after');
-            }
-        }
-    }
-}
-
-module.exports = MyBehavior;
-</code></pre>
 
             <h1 class="page-header" id="midware"><b>中间件</b></h1>
             <p>中间件是处理请求的第一个环节，可以对请求做过滤处理并调用下一个中间件</p>

@@ -116,6 +116,12 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2020-05-10
+
+    * 由于设计缺陷 npm 包 4.3.0 对控制器切面进行了重构，当 `beforeAction()` 返回值不为 true 时将阻止程序的运行
+    * `beforeActionCall()` 更名为 `beforeAction()`
+    * `afterActionCall()` 更名为 `afterAction()`
+
 + 2020-04-21
 
     * npm 包 4.2.0 对模板系统进行了重构

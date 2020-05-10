@@ -31,7 +31,7 @@ class ILog extends Event {
      * @param {String} eventName 事件名称
      * @param {Array} parameter 参数
      */
-    trigger(eventName, parameter) {
+    trigger(eventName, parameter = null) {
         if(!this.eventsMap.has(eventName)) {
             return;
         }
