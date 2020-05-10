@@ -55,7 +55,7 @@ class Candy {
 
         Candy.pathAliases[alias] = path;
     }
-    
+
     /**
      * 删除路径别名
      *
@@ -65,19 +65,19 @@ class Candy {
         if('@' !== alias.charAt(0)) {
             alias = '@' + alias;
         }
-        
+
         delete Candy.pathAliases[alias];
     }
 
     /**
-     * 创建对象 系统类路径约定以 candy 开头 应用类以项目目录开头
+     * 创建对象
      *
-     * @param {String | Object} clazz 以某个已经定义的别名开头的类全名或带 'classPath' 键的配置
+     * @param {String | Object} 以某个别名开头的类全名或带 'classPath' 键的配置
      *
      * eg.
-     * candy/log/file/Target
+     * 'alias/path/Class'
      * or
-     * {classPath: '...', ...}
+     * {classPath: 'some/path/Class', ...}
      *
      * @param {any} parameters 构造函数参数
      * @return {Object} 类实例
