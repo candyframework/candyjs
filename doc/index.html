@@ -45,12 +45,12 @@
                 <code>CandyJs</code>实现了一套<code>动态路由</code>规范，您不需要提前注册所需要的路由，只需要输入网址<code>CandyJs</code>会自己找到路由对应的组件。
             </p>
 
+            <h1 class="page-header"><a href="./index_en.html">英文</a></h1>
+
             <h1 class="page-header">入门</h1>
 
             <h4><b>安装程序</b></h4>
-            <p>
-                <pre><code>npm install candyjs</code></pre>
-            </p>
+            <pre><code>npm install candyjs</code></pre>
 
             <h1 class="page-header" id="firstrun"><b>第一次运行程序</b></h1>
             <p>本例输出一个 MVC 模式 Hello word 程序， 如果只想要写一些接口程序，请看<a href="#restful">这里</a></p>
@@ -60,13 +60,10 @@
                 如果<code>CandyJs</code>是通过<code>npm</code>安装的 那么<code>_candy</code>会被安装到<code>node_modules/.bin</code>目录
                 如果<code>CandyJs</code>是通过下载源码手动安装的 那么需要到<code>node_modules/candyjs/bin</code>目录下找到该工具
             </p>
-            <p>
-                <pre><code>./node_modules/.bin/_candy PROJECT_NAME 使用自己想用的应用名字替换掉 PROJECT_NAME 变量即可</code></pre>
-            </p>
+            <pre><code>./node_modules/.bin/_candy PROJECT_NAME 使用自己想用的应用名字替换掉 PROJECT_NAME 变量即可</code></pre>
 
             <p>这样就会创建一个简单的应用如下</p>
-<p>
-    <pre><code>
+<pre><code>
 PROJECT_NAME
 |
 |- index.js
@@ -84,18 +81,16 @@ PROJECT_NAME
 |      |-- index
 |      |   |
 |      |   |-- index.html
-    </code></pre>
-</p>
+</code></pre>
 
             <p>进入应用目录启动程序</p>
-            <p><pre><code>node index.js</code></pre></p>
+            <pre><code>node index.js</code></pre>
             <p>访问程序</p>
-            <p><pre><code><a href="http://localhost:2333" target="_blank">http://localhost:2333</a></code></pre></p>
+            <pre><code><a href="http://localhost:2333" target="_blank">http://localhost:2333</a></code></pre>
 
             <h1 class="page-header" id="appstruct">应用结构</h1>
 
             <h4><b>一个比较完整的应用目录结构如下</b></h4>
-<p>
 <pre><code>
 PROJECT_NAME
 |
@@ -148,7 +143,6 @@ PROJECT_NAME
 |   -- runtime 缓存目录
 |
 </pre></code>
-</p>
 
             <h4><b>入口脚本<code>index.js</code></b></h4>
             <p>
@@ -163,7 +157,6 @@ PROJECT_NAME
                     <li>注册各种需要组件</li>
                 </ul>
             </p>
-<p>
 <pre><code>
 var CandyJs = require('candyjs');
 var App = require('candyjs/web/Application');
@@ -196,7 +189,6 @@ new CandyJs(app).listen(2333, function(){
     console.log('listen on 2333');
 });
 </pre></code>
-</p>
 
             <h4><b>应用</b></h4>
             <p>
@@ -220,7 +212,6 @@ new CandyJs(app).listen(2333, function(){
             <ul>
                 <li>
                     <p><code>candy/web/Application.routesMap</code> 用来自定义路由处理程序</p>
-<p>
 <pre><code>
 // account 路由使用 app/controllers/user/IndexController 做处理 并传入了一个参数 property
 'account': {
@@ -228,18 +219,15 @@ new CandyJs(app).listen(2333, function(){
     'property': 'value'
 }
 </code></pre>
-</p>
                 </li>
                 <li>
                     <p><code>candy/web/Application.modules</code> 用来注册应用模块</p>
-<p>
 <pre><code>
 // 注册一个 bbs 模块
 'modules': {
     'bbs': 'app/modules/bbs'
 }
 </code></pre>
-</p>
                 </li>
                 <li>
                     <p><code>candy/web/Application.encoding</code> 项目编码方式</p>
@@ -257,7 +245,6 @@ new CandyJs(app).listen(2333, function(){
 
             <h4><b>动作</b></h4>
             <p>控制器由<code>动作</code>组成，它是执行终端用户请求的最基础的单元，一个控制器有且只有一个入口动作叫做<code>run</code></p>
-<p>
 <pre><code>
 'use strict';
 
@@ -276,14 +263,12 @@ class IndexController extends Controller {
 
 module.exports = IndexController;
 </pre></code>
-</p>
 
             <h4><b>动作切面</b></h4>
             <p>
                 如果控制器从<code>candy/web/Controller</code>继承而来<mark>（在 CandyJs 中控制器可以不从<code>candy/web/Controller</code>继承）</mark>
                 那么就可以使用动作切面在控制器的动作执行前后实现一些业务逻辑
             </p>
-<p>
 <pre><code>
 'use strict';
 
@@ -310,26 +295,70 @@ class IndexController extends Controller {
 
 module.exports = IndexController;
 </pre></code>
-</p>
 
             <blockquote class="bg-danger">
                 注意 由于项目代码中可能存在异步操作<code>afterActionCall()</code>并不能保证在 run() 执行完成后再执行
             </blockquote>
 
+            <h1 class="page-header" id="router"><b>MVC 路由</b></h1>
+            <p>路由是<code>MVC</code>模式中的一部分，实现控制器寻址</p>
+            <p><code>MVC</code>模式中，每一个路由会对应到一个控制器文件</p>
+
             <h4><b>路由与控制器</b></h4>
             <p>一般一个路由对应一个控制器 路由格式如下</p>
-            <p><pre><code>[route_prefix]/[controllerId]</code></pre></p>
+            <pre><code>[route_prefix]/[controllerId]</code></pre>
             <p>如果属于模块下的控制器 那么路由格式如下</p>
-            <p><pre><code>[moduleId]/[controllerId]</code></pre></p>
+            <pre><code>[moduleId]/[controllerId]</code></pre>
             <p>如果用户的请求地址为<code>http://hostname/index</code>会执行<code>index</code>控制器的<code>run</code>入口动作</p>
             <p>如果用户的请求地址为<code>http://hostname/bbs/index</code>会执行<code>bbs</code>模块的<code>index</code>控制器的<code>run</code>入口动作 或者执行普通控制器的<code>bbs</code>目录下的<code>index</code>控制器的<code>run</code>入口动作</p>
 
             <p>控制器查找顺序 优先查找模块下的控制器<code>模块控制器 --> 普通控制器</code></p>
 
+            <h4><b>自定义路由配置</b></h4>
+            <p><code>CandyJs</code>中可以自定义路由的处理程序，这里通过<code>routesMap</code>来实现</p>
+<pre><code>
+var App = require('candyjs/web/Application');
+
+var app = new App({
+    id: 'myapp',
+
+    routesMap: {
+        // 比如访问 http://www.somedomain.com/account
+        // 这时候 account 路由将使用 app/controllers/user/IndexController 做处理
+        // 并将 IndexController 的 foo 成员变量赋值为 123
+        'account': {
+            'classPath': 'app/controllers/user/IndexController',
+            'foo': '123'
+        }
+    }
+});
+</pre></code>
+
+            <h4><b>路由拦截</b></h4>
+            <p>很多时候，网站会需要进行维护，这时候需要关闭网站，<code>candyjs</code>提供了路由拦截功能，使得网站维护变得简单</p>
+<pre><code>
+var App = require('candyjs/web/Application');
+
+var app = new App({
+    id: 'myapp',
+
+    // 这条配置使得所有请求都会被转发到 app/Intercept 去处理
+    'interceptAll': 'app/Intercept',
+});
+
+// Intercept.js
+class Intercept {
+    run(req, res) {
+        res.end('intercepted');
+    }
+}
+module.exports = Intercept;
+</pre></code>
+
             <h1 class="page-header" id="model"><b>模型</b></h1>
-            <p>模型是<code>MVC</code>模式中的一部分 是代表业务数据的对象</p>
+            <p>模型是<code>MVC</code>模式中的一部分，是代表业务数据的对象</p>
             <blockquote class="bg-info">
-                <code>CandyJs</code>暂时没有提供读取数据库的类
+                模型部分设计中。。。
             </blockquote>
 
             <h1 class="page-header" id="view"><b>视图</b></h1>
@@ -354,7 +383,6 @@ module.exports = IndexController;
             <p>下面将使用<code>Handlebars</code>对以上方式进行逐个讲解</p>
 
             <h6><b>全局配置方式</b></h6>
-<p>
 <pre><code>
 // 全局配置方式是使用 candyjs 的别名系统实现的
 // 这里的代码可以从源代码 examples 目录中找到
@@ -433,10 +461,8 @@ class IndexController extends Controller {
     }
 }
 </code></pre>
-</p>
 
             <h6><b>局部注入方式</b></h6>
-<p>
 <pre><code>
 // 1. 局部注入方式第 1 步也需要编写我们的模板引擎，参考全局配置方式
 
@@ -464,10 +490,8 @@ class IndexController extends Controller {
 
 module.exports = IndexController;
 </code></pre>
-</p>
 
             <h6><b>嵌入式</b></h6>
-<p>
 <pre><code>
 // 这种方式比较灵活，不需要编写模板引擎
 
@@ -494,7 +518,6 @@ class IndexController extends Controller {
 }
 module.exports = IndexController;
 </code></pre>
-</p>
 
             <h4><b>控制器层的视图 API</b></h4>
             <p>
@@ -506,7 +529,6 @@ module.exports = IndexController;
                 <li><code>findViewFile(view)</code> 用于获取一个视图文件的绝对路径</li>
                 <li><code>getViewContent(view, callback)</code> 用于读取一个视图文件的内容</li>
             </ul>
-<p>
 <pre><code>
 'use strict';
 
@@ -526,7 +548,6 @@ class IndexController extends Controller {
 
 module.exports = IndexController;
 </code></pre>
-</p>
 
             <h1 class="page-header" id="module"><b>模块</b></h1>
             <p>
@@ -540,7 +561,6 @@ module.exports = IndexController;
 
             <h4><b>创建模块</b></h4>
             <p>在应用目录的<code>modules</code>目录中建立单独目录创建模块 如下</p>
-<p>
 <pre><code>
 modules 模块目录
     |
@@ -556,11 +576,9 @@ modules 模块目录
     |   |
     |   |-- 其他目录
 </code></pre>
-</p>
 
             <h4><b>注册模块</b></h4>
             <p>创建完成的模块还不能被系统识别 需要手动注册一下</p>
-<p>
 <pre><code>
 var CandyJs = require('candyjs');
 var App = require('candyjs/web/Application');
@@ -579,7 +597,6 @@ new CandyJs(new App({
     console.log('listen on 2333');
 });
 </code></pre>
-</p>
 
             <h1 class="page-header" id="component"><b>组件 & 行为</b></h1>
 
@@ -608,7 +625,6 @@ new CandyJs(new App({
 
             <h4><b>事件</b></h4>
             <p><code>CandyJs</code>中实现了一个观察者模式</p>
-<p>
 <pre><code>
 'use strict';
 
@@ -635,13 +651,11 @@ class IndexController extends Controller {
 
 module.exports = IndexController;
 </code></pre>
-</p>
 
             <h4><b>行为的使用</b></h4>
 
             <h6><b>定义行为</b></h6>
             <p>要定义行为，可以通过继承<code>candy/core/Behavior</code>或其子类来建立一个类</p>
-<p>
 <pre><code>
 'use strict';
 
@@ -663,7 +677,6 @@ class MyBehavior extends Behavior {
 
 module.exports = MyBehavior;
 </code></pre>
-</p>
 
             <p>以上代码定义了行为类<code>MyBehavior</code>并为要附加行为的组件提供了两个属性<code>prop1 prop2</code>和一个方法<code>myFun()</code></p>
 
@@ -671,7 +684,6 @@ module.exports = MyBehavior;
             <p>可以通过<code>静态配置</code>或者<code>动态方法</code>形式附加行为到组件</p>
 
             <p>要使用静态配置附加行为，只需要重写组件类的<code>behaviors()</code>方法即可。<code>behaviors()</code>方法应该返回行为配置列表</p>
-<p>
 <pre><code>
 'use strict';
 
@@ -698,10 +710,8 @@ class IndexController extends Controller {
 
 module.exports = IndexController;
 </code></pre>
-</p>
 
             <p>要使用动态方法附加行为，在组件里调用<code>attachBehavior()</code>方法即可</p>
-<p>
 <pre><code>
 'use strict';
 
@@ -726,14 +736,12 @@ class IndexController extends Controller {
 
 module.exports = IndexController;
 </code></pre>
-</p>
 
             <h6><b>使用</b></h6>
             <p>一旦行为附加到组件 就可以直接使用它</p>
             <blockquote class="bg-info">
                 为了不必要的性能开销，<code>CandyJs</code>不会主动执行注入操作（或许后期会改动），要想使用行为类的功能，必须在调用行为类的功能之前手动调用一下<code>injectBehaviors()</code>方法
             </blockquote>
-<p>
 <pre><code>
 'use strict';
 
@@ -765,11 +773,9 @@ class IndexController extends Controller {
 
 module.exports = IndexController;
 </code></pre>
-</p>
 
             <h6><b>行为中处理事件</b></h6>
             <p>行为类可以处理组件触发的事件，只需要重写行为类的<code>events()</code>方法即可</p>
-<p>
 <pre><code>
 // CandyJs 在调用控制器入口动作前后会触发 beforeActionCall afterActionCall 事件
 // 可以使用行为类对此进行拦截处理
@@ -793,12 +799,10 @@ class MyBehavior extends Behavior {
 
 module.exports = MyBehavior;
 </code></pre>
-</p>
 
             <h1 class="page-header" id="midware"><b>中间件</b></h1>
             <p>中间件是处理请求的第一个环节，可以对请求做过滤处理并调用下一个中间件</p>
             <p><code>CandyJs</code>中的中间件需要通过<code>Hook</code>进行注册，每一个中间件是一个可以接受三个参数的函数</p>
-<p>
 <pre><code>
 // 入口文件
 var CandyJs = require('candyjs');
@@ -825,7 +829,6 @@ new CandyJs(new App({
     console.log('listen on 2333');
 });
 </code></pre>
-</p>
 
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时只提供了一个处理静态资源的中间件
@@ -836,7 +839,6 @@ new CandyJs(new App({
             <p>
                 <code>CandyJs</code>默认是不处理静态资源的，需要使用中间件
             </p>
-<p>
 <pre><code>
 // 入口文件
 var CandyJs = require('candyjs');
@@ -856,7 +858,6 @@ new CandyJs(new App({
     console.log('listen on 2333');
 });
 </code></pre>
-</p>
 
             <h1 class="page-header" id="url"><b>URI & URL 类</b></h1>
             <p>
@@ -867,7 +868,6 @@ new CandyJs(new App({
             <ul>
                 <li><code>parseUrl()</code> 解析 url</li>
             </ul>
-<p>
 <pre><code>
 var URI = Candy.include('candy/web/URI');
 
@@ -888,7 +888,6 @@ var uri = new URI();
 */
 uri.parseUrl('http://xxx.com:8080/abc?q=1#anchor');
 </code></pre>
-</p>
 
             <h4><b>candy/web/URL</b></h4>
             <ul>
@@ -897,7 +896,6 @@ uri.parseUrl('http://xxx.com:8080/abc?q=1#anchor');
                 <li><code>getCurrent()</code> 获取当前网址 不包含锚点部分</li>
                 <li><code>to(url[, params = null])</code> 创建一个 url</li>
             </ul>
-<p>
 <pre><code>
 var URL = Candy.include('candy/web/URL');
 
@@ -909,7 +907,6 @@ url.to('index/index');
 // return scheme://host/index/index?id=1#anchor
 url.to('index/index', {id: 1, '#': 'anchor'})
 </code></pre>
-</p>
 
             <h1 class="page-header" id="reqres"><b>请求与响应</b></h1>
             <p>
@@ -938,7 +935,6 @@ url.to('index/index', {id: 1, '#': 'anchor'})
             <blockquote class="bg-danger">
                 <code>CandyJs</code>中使用 getParameter() 获取 POST 参数需要依赖第三方解析 body 的中间件，否则将反回 null
             </blockquote>
-<p>
 <pre><code>
 var Request = Candy.include('candy/web/Request');
 var request = new Request(req);
@@ -953,7 +949,6 @@ const bodyParser = require('body-parser');
 
 Hook.addHook(bodyParser.json());
 </code></pre>
-</p>
 
             <h4><b>HTTP 响应 candy/web/Response 类</b></h4>
             <p>
@@ -972,7 +967,6 @@ Hook.addHook(bodyParser.json());
             </ul>
 
             <h6><b>使用 response 输出内容</b></h6>
-<p>
 <pre><code>
 var Response = Candy.include('candy/web/Response');
 var response = new Response(res);
@@ -988,7 +982,6 @@ var Response = Candy.include('candy/web/Response');
 var response = new Response(res);
 response.redirect('http://foo.com');
 </code></pre>
-</p>
 
             <h1 class="page-header" id="helper"><b>助手类</b></h1>
             <p>助手类封装了一些常用操作</p>
@@ -1017,7 +1010,6 @@ response.redirect('http://foo.com');
                 <li><code>format(formats[, timestamp = Date.now()])</code> 格式化时间</li>
             </ul>
 
-<p>
 <pre><code>
 var Response = Candy.include('candy/helpers/FileHelper');
 var Response = Candy.include('candy/helpers/StringHelper');
@@ -1035,7 +1027,6 @@ var strTag = StringHelper.filterTags('&lt;a&gt;abc&lt;/a&gt;xyz');
 // 格式化当前时间 return xxxx-xx-xx xx:xx:xx
 var time = TimeHelper.format('y-m-d h:i:s');
 </code></pre>
-</p>
 
             <h1 class="page-header" id="alias"><b>别名系统</b></h1>
             <p>为了方便类的管理，实现自动加载、初始化等，<code>CandyJs</code>提供了一套别名系统</p>
@@ -1053,19 +1044,16 @@ var time = TimeHelper.format('y-m-d h:i:s');
             <h4><b>类的加载及实例化</b></h4>
             <h6><b>类的加载</b></h6>
             <p><code>CandyJs</code>中可以方便的使用别名来加载类</p>
-<p>
 <pre><code>
 var Candy = require('candyjs/Candy');
 var App = Candy.include('candy/web/Application');
 </code></pre>
-</p>
             <p>上面的<code>Candy.include('candy/web/Application');</code>可以实现加载系统的<code>Application</code>类</p>
             <p>其中开头的<code>candy</code>就是一个系统内置别名。<code>CandyJs</code>在解析路径的时候，首先会尝试将路径的开始部分当做一个别名来解析</p>
 
             <h6><b>类的实例化</b></h6>
             <p><code>CandyJs</code>中很多类都是使用<code>Candy.createObject()</code>来进行实例化的，他的强大之处在于可以识别别名，自动加载和初始化一个类</p>
 
-<p>
 <pre><code>
 // 1. 以字符串方式加载并实例化类，这种方式比较简单
 Candy.createObject('candy/utils/LinkedQueue', '还可以传入一些构造函数参数');
@@ -1077,11 +1065,9 @@ Candy.createObject({
     myProp2: '222'
 }, '构造函数参数');
 </code></pre>
-</p>
 
             <h4><b>自定义别名</b></h4>
             <p>用户可以自定义别名</p>
-<p>
 <pre><code>
 // 注册别名
 Candy.setPathAlias('@lib', '/home/www/library');
@@ -1089,7 +1075,6 @@ Candy.setPathAlias('@lib', '/home/www/library');
 // 加载并创建 /home/www/library/MyClass 类
 var obj = Candy.createObject('lib/MyClass');
 </code></pre>
-</p>
 
             <h1 class="page-header" id="restful"><b>RESTful</b></h1>
             <blockquote class="bg-danger">
@@ -1106,7 +1091,6 @@ var obj = Candy.createObject('lib/MyClass');
                 <li><code>head(route, handler)</code></li>
                 <li><code>options(route, handler)</code></li>
             </ul>
-<p>
 <pre><code>
 var CandyJs = require('candyjs');
 var App = require('candyjs/web/RestApplication');
@@ -1143,7 +1127,6 @@ candyJs.listen('2333', () => {
     console.log('listen on 2333')
 });
 </code></pre>
-</p>
 
             <h4><b>RESTful 中的路由问题</b></h4>
             <p>
@@ -1158,7 +1141,6 @@ candyJs.listen('2333', () => {
 
             <h4><b>使用日志</b></h4>
             <p>使用日志功能前，需要在入口文件注册，<code>CandyJs</code>可以同时配置多种日志，只需要在<code>targets</code>项目中配置即可</p>
-<p>
 <pre><code>
 'log': {
     'targets': {
@@ -1176,9 +1158,7 @@ candyJs.listen('2333', () => {
     'flushInterval': 10  // 每 10 次向文件写一次 log
 }
 </code></pre>
-</p>
 
-<p>
 <pre><code>
 var CandyJs = require('candyjs');
 
@@ -1186,7 +1166,6 @@ var log = CandyJs.getLogger();
 log.error('This is a error message');
 log.flush();  // 写入硬盘
 </code></pre>
-</p>
 
             <p>
                 <code>targets</code>用于配置日志处理程序，现在只支持文件日志，所以上面配置了<code>file</code>字段
@@ -1208,7 +1187,6 @@ log.flush();  // 写入硬盘
                 <code>CandyJs</code>暂时只提供了文件日志功能，如果想实现诸如数据库日志等的功能必须自己进行日志扩展。
                 <code>CandyJs</code>完善的代码设计使得进行日志扩展非常容易，只需要让扩展的日志类继承<code>candy/log/ITarget</code>并实现其中的<code>flush()</code>方法即可
             </blockquote>
-<p>
 <pre><code>
 // 1. 定义日志类
 var Candy = require('candyjs/Candy');  // 助手类
@@ -1246,7 +1224,6 @@ var log = CandyJs.getLogger();
 log.error('This is a error message');
 log.flush();
 </code></pre>
-</p>
 
             <h4><b>第三方日志</b></h4>
             <p>如果上述方式不能满足你的需求，你也可以使用第三方日志，如<code>log4js</code>，只需要按照第三方库的文档使用即可</p>
@@ -1258,7 +1235,6 @@ log.flush();
 
             <h4><b>使用缓存</b></h4>
             <p>使用缓存功能前 需要在入口文件注册</p>
-<p>
 <pre><code>
 'cache': {
     'file': {
@@ -1267,7 +1243,6 @@ log.flush();
     }
 }
 </code></pre>
-</p>
 
             <p><code>file</code>用于指定使用文件缓存</p>
 
@@ -1280,7 +1255,6 @@ log.flush();
                 <li><code>deleteSync(key)</code> 同步删除缓存</li>
                 <li><code>delete(key, callback)</code> 异步删除缓存</li>
             </ul>
-<p>
 <pre><code>
 var Candy = require('candyjs/Candy');
 var Cache = Candy.include('candy/cache/Cache');
@@ -1298,7 +1272,6 @@ c.set('key2', 'value2', undefined, (err) => {
     });
 });
 </code></pre>
-</p>
 
             <blockquote class="bg-info">
                 <code>CandyJs</code>暂时只提供了文件缓存功能 如果想实现诸如数据库缓存等的功能必须自己进行缓存扩展
@@ -1312,6 +1285,7 @@ c.set('key2', 'value2', undefined, (err) => {
                 <li><a href="#firstrun">第一次运行程序</a></li>
                 <li><a href="#appstruct">应用结构</a></li>
                 <li><a href="#controller">应用控制器</a></li>
+                <li><a href="#router">MVC 路由</a></li>
                 <li><a href="#model">模型</a></li>
                 <li><a href="#view">视图</a></li>
                 <li><a href="#module">模块</a></li>
