@@ -49,6 +49,13 @@ class Controller extends CoreController {
     /**
      * {@inheritdoc}
      */
+    run(request, response) {
+        response.end('Controller must implements the run() method');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     render(view, parameters = null) {
         this.getView().render(view, parameters);
     }

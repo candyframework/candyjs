@@ -69,6 +69,11 @@ class Controller extends Component {
     }
 
     /**
+     * 执行控制器入口
+     */
+    run(request, response) {}
+
+    /**
      * 渲染文件 须由子类进行实现
      *
      * @param {String} view 视图名

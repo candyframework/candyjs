@@ -27,7 +27,7 @@ class View extends CoreView {
      * @param {Object} parameters 参数
      */
     renderFile(file, parameters) {
-        this.context.response.end('You must implements the renderFile() method of View');
+        this.context.response.end('View must implements the renderFile() method');
     }
 
 }
