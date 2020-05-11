@@ -69,7 +69,7 @@ class Controller extends Component {
     }
 
     /**
-     * 渲染文件
+     * 渲染文件 须由子类进行实现
      *
      * @param {String} view 视图名
      * @param {Object} parameters 参数

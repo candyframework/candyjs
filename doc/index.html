@@ -147,7 +147,7 @@ PROJECT_NAME
             <h4><b>入口脚本<code>index.js</code></b></h4>
             <p>
                 入口脚本是应用启动流程中的第一环，一个应用只有一个入口脚本。
-                入口脚本包含启动脚本 程序启动后就会监听客户端的连接
+                入口脚本包含启动脚本，程序启动后就会监听客户端的连接
             </p>
             <p>
                 入口脚本主要完成以下工作
@@ -244,7 +244,7 @@ new CandyJs(app).listen(2333, function(){
             <p>控制器是<code>MVC</code>模式中的一部分，是继承<code>candy/core/Controller</code>类的对象，负责处理请求和生成响应</p>
 
             <h4><b>动作</b></h4>
-            <p>控制器由<code>动作</code>组成，它是执行终端用户请求的最基础的单元，一个控制器有且只有一个入口动作叫做<code>run</code></p>
+            <p>控制器由<code>动作</code>组成，它是执行终端用户请求的最基础的单元，一个控制器有且只有一个入口动作叫做<code>run</code>，入口动作在控制器被创建后会自动运行</p>
 <pre><code>
 'use strict';
 
@@ -276,7 +276,7 @@ module.exports = IndexController;
                     <li><code>beforeActionCall() 更名为 beforeAction()</code></li>
                     <li><code>afterActionCall() 更名为 afterAction()</code></li>
                 </ul>
-                <p><code>beforeAction(req, res)</code> 方法必须同步返回一个布尔类型的值，以表明程序是否继续向后执行。<code>true</code>表示告诉程序向下执行，其他返回值则会阻止程序运行</p>
+                <p><code>beforeAction(req, res)</code> 方法必须同步返回一个布尔类型的值，以表明程序是否继续向后执行。<code>true</code>表示告诉程序向下执行，其他返回值则会阻止程序运行，这给一些需要做验证或者其他预处理的业务提供了便利性</p>
             </blockquote>
 
 <pre><code>
@@ -288,11 +288,12 @@ var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
-    // 这里演示了如何阻止程序的运行
-    // 并手动控制程序走向
+    // 这里演示了如何阻止程序的默认执行
+    // 改为手动控制程序走向
+    // 由于修改了程序执行逻辑，控制器的默认入口 run() 就不需要了
     beforeAction(req, res) {
         setTimeout(() => {
-            this.run(req, res);
+            this.myRun(req, res);
         }, 1000);
 
         // 阻止程序的运行
@@ -303,8 +304,8 @@ class IndexController extends Controller {
         console.log('afterActionCall')
     }
 
-    // 入口动作
-    run(req, res) {
+    // 入口
+    myRun(req, res) {
         res.end('hello');
     }
 
