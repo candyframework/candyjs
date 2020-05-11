@@ -156,7 +156,7 @@ new CandyJs(app).listen(8090, function(){
 
 + 2018-08-20
 
-    * npm 包 3.0.5 移除 y/web/Request 类的 `setQueryString()` 方法
+    * npm 包 3.0.5 移除 candy/web/Request 类的 `setQueryString()` 方法
 
 + 2018-08-20
 
