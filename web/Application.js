@@ -152,7 +152,7 @@ class Application extends CoreApp {
         }
 
         // 检测非法
-        if(!/^[\w\-\/]+$/.test(route) || route.indexOf('//') >= 0) {
+        if(route.indexOf('//') >= 0) {
             return null;
         }
 

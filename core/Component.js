@@ -37,7 +37,7 @@ class Component extends Event {
     injectBehaviors() {
         this.ensureDeclaredBehaviorsAttached();
 
-        this.behaviorsMap.forEach((v) => {
+        for(let v of this.behaviorsMap.values()) {
             // 自有属性
             let keys = Object.keys(v);
             for(let i=0, len=keys.length; i<len; i++) {
@@ -54,7 +54,7 @@ class Component extends Event {
                     this[ keys[i] ] = v[ keys[i] ];
                 }
             }
-        });
+        }
     }
 
     /**
