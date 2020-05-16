@@ -17,22 +17,22 @@ const app = new App({
 
 
 // api
-const msg = 'hello cache';
-app.get('/cache', (req, res) => {
+const msg = 'hello cache with async await';
+app.get('/cache', async (req, res) => {
     let c = Cache.getCache('file');
-    c.setSync('mykey', msg);
 
-    c.get('mykey', (err, data) => {
-        res.end(data);
-    });
+    await c.set('mykey', msg);
+    let data = await c.get('mykey');
+
+    res.end(data);
 });
 
 const js = new CandyJs(app);
 const server = js.getServer();
 
-// test restful api
-describe('RESTful api', function() {
-    it('simple get', function(done) {
+
+describe('Cache', function() {
+    it('set & get', function(done) {
         request(server)
             .get('/cache')
             .expect(200)

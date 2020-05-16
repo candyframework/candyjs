@@ -1243,11 +1243,11 @@ log.flush();
             <h4><b>缓存接口</b></h4>
             <ul>
                 <li><code>setSync(key, value, duration)</code> 同步写入缓存</li>
-                <li><code>set(key, value, duration, callback)</code> 异步写入缓存</li>
+                <li><code>set(key, value, duration): Promise</code> 异步写入缓存</li>
                 <li><code>getSync(key)</code> 同步读取缓存</li>
-                <li><code>get(key, callback)</code> 异步读取缓存</li>
+                <li><code>get(key): Promise</code> 异步读取缓存</li>
                 <li><code>deleteSync(key)</code> 同步删除缓存</li>
-                <li><code>delete(key, callback)</code> 异步删除缓存</li>
+                <li><code>delete(key): Promise</code> 异步删除缓存</li>
             </ul>
 <pre><code>
 var Candy = require('candyjs/Candy');
@@ -1260,11 +1260,11 @@ c.setSync('key', 'value');
 var data = c.getSync('key');
 
 // 异步
-c.set('key2', 'value2', undefined, (err) => {
-    c.get('sync', (err, data) => {
-        res.end(data);
-    });
-});
+async function getSetData() {
+    await c.set('key2', 'value2');
+
+    let data = await c.get('key2');
+}
 </code></pre>
 
             <blockquote class="bg-info">

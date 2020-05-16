@@ -24,29 +24,32 @@ class ICache {
     setSync(key, value, duration) {}
 
     /**
-     * 写入缓存
+     * 异步写入缓存
      *
      * @param {String} key 缓存键
      * @param {String} value 缓存值
      * @param {Number} duration 缓存时间 毫秒
-     * @param {Function} callback 回调
+     * @return {Promise}
+     * @throws {Error}
      */
-    set(key, value, duration, callback) {}
+    set(key, value, duration) {}
 
     /**
      * 同步读取缓存
      *
      * @param {String} key 缓存键
+     * @return {String}
      */
     getSync(key) {}
 
     /**
-     * 读取缓存
+     * 异步读取缓存
      *
      * @param {String} key 缓存键
-     * @param {Function} callback 回调
+     * @return {Promise}
+     * @throws {Error}
      */
-    get(key, callback) {}
+    get(key) {}
 
     /**
      * 同步删除缓存
@@ -56,12 +59,13 @@ class ICache {
     deleteSync(key) {}
 
     /**
-     * 删除缓存
+     * 异步删除缓存
      *
      * @param {String} key 缓存键
-     * @param {Function} callback 回调
+     * @return {Promise}
+     * @throws {Error}
      */
-    delete(key, callback) {}
+    delete(key) {}
 
 }
 

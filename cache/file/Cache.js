@@ -74,34 +74,39 @@ class Cache extends ICache {
     /**
      * @inheritdoc
      */
-    set(key, value, duration = 31536000000/* one year */, callback = null) {
-        let cacheFile = this.getCacheFile(key);
+    set(key, value, duration = 31536000000/* one year */) {
+        return new Promise((resolve, reject) => {
+            let cacheFile = this.getCacheFile(key);
+            let life = (Date.now() + duration) / 1000;
 
-        let life = (Date.now() + duration) / 1000;
+            // 检查目录
+            fs.access(this.cachePath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
+                if(null === err) {
+                    fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
+                        if(null !== err) {
+                            reject(err);
+                            return;
+                        }
 
-        // 检查目录
-        fs.access(this.cachePath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
-            if(null === err) {
-                fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
-                    if(null !== err) {
-                        callback(err);
-                        return;
-                    }
+                        fs.utimes(cacheFile, life, life, () => {
+                            resolve();
+                        });
+                    });
 
-                    fs.utimes(cacheFile, life, life, callback);
-                });
+                    return;
+                }
 
-                return;
-            }
+                FileHelper.createDirectory(this.cachePath, 0o777, (err) => {
+                    fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
+                        if(null !== err) {
+                            reject(err);
+                            return;
+                        }
 
-            FileHelper.createDirectory(this.cachePath, 0o777, (err) => {
-                fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
-                    if(null !== err) {
-                        callback(err);
-                        return;
-                    }
-
-                    fs.utimes(cacheFile, life, life, callback);
+                        fs.utimes(cacheFile, life, life, () => {
+                            resolve();
+                        });
+                    });
                 });
             });
         });
@@ -124,21 +129,30 @@ class Cache extends ICache {
     /**
      * @inheritdoc
      */
-    get(key, callback) {
-        let cacheFile = this.getCacheFile(key);
+    get(key) {
+        return new Promise((resolve, reject) => {
+            let cacheFile = this.getCacheFile(key);
 
-        fs.stat(cacheFile, (err, stats) => {
-            if(null !== err) {
-                callback(err, null);
-                return;
-            }
+            fs.stat(cacheFile, (err, stats) => {
+                if(null !== err) {
+                    reject(err);
+                    return;
+                }
 
-            if(stats.mtime.getTime() < Date.now()) {
-                callback(new CacheException('The cache: '+ key +' has expired'), null);
-                return;
-            }
+                if(stats.mtime.getTime() < Date.now()) {
+                    reject(new CacheException('The cache: '+ key +' has expired'));
+                    return;
+                }
 
-            fs.readFile(cacheFile, Candy.app.encoding, callback);
+                fs.readFile(cacheFile, Candy.app.encoding, (err, data) => {
+                    if(null !== err) {
+                        reject(err);
+                        return;
+                    }
+
+                    resolve(data);
+                });
+            });
         });
     }
 
@@ -154,10 +168,19 @@ class Cache extends ICache {
     /**
      * @inheritdoc
      */
-    delete(key, callback) {
-        let cacheFile = this.getCacheFile(key);
+    delete(key) {
+        return new Promise((resolve, reject) => {
+            let cacheFile = this.getCacheFile(key);
 
-        fs.unlink(cacheFile, callback);
+            fs.unlink(cacheFile, (err) => {
+                if(null !== err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve();
+            });
+        });
     }
 
 }

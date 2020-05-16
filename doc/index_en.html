@@ -1061,11 +1061,11 @@ log.flush();  // flush data to disk
             <h4><b>Cache interface</b></h4>
             <ul>
                 <li><code>setSync(key, value, duration)</code></li>
-                <li><code>set(key, value, duration, callback)</code></li>
+                <li><code>set(key, value, duration): Promise</code></li>
                 <li><code>getSync(key)</code></li>
-                <li><code>get(key, callback)</code></li>
+                <li><code>get(key): Promise</code></li>
                 <li><code>deleteSync(key)</code></li>
-                <li><code>delete(key, callback)</code></li>
+                <li><code>delete(key): Promise</code></li>
             </ul>
 <pre><code>
 var Candy = require('candyjs/Candy');
@@ -1078,11 +1078,11 @@ c.setSync('key', 'value');
 var data = c.getSync('key');
 
 // 异步
-c.set('key2', 'value2', undefined, (err) => {
-    c.get('sync', (err, data) => {
-        res.end(data);
-    });
-});
+async function getSetData() {
+    await c.set('key2', 'value2');
+
+    let data = await c.get('key2');
+}
 </code></pre>
 
         </div>
