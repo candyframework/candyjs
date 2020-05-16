@@ -242,6 +242,7 @@ new CandyJs(app).listen(2333, function(){
 
             <h1 class="page-header" id="controller"><b>应用控制器</b></h1>
             <p>控制器是<code>MVC</code>模式中的一部分，是继承<code>candy/core/Controller</code>类的对象，负责处理请求和生成响应</p>
+            <p>业务逻辑一般都应该出现在控制器中，包括但不限于处理用户传递的数据，计算数据等</p>
 
             <h4><b>动作</b></h4>
             <p>控制器由<code>动作</code>组成，它是执行终端用户请求的最基础的单元，一个控制器有且只有一个入口动作叫做<code>run</code>，入口动作在控制器被创建后会自动运行</p>
@@ -616,7 +617,7 @@ new CandyJs(new App({
             <h1 class="page-header" id="component"><b>组件 & 行为</b></h1>
 
             <h4><b>组件</b></h4>
-            <p>组件是实现<code>属性 (property) 行为 (behavior) 事件 (event)</code>的基类 如果一个类继承自组件类 那么这个类就拥有组件类的特性</p>
+            <p>组件是实现<code>属性 (property) 行为 (behavior) 事件 (event)</code>的基类，如果一个类从组件类继承，那么这个类就拥有组件类的特性</p>
             <p>
                 组件是<code>candy/core/Component</code>或其子类的实例
             </p>
@@ -1277,7 +1278,7 @@ c.set('key2', 'value2', undefined, (err) => {
                 <li><a href="javascript:;">入门</a></li>
                 <li><a href="#firstrun">第一次运行程序</a></li>
                 <li><a href="#appstruct">应用结构</a></li>
-                <li><a href="#controller">应用控制器</a></li>
+                <li><a href="#controller">控制器</a></li>
                 <li><a href="#router">MVC 路由</a></li>
                 <li><a href="#model">模型</a></li>
                 <li><a href="#view">视图</a></li>
@@ -1299,7 +1300,7 @@ c.set('key2', 'value2', undefined, (err) => {
 
 <footer>
     <div class="container">
-        <h4>&copy; CandyJs Since 2017</h4>
+        <h4>&copy; CandyJs</h4>
     </div>
 </footer>
 

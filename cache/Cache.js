@@ -7,9 +7,13 @@
 const Candy = require('../Candy');
 const InvalidConfigException = require('../core/InvalidConfigException');
 const InvalidArgumentException = require('../core/InvalidArgumentException');
+const ICache = require('./ICache');
 
 class Cache {
 
+    /**
+     * @return {ICache}
+     */
     static getCache(cacheFlag) {
         if(undefined === cacheFlag) {
             throw new InvalidArgumentException('Invalid parameter: cacheFlag');

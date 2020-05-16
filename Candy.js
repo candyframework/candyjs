@@ -158,7 +158,7 @@ class Candy {
 Candy.app = null;
 
 /**
- * @property {Object} pathAliases 路径别名
+ * @property {Map<String, String>} pathAliases 路径别名
  */
 Candy.pathAliases = {'@candy': __dirname};
 
