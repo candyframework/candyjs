@@ -25,12 +25,12 @@ const server = new CandyJs(app).getServer();
 describe('MVC', function() {
     it('simple get', function(done) {
         request(server)
-            .get('/')
+            .get('/?p1=hh&p2=hehe')
             .expect(200)
             .end(function(err, res){
                 if (err) return done(err);
 
-                assert.equal(res.text.trim(), 'mvc');
+                assert.equal(res.text.trim(), 'mvc hh');
 
                 done();
             });

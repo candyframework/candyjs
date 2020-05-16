@@ -62,14 +62,9 @@ class Request extends CoreRequest {
             return defaultValue;
         }
 
-        // 查找参数
-        if(0 === parsed.query.indexOf(parameter + '=')
-            || parsed.query.indexOf('&' + parameter + '=') > 0) {
+        let ret = querystring.parse(parsed.query);
 
-            return querystring.parse(parsed.query)[parameter];
-        }
-
-        return defaultValue;
+        return undefined === ret[parameter] ? defaultValue : ret[parameter];
     }
 
     /**
