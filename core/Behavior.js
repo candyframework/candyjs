@@ -1,23 +1,19 @@
 /**
- * @author
+ * @author afu
  * @license MIT
  */
 'use strict';
 
 /**
- * 所有行为类的基类
+ * 行为类
  *
- * 一个行为类可以用于在不改变原组件代码的情况下增强其功能
- * 当行为附加到组件后它将 注入 它的方法和属性到组件中
- * 然后就可以像访问组件自己的方法和属性一样访问它们
- *
- * 行为类还能够监听组件的事件并作出响应
+ * 行为类能够监听组件的事件并作出响应
  */
 class Behavior {
 
     constructor() {
         /**
-         * @property {Component} component 拥有行为的组件
+         * @property {Component} component 组件
          */
         this.component = null;
     }
@@ -25,13 +21,11 @@ class Behavior {
     /**
      * 声明要监听的组件的事件和对应事件的处理程序
      *
-     * @return {Object}
+     * [
+     *      ['eventName', handler]
+     * ]
      *
-     * {
-     *      eventName1: handler1,
-     *      eventNameN: handlerN
-     * }
-     *
+     * @return {Array}
      */
     events() {
         return null;
@@ -46,13 +40,12 @@ class Behavior {
         this.component = component;
 
         let events = this.events();
-
         if(null === events) {
             return;
         }
 
-        for(let eventName in events) {
-            this.component.on(eventName, events[eventName]);
+        for(let v of events) {
+            this.component.on(v[0], v[1]);
         }
     }
 
@@ -65,13 +58,12 @@ class Behavior {
         }
 
         let events = this.events();
-
         if(null === events) {
             return;
         }
 
-        for(let eventName in events) {
-            this.component.off(eventName, events[eventName]);
+        for(let v of events) {
+            this.component.off(v[0], v[1]);
         }
 
         this.component = null;

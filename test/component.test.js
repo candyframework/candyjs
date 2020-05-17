@@ -9,8 +9,11 @@ class EventController extends Controller {
     constructor(context) {
         super(context);
 
-        this.on('myevent', function(data) {
+        this.on('myevent', (data) => {
             EventController.eventFlag = data;
+
+            // 移除
+            this.offAll();
         });
     }
 
@@ -31,17 +34,23 @@ describe('simple-event', function() {
 });
 
 
+// 行为类
 const Behavior = Candy.include('candy/core/Behavior');
 class MyBehavior extends Behavior {
     constructor() {
         super();
-
-        this.props1 = 1;
-        this.props2 = 2;
     }
 
-    myFun() {
-        return 'behavior_fun';
+    // 监听 customEvent 事件
+    events() {
+        return [
+            ['customEvent', (e) => {
+                e.result = 'data processed by behavior';
+            }],
+            ['customEvent2', (e) => {
+                e.result += '--process2';
+            }]
+        ];
     }
 }
 
@@ -50,35 +59,29 @@ class MyBehavior extends Behavior {
 class StaticBehaviorController extends Controller {
     constructor(context) {
         super(context);
-
-        // 2. 注入行为类
-        this.injectBehaviors();
     }
 
-    // 1. 重写方法
+    // 重写方法
     behaviors() {
-        return {
-            myBehavior: new MyBehavior()
-        };
+        return [
+            ['myBehavior', new MyBehavior()]
+        ];
     }
 
-    run(req, res) {
+    run() {
+        let data = {result: ''};
+        this.trigger('customEvent', data);
 
+        this.detachBehavior('myBehavior');
+        return data.result;
     }
 }
 
 describe('static-behavior', function() {
     it('injectedBehavior', function(done) {
-        var b = new StaticBehaviorController();
-        b.run();
-
-        var p1 = b.props1;
-        var p2 = b.props2;
-        var str = b.myFun();
-
-        assert.equal(p1, 1);
-        assert.equal(p2, 2);
-        assert.equal(str, 'behavior_fun');
+        let b = new StaticBehaviorController();
+        let rs = b.run();
+        assert.equal(rs, 'data processed by behavior');
 
         done();
     });
@@ -90,30 +93,25 @@ class DynamicBehaviorController extends Controller {
     constructor(context) {
         super(context);
 
-        // 1. 附加组件
+        // 动态附加行为 行为里面会监听 customEvent 事件
         this.attachBehavior('myBehavior', new MyBehavior());
-
-        // 2. 注入行为类
-        this.injectBehaviors();
     }
 
-    run(req, res) {
+    run() {
+        let data = {result: ''};
+        this.trigger('customEvent', data);
+        this.trigger('customEvent2', data);
 
+        this.detachBehavior('myBehavior');
+        return data.result;
     }
 }
 
 describe('dynamic-behavior', function() {
     it('injectedBehavior', function(done) {
-        var b = new DynamicBehaviorController();
-        b.run();
-
-        var p1 = b.props1;
-        var p2 = b.props2;
-        var str = b.myFun();
-
-        assert.equal(p1, 1);
-        assert.equal(p2, 2);
-        assert.equal(str, 'behavior_fun');
+        let b = new DynamicBehaviorController();
+        let rs = b.run();
+        assert.equal(rs, 'data processed by behavior--process2');
 
         done();
     });

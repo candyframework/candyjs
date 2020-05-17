@@ -567,10 +567,12 @@ module.exports = IndexController;
 
             <h1 class="page-header" id="module"><b>模块</b></h1>
             <p>
-                模块是独立的软件单元<code>由模型 视图 控制器</code>和其他组件组成
-                终端用户可以访问在应用主体中已注册的模块的控制器
-                <code>CandyJs</code>在解析路由时优先查找模块中有没有满足条件的控制器
+                模块是独立的软件单元，体量较小，<code>由模型、视图、控制器</code>和其他组件组成。
             </p>
+            <p>
+                终端用户可以访问在应用主体中已注册的模块的控制器，<code>CandyJs</code>在解析路由时优先查找模块中有没有满足条件的控制器
+            </p>
+            <p>如果项目中某个功能相对独立，与项目关联不大，随时准备删除或加入进来，那么可以考虑将其放入模块系统</p>
             <blockquote class="bg-info">
                 注意 和普通项目目录不同的是 模块中的<code>控制器和视图</code>没有子目录
             </blockquote>
@@ -580,7 +582,7 @@ module.exports = IndexController;
 <pre><code>
 modules 模块目录
     |
-    |-- bbs 创建 bbs 模块
+    |-- newyearactive 新年活动页面
     |   |
     |   |-- controllers 模块控制器目录
     |   |   |
@@ -603,8 +605,9 @@ new CandyJs(new App({
     ...
 
     // 注册模块
+    // 这样路由为 /newyearactive 时会优先匹配到该模块
     'modules': {
-        'bbs': 'app/modules/bbs'
+        'newyearactive': 'app/modules/newyearactive'
     },
 
     ...
@@ -617,7 +620,7 @@ new CandyJs(new App({
             <h1 class="page-header" id="component"><b>组件 & 行为</b></h1>
 
             <h4><b>组件</b></h4>
-            <p>组件是实现<code>属性 (property) 行为 (behavior) 事件 (event)</code>的基类，如果一个类从组件类继承，那么这个类就拥有组件类的特性</p>
+            <p>组件是实现<code>行为 (behavior) 事件 (event)</code>的基类，如果一个类从组件类继承，那么这个类就拥有组件类的特性</p>
             <p>
                 组件是<code>candy/core/Component</code>或其子类的实例
             </p>
@@ -632,12 +635,9 @@ new CandyJs(new App({
             </p>
             <ul>
                 <li>一个行为类可以用于在不改变原组件代码的情况下增强其功能</li>
-                <li>当行为附加到组件后，它将<code>注入</code>它的方法和属性到组件中，然后就可以像访问组件自己的方法和属性一样访问它们</li>
-                <li>行为类还能够监听组件的事件并作出响应</li>
+                <li>行为类能够监听组件的事件并作出响应，这对于拦截框架的核心事件，并对其做出处理提供了方便</li>
             </ul>
 
-            <h4><b>属性</b></h4>
-            <p>javascript 类的成员变量也被称为属性 properties</p>
 
             <h4><b>事件</b></h4>
             <p><code>CandyJs</code>中实现了一个观察者模式</p>
@@ -1243,11 +1243,11 @@ log.flush();
             <h4><b>缓存接口</b></h4>
             <ul>
                 <li><code>setSync(key, value, duration)</code> 同步写入缓存</li>
-                <li><code>set(key, value, duration): Promise</code> 异步写入缓存</li>
+                <li><code>set(key, value, duration, callback)</code> 异步写入缓存</li>
                 <li><code>getSync(key)</code> 同步读取缓存</li>
-                <li><code>get(key): Promise</code> 异步读取缓存</li>
+                <li><code>get(key, callback)</code> 异步读取缓存</li>
                 <li><code>deleteSync(key)</code> 同步删除缓存</li>
-                <li><code>delete(key): Promise</code> 异步删除缓存</li>
+                <li><code>delete(key, callback)</code> 异步删除缓存</li>
             </ul>
 <pre><code>
 var Candy = require('candyjs/Candy');

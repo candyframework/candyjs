@@ -1,5 +1,5 @@
 /**
- * @author
+ * @author afu
  * @license MIT
  */
 'use strict';
@@ -9,12 +9,9 @@
  */
 class Event {
 
-    /**
-     * constructor
-     */
     constructor() {
         /**
-         * @property {Map} eventsMap the attached event handlers
+         * @property {Map<String, Array>} eventsMap the attached event handlers
          *
          * {
          *      'eventName1': [fn1, fn2],
@@ -39,17 +36,17 @@ class Event {
     }
 
     /**
-     * 注销事件处理
+     * 注销事件
      *
-     * @param {String} eventName
-     * @param {Function} handler
+     * @param {String} eventName 事件名称
+     * @param {Function} handler 事件处理器
      */
-    off(eventName, handler) {
+    off(eventName, handler = null) {
         if(!this.eventsMap.has(eventName)) {
             return;
         }
 
-        if(undefined === handler) {
+        if(null === handler) {
             this.eventsMap.delete(eventName);
             return;
         }
@@ -63,7 +60,14 @@ class Event {
     }
 
     /**
-     * 触发
+     * 注销所有事件
+     */
+    offAll() {
+        this.eventsMap.clear();
+    }
+
+    /**
+     * 触发事件
      *
      * @param {String} eventName 事件名称
      * @param {any} parameter 参数
@@ -74,25 +78,8 @@ class Event {
         }
 
         const handlers = this.eventsMap.get(eventName);
-        for(let i=0, len=handlers.length; i<len; i++) {
+        for(let i=0; i<handlers.length; i++) {
             handlers[i](parameter);
-        }
-    }
-
-    /**
-     * 触发
-     *
-     * @param {String} eventName 事件名称
-     * @param {any} parameters 参数
-     */
-    triggerWithRestParameters(eventName, ...parameters) {
-        if(!this.eventsMap.has(eventName)) {
-            return;
-        }
-
-        const handlers = this.eventsMap.get(eventName);
-        for(let i=0, len=handlers.length; i<len; i++) {
-            handlers[i](...parameters);
         }
     }
 

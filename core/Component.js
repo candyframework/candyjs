@@ -1,5 +1,5 @@
 /**
- * @author
+ * @author afu
  * @license MIT
  */
 'use strict';
@@ -9,7 +9,7 @@ const Event = require('./Event');
 const Behavior = require('./Behavior');
 
 /**
- * 组件是实现 属性 (property) 行为 (behavior) 事件 (event) 的基类
+ * 组件是实现 行为 (behavior) 事件 (event) 的基类
  */
 class Component extends Event {
 
@@ -20,60 +20,35 @@ class Component extends Event {
         super();
 
         /**
-         * @property {Map} behaviorsMap the attached behaviors
+         * @property {Map<String, Behavior>} behaviorsMap the attached behaviors
          *
          * {
-         *     'behaviorName1': BehaviorInstance1,
-         *     'behaviorNameN': BehaviorInstanceN
+         *     'behaviorName1': instance1,
+         *     'behaviorNameN': instanceN
          * }
-         *
          */
         this.behaviorsMap = new Map();
-    }
 
-    /**
-     * 注入行为 只能注入实例变量和实例方法
-     */
-    injectBehaviors() {
         this.ensureDeclaredBehaviorsAttached();
-
-        for(let v of this.behaviorsMap.values()) {
-            // 自有属性
-            let keys = Object.keys(v);
-            for(let i=0, len=keys.length; i<len; i++) {
-                // 不覆盖已有属性
-                if(undefined === this[ keys[i] ]) {
-                    this[ keys[i] ] = v[ keys[i] ];
-                }
-            }
-
-            // 原型属性 类的方法不可枚举 所以这里用了特殊 api
-            keys = Object.getOwnPropertyNames(Object.getPrototypeOf(v));
-            for(let i=0, len=keys.length; i<len; i++) {
-                if('constructor' !== keys[i] && undefined === this[ keys[i]]) {
-                    this[ keys[i] ] = v[ keys[i] ];
-                }
-            }
-        }
     }
 
     /**
-     * 声明该组件的行为列表
+     * 注入行为
      *
-     * 子类组件可以重写该方法去指定要附加的行为类
+     * @deprecated
+     */
+    injectBehaviors() {}
+
+    /**
+     * 声明组件的行为列表
      *
-     * @return {Object}
+     * [
+     *      ['behaviorName', instanceClass],
+     *      ['behaviorName', 'behaviorClassPath'],
+     *      ['behaviorName', {'classPath': 'behaviorClassPath'}]
+     * ]
      *
-     * {
-     *     'behaviorName': {
-     *         'classPath': 'BehaviorClassName',
-     *         'property1': 'value1',
-     *         'property2': 'value2'
-     *     },
-     *     'behaviorName2': 'BehaviorClassName2'
-     *     'behaviorName3': BehaviorClassInstance
-     * }
-     *
+     * @return {Array} 行为列表
      */
     behaviors() {
         return null;
@@ -89,19 +64,30 @@ class Component extends Event {
             return;
         }
 
-        for(let name in behaviors) {
-            this.attachBehaviorInternal(name, behaviors[name]);
+        for(let v of behaviors) {
+            this.attachBehaviorInternal(v[0], v[1]);
         }
     }
 
     /**
      * 向组件附加一个行为
      *
-     * @param {String} name 行为的名称
-     * @param {String | Object} behavior
+     * @param {String} name 行为名称
+     * @param {String | Object} behavior 行为
      */
     attachBehavior(name, behavior) {
         this.attachBehaviorInternal(name, behavior);
+    }
+
+    /**
+     * 以列表形式向组件添加行为
+     *
+     * @param {Array} behaviors 行为列表
+     */
+    attachBehaviors(behaviors) {
+        for(let v of behaviors) {
+            this.attachBehavior(v[0], v[1]);
+        }
     }
 
     /**
@@ -124,10 +110,19 @@ class Component extends Event {
     }
 
     /**
+     * 删除组件上所有的行为
+     */
+    detachBehaviors() {
+        for(let name of this.behaviorsMap.keys()) {
+            this.detachBehavior(name);
+        }
+    }
+
+    /**
      * 保存行为类到组件
      *
      * @param {String} name 行为的名称
-     * @param {String | Object} behavior
+     * @param {Behavior | String | Object} behavior
      */
     attachBehaviorInternal(name, behavior) {
         if(!(behavior instanceof Behavior)) {

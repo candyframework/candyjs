@@ -1,5 +1,5 @@
 /**
- * @author
+ * @author afu
  * @license MIT
  */
 'use strict';
@@ -100,12 +100,9 @@ class Application extends CoreApp {
 
         // 是否继承自框架控制器
         if( !(controller instanceof WebController) ) {
-            CandyJS.getLogger().trace('Starting to run the run() method of: ' + controller.constructor.name);
             controller.run(request, response);
             return;
         }
-
-        CandyJS.getLogger().trace('Starting to run the runControllerAction() method of: ' + controller.constructor.name);
 
         controller.context.request = request;
         controller.context.response = response;
@@ -158,6 +155,8 @@ class Application extends CoreApp {
 
         // 拦截路由
         if(null !== this.interceptAll) {
+            CandyJS.getLogger().trace('Route was intercepted: ' + route);
+
             return Candy.createObject(this.interceptAll);
         }
 
@@ -192,7 +191,7 @@ class Application extends CoreApp {
         // 模块没有前缀目录
         let clazz = null;
         if(null !== this.routesMap && undefined !== this.routesMap[id]) {
-            CandyJS.getLogger().trace('Starting to create controller: '
+            CandyJS.getLogger().trace('Create controller by routesMap: '
                 + ('string' === typeof this.routesMap[id]
                     ? this.routesMap[id] : this.routesMap[id].classPath));
 
@@ -204,13 +203,12 @@ class Application extends CoreApp {
         }
 
         if(null !== this.modules && undefined !== this.modules[id]) {
-            moduleId = id;
+            CandyJS.getLogger().trace('Create module controller: ' + this.modules[id]);
 
+            moduleId = id;
             clazz = StringHelper.trimChar(this.modules[id], '/')
                 + '/controllers/'
                 + StringHelper.ucFirst(controllerId) + 'Controller';
-
-            CandyJS.getLogger().trace('Starting to create controller: ' + this.modules[id]);
 
             return Candy.createObjectAsString(clazz, {
                 moduleId: moduleId,
@@ -219,13 +217,13 @@ class Application extends CoreApp {
             });
         }
 
+        CandyJS.getLogger().trace('Create common controller: ' + clazz);
+
         clazz = this.defaultControllerNamespace
             + '/'
             + viewPath
             + '/'
             + StringHelper.ucFirst(controllerId) + 'Controller';
-
-        CandyJS.getLogger().trace('Starting to create controller: ' + clazz);
 
         return Candy.createObjectAsString(clazz, {
             moduleId: moduleId,

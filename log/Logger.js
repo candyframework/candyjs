@@ -1,5 +1,5 @@
 /**
- * @author
+ * @author afu
  * @license MIT
  */
 'use strict';
@@ -53,6 +53,7 @@ class Logger {
         if(undefined !== settings.flushInterval) {
             this.flushInterval = settings.flushInterval;
         }
+
         for(let target in settings.targets) {
             if(undefined !== settings.targets[target].classPath) {
                 let clazz = Candy.createObjectAsString(

@@ -1,11 +1,11 @@
 /**
- * @author
+ * @author afu
  * @license MIT
  */
 'use strict';
 
-const CandyJs = require('../index');
 const Component = require('./Component');
+const ActionEvent = require('./ActionEvent');
 
 /**
  * 控制器基类
@@ -29,14 +29,13 @@ class Controller extends Component {
      *
      * @param {Object} request
      * @param {Object} response
-     * @return {Boolean}
+     * @return {Boolean} 决定了控制器的动作是否会接续执行
      */
     beforeAction(request, response) {
-        CandyJs.getLogger().trace('The beforeAction() method is called');
+        let actionEvent = new ActionEvent(request, response);
+        this.trigger(Controller.EVENT_BEFORE_ACTION, actionEvent);
 
-        this.trigger(Controller.EVENT_BEFORE_ACTION, this.context);
-
-        return true;
+        return actionEvent.valid;
     }
 
     /**
@@ -46,9 +45,7 @@ class Controller extends Component {
      * @param {Object} response
      */
     afterAction(request, response) {
-        CandyJs.getLogger().trace('The afterAction() method is called');
-
-        this.trigger(Controller.EVENT_AFTER_ACTION, this.context);
+        this.trigger(Controller.EVENT_AFTER_ACTION, null);
     }
 
     /**
@@ -62,7 +59,6 @@ class Controller extends Component {
             return;
         }
 
-        CandyJs.getLogger().trace('Starting to run the run() method of: ' + this.constructor.name);
         this.run(request, response);
 
         this.afterAction(request, response);

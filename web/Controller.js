@@ -1,5 +1,5 @@
 /**
- * @author
+ * @author afu
  * @license MIT
  */
 'use strict';
@@ -47,14 +47,14 @@ class Controller extends CoreController {
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     run(request, response) {
         response.end('Controller must implements the run() method');
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     render(view, parameters = null) {
         this.getView().render(view, parameters);
