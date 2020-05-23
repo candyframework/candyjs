@@ -44,6 +44,12 @@
             <p>
                 <code>CandyJs</code>实现了一套<code>动态路由</code>规范，您不需要提前注册所需要的路由，只需要输入网址<code>CandyJs</code>会自己找到路由对应的组件。
             </p>
+            <p>
+                <code>CandyJs</code>实现了正则路由的合并，多个正则路由我们会将其合成一个大路由，避免了路由逐个匹配带来的巨大性能损失
+            </p>
+            <p>
+                <code>CandyJs</code>实现了类的按需加载，所有文件只有用到时才去加载，这得益于框架定制的别名系统
+            </p>
 
             <h1 class="page-header"><a href="./index_en.html">英文</a></h1>
 
@@ -620,7 +626,7 @@ new CandyJs(new App({
             <h1 class="page-header" id="component"><b>组件 & 行为</b></h1>
 
             <h4><b>组件</b></h4>
-            <p>组件是实现<code>行为 (behavior) 事件 (event)</code>的基类，如果一个类从组件类继承，那么这个类就拥有组件类的特性</p>
+            <p>组件是实现<code>行为 (behavior) 事件 (event)</code>的基类，如果一个类从<code>candy/core/Component</code>或其子类继承而来，那么这个类就拥有组件的特性</p>
             <p>
                 组件是<code>candy/core/Component</code>或其子类的实例
             </p>
@@ -637,7 +643,6 @@ new CandyJs(new App({
                 <li>一个行为类可以用于在不改变原组件代码的情况下增强其功能</li>
                 <li>行为类能够监听组件的事件并作出响应，这对于拦截框架的核心事件，并对其做出处理提供了方便</li>
             </ul>
-
 
             <h4><b>事件</b></h4>
             <p><code>CandyJs</code>中实现了一个观察者模式</p>
@@ -670,6 +675,10 @@ module.exports = IndexController;
 
             <h4><b>行为的使用</b></h4>
 
+            <blockquote class="bg-danger">
+                从 4.4.0 开始，我们对行为进行了重构，去除了作用不大的方法注入，保留了事件监听
+            </blockquote>
+
             <h6><b>定义行为</b></h6>
             <p>要定义行为，可以通过继承<code>candy/core/Behavior</code>或其子类来建立一个类</p>
 <pre><code>
@@ -678,23 +687,31 @@ module.exports = IndexController;
 var Candy = require('candyjs/Candy');
 var Behavior = Candy.include('candy/core/Behavior');
 
+// 行为类
 class MyBehavior extends Behavior {
     constructor() {
         super();
-
-        this.props1 = 1;
-        this.props2 = 2;
     }
 
-    myFun() {
-        // todo
+    // 监听控制器的 customEvent 事件
+    // 由于一个事件可以有多个处理程序 为保证顺序 这里必须使用数组
+    // 格式为 [行为名, 行为处理器]
+    events() {
+        return [
+            ['customEvent', (e) => {
+                e.result = 'data processed by behavior';
+            }],
+            ['customEvent2', (e) => {
+                e.result += '--process2';
+            }]
+        ];
     }
 }
 
 module.exports = MyBehavior;
 </code></pre>
 
-            <p>以上代码定义了行为类<code>MyBehavior</code>并为要附加行为的组件提供了两个属性<code>prop1 prop2</code>和一个方法<code>myFun()</code></p>
+            <p>以上代码定义了行为类<code>MyBehavior</code>并监听了一个自定义事件<code>customEvent</code>
 
             <h6><b>附加行为到组件</b></h6>
             <p>可以通过<code>静态配置</code>或者<code>动态方法</code>形式附加行为到组件</p>
@@ -711,15 +728,18 @@ class IndexController extends Controller {
 
     // 重写方法
     behaviors() {
-
-        // 返回要附加的行为
-        return {
-            myBehavior: 'app/controllers/index/MyBehavior'
-        };
+        return [
+            ['myBehavior', new MyBehavior()]
+        ];
     }
 
     run(req, res) {
-        res.end('hello');
+        let data = {result: ''};
+        this.trigger('customEvent', data);
+
+        // 卸载行为
+        this.detachBehavior('myBehavior');
+        return data.result;
     }
 
 }
@@ -740,49 +760,17 @@ class IndexController extends Controller {
     constructor(context) {
         super(context);
 
-        // 附加组件
-        this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
+        // 动态附加行为 行为里面会监听 customEvent 事件
+        this.attachBehavior('myBehavior', new MyBehavior());
     }
 
     run(req, res) {
-        res.end('hello');
-    }
+        let data = {result: ''};
+        this.trigger('customEvent', data);
+        this.trigger('customEvent2', data);
 
-}
-
-module.exports = IndexController;
-</code></pre>
-
-            <h6><b>使用</b></h6>
-            <p>一旦行为附加到组件 就可以直接使用它</p>
-            <blockquote class="bg-info">
-                为了不必要的性能开销，<code>CandyJs</code>不会主动执行注入操作（或许后期会改动），要想使用行为类的功能，必须在调用行为类的功能之前手动调用一下<code>injectBehaviors()</code>方法
-            </blockquote>
-<pre><code>
-'use strict';
-
-var CandyJs = require('candyjs');
-var Candy = require('candyjs/Candy');
-var Controller = Candy.include('candy/web/Controller');
-
-class IndexController extends Controller {
-
-    constructor(context) {
-        super(context);
-
-        this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
-
-        // 手动调用
-        this.injectBehaviors();
-    }
-
-    run(req, res) {
-        // 使用行为类的功能
-        this.myFun();
-        console.log(this.props1);
-        console.log(this.props2);
-
-        res.end('hello');
+        this.detachBehavior('myBehavior');
+        return data.result;
     }
 
 }
@@ -1003,8 +991,8 @@ response.redirect('http://foo.com');
 
 <pre><code>
 var Response = Candy.include('candy/helpers/FileHelper');
-var Response = Candy.include('candy/helpers/StringHelper');
-var Response = Candy.include('candy/helpers/TimeHelper');
+var StringHelper = Candy.include('candy/helpers/StringHelper');
+var TimeHelper = Candy.include('candy/helpers/TimeHelper');
 
 // return /a/c
 var path = FileHelper.normalizePath('/a/./b/../c');
@@ -1162,9 +1150,9 @@ log.flush();  // 写入硬盘
 </code></pre>
 
             <p>
-                <code>targets</code>用于配置日志处理程序，现在只支持文件日志，所以上面配置了<code>file</code>字段
+                <code>targets</code>用于配置日志处理程序，现在只支持文件日志，所以上面配置了<code>file</code>字段，<code>candyjs</code>可以同时配置多个<code>targets</code>，只需要在和<code>file</code>字段平级的地方再添加一个日志配置，那么每次这日志，新配置的日志也会被执行。
             </p>
-            <p><code>flushInterval</code>表示日志写入硬盘的频率。这里指定每调用 10 次日志接口向硬盘同步一次</p>
+            <p><code>flushInterval</code>表示日志写入硬盘的频率。由于 IO 操作比较耗时，<code>candyjs</code>出于优化考虑，并不会每次调用日志接口就写日志，而是先缓存起来，在某一时刻一同写入。这里指定每调用 10 次日志接口向硬盘同步一次</p>
             <p>用户手动调用<code>flush()</code>也会触发同步日志到硬盘的操作</p>
 
             <h4><b>日志接口</b></h4>

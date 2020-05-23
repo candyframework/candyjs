@@ -6,6 +6,14 @@ const Controller = Candy.include('candy/web/Controller');
 const Request = Candy.include('candy/web/Request');
 
 class IndexController extends Controller {
+    // 动作执行前添加一个加过滤器
+    // 过滤器添加了跨域 header 头信息
+    behaviors() {
+        return [
+            ['cors', 'app/filters/Cors']
+        ];
+    }
+
     run(req, res) {
         let uid = Request.getQueryString(req, 'uid');
 

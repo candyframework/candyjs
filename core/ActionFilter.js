@@ -10,7 +10,7 @@ const Controller = require('./Controller');
 /**
  * 动作过滤器
  *
- * 过滤器会在控制器的动作执行之前执行
+ * 过滤器会在控制器的动作执行之前执行并且只支持同步操作
  */
 class ActionFilter extends Behavior {
 
@@ -19,6 +19,7 @@ class ActionFilter extends Behavior {
 
         // make sure function has 'this' reference
         this.beforeFilter = this.beforeFilter.bind(this);
+        this.afterFilter = this.afterFilter.bind(this);
     }
 
     /**
@@ -26,7 +27,8 @@ class ActionFilter extends Behavior {
      */
     events() {
         return [
-            [Controller.EVENT_BEFORE_ACTION, this.beforeFilter]
+            [Controller.EVENT_BEFORE_ACTION, this.beforeFilter],
+            [Controller.EVENT_AFTER_ACTION, this.afterFilter]
         ];
     }
 
@@ -34,12 +36,21 @@ class ActionFilter extends Behavior {
         this.beforeAction(actionEvent);
     }
 
+    afterFilter(actionEvent) {
+        this.unListen();
+
+        this.afterAction(actionEvent);
+    }
+
     /**
      * 前置过滤
      */
-    beforeAction(actionEvent) {
-        return true;
-    }
+    beforeAction(actionEvent) {}
+
+    /**
+     * 后置过滤
+     */
+    afterAction(actionEvent) {}
 
 }
 

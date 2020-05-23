@@ -576,26 +576,30 @@ new CandyJs(new App({
 
             <h1 class="page-header" id="component"><b>Component & Behavior</b></h1>
 
-            <h4><b>Component</b></h4>
-            <p>Component is the base class of<code>Property Behavior and Event</code></p>
-            <p>Components are instances of<code>candy/core/Controller</code>, or an extended class</p>
-            <p>Behavior classes are typically used in conjunction with component classes</p>
+            <h4><b>组件</b></h4>
+            <p>组件是实现<code>行为 (behavior) 事件 (event)</code>的基类，如果一个类从<code>candy/core/Component</code>或其子类继承而来，那么这个类就拥有组件的特性</p>
+            <p>
+                组件是<code>candy/core/Component</code>或其子类的实例
+            </p>
+            <p>
+                <code>CandyJs</code>中<code>candy/web/Controller</code>类继承自<code>candy/core/Component</code>，所以控制器具有组件的特性
+            </p>
+            <p>行为类一般与组件类同时使用</p>
 
-            <h4><b>Behavior</b></h4>
-            <p>Behavior is instances of<code>candy/core/Behavior</code>, or an extended class</p>
-            <p>A behavior class can be used to enhance its functionality without changing the original component code</p>
-            <p>When a behavior is attached to a component, it will inject its methods and properties into the component and then access them as if they were to access the component's own methods and properties</p>
-            <p>The behavior class also can listen to the component's events and respond</p>
+            <h4><b>行为</b></h4>
+            <p>
+                行为是<code>candy/core/Behavior</code>类或其子类的实例，具有如下作用
+            </p>
+            <ul>
+                <li>一个行为类可以用于在不改变原组件代码的情况下增强其功能</li>
+                <li>行为类能够监听组件的事件并作出响应，这对于拦截框架的核心事件，并对其做出处理提供了方便</li>
+            </ul>
 
-            <h4><b>Properties</b></h4>
-            <p>Membership variables for the javascript class are also known as properties</p>
-
-            <h4><b>Event</b></h4>
-            <p><code>CandyJs</code>implements an observer pattern</p>
+            <h4><b>事件</b></h4>
+            <p><code>CandyJs</code>中实现了一个观察者模式</p>
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Controller = Candy.include('candy/web/Controller');
 
@@ -620,40 +624,50 @@ class IndexController extends Controller {
 module.exports = IndexController;
 </code></pre>
 
-            <h4><b>Use behavior</b></h4>
+            <h4><b>行为的使用</b></h4>
 
-            <h6><b>Define behavior</b></h6>
-            <p>Create a class by inheriting<code>candy/core/Behavior</code>or its subclasses</p>
+            <blockquote class="bg-danger">
+                从 4.4.0 开始，我们对行为进行了重构，去除了作用不大的方法注入，保留了事件监听
+            </blockquote>
+
+            <h6><b>定义行为</b></h6>
+            <p>要定义行为，可以通过继承<code>candy/core/Behavior</code>或其子类来建立一个类</p>
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Behavior = Candy.include('candy/core/Behavior');
 
+// 行为类
 class MyBehavior extends Behavior {
     constructor() {
         super();
-
-        this.props1 = 1;
-        this.props2 = 2;
     }
 
-    myFun() {
-        // todo
+    // 监听控制器的 customEvent 事件
+    // 由于一个事件可以有多个处理程序 为保证顺序 这里必须使用数组
+    // 格式为 [行为名, 行为处理器]
+    events() {
+        return [
+            ['customEvent', (e) => {
+                e.result = 'data processed by behavior';
+            }],
+            ['customEvent2', (e) => {
+                e.result += '--process2';
+            }]
+        ];
     }
 }
 
 module.exports = MyBehavior;
 </code></pre>
 
-            <p>The above code defines the behavior class<code>MyBehavior</code>and provides two properties<code>prop1 prop2</code>and a method for the component to attach the behavior<code>myFun()</code></p>
+            <p>以上代码定义了行为类<code>MyBehavior</code>并监听了一个自定义事件<code>customEvent</code>
 
-            <h6><b>Attach behavior to component</b></h6>
-            <p>You can attach a behavior to a component either statically or dynamically</p>
+            <h6><b>附加行为到组件</b></h6>
+            <p>可以通过<code>静态配置</code>或者<code>动态方法</code>形式附加行为到组件</p>
 
-            <p>To attach a behavior statically, override the<code>behaviors()</code>method of the component class to which the behavior is being attached</p>
-            <p>The<code>behaviors()</code>method should return a list of behavior configurations</p>
+            <p>要使用静态配置附加行为，只需要重写组件类的<code>behaviors()</code>方法即可。<code>behaviors()</code>方法应该返回行为配置列表</p>
 <pre><code>
 'use strict';
 
@@ -663,16 +677,20 @@ var Controller = Candy.include('candy/web/Controller');
 
 class IndexController extends Controller {
 
-    // override
+    // 重写方法
     behaviors() {
-
-        return {
-            myBehavior: 'app/controllers/index/MyBehavior'
-        };
+        return [
+            ['myBehavior', new MyBehavior()]
+        ];
     }
 
     run(req, res) {
-        res.end('hello');
+        let data = {result: ''};
+        this.trigger('customEvent', data);
+
+        // 卸载行为
+        this.detachBehavior('myBehavior');
+        return data.result;
     }
 
 }
@@ -680,7 +698,7 @@ class IndexController extends Controller {
 module.exports = IndexController;
 </code></pre>
 
-            <p>To attach a behavior dynamically, call the<code>attachBehavior()</code>method of the component to which the behavior is being attached</p>
+            <p>要使用动态方法附加行为，在组件里调用<code>attachBehavior()</code>方法即可</p>
 <pre><code>
 'use strict';
 
@@ -693,49 +711,17 @@ class IndexController extends Controller {
     constructor(context) {
         super(context);
 
-        this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
+        // 动态附加行为 行为里面会监听 customEvent 事件
+        this.attachBehavior('myBehavior', new MyBehavior());
     }
 
     run(req, res) {
-        res.end('hello');
-    }
+        let data = {result: ''};
+        this.trigger('customEvent', data);
+        this.trigger('customEvent2', data);
 
-}
-
-module.exports = IndexController;
-</code></pre>
-
-            <h6><b>Using behaviors</b></h6>
-            <p>Once a behavior is attached to a component, its usage is straightforward</p>
-            <blockquote class="bg-info">
-                For unnecessary performance overhead<code>CandyJs</code>does not really perform the injection operation.
-                To use the function of the behavior class, you must manually call the<code>injectBehaviors()</code>method before calling the function of the behavior class
-            </blockquote>
-<pre><code>
-'use strict';
-
-var CandyJs = require('candyjs');
-var Candy = require('candyjs/Candy');
-var Controller = Candy.include('candy/web/Controller');
-
-class IndexController extends Controller {
-
-    constructor(context) {
-        super(context);
-
-        this.attachBehavior('myBehavior', 'app/controllers/index/MyBehavior');
-    }
-
-    run(req, res) {
-        // manually call
-        this.injectBehaviors();
-
-        // using behaviors
-        this.myFun();
-        console.log(this.props1);
-        console.log(this.props2);
-
-        res.end('hello');
+        this.detachBehavior('myBehavior');
+        return data.result;
     }
 
 }
