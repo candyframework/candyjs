@@ -140,7 +140,7 @@ class Cache extends ICache {
                 }
 
                 if(stats.mtime.getTime() < Date.now()) {
-                    reject(new CacheException('The cache: '+ key +' has expired'));
+                    resolve(null);
                     return;
                 }
 
