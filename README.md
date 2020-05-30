@@ -98,7 +98,7 @@ new CandyJs(app).listen(8090, function(){
 |      |
 |   -- modules 模块
 |      |
-|      |-- reg
+|      |-- actives
 |      |   |
 |      |   |-- controllers 模块控制器目录 其下无子目录
 |      |   |   |
@@ -115,6 +115,10 @@ new CandyJs(app).listen(8090, function(){
 </pre>
 
 ### 变更
+
++ 2020-05-30
+
+    * npm 4.4.1 重构了 url 请求部分 `candy/web/Request` 与 `candy/web/Response` 已标记为过期 使用 `candy/http/*` 替代
 
 + 2020-05-16
 
