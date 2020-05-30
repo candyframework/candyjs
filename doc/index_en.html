@@ -810,29 +810,25 @@ url.to('index/index', {id: 1, '#': 'anchor'})
 
             <h1 class="page-header" id="reqres"><b>Request and Response</b></h1>
             <p>
-                <code>CandyJs</code>provides classes<code>candy/web/Request</code>and<code>candy/web/Response</code>that handle requests and responses
+                <code>CandyJs</code>provides classes<code>candy/http/Request</code>and<code>candy/http/Response</code>that handle requests and responses
             </p>
 
             <h4><b>HTTP Request</b></h4>
             <p>Used to handle http requests</p>
             <p>
-                <code>candy/web/Request</code>class provides a set of instances and static methods to manipulate the required data
+                <code>candy/http/Request</code>class provides a set of instances and static methods to manipulate the required data
             </p>
             <ul>
-                <li><code>static parseUrl(request)</code>Simple resolution url</li>
-                <li><code>static getClientIp(request)</code>Gets the client IP</li>
-                <li><code>static getQueryString(request, param)</code>Get the request parameter</li>
-                <li><code>static getParameter(request, param)</code>Get the POST request parameter</li>
-                <li><code>static getCookie(request, name)</code>Get cookies</li>
                 <li><code>getQueryString(param)</code>Instance method get the request parameter</li>
                 <li><code>getParameter(param)</code>Instance method get the POST request parameter</li>
                 <li><code>getCookie(name)</code>Instance method get cookies</li>
+                <li><code>getHeaders()</code>get http headers</li>
             </ul>
             <blockquote class="bg-danger">
                 In the use of<code>getParameter()</code>to obtain the POST parameter temporarily need to rely on third-party analysis of the body of the middleware will otherwise back to the null
             </blockquote>
 <pre><code>
-var Request = Candy.include('candy/web/Request');
+var Request = Candy.include('candy/http/Request');
 var request = new Request(req);
 var id = request.getQueryString('id');
 ...
@@ -841,7 +837,7 @@ var id = request.getQueryString('id');
             <h4><b>HTTP Response</b></h4>
             <p>Outputs a response message to the client</p>
             <p>
-                <code>candy/web/Response</code>class provides a set of instances and static methods to manipulate the response data
+                <code>candy/http/Response</code>class provides a set of instances and static methods to manipulate the response data
             </p>
             <ul>
                 <li><code>setStatusCode(value[, text])</code>Set the http status code</li>
@@ -854,7 +850,7 @@ var id = request.getQueryString('id');
 
             <h6><b>Use the Response to output data</b></h6>
 <pre><code>
-var Response = Candy.include('candy/web/Response');
+var Response = Candy.include('candy/http/Response');
 var response = new Response(res);
 response.setContent('some data from server');
 response.send();
@@ -862,7 +858,7 @@ response.send();
 
             <h6><b>Use the Response to redirection</b></h6>
 <pre><code>
-var Response = Candy.include('candy/web/Response');
+var Response = Candy.include('candy/http/Response');
 var response = new Response(res);
 response.redirect('http://foo.com');
 </code></pre>

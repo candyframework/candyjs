@@ -5,15 +5,16 @@
 'use strict';
 
 const url = require('url');
-const querystring = require('querystring');
 
-const Cookie = require('./Cookie');
-const CoreRequest = require('../core/Request');
+const HttpRequest = require('../http/Request');
 
 /**
  * 请求
+ *
+ * @deprecated
+ * @see HttpRequest
  */
-class Request extends CoreRequest {
+class Request extends HttpRequest {
 
     /**
      * constructor
@@ -25,6 +26,7 @@ class Request extends CoreRequest {
     /**
      * 解析 request url
      *
+     * @deprecated
      * @param {Object} request 请求对象
      * @return {Object}
      */
@@ -39,12 +41,7 @@ class Request extends CoreRequest {
      * @return {String}
      */
     static getClientIp(request) {
-        let forward = request.headers['x-forwarded-for'];
-        if(undefined !== forward) {
-            return forward.substring(0, forward.indexOf(','));
-        }
-
-        return request.connection.remoteAddress;
+        return new HttpRequest(request).getClientIp();
     }
 
     /**
@@ -56,15 +53,7 @@ class Request extends CoreRequest {
      * @return {String | null}
      */
     static getQueryString(request, parameter, defaultValue = null) {
-        let parsed = url.parse(request.url);
-
-        if(null === parsed.query) {
-            return defaultValue;
-        }
-
-        let ret = querystring.parse(parsed.query);
-
-        return undefined === ret[parameter] ? defaultValue : ret[parameter];
+        return new HttpRequest(request).getQueryString(parameter, defaultValue);
     }
 
     /**
@@ -76,11 +65,7 @@ class Request extends CoreRequest {
      * @return {String | null}
      */
     static getParameter(request, parameter, defaultValue = null) {
-        if(undefined === request.body) {
-            return defaultValue;
-        }
-
-        return undefined === request.body[parameter] ? defaultValue : request.body[parameter];
+        return new HttpRequest(request).getParameter(parameter, defaultValue);
     }
 
     /**
@@ -88,78 +73,9 @@ class Request extends CoreRequest {
      *
      * @param {Object} request 请求对象
      * @param {String} name cookie name
-     * @see Cookie.getCookie
      */
     static getCookie(request, name) {
-        return Cookie.getCookie(request, name);
-    }
-
-    /**
-     * 获取 get 参数
-     *
-     * @param {String} parameter 参数名
-     * @see Request.getQueryString
-     */
-    getQueryString(parameter) {
-        return Request.getQueryString(this.request, parameter);
-    }
-
-    /**
-     * 获取 post 参数
-     *
-     * @param {String} parameter 参数名
-     * @see Request.getParameter
-     */
-    getParameter(parameter) {
-        return Request.getParameter(this.request, parameter);
-    }
-
-    /**
-     * 获取 cookie
-     *
-     * @param {String} name cookie name
-     * @see Request.getCookie
-     */
-    getCookie(name) {
-        return Request.getCookie(this.request, name);
-    }
-
-    /**
-     * 获取引用网址
-     *
-     * @return {String | null}
-     */
-    getReferer(request) {
-        if(undefined !== this.request.headers.referer) {
-            return this.request.headers.referer;
-        }
-
-        return null;
-    }
-
-    /**
-     * 获取 URI 协议和主机部分
-     *
-     * @return {String}
-     */
-    getHostInfo() {
-        let protocol = undefined !== this.request.socket.encrypted
-            || 'https' === this.request.headers['x-forwarded-protocol']
-                ? 'https'
-                : 'http';
-
-        let host = protocol + '://' + this.request.headers.host;
-
-        return host;
-    }
-
-    /**
-     * 获取当前网址 不包含锚点部分
-     *
-     * @return {String}
-     */
-    getCurrent() {
-        return this.getHostInfo() + this.request.url;
+        return new HttpRequest(request).getCookie(name);
     }
 
 }

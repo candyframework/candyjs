@@ -27,22 +27,6 @@ class LinkedQueue extends Queue {
     /**
      * @inheritdoc
      */
-    iterator() {
-        if(null === this.currentIteratorNode) {
-            this.currentIteratorNode = this.headNode;
-
-        } else {
-            this.currentIteratorNode = this.currentIteratorNode.next;
-        }
-
-        return null === this.currentIteratorNode
-            ? (this.currentIteratorNode = null, null)
-            : this.currentIteratorNode.data;
-    }
-
-    /**
-     * @inheritdoc
-     */
     each(callback) {
         for(let current = this.headNode; null !== current; current = current.next) {
             if(false === callback(current.data)) {

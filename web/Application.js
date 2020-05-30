@@ -4,11 +4,12 @@
  */
 'use strict';
 
+const url = require('url');
+
 const Candy = require('../Candy');
 const CandyJS = require('../index');
 const CoreApp = require('../core/Application');
 const StringHelper = require('../helpers/StringHelper');
-const Request = require('./Request');
 const WebController = require('./Controller');
 const InvalidRouteException = require('../core/InvalidRouteException');
 
@@ -88,7 +89,7 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     requestListener(request, response) {
-        let route = Request.parseUrl(request).pathname;
+        let route = url.parse(request.url).pathname;
 
         CandyJS.getLogger().trace('Route requested: ' + route);
 

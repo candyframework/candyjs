@@ -4,8 +4,9 @@
  */
 'use strict';
 
+const url = require('url');
+
 const Candy = require('../Candy');
-const Request = require('./Request');
 const RegExpRouter = require('../utils/RegExpRouter');
 const CoreApp = require('../core/Application');
 const InvalidCallException = require('../core/InvalidCallException');
@@ -48,7 +49,7 @@ class RestApplication extends CoreApp {
      * @param {Object} response
      */
     requestListener(request, response) {
-        let route = Request.parseUrl(request).pathname;
+        let route = url.parse(request.url).pathname;
         let ret = this.resolveRoutes(route, request.method);
 
         if(null === ret) {

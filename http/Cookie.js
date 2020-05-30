@@ -22,7 +22,7 @@ class Cookie {
      * @param {Boolean} secure cookie secure
      * @param {Boolean} httpOnly cookie httpOnly
      */
-    constructor(name, value, expires = 0, path = '/', domain = '', secure = false, httpOnly = false) {
+    constructor(name, value, expires = 0, path = '', domain = '', secure = false, httpOnly = false) {
         this.name = name;
         this.value = value;
         this.expires = expires;
@@ -32,6 +32,11 @@ class Cookie {
         this.httpOnly = httpOnly;
     }
 
+    /**
+     * 格式化一条 cookie
+     *
+     * @return {String}
+     */
     toString() {
         let ret = [this.name + '=' + this.value];
 
@@ -50,43 +55,6 @@ class Cookie {
         }
 
         return ret.join('; ');
-    }
-
-    /**
-     * 获取 cookie
-     *
-     * @param {Object} request cookie name
-     * @param {String} name cookie name
-     * @return {String | null}
-     */
-    static getCookie(request, name) {
-        if(undefined === request.headers.cookie) {
-            return null;
-        }
-
-        let ret = null;
-        let list = request.headers.cookie.split('; ');
-
-        for(let tmp=null,i=0,len=list.length; i<len; i++) {
-            tmp = list[i].split('=');
-
-            if(name === tmp[0]) {
-                ret = decodeURIComponent(tmp[1]);
-                break;
-            }
-        }
-
-        return ret;
-    }
-
-    /**
-     * 设置 cookie
-     *
-     * @param {Object} response cookie name
-     * @param {Array} cookies cookies
-     */
-    static setCookie(response, cookies) {
-        response.setHeader('Set-Cookie', cookies);
     }
 
 }

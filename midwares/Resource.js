@@ -5,8 +5,7 @@
 'use strict';
 
 const fs = require('fs');
-
-const Request = require('../web/Request');
+const url = require('url');
 
 /**
  * 静态资源处理
@@ -47,7 +46,7 @@ class Resource {
      */
     isStatic(request) {
         let ret = false;
-        let pathname = Request.parseUrl(request).pathname;
+        let pathname = url.parse(request.url).pathname;
         let ext = this.getExtName(pathname).substring(1);
         let mime = undefined === this.options.mime ?
             Resource.mime :
@@ -113,7 +112,7 @@ class Resource {
             return;
         }
 
-        let pathname = Request.parseUrl(request).pathname;
+        let pathname = url.parse(request.url).pathname;
         let mimeType = this.getMimeType(pathname);
 
         pathname = (this.root + pathname).replace(/\.\./g, '');
