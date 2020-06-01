@@ -47,9 +47,6 @@
             <p>
                 <code>CandyJs</code>实现了正则路由的合并，多个正则路由我们会将其合成一个大路由，避免了路由逐个匹配带来的巨大性能损失
             </p>
-            <p>
-                <code>CandyJs</code>实现了类的按需加载，所有文件只有用到时才去加载，这得益于框架定制的别名系统
-            </p>
 
             <h1 class="page-header"><a href="./index_en.html">英文</a></h1>
 
@@ -1021,10 +1018,15 @@ var time = TimeHelper.format('y-m-d h:i:s');
             <p><code>CandyJs</code>中可以方便的使用别名来加载类</p>
 <pre><code>
 var Candy = require('candyjs/Candy');
-var App = Candy.include('candy/web/Application');
+var Controller = Candy.include('candy/web/Controller');
 </code></pre>
-            <p>上面的<code>Candy.include('candy/web/Application');</code>可以实现加载系统的<code>Application</code>类</p>
+            <p>上面的<code>Candy.include('candy/web/Controller');</code>可以实现加载系统的<code>Controller</code>类</p>
             <p>其中开头的<code>candy</code>就是一个系统内置别名。<code>CandyJs</code>在解析路径的时候，首先会尝试将路径的开始部分当做一个别名来解析</p>
+            <blockquote class="bg-danger">
+                <p>虽然<code>Candy.include</code>可以很方便的加载一个类，但是这种方式加载的类是无法识别类型的，所以也就不会有代码提示功能</p>
+                <p>对于需要代码提示的人推荐使用 require 进行加载<code>const Controller = require('candyjs/web/Controller')</code></p>
+            </blockquote>
+            
 
             <h6><b>类的实例化</b></h6>
             <p><code>CandyJs</code>中很多类都是使用<code>Candy.createObject()</code>来进行实例化的，他的强大之处在于可以识别别名，自动加载和初始化一个类</p>
