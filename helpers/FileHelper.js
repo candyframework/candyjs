@@ -26,10 +26,12 @@ class FileHelper {
     /**
      * 转化正常路径
      *
+     * ```
      * 路径分隔符转换 e.g. '\\a\\b\\c' becomes '/a/b/c'
      * 删除末尾分隔符 e.g. '/a/b/c/' becomes '/a/b/c'
      * 多斜线转为单个 e.g. '/a///b/c' becomes '/a/b/c'
      * 处理 .. 与 . e.g. '/a/./b/../c' becomes '/a/c'
+     * ```
      *
      * @param {String} path 待转换路径
      * @param {String} directorySeparator 目录分隔符

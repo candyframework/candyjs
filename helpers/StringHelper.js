@@ -125,9 +125,11 @@ class StringHelper {
     /**
      * 过滤 html 标签
      *
+     * ```
      * eg.
      * filterTags('<a>abc</a>xyz') -> abcxyz
      * filterTags('<a>abc</a>xyz', '<a><b>') -> <a>abc</a>xyz
+     * ```
      *
      * @param {String} str
      * @param {String} allowed

@@ -1,7 +1,6 @@
 const assert = require('assert');
 
-const Candy = require('../Candy');
-const Controller = Candy.include('candy/web/Controller');
+const Controller = require('../web/Controller');
 
 
 // 简单事件测试
@@ -35,7 +34,7 @@ describe('simple-event', function() {
 
 
 // 行为类
-const Behavior = Candy.include('candy/core/Behavior');
+const Behavior = require('../core/Behavior');
 class MyBehavior extends Behavior {
     constructor() {
         super();

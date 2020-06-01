@@ -7,11 +7,11 @@
 const Candy = require('../Candy');
 const InvalidConfigException = require('../core/InvalidConfigException');
 const InvalidArgumentException = require('../core/InvalidArgumentException');
-const ICache = require('./ICache');
 
 class Cache {
 
     /**
+     * @typedef {import('./ICache')} ICache
      * @return {ICache}
      */
     static getCache(cacheFlag) {

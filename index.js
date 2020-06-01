@@ -17,7 +17,8 @@ class CandyJs {
     /**
      * constructor
      *
-     * @param {any} application 应用实例
+     * @typedef {import('./core/Application')} Application
+     * @param {Application} application 应用实例
      */
     constructor(application) {
         this.server = null;
@@ -25,7 +26,9 @@ class CandyJs {
     }
 
     /**
-     * 后去日志对象
+     * 获取日志对象
+     *
+     * @return {Logger}
      */
     static getLogger() {
         if(null === CandyJs._logger) {
@@ -64,7 +67,7 @@ class CandyJs {
     /**
      * 获取 http server
      *
-     * @return http server
+     * @return {http.Server}
      */
     getServer() {
         return http.createServer(this.handler.bind(this));

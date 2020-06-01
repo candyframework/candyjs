@@ -47,8 +47,9 @@ class TimeHelper {
      * @param {String} formats 格式化参数
      * @param {Number} timestamp 时间戳
      *
-     * 用法
+     * ```
      * let str = TimeHelper.format('y-m-d h:i:s');
+     * ```
      *
      * @return {String}
      */

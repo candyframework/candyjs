@@ -72,12 +72,14 @@ class Candy {
     /**
      * 创建对象
      *
-     * @param {String | Object} 以某个别名开头的类全名或带 'classPath' 键的配置
+     * @param {String | Object} 以某个别名开头的类全名或类配置
      *
+     * ```
      * eg.
      * 'alias/path/Class'
      * or
-     * {classPath: 'some/path/Class', ...}
+     * {classPath: 'some/path/Class', anyOtherProperties}
+     * ```
      *
      * @param {any} parameters 构造函数参数
      * @return {Object} 类实例
