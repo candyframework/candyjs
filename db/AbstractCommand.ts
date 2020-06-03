@@ -2,12 +2,13 @@
  * @author afu
  * @license MIT
  */
+import Event from '../core/Event';
 import AbstractQuery from './AbstractQuery';
 
- /**
-  * 数据库操作基类
-  */
-export default abstract class AbstractCommand {
+/**
+ * 数据库操作基类
+ */
+export default abstract class AbstractCommand extends Event {
     public static EVENT_BEFORE_QUERY = 1
     public static EVENT_AFTER_QUERY = 2;
     public static EVENT_BEFORE_EXECUTE = 3;

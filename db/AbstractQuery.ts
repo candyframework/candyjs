@@ -6,7 +6,7 @@
 /**
  * SQL 生成器抽象层
  *
- * 子类应该继承该类并实现 IQuery 接口
+ * 子类应该继承该类并实现该类的抽象方法
  */
 export default abstract class AbstractQuery {
     /**

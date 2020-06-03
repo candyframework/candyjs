@@ -14,7 +14,7 @@ database interface
 
 大致是所有查询使用 promise 返回，所有中间查询方法都是同步的
 
-```
+```javascript
 const db = await db.instance('master');
 
 // 1. 使用 sql 操作数据库
