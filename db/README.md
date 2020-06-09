@@ -48,10 +48,6 @@ const rs = command.queryColumn();
 // 2. 使用预处理语句
 
 // 增加
-const command = db.prepareStatement('INSERT INTO xxx(id, age) VALUES(:id, :age)')
-    .bindValues([':id': 1, ':age': 20]);
-await command.execute();
-
 const command = db.prepareStatement('INSERT INTO xxx(id, age) VALUES(?, ?)')
     .bindValues([1, 20]);
 await command.execute();
@@ -67,8 +63,8 @@ const command = db.prepareStatement('UPDATE xxx SET age = ? WHERE id = ?')
 await command.execute();
 
 // 查询一条
-const command = db.prepareStatement('SELECT age FROM xxx WHERE id = :id')
-    .bindValue(':id', 1);
+const command = db.prepareStatement('SELECT age FROM xxx WHERE id = ?')
+    .bindValue(1);
 await command.queryOne();
 
 
@@ -80,7 +76,6 @@ await query.getAll();
 
 // 查询一条
 await db.createQuery().select('id, age').from('xxx').where('id = ?', [1]).getOne();
-await db.createQuery().select('id, age').from('xxx').where('id = :id', [':id': 1]).getOne();
 
 // 查询单列
 await db.createQuery().select('age').from('xxx').where('id = 1').getColumn();

@@ -9,10 +9,10 @@ import AbstractQuery from './AbstractQuery';
  * 数据库操作基类
  */
 export default abstract class AbstractCommand extends Event {
-    public static EVENT_BEFORE_QUERY = 1
-    public static EVENT_AFTER_QUERY = 2;
-    public static EVENT_BEFORE_EXECUTE = 3;
-    public static EVENT_AFTER_EXECUTE = 4;;
+    public static EVENT_BEFORE_QUERY = 'beforeQuery';
+    public static EVENT_AFTER_QUERY = 'afterQuery';
+    public static EVENT_BEFORE_EXECUTE = 'beforeExecute';
+    public static EVENT_AFTER_EXECUTE = 'afterExecute';
 
     /**
      * Create QueryBuilder
@@ -44,7 +44,7 @@ export default abstract class AbstractCommand extends Event {
     /**
      * 绑定多个参数 可以用于绑定命名参数和占位符参数
      *
-     * @param {any} parameters
+     * @param {Array} parameters
      */
     public abstract bindValues(parameter: any): this;
 

@@ -4,12 +4,10 @@
  */
 'use strict';
 
-const Queue = require('./Queue');
-
 /**
- * 链表
+ * 队列
  */
-class LinkedQueue extends Queue {
+class LinkedQueue {
 
     /**
      * constructor
@@ -24,8 +22,27 @@ class LinkedQueue extends Queue {
         this.currentIteratorNode = null;
     }
 
+    [Symbol.iterator]() {
+        let node = this.headNode;
+
+        return {
+            next: () => {
+                if(null !== node) {
+                    let ret = { value: node.data, done: false };
+                    node = node.next;
+
+                    return ret;
+                }
+
+                return {done: true};
+            }
+        };
+    }
+
     /**
-     * @inheritdoc
+     * 遍历队列 callback 返回值为 false 可结束循环
+     *
+     * @param {Function} callback
      */
     each(callback) {
         for(let current = this.headNode; null !== current; current = current.next) {
@@ -36,7 +53,9 @@ class LinkedQueue extends Queue {
     }
 
     /**
-     * @inheritdoc
+     * 列表添加元素
+     *
+     * @param {any} data 数据
      */
     add(data) {
         let node = new LinkedQueue.Node(data, null);
@@ -54,7 +73,9 @@ class LinkedQueue extends Queue {
     }
 
     /**
-     * @inheritdoc
+     * 移除并返回第一个元素
+     *
+     * @return {any | null}
      */
     take() {
         // 为空直接返回
@@ -81,7 +102,9 @@ class LinkedQueue extends Queue {
     }
 
     /**
-     * @inheritdoc
+     * 删除一个元素
+     *
+     * @param {any} data 要删除的元素
      */
     remove(data) {
         let current = this.headNode;
@@ -118,7 +141,7 @@ class LinkedQueue extends Queue {
     }
 
     /**
-     * @inheritdoc
+     * 清空列表
      */
     clear() {
         while(0 !== this.size) {
@@ -127,7 +150,7 @@ class LinkedQueue extends Queue {
     }
 
     /**
-     * @inheritdoc
+     * toString
      */
     toString() {
         let str = '[ ';
