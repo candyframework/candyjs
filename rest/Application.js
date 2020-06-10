@@ -98,7 +98,7 @@ class Application extends CoreApp {
         // }
 
         let fastRouter = new FastRouter();
-        fastRouter.setRoutesList(routesMap);
+        fastRouter.setRoutes(routesMap);
         // this.cachedRegExp[httpMethod] = fastRouter;
 
         return fastRouter.exec(route);

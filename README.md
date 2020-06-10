@@ -116,6 +116,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2020-06-10
+
+    * npm 4.4.4 分离正则路由组件到 `fast-regexp-router`
+
 + 2020-05-30
 
     * npm 4.4.1 重构了 url 请求部分 `candy/web/Request` 与 `candy/web/Response` 已标记为过期 使用 `candy/http/*` 替代
