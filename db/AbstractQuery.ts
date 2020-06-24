@@ -45,18 +45,18 @@ export default abstract class AbstractQuery {
     public $options = new Map();
 
     /**
-     * @property {Map} $parameters list of query parameter values. For example, {':name': 'li', ':age': 20}
+     * @property {Array} $parameters list of query parameter values
      */
-    public $parameters = new Map();
+    public $parameters = [];
 
     /**
      * Set parameters
      *
-     * @param {any} parameters
+     * @param {Array} parameters
      */
-    public addParameters(parameters: any): void {
-        for(let name in parameters) {
-            this.$parameters.set(name, parameters[name]);
+    public addParameters(parameters: any[]): void {
+        for(let name of parameters) {
+            this.$parameters.push(name);
         }
     }
 
@@ -109,9 +109,9 @@ export default abstract class AbstractQuery {
      * Sets the WHERE condition of a query
      *
      * @param {String} condition
-     * @param {any} parameters
+     * @param {Array} parameters
      */
-    public abstract where(condition: string, parameters: any): this;
+    public abstract where(condition: string, parameters: any[]): this;
 
     /**
      * 分组
