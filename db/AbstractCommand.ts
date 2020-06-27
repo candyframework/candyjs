@@ -114,27 +114,21 @@ export default abstract class AbstractCommand extends Event {
     /**
      * 开启事务
      *
-     * 预留接口
-     *
      * @return {Boolean}
      */
-    // public abstract beginTransaction(): boolean;
+    public abstract beginTransaction(): boolean;
 
     /**
      * 提交事务
      *
-     * 预留接口
-     *
      * @return {Boolean}
      */
-    // public abstract commitTransaction(): boolean;
+    public abstract commitTransaction(): boolean;
 
     /**
      * 回滚事务
      *
-     * 预留接口
-     *
      * @return {Boolean}
      */
-    // public abstract rollbackTransaction(): boolean;
+    public abstract rollbackTransaction(): boolean;
 }

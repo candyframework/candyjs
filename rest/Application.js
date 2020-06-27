@@ -41,7 +41,10 @@ class Application extends CoreApp {
             OPTIONS: []
         };
 
-        // this.cachedRegExp = {};
+        /**
+         * @property {Map<String, FastRouter>}
+         */
+        this.cachedRouter = new Map();
 
         Candy.config(this, config);
     }
@@ -93,13 +96,13 @@ class Application extends CoreApp {
             return null;
         }
 
-        // if(this.cachedRegExp[httpMethod]) {
-        //     return this.cachedRegExp[httpMethod].exec(route);
-        // }
+        if(this.cachedRouter.has(httpMethod)) {
+            return this.cachedRouter.get(httpMethod).exec(route);
+        }
 
         let fastRouter = new FastRouter();
         fastRouter.setRoutes(routesMap);
-        // this.cachedRegExp[httpMethod] = fastRouter;
+        this.cachedRouter.set(httpMethod, fastRouter);
 
         return fastRouter.exec(route);
     }
