@@ -10,7 +10,7 @@ const FastRouter = require('fast-regexp-router');
 
 const Candy = require('../Candy');
 const CoreApp = require('../core/Application');
-const InvalidCallException = require('../core/InvalidCallException');
+const InvalidRouteException = require('../core/InvalidRouteException');
 
 /**
  * rest application
@@ -52,15 +52,15 @@ class Application extends CoreApp {
     /**
      * 请求处理
      *
-     * @param {Object} request
-     * @param {Object} response
+     * @param {any} request
+     * @param {any} response
      */
     requestListener(request, response) {
         let route = url.parse(request.url).pathname;
         let ret = this.resolveRoutes(route, request.method);
 
         if(null === ret) {
-            throw new InvalidCallException('The REST route: ' + route + ' not found');
+            throw new InvalidRouteException('The REST route requested is invalid ' + route);
         }
 
         // handler is function
