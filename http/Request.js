@@ -25,6 +25,13 @@ class Request extends CoreRequest {
     }
 
     /**
+     * 获取一条 session
+     *
+     * @param {Boolean} create 不存在时是否创建
+     */
+    getSession(create = true) {}
+
+    /**
      * 获取 get 参数
      *
      * @param {String} parameter 参数名
