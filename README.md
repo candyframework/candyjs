@@ -116,6 +116,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2020-07-12
+
+    * npm 4.5.0 系统优化 并修复部分 bug
+
 + 2020-06-10
 
     * npm 4.4.4 分离正则路由组件到 `fast-regexp-router`

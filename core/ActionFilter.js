@@ -33,9 +33,17 @@ class ActionFilter extends Behavior {
     }
 
     beforeFilter(actionEvent) {
+        if(!actionEvent.valid) {
+            this.unListen();
+            return;
+        }
+
         this.beforeAction(actionEvent);
     }
 
+    /**
+     * afterFilter() will not execute when false === actionEvent.valid
+     */
     afterFilter(actionEvent) {
         this.unListen();
 
