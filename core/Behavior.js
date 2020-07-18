@@ -13,7 +13,9 @@ class Behavior {
 
     constructor() {
         /**
-         * @property {Component} component 组件
+         * @typedef {import('./Component')} Component
+         * @type {Component}
+         * @public
          */
         this.component = null;
     }
@@ -34,6 +36,7 @@ class Behavior {
     /**
      * 监听组件的事件
      *
+     * @typedef {import('./Component')} Component
      * @param {Component} component 组件
      */
     listen(component) {
