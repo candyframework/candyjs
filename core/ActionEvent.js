@@ -14,18 +14,23 @@ class ActionEvent extends Event {
     /**
      * constructor
      */
-    constructor(request, response) {
+    constructor() {
         super();
 
         /**
          * @property {any} request
          */
-        this.request = request;
+        this.request = null;
 
         /**
          * @property {any} response
          */
-        this.response = response;
+        this.response = null;
+
+        /**
+         * @property {any} data
+         */
+        this.data = null;
 
         /**
          * @property {Boolean} 状态
