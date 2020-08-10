@@ -382,17 +382,13 @@ module.exports = Intercept;
 
             <h1 class="page-header" id="view"><b>视图</b></h1>
             <p>视图是<code>MVC</code>模式中的一部分 它用于给终端用户展示页面</p>
-            <blockquote class="bg-info">
-                视图类一般把模型层提供的数据与静态页面结合生成一个最终的页面展示给用户
-                <code>CandyJs</code>暂时只在控制器层提供了功能有限的<code>API</code>
-            </blockquote>
 
             <h4><b>模板引擎</b></h4>
             <blockquote class="bg-info">
-                一般视图类与模板引擎结合使用，<code>CandyJs</code>建议使用第三方模板引擎进行开发，当然使用方式也非常简单
+                <code>CandyJs</code>提供了<code>@candyjs/template-hbs</code>来负责模板渲染，<a target="_blank" href="https://github.com/douyu-beijing/candyjs-template-hbs">查看详情</a>
             </blockquote>
 
-            <h4><b>使用模板引擎</b></h4>
+            <h4><b>其他方式使用模板引擎</b></h4>
             <p>得益于<code>CandyJs</code>灵活的架构设计，使得模板引擎使用非常便捷，这里有如下几种方式：</p>
             <ul>
                 <li>全局配置方式</li>
