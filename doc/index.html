@@ -21,23 +21,44 @@
         color: #fff;
         padding: 20px 0;
     }
+    .doc-main {
+        margin-top: 60px;
+    }
+    .doc-navbar {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    @media (min-width: 1200px) {
+        .doc-rightnav {
+            position: fixed;
+            z-index: 10;
+            top: 60px;
+            bottom: 10px;
+            overflow-y: auto;
+            background-color: #eee;
+        }
+    }
     </style>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse doc-navbar">
         <div class="container">
             <a target="_blank" class="navbar-brand" href="https://github.com/douyu-beijing/candyjs">CandyJs</a>
         </div>
     </nav>
 </header>
 
-<div class="container">
+<div class="container doc-main">
     <div class="row">
         <div class="col-md-9">
             <h1>
             一个面向对象的高效 MVC and REST 框架
             </h1>
+            <p><img src="./candy.png"></p>
             <p>
                 <code>CandyJs</code>是一个健壮可扩展的 Web 框架，它提供了一套优雅的编写代码的规范，使得编写 Web 应用变得得心应手。
             </p>
@@ -316,6 +337,86 @@ class IndexController extends Controller {
 }
 
 module.exports = IndexController;
+</pre></code>
+
+            <h1 class="page-header" id="filter"><b>动作过滤器</b></h1>
+            <p>动作过滤器是一种特殊的行为类，用于过滤用户的请求，如果项目中使用到了<code>动作切面</code>，那么可以考虑是否可以替换为<code>过滤器</code></p>
+            <p><code>candyjs</code>提供的过滤器可以从<code>core/ActionFilter.js</code>找到，该类主要用于在控制器的动作执行前进行一些预处理操作</p>
+
+            <h4><b>过滤器的使用</b></h4>
+            <h6><b>1. 编写过滤器</b></h6>
+            <p>使用过滤器，首先必须编写过滤器，过滤器需要从<code>candyjs/core/ActionFilter</code>类继承</p>
+            <p>自定义过滤器根据具体需求可以选择实现<code>beforeAction()</code>或<code>afterAction()</code>方法</p>
+            <p><code>beforeAction()</code>会在控制器的动作执行前运行，<code>afterAction()</code>会在控制器的动作执行后运行</p>
+            <p>下面的过滤器代码简单实现了一个为接口请求添加跨域头的功能，并实现了过滤器的<code>beforeAction()</code>方法</p>
+<pre><code>
+const Candy = require('candyjs/Candy');
+const ActionFilter = require('candyjs/core/ActionFilter');
+
+class Cors extends ActionFilter {
+    constructor() {
+        super();
+
+        this.cors = {
+            // 允许访问该资源的外域 URI
+            'Access-Control-Allow-Origin': '*',
+            // 允许使用的请求方法
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS',
+            // 允许请求中使用的头信息
+            'Access-Control-Allow-Headers': '',
+            // 响应的有效时间为 秒
+            'Access-Control-Max-Age': 86400,
+            // 如果出现在预检请求的响应中 表示实际请求是否可以使用 credentials
+            'Access-Control-Allow-Credentials': 'true'
+        };
+    }
+
+    /**
+     * 实现过滤器前置方法，用于添加 http header 头
+     */
+    beforeAction(actionEvent) {
+        let request = actionEvent.request;
+        let response = actionEvent.response;
+
+        if(undefined !== request.headers['origin']) {
+            response.setHeader('Access-Control-Allow-Origin', this.cors['Access-Control-Allow-Origin']);
+        }
+
+        if(undefined !== request.headers['access-control-request-method']) {
+            response.setHeader('Access-Control-Allow-Methods', this.cors['Access-Control-Allow-Methods']);
+        }
+
+        if('OPTIONS' === request.method && undefined !== this.cors['Access-Control-Max-Age']) {
+            response.setHeader('Access-Control-Max-Age', this.cors['Access-Control-Max-Age']);
+        }
+
+        if(undefined !== this.cors['Access-Control-Allow-Credentials']) {
+            response.setHeader('Access-Control-Allow-Credentials', this.cors['Access-Control-Allow-Credentials']);
+        }
+    }
+}
+
+module.exports = Cors;
+</pre></code>
+
+            <h6><b>2. 使用过滤器</b></h6>
+            <p>使用过滤器很简单，只需要在控制器中添加<code>behaviors()</code>方法即可</p>
+<pre><code>
+class IndexController extends Controller {
+    // 使用过滤器
+    // 过滤器配置以数组形式返回
+    // 'cors' 表示过滤器的名字
+    // 'app/filters/Cors' 表示过滤器的类路径 这里表示 app/filters/Cors.js 类
+    behaviors() {
+        return [
+            ['cors', 'app/filters/Cors']
+        ];
+    }
+
+    run() {
+        // 此控制器动作执行前会先运行 behaviors() 方法指定的过滤器
+    }
+}
 </pre></code>
 
 
@@ -1256,11 +1357,12 @@ async function getSetData() {
 
         </div>
         <div class="col-md-3" style="position: relative;">
-            <ul id="rightnav" class="nav nav-pills nav-stacked" style="background-color: #f5f5f5">
+            <ul id="rightnav" class="nav nav-pills nav-stacked doc-rightnav">
                 <li><a href="javascript:;">入门</a></li>
                 <li><a href="#firstrun">第一次运行程序</a></li>
                 <li><a href="#appstruct">应用结构</a></li>
                 <li><a href="#controller">控制器</a></li>
+                <li><a href="#filter">动作过滤器</a></li>
                 <li><a href="#router">MVC 路由</a></li>
                 <li><a href="#model">模型</a></li>
                 <li><a href="#view">视图</a></li>

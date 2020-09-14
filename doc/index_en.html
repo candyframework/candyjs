@@ -21,46 +21,48 @@
         color: #fff;
         padding: 20px 0;
     }
-    code {margin: 0 6px;}
+    .doc-main {
+        margin-top: 60px;
+    }
+    .doc-navbar {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    @media (min-width: 1200px) {
+        .doc-rightnav {
+            position: fixed;
+            z-index: 10;
+            top: 60px;
+            bottom: 10px;
+            overflow-y: auto;
+            background-color: #eee;
+        }
+    }
     </style>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse doc-navbar">
         <div class="container">
             <a target="_blank" class="navbar-brand" href="https://github.com/douyu-beijing/candyjs">CandyJs</a>
         </div>
     </nav>
 </header>
 
-<div class="container">
+<div class="container doc-main">
     <div class="row">
         <div class="col-md-9">
-<h1>
-An object-oriented efficient MVC and REST framework
-</h1>
+            <h1>
+            An object-oriented efficient MVC and REST framework
+            </h1>
+            <p><img src="./candy.png"></p>
 
             <h1 class="page-header">Getting started</h1>
-
             <h4><b>Install the program</b></h4>
-            <p>
-                You can install<code>CandyJs</code>two ways
-                <ol>
-                    <li>Use<code>npm</code></li>
-                    <li>Download the source code for manual deployment</li>
-                </ol>
-            </p>
-
-            <h4><b>Use<code>npm</code>install</b></h4>
             <pre><code>npm install candyjs</code></pre>
-
-            <h4><b>Download the source code for manual deployment</b></h4>
-            <p>
-                <pre>Through<a target="_blank" href="https://github.com/douyu-beijing/candyjs"><b>GitHub</b></a>download source code and place it to the node_modules directory</pre>
-                <blockquote class="bg-info">
-                    Note that the source code downloaded by github may need to remove the git repository information from it otherwise the npm installs other packages may be problematic
-                </blockquote>
-            </p>
 
             <h1 class="page-header" id="firstrun"><b>Run the program for the first time</b></h1>
             <p>This example outputs a Hello word program</p>
@@ -281,13 +283,13 @@ module.exports = IndexController;
                 Then you can use the action aspect in the controller before or after action to perform some business logic
             </p>
             <blockquote class="bg-danger">
-                <p>由于前期设计导致动作切面作用不是很大，从 4.3.0 开始，我们对动作切面进行了重构</p>
-                <p>并且对方法名进行了调整</p>
+                <p>Because of design flaws, we rewrite the aspect system since 4.3.0</p>
+                <p>Adjustments of function names have been made</p>
                 <ul>
-                    <li><code>beforeActionCall() 更名为 beforeAction()</code></li>
-                    <li><code>afterActionCall() 更名为 afterAction()</code></li>
+                    <li><code>beforeActionCall() renamed to beforeAction()</code></li>
+                    <li><code>afterActionCall() renamed to afterAction()</code></li>
                 </ul>
-                <p><code>beforeAction(actionEvent)</code> 方法必须同步返回一个布尔类型的值，以表明程序是否继续向后执行。<code>true</code>表示告诉程序向下执行，其他返回值则会阻止程序运行</p>
+                <p>The<code>beforeAction(actionEvent)</code>function must return a boolean value synchronously so that the system can judge weather to stop or run continue.</p>
             </blockquote>
 <pre><code>
 'use strict';
@@ -338,10 +340,10 @@ module.exports = IndexController;
                 Temporarily<code>CandyJs</code>does not provide a class to read the database
             </blockquote>
 
-            <h1 class="page-header" id="view"><b>视图</b></h1>
-            <p>视图是<code>MVC</code>模式中的一部分 它用于给终端用户展示页面</p>
+            <h1 class="page-header" id="view"><b>View</b></h1>
+            <p>The view is part of the MVC pattern that represents the page that user can see</p>
 
-            <h4><b>模板引擎</b></h4>
+            <h4><b>Template</b></h4>
             <blockquote class="bg-info">
                 <code>CandyJs</code>提供了<code>@candyjs/template-hbs</code>来负责模板渲染，<a target="_blank" href="https://github.com/douyu-beijing/candyjs-template-hbs">查看详情</a>
             </blockquote>
@@ -1065,7 +1067,7 @@ async function getSetData() {
 
         </div>
         <div class="col-md-3" style="position: relative">
-            <ul id="rightnav" class="nav nav-pills nav-stacked" style="background-color: #f5f5f5">
+            <ul id="rightnav" class="nav nav-pills nav-stacked doc-rightnav">
                 <li><a href="javascript:;">Getting started</a></li>
                 <li><a href="#firstrun">First saying hello</a></li>
                 <li><a href="#appstruct">Application structure</a></li>
