@@ -11,6 +11,8 @@ const Controller = require('./Controller');
  * 动作过滤器
  *
  * 过滤器会在控制器的动作执行之前执行并且只支持同步操作
+ *
+ * 自定义过滤器需要从此类继承 并选择实现 `beforeAction()` 或者 `afterAction()`
  */
 class ActionFilter extends Behavior {
 
@@ -32,6 +34,10 @@ class ActionFilter extends Behavior {
         ];
     }
 
+    /**
+     * @typedef {import('./ActionEvent')} ActionEvent
+     * @param {ActionEvent} actionEvent
+     */
     beforeFilter(actionEvent) {
         if(!actionEvent.valid) {
             this.unListen();
@@ -42,7 +48,10 @@ class ActionFilter extends Behavior {
     }
 
     /**
-     * afterFilter() will not execute when false === actionEvent.valid
+     * afterFilter() will not execute when `false === actionEvent.valid`
+     *
+     * @typedef {import('./ActionEvent')} ActionEvent
+     * @param {ActionEvent} actionEvent
      */
     afterFilter(actionEvent) {
         this.unListen();

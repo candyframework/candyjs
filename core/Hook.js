@@ -39,8 +39,8 @@ class Hook {
     /**
      * 触发
      *
-     * @param {Object} req
-     * @param {Object} res
+     * @param {any} req
+     * @param {any} res
      * @param {Function} callback
      */
     trigger(req, res, callback) {

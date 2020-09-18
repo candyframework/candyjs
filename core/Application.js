@@ -15,8 +15,6 @@ class Application extends Event {
 
     /**
      * constructor
-     *
-     * @param {Object} config 配置信息
      */
     constructor(config) {
         super();
@@ -43,7 +41,7 @@ class Application extends Event {
     /**
      * 初始化应用
      *
-     * @param {Object} config 应用配置
+     * @param {any} config 应用配置
      * @throws {InvalidConfigException} 当丢失必要配置项目时
      */
     init(config) {
@@ -132,15 +130,15 @@ class Application extends Event {
     /**
      * handler request
      *
-     * @param {Object} request
-     * @param {Object} response
+     * @param {any} request
+     * @param {any} response
      */
     requestListener(request, response) {}
 
     /**
      * 异常处理
      *
-     * @param {Object} response 输出类
+     * @param {any} response 输出类
      * @param {Exception} exception 异常类
      */
     handlerException(response, exception) {}

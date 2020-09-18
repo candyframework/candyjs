@@ -25,9 +25,9 @@ class URL {
      * // scheme://host/index/index?id=1#anchor
      * url.to('index/index', {id: 1, '#': 'anchor'})
      *
-     * @param {Object} request
+     * @param {any} request
      * @param {String} url
-     * @param {Object} parameters
+     * @param {any} parameters
      * @return {String}
      */
     static to(request, url, parameters = null) {

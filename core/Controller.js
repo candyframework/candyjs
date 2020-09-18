@@ -19,7 +19,7 @@ class Controller extends Component {
         super();
 
         /**
-         * @property {Object} context 上下文环境 用于保存当前请求相关的信息
+         * @property {any} context 上下文环境 用于保存当前请求相关的信息
          */
         this.context = context;
     }
@@ -48,8 +48,8 @@ class Controller extends Component {
     /**
      * 执行控制器的方法
      *
-     * @param {Object} request
-     * @param {Object} response
+     * @param {any} request
+     * @param {any} response
      */
     runControllerAction(request, response) {
         let actionEvent = new ActionEvent();
@@ -74,8 +74,7 @@ class Controller extends Component {
      * 渲染文件 须由子类进行实现
      *
      * @param {String} view 视图名
-     * @param {Object} parameters 参数
-     * @return string | undefined
+     * @param {any} parameters 参数
      */
     render(view, parameters = null) {}
 

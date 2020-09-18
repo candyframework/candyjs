@@ -18,7 +18,7 @@ class View {
      */
     constructor(context) {
         /**
-         * @property {Object} context 上下文环境
+         * @property {any} context 上下文环境
          */
         this.context = context;
 
@@ -86,7 +86,7 @@ class View {
      * 渲染视图文件
      *
      * @param {String} view 视图名
-     * @param {Object} parameters 参数
+     * @param {any} parameters 参数
      */
     render(view, parameters = null) {
         let file = this.findViewFile(view);

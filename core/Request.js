@@ -12,7 +12,7 @@ class Request {
     /**
      * constructor
      *
-     * @param {Object} request
+     * @param {any} request
      */
     constructor(request) {
         this.request = request;

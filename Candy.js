@@ -72,7 +72,7 @@ class Candy {
     /**
      * 创建对象
      *
-     * @param {String | Object} 以某个别名开头的类全名或类配置
+     * @param {String | any} 以某个别名开头的类全名或类配置
      *
      * ```
      * eg.
@@ -108,7 +108,7 @@ class Candy {
     /**
      * 配置方式创建对象
      *
-     * @param {Object} definition
+     * @param {any} definition
      */
     static createObjectAsDefinition(definition, ...parameters) {
         let realClass = Candy.getPathAlias('@' + definition.classPath);
@@ -140,8 +140,8 @@ class Candy {
     /**
      * 对象配置
      *
-     * @param {Object} object 需要配置的对象
-     * @param {Object} properties 配置项
+     * @param {any} object 需要配置的对象
+     * @param {any} properties 配置项
      * @return {Object} 源对象
      */
     static config(object, properties) {
@@ -155,7 +155,8 @@ class Candy {
 }
 
 /**
- * @property {Application} app 应用实例
+ * @typedef {import('./core/Application')} Application
+ * @type {Application} app 应用实例
  */
 Candy.app = null;
 

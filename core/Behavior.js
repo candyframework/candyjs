@@ -15,7 +15,6 @@ class Behavior {
         /**
          * @typedef {import('./Component')} Component
          * @type {Component}
-         * @public
          */
         this.component = null;
     }

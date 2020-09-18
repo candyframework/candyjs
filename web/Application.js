@@ -22,7 +22,7 @@ class Application extends CoreApp {
         super(config);
 
         /**
-         * @property {String | Object} interceptAll 拦截所有路由
+         * @property {String | any} interceptAll 拦截所有路由
          *
          * 'app/some/Class'
          *
@@ -37,7 +37,7 @@ class Application extends CoreApp {
         this.interceptAll = null;
 
         /**
-         * @property {Object} routesMap 实现路由到控制器转换配置
+         * @property {any} routesMap 实现路由到控制器转换配置
          *
          * {
          *     'u': 'app/controllers/user/IndexController',
@@ -51,7 +51,7 @@ class Application extends CoreApp {
         this.routesMap = null;
 
         /**
-         * @property {Object} modules 注册的模块
+         * @property {any} modules 注册的模块
          *
          * 'modules': {
          *     'bbs': 'app/modules/bbs'

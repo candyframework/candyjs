@@ -27,8 +27,8 @@ class Request extends HttpRequest {
      * 解析 request url
      *
      * @deprecated
-     * @param {Object} request 请求对象
-     * @return {Object}
+     * @param {any} request 请求对象
+     * @return {any}
      */
     static parseUrl(request) {
         return url.parse(request.url);
@@ -37,7 +37,7 @@ class Request extends HttpRequest {
     /**
      * 获取客户端 ip
      *
-     * @param {Object} request 请求对象
+     * @param {any} request 请求对象
      * @return {String}
      */
     static getClientIp(request) {
@@ -47,7 +47,7 @@ class Request extends HttpRequest {
     /**
      * 静态方法 获取 get 参数
      *
-     * @param {Object} request 请求对象
+     * @param {any} request 请求对象
      * @param {String} parameter 参数名
      * @param {String} defaultValue 默认值
      * @return {String | null}
@@ -59,7 +59,7 @@ class Request extends HttpRequest {
     /**
      * 静态方法 获取 post 参数
      *
-     * @param {Object} request 请求对象
+     * @param {any} request 请求对象
      * @param {String} parameter 参数名
      * @param {String} defaultValue 默认值
      * @return {String | null}
@@ -71,7 +71,7 @@ class Request extends HttpRequest {
     /**
      * 获取 cookie
      *
-     * @param {Object} request 请求对象
+     * @param {any} request 请求对象
      * @param {String} name cookie name
      */
     static getCookie(request, name) {
