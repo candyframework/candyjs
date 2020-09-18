@@ -91,7 +91,7 @@ class View {
     render(view, parameters = null) {
         let file = this.findViewFile(view);
 
-        this.renderFile(file, parameters);
+        return this.renderFile(file, parameters);
     }
 
 }

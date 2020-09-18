@@ -59,7 +59,7 @@ class Controller extends CoreController {
      * @inheritdoc
      */
     render(view, parameters = null) {
-        this.getView().render(view, parameters);
+        return this.getView().render(view, parameters);
     }
 
 }
