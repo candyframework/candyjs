@@ -19,9 +19,30 @@ class ActionFilter extends Behavior {
     constructor() {
         super();
 
-        // make sure function has 'this' reference
-        this.beforeFilter = this.beforeFilter.bind(this);
-        this.afterFilter = this.afterFilter.bind(this);
+        /**
+         * @typedef {import('./ActionEvent')} ActionEvent
+         * @param {ActionEvent} actionEvent
+         */
+        this.beforeFilter = (actionEvent) => {
+            if(!actionEvent.valid) {
+                this.unListen();
+                return;
+            }
+
+            this.beforeAction(actionEvent);
+        };
+
+        /**
+         * afterFilter() will not execute when `false === actionEvent.valid`
+         *
+         * @typedef {import('./ActionEvent')} ActionEvent
+         * @param {ActionEvent} actionEvent
+         */
+        this.afterFilter = (actionEvent) => {
+            this.unListen();
+
+            this.afterAction(actionEvent);
+        };
     }
 
     /**
@@ -32,31 +53,6 @@ class ActionFilter extends Behavior {
             [Controller.EVENT_BEFORE_ACTION, this.beforeFilter],
             [Controller.EVENT_AFTER_ACTION, this.afterFilter]
         ];
-    }
-
-    /**
-     * @typedef {import('./ActionEvent')} ActionEvent
-     * @param {ActionEvent} actionEvent
-     */
-    beforeFilter(actionEvent) {
-        if(!actionEvent.valid) {
-            this.unListen();
-            return;
-        }
-
-        this.beforeAction(actionEvent);
-    }
-
-    /**
-     * afterFilter() will not execute when `false === actionEvent.valid`
-     *
-     * @typedef {import('./ActionEvent')} ActionEvent
-     * @param {ActionEvent} actionEvent
-     */
-    afterFilter(actionEvent) {
-        this.unListen();
-
-        this.afterAction(actionEvent);
     }
 
     /**
