@@ -83,6 +83,16 @@ class View {
     }
 
     /**
+     * 渲染文件
+     *
+     * 模板渲染入口 模板引擎必须实现这个方法
+     *
+     * @param {String} file 文件路径
+     * @param {any} parameters 参数
+     */
+    renderFile(file, parameters) {}
+
+    /**
      * 渲染视图文件
      *
      * @param {String} view 视图名
