@@ -120,21 +120,25 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2020-10-31
+
+    * npm package 4.6.0 移除已经标记为过期的类
+
 + 2020-07-12
 
-    * npm 4.5.0 系统优化 并修复部分 bug
+    * npm package 4.5.0 系统优化 并修复部分 bug
 
 + 2020-06-10
 
-    * npm 4.4.4 分离正则路由组件到 `fast-regexp-router`
+    * npm package 4.4.4 分离正则路由组件到 `fast-regexp-router`
 
 + 2020-05-30
 
-    * npm 4.4.1 重构了 url 请求部分 `candy/web/Request` 与 `candy/web/Response` 已标记为过期 使用 `candy/http/*` 替代
+    * npm package 4.4.1 重构了 url 请求部分 `candy/web/Request` 与 `candy/web/Response` 已标记为过期 使用 `candy/http/*` 替代
 
 + 2020-05-16
 
-    * npm 4.4.0 重构了缓存系统 所有异步操作均返回 Promise ，不再使用回调函数
+    * npm package 4.4.0 重构了缓存系统 所有异步操作均返回 Promise ，不再使用回调函数
 
 + 2020-05-16
 
