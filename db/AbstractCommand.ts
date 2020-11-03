@@ -31,12 +31,7 @@ export default abstract class AbstractCommand extends Event {
     /**
      * 初始化操作
      */
-    public abstract initConnection(configuration: any): void;
-
-    /**
-     * Create QueryBuilder
-     */
-    public abstract createQuery(): any;
+    public initConnection(configuration: any): void {}
 
     /**
      * Prepares a sql for execution
@@ -72,14 +67,14 @@ export default abstract class AbstractCommand extends Event {
     /**
      * Executes the query and returns all results as an array
      *
-     * @return {Promise} 包含所有结果的数组 如果没有记录则返回一个空数组
+     * @returns {Promise} 包含所有结果的数组 如果没有记录则返回一个空数组
      */
     public abstract queryAll(): Promise<any>;
 
     /**
      * Executes the query and returns a single row of result
      *
-     * @return {Promise} 结果集的第一行记录 没有记录时返回 null
+     * @returns {Promise} 结果集的第一行记录 没有记录时返回 null
      */
     public abstract queryOne(): Promise<any>;
 
@@ -88,14 +83,14 @@ export default abstract class AbstractCommand extends Event {
      *
      * 预留接口
      *
-     * @return {Promise} 结果集的第一行第一列记录 如果没有记录则返回 null
+     * @returns {Promise} 结果集的第一行第一列记录 如果没有记录则返回 null
      */
     // public abstract queryColumn(): Promise<string>;
 
     /**
      * 执行 sql 修改语句
      *
-     * @return {Promise} 影响行数
+     * @returns {Promise} 影响行数
      */
     public abstract execute(): Promise<number>;
 
@@ -107,28 +102,28 @@ export default abstract class AbstractCommand extends Event {
     /**
      * 获取上一次执行的 sql 语句
      *
-     * @return {String}
+     * @returns {String}
      */
     public abstract getLastSql(): string;
 
     /**
      * 开启事务
      *
-     * @return {Boolean}
+     * @returns {any}
      */
-    public abstract beginTransaction(): boolean;
+    public abstract beginTransaction(): any;
 
     /**
      * 提交事务
      *
-     * @return {Boolean}
+     * @returns {any}
      */
-    public abstract commitTransaction(): boolean;
+    public abstract commitTransaction(): any;
 
     /**
      * 回滚事务
      *
-     * @return {Boolean}
+     * @returns {any}
      */
-    public abstract rollbackTransaction(): boolean;
+    public abstract rollbackTransaction(): any;
 }

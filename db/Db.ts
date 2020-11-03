@@ -19,7 +19,7 @@ export default abstract class Db {
      *
      * @returns {AbstractCommand}
      */
-    public abstract getMaster(): AbstractCommand;
+    public abstract getMain(): AbstractCommand;
 
     /**
      * 获取一个从库链接

@@ -8,7 +8,13 @@ const Event = require('../core/Event');
 /**
  * 数据库操作基类
  */
-class AbstractCommand extends Event {}
+class AbstractCommand extends Event {
+    /**
+     * 初始化操作
+     */
+    initConnection(configuration) {}
+}
+exports.default = AbstractCommand;
 /**
  * @property {String} EVENT_BEFORE_QUERY
  */
@@ -25,4 +31,3 @@ AbstractCommand.EVENT_BEFORE_EXECUTE = 'beforeExecute';
  * @property {String} EVENT_AFTER_EXECUTE
  */
 AbstractCommand.EVENT_AFTER_EXECUTE = 'afterExecute';
-exports.default = AbstractCommand;
