@@ -85,8 +85,8 @@ class CandyJs {
      * const https = require('https');
      * const CandyJs = require('candyjs');
      *
-     * const app = new CandyJs({ ... });
-     * https.createServer({ ... }, app.handler.bind(app)).listen(443);
+     * const main = new CandyJs({ ... });
+     * https.createServer({ ... }, main.handler.bind(main)).listen(443);
      * ```
      *
      */
