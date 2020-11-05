@@ -9,7 +9,6 @@ const fs = require('fs');
 const Candy = require('../../Candy');
 const ICache = require('../ICache');
 const FileHelper = require('../../helpers/FileHelper');
-const CacheException = require('../../core/CacheException');
 
 /**
  * 文件缓存
