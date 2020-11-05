@@ -48,7 +48,7 @@ class Logger {
         }
 
         if(undefined === settings.targets) {
-            throw new InvalidConfigException('No log targets found');
+            throw new InvalidConfigException('The log configuration is invalid');
         }
         if(undefined !== settings.flushInterval) {
             this.flushInterval = settings.flushInterval;
