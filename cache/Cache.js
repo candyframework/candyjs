@@ -16,7 +16,7 @@ class Cache {
      */
     static getCache(cacheFlag) {
         if(undefined === cacheFlag) {
-            throw new InvalidArgumentException('Argument must be provide for getCache()');
+            throw new InvalidArgumentException('An argument must be provide for getCache()');
         }
         if(undefined === Candy.app.cache || undefined === Candy.app.cache[cacheFlag]) {
             throw new InvalidConfigException('The cache configuration is not found');
