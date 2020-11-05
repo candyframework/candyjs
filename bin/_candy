@@ -5,11 +5,11 @@
 /**
  * 该文件用来初始化基本的应用框架
  */
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var dir = process.cwd();
-var appName = process.argv.slice(2)[0];
+const dir = process.cwd();
+const appName = process.argv.slice(2)[0];
 
 if(undefined === appName) {
     console.log('appName must specified');
@@ -44,9 +44,9 @@ prject
         modules
         runtime
 */
-var controllerPath = dir + '/' + appName + '/app/controllers/index';
-var viewPath = dir + '/' + appName + '/app/views/index';
-var mainFile = dir + '/' + appName + '/index.js';
+const controllerPath = dir + '/' + appName + '/app/controllers/index';
+const viewPath = dir + '/' + appName + '/app/views/index';
+const mainFile = dir + '/' + appName + '/index.js';
 
 createDirectorySync(controllerPath);
 createDirectorySync(viewPath);
@@ -55,9 +55,7 @@ createDirectorySync(viewPath);
 fs.writeFile(controllerPath + '/IndexController.js',
 `'use strict';
 
-var CandyJs = require('candyjs');
-var Candy = require('candyjs/Candy');
-var Controller = Candy.include('candy/web/Controller');
+const Controller = require('candyjs/web/Controller');
 
 class IndexController extends Controller {
 
@@ -94,8 +92,8 @@ fs.writeFile(viewPath + '/index.html',
 
 // main file
 fs.writeFile(mainFile,
-`var CandyJs = require('candyjs');
-var App = require('candyjs/web/Application');
+`const CandyJs = require('candyjs');
+const App = require('candyjs/web/Application');
 
 new CandyJs(new App({
     'id': 1,
