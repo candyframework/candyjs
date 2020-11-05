@@ -273,7 +273,6 @@ new CandyJs(app).listen(2333, function(){
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Controller = Candy.include('candy/web/Controller');
 
@@ -307,7 +306,6 @@ module.exports = IndexController;
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Controller = Candy.include('candy/web/Controller');
 
@@ -350,7 +348,6 @@ module.exports = IndexController;
             <p><code>beforeAction()</code>会在控制器的动作执行前运行，<code>afterAction()</code>会在控制器的动作执行后运行</p>
             <p>下面的过滤器代码简单实现了一个为接口请求添加跨域头的功能，并实现了过滤器的<code>beforeAction()</code>方法</p>
 <pre><code>
-const Candy = require('candyjs/Candy');
 const ActionFilter = require('candyjs/core/ActionFilter');
 
 class Cors extends ActionFilter {
@@ -648,7 +645,6 @@ module.exports = IndexController;
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Controller = Candy.include('candy/web/Controller');
 
@@ -814,7 +810,6 @@ module.exports = MyBehavior;
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Controller = Candy.include('candy/web/Controller');
 
@@ -845,7 +840,6 @@ module.exports = IndexController;
 <pre><code>
 'use strict';
 
-var CandyJs = require('candyjs');
 var Candy = require('candyjs/Candy');
 var Controller = Candy.include('candy/web/Controller');
 
