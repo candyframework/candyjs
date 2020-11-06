@@ -110,22 +110,27 @@ class Application extends CoreApp {
     /**
      * Adds a route to the collection
      *
-     * @param {String | Array} httpMethod
+     * @param {String} httpMethod
      * @param {String} route
      * @param {Function | String} handler
      */
     addRoute(httpMethod, route, handler) {
-        if('string' === typeof httpMethod) {
-            this.methods[httpMethod].push({
-                route: route,
-                handler: handler
-            });
+        this.methods[httpMethod].push({
+            route: route,
+            handler: handler
+        });
+    }
 
-            return;
-        }
-
-        for(let i=0,len=httpMethod.length; i<len; i++) {
-            this.methods[httpMethod[i]].push({
+    /**
+     * Adds routes to the collection
+     *
+     * @param {Array} httpMethods
+     * @param {String} route
+     * @param {Function | String} handler
+     */
+    addRoutes(httpMethods, route, handler) {
+        for(let i=0,len=httpMethods.length; i<len; i++) {
+            this.methods[httpMethods[i]].push({
                 route: route,
                 handler: handler
             });
