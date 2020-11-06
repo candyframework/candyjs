@@ -9,12 +9,6 @@ const fs = require('fs');
 const path = require('path');
 
 const dir = process.cwd();
-const appName = process.argv.slice(2)[0];
-
-if(undefined === appName) {
-    console.log('appName must specified');
-    return;
-}
 
 function createDirectorySync(dir, mode) {
     undefined === mode && (mode = 0o777);
@@ -44,9 +38,9 @@ prject
         modules
         runtime
 */
-const controllerPath = dir + '/' + appName + '/app/controllers/index';
-const viewPath = dir + '/' + appName + '/app/views/index';
-const mainFile = dir + '/' + appName + '/index.js';
+const controllerPath = dir + '/app/controllers/index';
+const viewPath = dir + '/app/views/index';
+const mainFile = dir + '/index.js';
 
 createDirectorySync(controllerPath);
 createDirectorySync(viewPath);
