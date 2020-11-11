@@ -23,10 +23,10 @@ class Candy {
         // 截取开头作为别名
         let pos = alias.indexOf('/');
         let root = -1 === pos ? alias : alias.substring(0, pos);
-        if(undefined !== Candy.pathAliases[root]) {
-            return -1 === pos ?
-                Candy.pathAliases[root] :
-                Candy.pathAliases[root] + alias.substring(pos);
+        if(Candy.pathAliases.has(root)) {
+            return -1 === pos
+                ? Candy.pathAliases.get(root)
+                : Candy.pathAliases.get(root) + alias.substring(pos);
         }
 
         return '';
@@ -43,17 +43,11 @@ class Candy {
             alias = '@' + alias;
         }
 
-        if(null === path) {
-            delete Candy.pathAliases[alias];
-
-            return;
-        }
-
         if('/' === path.charAt(path.length - 1)) {
             path = path.substring(0, path.length - 1);
         }
 
-        Candy.pathAliases[alias] = path;
+        Candy.pathAliases.set(alias, path);
     }
 
     /**
@@ -66,7 +60,7 @@ class Candy {
             alias = '@' + alias;
         }
 
-        delete Candy.pathAliases[alias];
+        Candy.pathAliases.delete(alias);
     }
 
     /**
@@ -163,7 +157,7 @@ Candy.app = null;
 /**
  * @property {Map<String, String>} pathAliases 路径别名
  */
-Candy.pathAliases = {'@candy': __dirname};
+Candy.pathAliases = new Map([ ['@candy', __dirname] ]);
 
 /**
  * @property {String} defaultExtension 默认文件扩展名
