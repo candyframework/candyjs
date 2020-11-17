@@ -128,13 +128,13 @@ class Request extends CoreRequest {
     getClientIp() {
         let forward = this.request.headers['x-forwarded-for'];
 
-        if(undefined !== forward) {
-            return forward.indexOf(',') > 0
-                ? forward.substring(0, forward.indexOf(','))
-                : forward;
+        if(undefined === forward) {
+            return this.request.connection.remoteAddress;
         }
 
-        return this.request.connection.remoteAddress;
+        return forward.indexOf(',') > 0
+            ? forward.substring(0, forward.indexOf(','))
+            : forward;
     }
 
     /**
