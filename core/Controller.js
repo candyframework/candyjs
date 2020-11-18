@@ -56,6 +56,7 @@ class Controller extends Component {
         actionEvent.request = request;
         actionEvent.response = response;
 
+        // todo 这里没想好怎么设计 让我想想看
         if( true !== this.beforeAction(actionEvent) ) {
             return;
         }
