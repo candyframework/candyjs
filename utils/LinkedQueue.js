@@ -13,8 +13,6 @@ class LinkedQueue {
      * constructor
      */
     constructor() {
-        super();
-
         this.headNode = null;
         this.tailNode = null;
         this.size = 0;
