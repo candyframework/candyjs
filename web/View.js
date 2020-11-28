@@ -22,7 +22,8 @@ class View extends CoreView {
      * @inheritdoc
      */
     renderFile(file, parameters) {
-        return this.context.response.end('View must implements the renderFile() method');
+        this.context.response.write('View must implements the renderFile() method');
+        return this.context.response.end();
     }
 
 }

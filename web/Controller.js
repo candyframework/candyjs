@@ -52,7 +52,8 @@ class Controller extends CoreController {
      * @inheritdoc
      */
     run(request, response) {
-        response.end('Controller must implements the run() method');
+        response.write('Controller must implements the run() method');
+        response.end();
     }
 
     /**

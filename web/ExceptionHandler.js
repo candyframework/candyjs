@@ -19,9 +19,10 @@ class ExceptionHandler extends CoreExceptionHandler {
         response.setHeader('Content-Type', 'text/plain');
         response.writeHead(500);
 
-        response.end(null !== Candy.app && true === Candy.app.debug
+        response.write(null !== Candy.app && true === Candy.app.debug
             ? exception.message + '\n' + exception.stack
             : 'The server encountered an internal error');
+        response.end();
     }
 
 }
