@@ -51,28 +51,38 @@ export = class ArrayList implements IList {
     }
 
     /**
-     * @inheritdoc
+     * Returns the number of elements in this list
+     *
+     * @returns {Number}
      */
     public size(): number {
         return this.length;
     }
 
     /**
-     * @inheritdoc
+     * Returns true if this list contains no elements
+     *
+     * @returns {Boolean}
      */
     public isEmpty(): boolean {
         return 0 === this.length;
     }
 
     /**
-     * @inheritdoc
+     * Returns true if this list contains the specified element
+     *
+     * @param {any} element
+     * @returns {Boolean}
      */
     public contains(element: any): boolean {
         return this.indexOf(element) >= 0;
     }
 
     /**
-     * @inheritdoc
+     * Returns the index of the first occurrence of the specified element in this list, or -1 if does not contain the element
+     *
+     * @param {ANY} element
+     * @returns {Number}
      */
     public indexOf(element: any): number {
         for(let i=0; i<this.length; i++) {
@@ -85,7 +95,10 @@ export = class ArrayList implements IList {
     }
 
     /**
-     * @inheritdoc
+     * Returns the index of the last occurrence of the specified element in this list, or -1 if does not contain the element
+     *
+     * @param {any} element
+     * @returns {Number}
      */
     public lastIndexOf(element: any): number {
         for(let i=this.length-1; i>=0; i--) {
@@ -98,7 +111,9 @@ export = class ArrayList implements IList {
     }
 
     /**
-     * @inheritdoc
+     * Appends the specified element to the end of this list
+     *
+     * @param {any} element
      */
     public add(element: any): void {
         if(this.elementData.length > this.length) {
@@ -111,7 +126,9 @@ export = class ArrayList implements IList {
     }
 
     /**
-     * @inheritdoc
+     * Removes the first occurrence of the specified element from this list
+     *
+     * @param {any} element
      */
     public remove(element: any): boolean {
         let move = 0;
@@ -130,7 +147,9 @@ export = class ArrayList implements IList {
     }
 
     /**
-     * @inheritdoc
+     * Removes the element at the specified position in this list
+     *
+     * @param {Number} index
      * @throws {Error}
      */
     public removeAt(index: number): any {
@@ -149,7 +168,9 @@ export = class ArrayList implements IList {
     }
 
     /**
-     * @inheritdoc
+     * Returns the element at the specified position in this list
+     *
+     * @param {Number} index
      * @throws {Error}
      */
     public get(index: number): any {
@@ -161,7 +182,10 @@ export = class ArrayList implements IList {
     }
 
     /**
-     * @inheritdoc
+     * Replaces the element in the list with the specified element
+     *
+     * @param {Number} index
+     * @param {any} element
      * @throws {Error}
      */
     public set(index: number, element: any): any {
@@ -176,7 +200,7 @@ export = class ArrayList implements IList {
     }
 
     /**
-     * @inheritdoc
+     * Removes all of the elements from this list
      */
     public clear(): void {
         this.length = 0;

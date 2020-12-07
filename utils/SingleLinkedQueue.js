@@ -40,7 +40,9 @@ module.exports = class SingleLinkedQueue {
         }
     }
     /**
-     * @interface
+     * 添加元素
+     *
+     * @param {any} item 数据
      */
     add(data) {
         let node = new SingleLinkedQueueNode(data, null);
@@ -54,7 +56,9 @@ module.exports = class SingleLinkedQueue {
         this.size++;
     }
     /**
-     * @inheritdoc
+     * 移除并返回队首元素
+     *
+     * @return {any | null}
      */
     take() {
         // 为空直接返回
@@ -75,7 +79,9 @@ module.exports = class SingleLinkedQueue {
         return data;
     }
     /**
-     * @inheritdoc
+     * 删除一个元素
+     *
+     * @param {any} item 要删除的元素
      */
     remove(data) {
         let current = this.headNode;
@@ -104,7 +110,7 @@ module.exports = class SingleLinkedQueue {
         }
     }
     /**
-     * 清空列表
+     * 清空队列
      */
     clear() {
         while (0 !== this.size) {

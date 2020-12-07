@@ -33,25 +33,35 @@ module.exports = class ArrayList {
         };
     }
     /**
-     * @inheritdoc
+     * Returns the number of elements in this list
+     *
+     * @returns {Number}
      */
     size() {
         return this.length;
     }
     /**
-     * @inheritdoc
+     * Returns true if this list contains no elements
+     *
+     * @returns {Boolean}
      */
     isEmpty() {
         return 0 === this.length;
     }
     /**
-     * @inheritdoc
+     * Returns true if this list contains the specified element
+     *
+     * @param {any} element
+     * @returns {Boolean}
      */
     contains(element) {
         return this.indexOf(element) >= 0;
     }
     /**
-     * @inheritdoc
+     * Returns the index of the first occurrence of the specified element in this list, or -1 if does not contain the element
+     *
+     * @param {ANY} element
+     * @returns {Number}
      */
     indexOf(element) {
         for (let i = 0; i < this.length; i++) {
@@ -62,7 +72,10 @@ module.exports = class ArrayList {
         return -1;
     }
     /**
-     * @inheritdoc
+     * Returns the index of the last occurrence of the specified element in this list, or -1 if does not contain the element
+     *
+     * @param {any} element
+     * @returns {Number}
      */
     lastIndexOf(element) {
         for (let i = this.length - 1; i >= 0; i--) {
@@ -73,7 +86,9 @@ module.exports = class ArrayList {
         return -1;
     }
     /**
-     * @inheritdoc
+     * Appends the specified element to the end of this list
+     *
+     * @param {any} element
      */
     add(element) {
         if (this.elementData.length > this.length) {
@@ -84,7 +99,9 @@ module.exports = class ArrayList {
         this.elementData.push(element);
     }
     /**
-     * @inheritdoc
+     * Removes the first occurrence of the specified element from this list
+     *
+     * @param {any} element
      */
     remove(element) {
         let move = 0;
@@ -101,7 +118,9 @@ module.exports = class ArrayList {
         return false;
     }
     /**
-     * @inheritdoc
+     * Removes the element at the specified position in this list
+     *
+     * @param {Number} index
      * @throws {Error}
      */
     removeAt(index) {
@@ -117,7 +136,9 @@ module.exports = class ArrayList {
         return oldValue;
     }
     /**
-     * @inheritdoc
+     * Returns the element at the specified position in this list
+     *
+     * @param {Number} index
      * @throws {Error}
      */
     get(index) {
@@ -127,7 +148,10 @@ module.exports = class ArrayList {
         return this.elementData[index];
     }
     /**
-     * @inheritdoc
+     * Replaces the element in the list with the specified element
+     *
+     * @param {Number} index
+     * @param {any} element
      * @throws {Error}
      */
     set(index, element) {
@@ -139,19 +163,19 @@ module.exports = class ArrayList {
         return oldValue;
     }
     /**
-     * @inheritdoc
+     * Removes all of the elements from this list
      */
     clear() {
         this.length = 0;
         this.elementData = [];
     }
     toString() {
-        let ret = '[';
+        let ret = '[ ';
         for (let v of this) {
             ret += v + ', ';
         }
         ret = ret.substring(0, ret.lastIndexOf(', '));
-        ret += ']';
+        ret += ' ]';
         return ret;
     }
 };
