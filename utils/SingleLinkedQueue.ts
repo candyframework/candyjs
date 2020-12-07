@@ -1,23 +1,30 @@
-/**
- * @author afu
- * @license MIT
- */
-'use strict';
+import IQueue from './IQueue';
 
-/**
- * 队列
- */
-class LinkedQueue {
+class SingleLinkedQueueNode {
+    public data: any;
+    public next: any;
 
     /**
      * constructor
      */
+    constructor(data: any, next: any) {
+        this.data = data;
+        this.next = next;
+    }
+}
+
+/**
+ * 队列
+ */
+export = class SingleLinkedQueue implements IQueue {
+    private headNode: any;
+    private tailNode: any;
+    private size: number;
+
     constructor() {
         this.headNode = null;
         this.tailNode = null;
         this.size = 0;
-
-        this.currentIteratorNode = null;
     }
 
     [Symbol.iterator]() {
@@ -32,7 +39,7 @@ class LinkedQueue {
                     return ret;
                 }
 
-                return {done: true};
+                return { value: undefined, done: true };
             }
         };
     }
@@ -42,7 +49,7 @@ class LinkedQueue {
      *
      * @param {Function} callback
      */
-    each(callback) {
+    each(callback: any): void {
         for(let current = this.headNode; null !== current; current = current.next) {
             if(false === callback(current.data)) {
                 break;
@@ -51,12 +58,10 @@ class LinkedQueue {
     }
 
     /**
-     * 列表添加元素
-     *
-     * @param {any} data 数据
+     * @interface
      */
-    add(data) {
-        let node = new LinkedQueue.Node(data, null);
+    add(data: any): void {
+        let node = new SingleLinkedQueueNode(data, null);
 
         if(0 === this.size) {
             this.headNode = node;
@@ -71,11 +76,9 @@ class LinkedQueue {
     }
 
     /**
-     * 移除并返回第一个元素
-     *
-     * @return {any | null}
+     * @inheritdoc
      */
-    take() {
+    take(): any {
         // 为空直接返回
         if(0 === this.size) {
             return null;
@@ -100,11 +103,9 @@ class LinkedQueue {
     }
 
     /**
-     * 删除一个元素
-     *
-     * @param {any} data 要删除的元素
+     * @inheritdoc
      */
-    remove(data) {
+    remove(data: any): void {
         let current = this.headNode;
         let previous = null;
 
@@ -141,7 +142,7 @@ class LinkedQueue {
     /**
      * 清空列表
      */
-    clear() {
+    clear(): void {
         while(0 !== this.size) {
             this.take();
         }
@@ -150,27 +151,16 @@ class LinkedQueue {
     /**
      * toString
      */
-    toString() {
-        let str = '[ ';
+    toString(): string {
+        let ret = '[ ';
 
         for(let current = this.headNode; null !== current; current = current.next) {
-            str += current.data + ' ';
+            ret += current.data + ', ';
         }
+        ret = ret.substring(0, ret.lastIndexOf(', '));
 
-        return str + ' ]';
+        return ret + ' ]';
     }
 
 }
-LinkedQueue.Node = class {
 
-    /**
-     * constructor
-     */
-    constructor(data, next) {
-        this.data = data;
-        this.next = next;
-    }
-
-};
-
-module.exports = LinkedQueue;
