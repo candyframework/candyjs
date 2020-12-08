@@ -1,14 +1,30 @@
 "use strict";
+const IndexOutOfBoundsException = require("../core/IndexOutOfBoundsException");
 module.exports = class ArrayList {
     constructor() {
         this.length = 0;
         this.elementData = [];
     }
     /**
-     * Copy array elements
+     * 将源数组拷贝到目标数组
+     *
+     * @param {any[]} src 源数组
+     * @param {Number} srcPos 源数组开始位置
+     * @param {any[]} dest 目标数组
+     * @param {Number} destPos 目标数组开始位置
+     * @param {Number} length 拷贝数量
      */
     static arrayCopy(src, srcPos, dest, destPos, length) {
         let copied = 0;
+        let expand = destPos + length - dest.length;
+        let tmp = null;
+        if (expand > 0) {
+            tmp = new Array(expand);
+            for (let i = 0; i < tmp.length; i++) {
+                tmp[i] = undefined;
+            }
+            dest.push.apply(dest, tmp);
+        }
         for (let i = srcPos; i < src.length; i++) {
             if (destPos < dest.length) {
                 dest[destPos++] = src[i];
@@ -99,6 +115,21 @@ module.exports = class ArrayList {
         this.elementData.push(element);
     }
     /**
+     * Inserts the specified element at the specified position
+     *
+     * @param {Number} index
+     * @param {any} element
+     * @throws {IndexOutOfBoundsException}
+     */
+    insert(index, element) {
+        if (index > this.length) {
+            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+        }
+        ArrayList.arrayCopy(this.elementData, index, this.elementData, index + 1, this.length - index);
+        this.length++;
+        this.elementData[index] = element;
+    }
+    /**
      * Removes the first occurrence of the specified element from this list
      *
      * @param {any} element
@@ -121,11 +152,11 @@ module.exports = class ArrayList {
      * Removes the element at the specified position in this list
      *
      * @param {Number} index
-     * @throws {Error}
+     * @throws {IndexOutOfBoundsException}
      */
     removeAt(index) {
         if (index >= this.length) {
-            throw new Error('removeAt is out of bounds: index=' + index + ', size=' + this.length);
+            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
         }
         let oldValue = this.elementData[index];
         let move = this.length - index - 1;
@@ -139,11 +170,11 @@ module.exports = class ArrayList {
      * Returns the element at the specified position in this list
      *
      * @param {Number} index
-     * @throws {Error}
+     * @throws {IndexOutOfBoundsException}
      */
     get(index) {
         if (index >= this.length) {
-            throw new Error('get is out of bounds: index=' + index + ', size=' + this.length);
+            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
         }
         return this.elementData[index];
     }
@@ -152,11 +183,11 @@ module.exports = class ArrayList {
      *
      * @param {Number} index
      * @param {any} element
-     * @throws {Error}
+     * @throws {IndexOutOfBoundsException}
      */
     set(index, element) {
         if (index >= this.length) {
-            throw new Error('set is out of bounds: index=' + index + ', size=' + this.length);
+            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
         }
         let oldValue = this.elementData[index];
         this.elementData[index] = element;

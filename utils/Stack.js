@@ -16,9 +16,7 @@ module.exports = class Stack extends ArrayList {
      */
     pop() {
         let len = this.size();
-        let item = this.get(len - 1);
-        this.removeAt(len - 1);
-        return item;
+        return this.removeAt(len - 1);
     }
     /**
      * Tests if this stack is empty

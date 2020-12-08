@@ -48,6 +48,14 @@ export default interface IList {
     add(element: any): void;
 
     /**
+     * Inserts the specified element at the specified position
+     *
+     * @param {Number} index
+     * @param {any} element
+     */
+    insert(index: number, element: any): void;
+
+    /**
      * Removes the first occurrence of the specified element from this list
      *
      * @param {any} element
