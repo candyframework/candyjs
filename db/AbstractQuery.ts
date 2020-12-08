@@ -12,42 +12,42 @@ export default abstract class AbstractQuery {
     /**
      * @property {String} $select the columns being selected
      */
-    public $select = '';
+    public $select: string = '';
 
     /**
      * @property {String} $from the table to be selected from
      */
-    public $from = '';
+    public $from: string = '';
 
     /**
      * @property {String} $where the condition of a query
      */
-    public $where = '';
+    public $where: string = '';
 
     /**
      *  @property {String} $groupBy the column of group by
      */
-    public $groupBy = '';
+    public $groupBy: string = '';
 
     /**
      *  @property {String} $having the condition of a query
      */
-    public $having = '';
+    public $having: string = '';
 
     /**
      *  @property {String} $orderBy the sort condition
      */
-    public $orderBy = '';
+    public $orderBy: string = '';
 
     /**
      * @property {Map} $options other sql information
      */
-    public $options = new Map();
+    public $options: Map<string, any> = new Map();
 
     /**
      * @property {Array} $parameters list of query parameter values
      */
-    public $parameters = [];
+    public $parameters: any[] = [];
 
     /**
      * Set parameters
