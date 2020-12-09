@@ -16,7 +16,7 @@ class SingleLinkedQueueNode {
 /**
  * 队列
  */
-export = class SingleLinkedQueue implements IQueue {
+class SingleLinkedQueue implements IQueue {
     private headNode: any;
     private tailNode: any;
     private size: number;
@@ -49,7 +49,7 @@ export = class SingleLinkedQueue implements IQueue {
      *
      * @param {Function} callback
      */
-    each(callback: any): void {
+    public each(callback: any): void {
         for(let current = this.headNode; null !== current; current = current.next) {
             if(false === callback(current.data)) {
                 break;
@@ -62,7 +62,7 @@ export = class SingleLinkedQueue implements IQueue {
      *
      * @param {any} item 数据
      */
-    add(data: any): void {
+    public add(data: any): void {
         let node = new SingleLinkedQueueNode(data, null);
 
         if(0 === this.size) {
@@ -82,7 +82,7 @@ export = class SingleLinkedQueue implements IQueue {
      *
      * @return {any | null}
      */
-    take(): any {
+    public take(): any {
         // 为空直接返回
         if(0 === this.size) {
             return null;
@@ -111,7 +111,7 @@ export = class SingleLinkedQueue implements IQueue {
      *
      * @param {any} item 要删除的元素
      */
-    remove(data: any): void {
+    public remove(data: any): void {
         let current = this.headNode;
         let previous = null;
 
@@ -148,7 +148,7 @@ export = class SingleLinkedQueue implements IQueue {
     /**
      * 清空队列
      */
-    clear(): void {
+    public clear(): void {
         while(0 !== this.size) {
             this.take();
         }
@@ -157,7 +157,7 @@ export = class SingleLinkedQueue implements IQueue {
     /**
      * toString
      */
-    toString(): string {
+    public toString(): string {
         let ret = '[ ';
 
         for(let current = this.headNode; null !== current; current = current.next) {
@@ -168,4 +168,4 @@ export = class SingleLinkedQueue implements IQueue {
         return ret + ' ]';
     }
 }
-
+export = SingleLinkedQueue;

@@ -1,9 +1,9 @@
 const request = require('supertest');
 const assert = require('assert');
 
-const CandyJs = require('../index.js');
-const App = require('../web/RestApplication.js');
-const Cache = require('../cache/Cache.js');
+const CandyJs = require('../index');
+const App = require('../rest/Application');
+const Cache = require('../cache/Cache');
 
 const app = new App({
     id: 1,

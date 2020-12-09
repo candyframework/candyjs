@@ -1,6 +1,9 @@
 "use strict";
 const IndexOutOfBoundsException = require("../core/IndexOutOfBoundsException");
-module.exports = class ArrayList {
+/**
+ * ArrayList
+ */
+class ArrayList {
     constructor() {
         this.length = 0;
         this.elementData = [];
@@ -209,4 +212,5 @@ module.exports = class ArrayList {
         ret += ' ]';
         return ret;
     }
-};
+}
+module.exports = ArrayList;

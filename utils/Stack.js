@@ -1,6 +1,9 @@
 "use strict";
 const ArrayList = require("./ArrayList");
-module.exports = class Stack extends ArrayList {
+/**
+ * Stack
+ */
+class Stack extends ArrayList {
     /**
      * Push an item onto the top of this stack
      *
@@ -24,4 +27,5 @@ module.exports = class Stack extends ArrayList {
     empty() {
         return 0 === this.size();
     }
-};
+}
+module.exports = Stack;

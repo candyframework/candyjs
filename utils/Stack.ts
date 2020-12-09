@@ -3,13 +3,13 @@ import ArrayList = require('./ArrayList');
 /**
  * Stack
  */
-export = class Stack extends ArrayList {
+class Stack extends ArrayList {
     /**
      * Push an item onto the top of this stack
      *
      * @param {any} item
      */
-    push(item: any): void {
+    public push(item: any): void {
         this.add(item);
     }
 
@@ -18,7 +18,7 @@ export = class Stack extends ArrayList {
      *
      * @throws {Error}
      */
-    pop(): any {
+    public pop(): any {
         let len = this.size();
 
         return this.removeAt(len - 1);
@@ -27,7 +27,8 @@ export = class Stack extends ArrayList {
     /**
      * Tests if this stack is empty
      */
-    empty(): boolean {
+    public empty(): boolean {
         return 0 === this.size();
     }
 }
+export = Stack;

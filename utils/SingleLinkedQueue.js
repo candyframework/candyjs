@@ -8,7 +8,10 @@ class SingleLinkedQueueNode {
         this.next = next;
     }
 }
-module.exports = class SingleLinkedQueue {
+/**
+ * 队列
+ */
+class SingleLinkedQueue {
     constructor() {
         this.headNode = null;
         this.tailNode = null;
@@ -128,4 +131,5 @@ module.exports = class SingleLinkedQueue {
         ret = ret.substring(0, ret.lastIndexOf(', '));
         return ret + ' ]';
     }
-};
+}
+module.exports = SingleLinkedQueue;

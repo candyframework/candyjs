@@ -1,7 +1,10 @@
 import IList from './IList';
 import IndexOutOfBoundsException = require('../core/IndexOutOfBoundsException');
 
-export = class ArrayList implements IList {
+/**
+ * ArrayList
+ */
+class ArrayList implements IList {
     /**
      * The size of the ArrayList
      */
@@ -254,3 +257,4 @@ export = class ArrayList implements IList {
         return ret;
     }
 }
+export = ArrayList;
