@@ -40,11 +40,14 @@ class Logger {
      * @property {Array} messages logged messages
      *
      * Each log message is of the following structure:
+     *
+     * ```
      * [
      *   [0] => string:message
      *   [1] => number:level
      *   [2] => number:timestamp
      * ]
+     * ```
      */
     public messages: any[];
 
@@ -60,9 +63,7 @@ class Logger {
 
     constructor(settings: any) {
         this.messages = [];
-
         this.flushInterval = 10;
-
         this.targets = [];
 
         this.init(settings);
@@ -98,8 +99,10 @@ class Logger {
      * @return {Logger}
      */
     static getLogger(): Logger {
+        let app: any = Candy.app;
+
         if(null === Logger._logger) {
-            Logger._logger = new Logger(Candy.app.log);
+            Logger._logger = new Logger(app.log);
         }
 
         return Logger._logger;

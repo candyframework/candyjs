@@ -1,5 +1,8 @@
 "use strict";
 const Event = require("../core/Event");
+/**
+ * 日志抽象层
+ */
 class AbstractLog extends Event {
     constructor() {
         super();

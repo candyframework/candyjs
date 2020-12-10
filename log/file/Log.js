@@ -29,9 +29,6 @@ const TimeHelper = require("../../helpers/TimeHelper");
  *
  */
 class Log extends AbstractLog {
-    /**
-     * constructor
-     */
     constructor(config) {
         super();
         this.logPath = undefined === config.logPath

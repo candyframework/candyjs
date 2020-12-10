@@ -10,9 +10,6 @@ const AbstractLog = require("./AbstractLog");
  * 日志
  */
 class Logger {
-    /**
-     * constructor
-     */
     constructor(settings) {
         this.messages = [];
         this.flushInterval = 10;
@@ -43,8 +40,9 @@ class Logger {
      * @return {Logger}
      */
     static getLogger() {
+        let app = Candy.app;
         if (null === Logger._logger) {
-            Logger._logger = new Logger(Candy.app.log);
+            Logger._logger = new Logger(app.log);
         }
         return Logger._logger;
     }

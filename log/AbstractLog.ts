@@ -5,6 +5,9 @@
 import ILog from './ILog';
 import Event = require('../core/Event');
 
+/**
+ * 日志抽象层
+ */
 abstract class AbstractLog extends Event implements ILog {
 
     /**
