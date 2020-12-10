@@ -2,6 +2,7 @@
  * List 接口
  */
 export default interface IList {
+
     /**
      * Returns the number of elements in this list
      *
@@ -88,4 +89,5 @@ export default interface IList {
      * Removes all of the elements from this list
      */
     clear(): void;
+
 }

@@ -4,6 +4,7 @@ import ArrayList = require('./ArrayList');
  * Stack
  */
 class Stack extends ArrayList {
+
     /**
      * Push an item onto the top of this stack
      *
@@ -30,5 +31,6 @@ class Stack extends ArrayList {
     public empty(): boolean {
         return 0 === this.size();
     }
+
 }
 export = Stack;

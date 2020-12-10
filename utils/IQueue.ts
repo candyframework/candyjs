@@ -2,6 +2,7 @@
  * Queue 接口
  */
 export default interface IQueue {
+
     /**
      * 添加元素
      *
@@ -27,4 +28,5 @@ export default interface IQueue {
      * 清空队列
      */
     clear(): void;
+
 }

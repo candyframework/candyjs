@@ -5,6 +5,7 @@ import IndexOutOfBoundsException = require('../core/IndexOutOfBoundsException');
  * ArrayList
  */
 class ArrayList implements IList {
+
     /**
      * The size of the ArrayList
      */
@@ -256,5 +257,6 @@ class ArrayList implements IList {
 
         return ret;
     }
+
 }
 export = ArrayList;

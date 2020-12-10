@@ -17,6 +17,7 @@ class SingleLinkedQueueNode {
  * 队列
  */
 class SingleLinkedQueue implements IQueue {
+
     private headNode: any;
     private tailNode: any;
     private size: number;
@@ -167,5 +168,6 @@ class SingleLinkedQueue implements IQueue {
 
         return ret + ' ]';
     }
+
 }
 export = SingleLinkedQueue;
