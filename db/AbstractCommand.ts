@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import Event from '../core/Event';
+import Event = require('../core/Event');
 
 /**
  * 数据库操作基类

@@ -1,10 +1,10 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * @author afu
  * @license MIT
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-const Event = require('../core/Event');
+const Event = require("../core/Event");
 /**
  * 数据库操作基类
  */
@@ -12,7 +12,7 @@ class AbstractCommand extends Event {
     /**
      * 初始化操作
      */
-    initConnection(configuration) {}
+    initConnection(configuration) { }
 }
 exports.default = AbstractCommand;
 /**
