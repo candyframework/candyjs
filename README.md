@@ -120,6 +120,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2020-12-16
+
+    * npm package 4.7.0 优化数据库类
+
 + 2020-10-31
 
     * npm package 4.6.0 移除已经标记为过期的类
