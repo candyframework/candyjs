@@ -28,12 +28,9 @@ class Controller extends Component {
      * 控制器方法执行前
      *
      * @param {ActionEvent} actionEvent
-     * @return {Boolean} 决定了控制器的动作是否会接续执行
      */
     beforeAction(actionEvent) {
         this.trigger(Controller.EVENT_BEFORE_ACTION, actionEvent);
-
-        return actionEvent.valid;
     }
 
     /**
@@ -57,7 +54,9 @@ class Controller extends Component {
         actionEvent.response = response;
 
         // todo 这里没想好怎么设计 让我想想看
-        if( true !== this.beforeAction(actionEvent) ) {
+        this.beforeAction(actionEvent);
+
+        if(true !== actionEvent.valid) {
             return;
         }
 

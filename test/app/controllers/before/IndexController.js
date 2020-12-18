@@ -6,14 +6,14 @@ var Controller = Candy.include('candy/web/Controller');
 class IndexController extends Controller {
 
     beforeAction(actionEvent) {
-        setTimeout(() => {
-            this.run(actionEvent.request, actionEvent.response);
-        }, 1000);
+        actionEvent.valid = false;
 
-        return false;
+        setTimeout(() => {
+            this.myrun(actionEvent.request, actionEvent.response);
+        }, 1000);
     }
 
-    run(req, res) {
+    myrun(req, res) {
         res.end('before action call');
     }
 
