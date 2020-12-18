@@ -76,13 +76,13 @@ new CandyJs(app).listen(8090, function(){
 |      |
 |      |-- user 用户组目录
 |      |   |
-|      |   |-- IndexController.js  - host:port/user/index 可以访问到该类
-|      |   |-- OtherController.js  - host:port/user/other 可以访问到该类
+|      |   |-- IndexController.js
+|      |   |-- OtherController.js
 |      |
 |      |-- goods 商品组目录
 |      |   |
-|      |   |-- IndexController.js  - host:port/goods/index 可以访问到该类
-|      |   |-- OtherController.js  - host:port/goods/other 可以访问到该类
+|      |   |-- IndexController.js
+|      |   |-- OtherController.js
 |      |
 |   -- views 普通控制器模板目录
 |      |
