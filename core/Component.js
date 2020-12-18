@@ -33,13 +33,6 @@ class Component extends Event {
     }
 
     /**
-     * 注入行为
-     *
-     * @deprecated
-     */
-    injectBehaviors() {}
-
-    /**
      * 声明组件的行为列表
      *
      * [
