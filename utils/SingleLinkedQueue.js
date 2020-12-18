@@ -1,13 +1,5 @@
 "use strict";
-class SingleLinkedQueueNode {
-    /**
-     * constructor
-     */
-    constructor(data, next) {
-        this.data = data;
-        this.next = next;
-    }
-}
+const DataNode = require("./DataNode");
 /**
  * 队列
  */
@@ -15,7 +7,7 @@ class SingleLinkedQueue {
     constructor() {
         this.headNode = null;
         this.tailNode = null;
-        this.size = 0;
+        this.length = 0;
     }
     [Symbol.iterator]() {
         let node = this.headNode;
@@ -29,6 +21,12 @@ class SingleLinkedQueue {
                 return { value: undefined, done: true };
             }
         };
+    }
+    /**
+     * 返回队列大小
+     */
+    size() {
+        return this.length;
     }
     /**
      * 遍历队列 callback 返回值为 false 可结束循环
@@ -48,15 +46,15 @@ class SingleLinkedQueue {
      * @param {any} item 数据
      */
     add(data) {
-        let node = new SingleLinkedQueueNode(data, null);
-        if (0 === this.size) {
+        let node = new DataNode(data, null, null);
+        if (0 === this.length) {
             this.headNode = node;
         }
         else {
             this.tailNode.next = node;
         }
         this.tailNode = node;
-        this.size++;
+        this.length++;
     }
     /**
      * 移除并返回队首元素
@@ -65,7 +63,7 @@ class SingleLinkedQueue {
      */
     take() {
         // 为空直接返回
-        if (0 === this.size) {
+        if (0 === this.length) {
             return null;
         }
         let data = this.headNode.data;
@@ -78,13 +76,14 @@ class SingleLinkedQueue {
         if (null === this.headNode) {
             this.headNode = this.tailNode = null;
         }
-        this.size--;
+        this.length--;
         return data;
     }
     /**
      * 删除一个元素
      *
      * @param {any} item 要删除的元素
+     * @returns 队列包含元素且删除成功 返回 true
      */
     remove(data) {
         let current = this.headNode;
@@ -107,16 +106,18 @@ class SingleLinkedQueue {
             }
             // 清除当前节点
             current.next = null;
+            current.data = null;
             current = null;
-            this.size--;
-            break;
+            this.length--;
+            return true;
         }
+        return false;
     }
     /**
      * 清空队列
      */
     clear() {
-        while (0 !== this.size) {
+        while (0 !== this.length) {
             this.take();
         }
     }

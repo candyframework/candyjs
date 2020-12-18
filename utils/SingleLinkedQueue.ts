@@ -1,31 +1,30 @@
 import IQueue from './IQueue';
-
-class SingleLinkedQueueNode {
-    public data: any;
-    public next: any;
-
-    /**
-     * constructor
-     */
-    constructor(data: any, next: any) {
-        this.data = data;
-        this.next = next;
-    }
-}
+import DataNode = require('./DataNode');
 
 /**
  * 队列
  */
 class SingleLinkedQueue implements IQueue {
 
-    private headNode: any;
-    private tailNode: any;
-    private size: number;
+    /**
+     * Pointer to first node
+     */
+    private headNode: DataNode;
+
+    /**
+     * Pointer to last node
+     */
+    private tailNode: DataNode;
+
+    /**
+     * The size of queue
+     */
+    private length: number;
 
     constructor() {
         this.headNode = null;
         this.tailNode = null;
-        this.size = 0;
+        this.length = 0;
     }
 
     [Symbol.iterator]() {
@@ -43,6 +42,13 @@ class SingleLinkedQueue implements IQueue {
                 return { value: undefined, done: true };
             }
         };
+    }
+
+    /**
+     * 返回队列大小
+     */
+    public size(): number {
+        return this.length;
     }
 
     /**
@@ -64,9 +70,9 @@ class SingleLinkedQueue implements IQueue {
      * @param {any} item 数据
      */
     public add(data: any): void {
-        let node = new SingleLinkedQueueNode(data, null);
+        let node = new DataNode(data, null, null);
 
-        if(0 === this.size) {
+        if(0 === this.length) {
             this.headNode = node;
 
         } else {
@@ -75,7 +81,7 @@ class SingleLinkedQueue implements IQueue {
 
         this.tailNode = node;
 
-        this.size++;
+        this.length++;
     }
 
     /**
@@ -85,7 +91,7 @@ class SingleLinkedQueue implements IQueue {
      */
     public take(): any {
         // 为空直接返回
-        if(0 === this.size) {
+        if(0 === this.length) {
             return null;
         }
 
@@ -102,7 +108,7 @@ class SingleLinkedQueue implements IQueue {
             this.headNode = this.tailNode = null;
         }
 
-        this.size--;
+        this.length--;
 
         return data;
     }
@@ -111,8 +117,9 @@ class SingleLinkedQueue implements IQueue {
      * 删除一个元素
      *
      * @param {any} item 要删除的元素
+     * @returns 队列包含元素且删除成功 返回 true
      */
-    public remove(data: any): void {
+    public remove(data: any): boolean {
         let current = this.headNode;
         let previous = null;
 
@@ -138,19 +145,22 @@ class SingleLinkedQueue implements IQueue {
 
             // 清除当前节点
             current.next = null;
+            current.data = null;
             current = null;
 
-            this.size--;
+            this.length--;
 
-            break;
+            return true;
         }
+
+        return false;
     }
 
     /**
      * 清空队列
      */
     public clear(): void {
-        while(0 !== this.size) {
+        while(0 !== this.length) {
             this.take();
         }
     }

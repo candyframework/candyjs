@@ -1,10 +1,11 @@
 import IList from './IList';
+import DataNode = require('./DataNode');
 import IndexOutOfBoundsException = require('../core/IndexOutOfBoundsException');
 
 /**
- * ArrayList
+ * LinkedList
  */
-class ArrayList implements IList {
+class LinkedList implements IList {
 
     /**
      * The size of the List
@@ -12,57 +13,29 @@ class ArrayList implements IList {
     private length: number;
 
     /**
-     * The array that stored the elements
+     * Pointer to first node
      */
-    private elementData: any[];
+    private headNode: DataNode;
 
     /**
-     * 将源数组拷贝到目标数组
-     *
-     * @param {any[]} src 源数组
-     * @param {Number} srcPos 源数组开始位置
-     * @param {any[]} dest 目标数组
-     * @param {Number} destPos 目标数组开始位置
-     * @param {Number} length 拷贝数量
+     * Pointer to last node
      */
-    static arrayCopy(src: any[], srcPos: number, dest: any[], destPos: number, length: number): void {
-        let copied = 0;
-
-        let expand = destPos + length - dest.length;
-        let tmp = null;
-        if(expand > 0) {
-            tmp = new Array(expand);
-            for(let i=0; i<tmp.length; i++) {
-                tmp[i] = undefined;
-            }
-            dest.push.apply(dest, tmp);
-        }
-
-        for(let i=srcPos; i<src.length; i++) {
-            if(destPos < dest.length) {
-                dest[destPos++] = src[i];
-                copied++;
-            }
-
-            if(destPos >= dest.length || copied >= length) {
-                break;
-            }
-        }
-    }
+    private tailNode: DataNode;
 
     constructor() {
+        this.headNode = null;
+        this.tailNode = null;
         this.length = 0;
-        this.elementData = [];
     }
 
     [Symbol.iterator]() {
-        let index = 0;
+        let node = this.headNode;
 
         return {
             next: () => {
-                if(index < this.length) {
-                    let ret = { value: this.elementData[index], done: false };
-                    index++;
+                if(null !== node) {
+                    let ret = { value: node.data, done: false };
+                    node = node.next;
 
                     return ret;
                 }
@@ -70,6 +43,93 @@ class ArrayList implements IList {
                 return { value: undefined, done: true };
             }
         };
+    }
+
+    /**
+     * Links element as last element
+     */
+    public linkLast(element: any): void {
+        let last = this.tailNode;
+        let newNode = new DataNode(element, null, last);
+
+        this.tailNode = newNode;
+        if(null === last) {
+            this.headNode = newNode;
+
+        } else {
+            last.next = newNode;
+        }
+
+        this.length++;
+    }
+
+    /**
+     * Inserts element before node
+     */
+    public linkBefore(element: any, node: DataNode): void {
+        let prev = node.previous;
+        let newNode = new DataNode(element, node, prev);
+
+        node.previous = newNode;
+        if(null === prev) {
+            this.headNode = newNode;
+
+        } else {
+            prev.next = newNode;
+        }
+
+        this.length++;
+    }
+
+    /**
+     * Unlinks node
+     */
+    public unlink(node: DataNode): any {
+        let data = node.data;
+        let next = node.next;
+        let prev = node.previous;
+
+        if(null === prev) {
+            this.headNode = next;
+        } else {
+            prev.next = next;
+            node.previous = null;
+        }
+
+        if(null === next) {
+            this.tailNode = prev;
+        } else {
+            next.previous = prev;
+            node.next = null;
+        }
+
+        node.data = null;
+        this.length--;
+
+        return data;
+    }
+
+    /**
+     * Find node by index
+     */
+    public getNode(index: number): DataNode {
+        let node = null;
+
+        if(index < (this.length >> 1)) {
+            node = this.headNode;
+            for(let i = 0; i < index; i++) {
+                node = node.next;
+            }
+
+            return node;
+        }
+
+        node = this.tailNode;
+        for(let i = this.length - 1; i > index; i--) {
+            node = node.previous;
+        }
+
+        return node;
     }
 
     /**
@@ -107,10 +167,13 @@ class ArrayList implements IList {
      * @returns {Number}
      */
     public indexOf(element: any): number {
-        for(let i=0; i<this.length; i++) {
-            if(element === this.elementData[i]) {
-                return i;
+        let index = 0;
+        for(let x = this.headNode; null !== x; x = x.next) {
+            if(element === x.data) {
+                return index;
             }
+
+            index++;
         }
 
         return -1;
@@ -123,9 +186,12 @@ class ArrayList implements IList {
      * @returns {Number}
      */
     public lastIndexOf(element: any): number {
-        for(let i=this.length-1; i>=0; i--) {
-            if(element === this.elementData[i]) {
-                return i;
+        let index = this.length;
+        for(let x = this.tailNode; null !== x; x = x.previous) {
+            index--;
+
+            if(element === x.data) {
+                return index;
             }
         }
 
@@ -138,13 +204,7 @@ class ArrayList implements IList {
      * @param {any} element
      */
     public add(element: any): void {
-        if(this.elementData.length > this.length) {
-            this.elementData[this.length++] = element;
-            return;
-        }
-
-        this.length++;
-        this.elementData.push(element);
+        this.linkLast(element);
     }
 
     /**
@@ -159,9 +219,12 @@ class ArrayList implements IList {
             throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
         }
 
-        ArrayList.arrayCopy(this.elementData, index, this.elementData, index + 1, this.length - index);
-        this.length++;
-        this.elementData[index] = element;
+        if(index === this.length) {
+            this.linkLast(element);
+            return;
+        }
+
+        this.linkBefore(element, this.getNode(index));
     }
 
     /**
@@ -170,14 +233,9 @@ class ArrayList implements IList {
      * @param {any} element
      */
     public remove(element: any): boolean {
-        let move = 0;
-        for(let i=0; i<this.length; i++) {
-            if(element === this.elementData[i]) {
-                move = this.length - i - 1;
-                if(move > 0) {
-                    ArrayList.arrayCopy(this.elementData, i + 1, this.elementData, i, move);
-                }
-                this.elementData[--this.length] = undefined;
+        for(let x = this.headNode; null !== x; x = x.next) {
+            if(element === x.data) {
+                this.unlink(x);
                 return true;
             }
         }
@@ -196,14 +254,7 @@ class ArrayList implements IList {
             throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
         }
 
-        let oldValue = this.elementData[index];
-        let move = this.length - index - 1;
-        if(move > 0) {
-            ArrayList.arrayCopy(this.elementData, index + 1, this.elementData, index, move);
-        }
-        this.elementData[--this.length] = undefined;
-
-        return oldValue;
+        return this.unlink(this.getNode(index));
     }
 
     /**
@@ -217,7 +268,7 @@ class ArrayList implements IList {
             throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
         }
 
-        return this.elementData[index];
+        return this.getNode(index).data;
     }
 
     /**
@@ -232,8 +283,9 @@ class ArrayList implements IList {
             throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
         }
 
-        let oldValue = this.elementData[index];
-        this.elementData[index] = element;
+        let node = this.getNode(index);
+        let oldValue = node.data;
+        node.data = element;
 
         return oldValue;
     }
@@ -242,21 +294,31 @@ class ArrayList implements IList {
      * Removes all of the elements from this list
      */
     public clear(): void {
+        for(let next = null, x = this.headNode; null !== x; ) {
+            next = x.next;
+
+            x.data = null;
+            x.next = null;
+            x.previous = null;
+
+            x = next;
+        }
+
         this.length = 0;
-        this.elementData = [];
+        this.headNode = null;
+        this.tailNode = null;
     }
 
     public toString(): string {
         let ret = '[ ';
 
-        for(let v of this) {
-            ret += v + ', '
+        for(let current = this.headNode; null !== current; current = current.next) {
+            ret += current.data + ', ';
         }
         ret = ret.substring(0, ret.lastIndexOf(', '));
-        ret += ' ]';
 
-        return ret;
+        return ret + ' ]';
     }
 
 }
-export = ArrayList;
+export = LinkedList;
