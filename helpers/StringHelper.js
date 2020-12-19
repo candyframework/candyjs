@@ -10,6 +10,24 @@
 class StringHelper {
 
     /**
+     * 查找子字符串出现的次数
+     *
+     * @param {String} content
+     * @param {String} find
+     * @return {Number}
+     */
+    static frequency(content, find) {
+        let num = 0;
+        let x = content.indexOf(find);
+        while(-1 !== x) {
+            num++;
+            x = content.indexOf(find, x + 1);
+        }
+
+        return num;
+    }
+
+    /**
      * 查找某字符串在另一个字符串中第 N 次出现的位置
      *
      * @param {String} str 待查找的字符串
