@@ -33,7 +33,7 @@ class Headers {
                     };
                 }
 
-                return {done: true};
+                return {value: undefined, done: true};
             }
         }
     }
