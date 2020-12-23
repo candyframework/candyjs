@@ -1,4 +1,6 @@
-# 一个面向对象的高效 node.js mvc and REST 框架。 CandyJs 不是第三方框架的扩展，而是一个全新的框架。
+# 一个面向对象的高效 Node.js MVC and REST 框架
+
+CandyJs 不是第三方框架的扩展，而是一个全新的框架。
 
 ### 为什么是 CandyJs
 
@@ -24,7 +26,7 @@
 
 ### Node 版本
 
-+ 大于等于 6.0.0 如果用到 async/await 的话需要 8.0 以上版本
++ >= 8.0
 
 ### Hello world
 
