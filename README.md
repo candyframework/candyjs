@@ -26,7 +26,7 @@ CandyJs 不是第三方框架的扩展，而是一个全新的框架。
 
 ### Node 版本
 
->= 8.0
+8.0.0 及以上
 
 ### Hello world
 
@@ -57,8 +57,11 @@ new CandyJs(app).listen(8090, function(){
 ### 系统内置别名
 
 + @candy  系统目录
+
 + @app  项目目录 由 appPath 指定 `Candy.app.getAppPath()` 可得到该值
+
 + @runtime  缓存目录 默认指向 @app/runtime `Candy.app.getRuntimePath()` 可得到该值
+
 + @root  网站根目录 `Candy.app.getRootPath()` 可得到该值
 
 ### 项目目录示例
