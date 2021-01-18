@@ -9,8 +9,7 @@ const App = require('../rest/Application');
 
 const app = new App({
     id: 1,
-    debug: true,
-    appPath: __dirname + '/app'
+    debug: true
 });
 
 // hook

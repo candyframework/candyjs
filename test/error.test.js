@@ -4,7 +4,7 @@ const request = require('supertest');
 const assert = require('assert');
 
 const CandyJs = require('../index');
-const App = require('../web/RestApplication');
+const App = require('../rest/Application');
 
 const app = new App({
     id: 1
