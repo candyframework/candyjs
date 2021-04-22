@@ -52,7 +52,6 @@ class Application extends Event {
         if(undefined !== config.appPath) {
             this.setAppPath(config.appPath);
             delete config.appPath;
-
         }
 
         if(undefined !== config.runtimePath) {
@@ -61,7 +60,7 @@ class Application extends Event {
 
         } else {
             // set "app/runtime"
-            this.setRuntimePath( this.getAppPath() + '/runtime');
+            this.setRuntimePath(this.getAppPath() + '/runtime');
         }
 
         if(undefined !== config.rootPath) {
