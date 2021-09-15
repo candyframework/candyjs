@@ -7,6 +7,7 @@
 const Candy = require('../Candy');
 const Component = require('../core/Component');
 const Validator = require('./Validator');
+const StringHelper = require('../helpers/StringHelper');
 const ModelException = require('../core/ModelException');
 
 /**
@@ -51,7 +52,7 @@ class Model extends Component {
      * ```
      * [
      *      {
-     *          rule: 'candy/validators/RequiredValidator',
+     *          rule: 'candy/model/RequiredValidator',
      *          attributes: ['name', 'age'],
      *          // 错误信息 可选
      *          messages: ['name is required', 'age is required']
@@ -70,6 +71,20 @@ class Model extends Component {
      */
     getAttributes() {
         return this.attributes;
+    }
+
+    /**
+     * 获取某个属性
+     *
+     * @param {String} attribute 属性名
+     * @throws {ModelException}
+     */
+    getAttribute(attribute) {
+        if(null === this.attributes) {
+            throw new ModelException('model has no attribute to get');
+        }
+
+        return this.attributes[attribute];
     }
 
     /**
@@ -134,6 +149,38 @@ class Model extends Component {
     }
 
     /**
+     * 填充模型
+     */
+    fill(request) {
+        if(null === this.attributes) {
+            throw new ModelException('model has no attributes to fill');
+        }
+
+        let fields = Object.getOwnPropertyNames(this.attributes);
+        let data = request[Model.fromParameter];
+
+        let method = '';
+        let value = '';
+        for(let field of fields) {
+            // setter 方法 setXxx()
+            method = 'set' + StringHelper.ucFirst(field);
+
+            if(null !== this.attributesMap && undefined !== this.attributesMap[field]) {
+                value = data[ this.attributesMap[field] ];
+            } else {
+                value = data[ field ];
+            }
+
+            if('function' === typeof this[method]) {
+                Reflect.apply(this[method], this, [value]);
+
+            } else {
+                this.attributes[field] = value;
+            }
+        }
+    }
+
+    /**
      * 执行验证
      *
      * @return {Boolean}
@@ -171,5 +218,10 @@ class Model extends Component {
         this.messages = [];
     }
 }
+
+/**
+ * @property {String} fromParameter 从哪里获取参数
+ */
+Model.fromParameter = 'body';
 
 module.exports = Model;
