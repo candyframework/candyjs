@@ -13,14 +13,15 @@ class RequiredValidator extends Validator {
     /**
      * @inheritdoc
      */
-    validate(attribute) {
+    validate(attributeName, attributeValue, message) {
         if(
-            !this.model.attributes
-            || null === this.model.attributes[attribute]
-            || undefined === this.model.attributes[attribute]
-            || '' === this.model.attributes[attribute]
+            null === attributeValue
+            || undefined === attributeValue
+            || '' === attributeValue
         ) {
-            return attribute + ' is required';
+            return '' === message
+                ? attributeName + ' is required'
+                : message;
         }
 
         return '';

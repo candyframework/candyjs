@@ -4,7 +4,7 @@
  */
 'use strict';
 
-const InvalidCallException = require('../core/InvalidCallException');
+const ModelException = require('../core/ModelException');
 
 /**
  * Validator base class
@@ -13,6 +13,9 @@ class Validator {
     constructor() {
         /**
          * 所属模型
+         *
+         * @typedef {import('./Model')} Model
+         * @type {Model}
          */
         this.model = null;
         /**
@@ -22,7 +25,11 @@ class Validator {
          * ['name', 'age']
          * ```
          */
-        this.attributes = [];
+        this.attributes = null;
+        /**
+         * 属性验证不通过时的错误信息 与 attributes 一一对应
+         */
+        this.messages = null;
     }
 
     /**
@@ -34,11 +41,14 @@ class Validator {
         let list = this.attributes;
         let messages = [];
 
-        for(let i=0, msg=''; i<list.length; i++) {
-            msg = this.validate(list[i]);
+        for(let i=0, result='', currentMessage=''; i<list.length; i++) {
+            currentMessage = null !== this.messages && this.messages.length > i
+                ? this.messages[i]
+                : '';
+            result = this.validate(list[i], this.model.attributes[ list[i] ], currentMessage);
 
-            if('' !== msg) {
-                messages.push(msg);
+            if('' !== result) {
+                messages.push(result);
             }
         }
 
@@ -48,11 +58,13 @@ class Validator {
     /**
      * 验证一个属性 子类应该实现该方法
      *
-     * @param {String} attribute 属性
+     * @param {String} attributeName 属性名
+     * @param {any} attributeValue 属性值
+     * @param {String} message 错误信息
      * @return {String} 有错误时返回错误信息 无错误时返回空字符串
      */
-    validate(attribute) {
-        throw new InvalidCallException('Child class must implement the validate() method');
+    validate(attributeName, attributeValue, message) {
+        throw new ModelException('Child class must implement the validate() method');
     }
 }
 

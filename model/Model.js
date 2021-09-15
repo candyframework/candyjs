@@ -7,6 +7,7 @@
 const Candy = require('../Candy');
 const Component = require('../core/Component');
 const Validator = require('./Validator');
+const ModelException = require('../core/ModelException');
 
 /**
  * 用于存储和校验与数据库相关的数据
@@ -16,19 +17,25 @@ class Model extends Component {
         super();
 
         /**
-         * 数据字段 一般与数据库字段一致
+         * 数据字段配置 一般与数据库字段一致
          *
          * ```
          * {
-         *      name: 'xyz',
-         *      age: 10
+         *      name: 'defaultValue',
+         *      age: defaultValue
          * }
          * ```
          */
         this.attributes = null;
 
         /**
-         * 模型属性与表单字段对应关系
+         * 模型属性与表单字段对应关系 用于解决模型字段与表单字段名称不同问题
+         *
+         * ```
+         * {
+         *      name: 'form_user_name'
+         * }
+         * ```
          */
         this.attributesMap = null;
 
@@ -45,7 +52,9 @@ class Model extends Component {
      * [
      *      {
      *          rule: 'candy/validators/RequiredValidator',
-     *          attributes: ['name', 'age']
+     *          attributes: ['name', 'age'],
+     *          // 错误信息 可选
+     *          messages: ['name is required', 'age is required']
      *      }
      * ]
      * ```
@@ -79,6 +88,10 @@ class Model extends Component {
      * @param {any} value 属性值
      */
     setAttribute(attribute, value) {
+        if(null === this.attributes) {
+            this.attributes = {};
+        }
+
         this.attributes[attribute] = value;
     }
 
@@ -96,10 +109,13 @@ class Model extends Component {
         let ret = [];
 
         for(let i=0; i<rules.length; i++) {
+            let messages = undefined === rules[i].messages ? null : rules[i].messages;
+
             if(rules[i].rule instanceof Validator) {
-                rules[i].model = this;
-                rules[i].attributes = rules[i].attributes;
-                ret.push(rules[i]);
+                rules[i].rule.model = this;
+                rules[i].rule.attributes = rules[i].attributes;
+                rules[i].rule.messages = messages;
+                ret.push(rules[i].rule);
 
                 continue;
             }
@@ -108,7 +124,8 @@ class Model extends Component {
                 Candy.createObjectAsDefinition({
                     classPath: rules[i].rule,
                     model: this,
-                    attributes: rules[i].attributes
+                    attributes: rules[i].attributes,
+                    messages: messages
                 })
             );
         }
@@ -122,8 +139,11 @@ class Model extends Component {
      * @return {Boolean}
      */
     validate() {
-        let validators = this.getValidators();
+        if(null === this.attributes) {
+            throw new ModelException('model has no attributes to validate');
+        }
 
+        let validators = this.getValidators();
         if(null === validators) {
             return true;
         }
