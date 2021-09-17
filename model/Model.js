@@ -159,24 +159,15 @@ class Model extends Component {
         let fields = Object.getOwnPropertyNames(this.attributes);
         let data = request[Model.fromParameter];
 
-        let method = '';
         let value = '';
         for(let field of fields) {
-            // setter 方法 setXxx()
-            method = 'set' + StringHelper.ucFirst(field);
-
             if(null !== this.attributesMap && undefined !== this.attributesMap[field]) {
                 value = data[ this.attributesMap[field] ];
             } else {
                 value = data[ field ];
             }
 
-            if('function' === typeof this[method]) {
-                Reflect.apply(this[method], this, [value]);
-
-            } else {
-                this.attributes[field] = value;
-            }
+            this.attributes[field] = value;
         }
     }
 
