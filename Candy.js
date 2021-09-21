@@ -149,8 +149,10 @@ class Candy {
 }
 
 /**
+ * 应用实例
+ *
  * @typedef {import('./core/Application')} Application
- * @type {Application} app 应用实例
+ * @type {Application}
  */
 Candy.app = null;
 

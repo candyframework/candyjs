@@ -56,6 +56,7 @@ class Application extends CoreApp {
          * 'modules': {
          *     'bbs': 'app/modules/bbs'
          * }
+         *
          */
         this.modules = null;
 
