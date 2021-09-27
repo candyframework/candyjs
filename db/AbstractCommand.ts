@@ -38,31 +38,29 @@ export default abstract class AbstractCommand extends Event {
      *
      * @param {String} sql
      */
-    public abstract prepareSql(sql: string): this;
+    public abstract prepareSql(sql: string): AbstractCommand;
 
     /**
      * Prepares a sql statement for execution
      *
      * @param {String} sql
      */
-    public abstract prepareStatement(sql: string): this;
+    public abstract prepareStatement(sql: string): AbstractCommand;
 
     /**
      * 绑定一个参数 只能用于绑定命名参数
      *
-     * 预留接口
-     *
      * @param {String} parameter
      * @param {String} value
      */
-    // public abstract bindValue(parameter: string, value: string): this;
+    public abstract bindValue(parameter: string, value: string): AbstractCommand;
 
     /**
      * 绑定多个参数 用于绑定占位符参数
      *
      * @param {Array} parameters
      */
-    public abstract bindValues(parameter: any[]): this;
+    public abstract bindValues(parameter: any[]): AbstractCommand;
 
     /**
      * Executes the query and returns all results as an array
@@ -80,8 +78,6 @@ export default abstract class AbstractCommand extends Event {
 
     /**
      * Executes the query and returns a single column of row
-     *
-     * 预留接口
      *
      * @returns {Promise} 结果集的第一行第一列记录 如果没有记录则返回 null
      */

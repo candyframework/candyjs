@@ -94,14 +94,14 @@ export default abstract class AbstractQuery {
      *
      * @param {String} columns
      */
-    public abstract select(columns: string): this;
+    public abstract select(columns: string): AbstractQuery;
 
     /**
      * Set the target to select
      *
      * @param {String} table
      */
-    public abstract from(table: string): this;
+    public abstract from(table: string): AbstractQuery;
 
     /**
      * Sets the WHERE condition of a query
@@ -109,26 +109,26 @@ export default abstract class AbstractQuery {
      * @param {String} condition
      * @param {Array} parameters
      */
-    public abstract where(condition: string, parameters: any[]): this;
+    public abstract where(condition: string, parameters: any[]): AbstractQuery;
 
     /**
      * 分组
      *
      * @param {String} column
      */
-    public abstract groupBy(column: string): this;
+    public abstract groupBy(column: string): AbstractQuery;
 
     /**
      * 筛选
      *
      * @param {String} condition
      */
-    public abstract having(condition: string): this;
+    public abstract having(condition: string): AbstractQuery;
 
     /**
      * Sets the ORDER BY condition of a query
      *
      * @param {String} columns
      */
-    public abstract orderBy(columns: string): this;
+    public abstract orderBy(columns: string): AbstractQuery;
 }
