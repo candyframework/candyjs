@@ -85,7 +85,7 @@ export default abstract class AbstractCommand extends Event {
      *
      * @returns {Promise} 结果集的第一行第一列记录 如果没有记录则返回 null
      */
-    // public abstract queryColumn(): Promise<string>;
+    public abstract queryColumn(): Promise<string>;
 
     /**
      * 执行 sql 修改语句

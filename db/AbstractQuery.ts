@@ -63,11 +63,9 @@ export default abstract class AbstractQuery {
     /**
      * Executes the query and returns a single column of row
      *
-     * 预留接口
-     *
      * @returns {Promise} 结果集的第一行第一列记录 如果没有记录则返回 null
      */
-    // public abstract getColumn(): Promise<string>;
+    public abstract getColumn(): Promise<string>;
 
     /**
      * Executes the query and returns a single row of result
