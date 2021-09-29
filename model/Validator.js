@@ -18,6 +18,7 @@ class Validator {
          * @type {Model}
          */
         this.model = null;
+
         /**
          * 待验证的属性
          *
@@ -26,8 +27,13 @@ class Validator {
          * ```
          */
         this.attributes = null;
+
         /**
          * 属性验证不通过时的错误信息 与 attributes 一一对应
+         *
+         * ```
+         * ['name is required', 'age is required']
+         * ```
          */
         this.messages = null;
     }
@@ -39,20 +45,36 @@ class Validator {
      */
     validateAttributes() {
         let list = this.attributes;
-        let messages = [];
+        let infos = [];
 
-        for(let i=0, result='', currentMessage=''; i<list.length; i++) {
-            currentMessage = null !== this.messages && this.messages.length > i
-                ? this.messages[i]
-                : '';
-            result = this.validate(list[i], this.model.attributes[ list[i] ], currentMessage);
+        for(let i=0, result=''; i<list.length; i++) {
+            result = this.validate(list[i], this.model.attributes[ list[i] ]);
 
             if('' !== result) {
-                messages.push(result);
+                infos.push(result);
             }
         }
 
-        return messages;
+        return infos;
+    }
+
+    /**
+     * 获取属性的错误描述
+     *
+     * @param {String} attributeName 属性名
+     * @return {String} 有配置错误信息则返回 否则返回空
+     */
+    getMessage(attributeName) {
+        if(null === this.messages) {
+            return '';
+        }
+
+        let index = this.attributes.indexOf(attributeName);
+        if(-1 === index || this.messages.length <= index) {
+            return '';
+        }
+
+        return this.messages[index];
     }
 
     /**
