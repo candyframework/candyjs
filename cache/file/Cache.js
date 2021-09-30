@@ -21,11 +21,6 @@ const FileHelper = require("../../helpers/FileHelper");
  *
  */
 class Cache extends AbstractCache {
-    /**
-     * constructor
-     *
-     * @param {Object} config
-     */
     constructor(config) {
         super();
         this.fileExtension = undefined === config.fileExtension
@@ -67,7 +62,7 @@ class Cache extends AbstractCache {
                             return;
                         }
                         fs.utimes(cacheFile, life, life, () => {
-                            resolve();
+                            resolve(null);
                         });
                     });
                     return;
@@ -79,7 +74,7 @@ class Cache extends AbstractCache {
                             return;
                         }
                         fs.utimes(cacheFile, life, life, () => {
-                            resolve();
+                            resolve(null);
                         });
                     });
                 });
@@ -140,7 +135,7 @@ class Cache extends AbstractCache {
                     reject(err);
                     return;
                 }
-                resolve();
+                resolve(null);
             });
         });
     }

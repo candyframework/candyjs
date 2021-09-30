@@ -1,73 +1,93 @@
-"use strict";
 /**
  * @author afu
  * @license MIT
  */
-const Component = require("./Component");
-const ActionEvent = require("./ActionEvent");
+import Component = require('./Component');
+import ActionEvent = require('./ActionEvent');
+
 /**
  * 控制器基类
  */
 class Controller extends Component {
+
+    /**
+     * @property {String} EVENT_BEFORE_ACTION
+     */
+    static EVENT_BEFORE_ACTION = 'beforeAction';
+
+    /**
+     * @property {String} EVENT_AFTER_ACTION
+     */
+    static EVENT_AFTER_ACTION = 'afterAction';
+
+    /**
+     * @property {any} context 上下文环境 用于保存当前请求相关的信息
+     */
+    public context: any;
+
     /**
      * constructor
      */
-    constructor(context) {
+    constructor(context: any) {
         super();
+
         this.context = context;
     }
+
     /**
      * 控制器方法执行前
      *
      * @param {ActionEvent} actionEvent
      */
-    beforeAction(actionEvent) {
+    public beforeAction(actionEvent: ActionEvent): void {
         this.trigger(Controller.EVENT_BEFORE_ACTION, actionEvent);
     }
+
     /**
      * 控制器方法执行后
      *
      * @param {ActionEvent} actionEvent
      */
-    afterAction(actionEvent) {
+    public afterAction(actionEvent: ActionEvent): void {
         this.trigger(Controller.EVENT_AFTER_ACTION, actionEvent);
     }
+
     /**
      * 执行控制器的方法
      *
      * @param {any} request
      * @param {any} response
      */
-    runControllerAction(request, response) {
+    private runControllerAction(request: any, response: any): void {
         let actionEvent = new ActionEvent();
         actionEvent.request = request;
         actionEvent.response = response;
+
         // todo 这里没想好怎么设计 让我想想看
         this.beforeAction(actionEvent);
-        if (true !== actionEvent.valid) {
+
+        if(true !== actionEvent.valid) {
             return;
         }
+
         this.run(request, response);
+
         this.afterAction(actionEvent);
     }
+
     /**
      * 执行控制器入口
      */
-    run(request, response) { }
+    public run(request: any, response: any): void {}
+
     /**
      * 渲染文件 须由子类进行实现
      *
      * @param {String} view 视图名
      * @param {any} parameters 参数
      */
-    render(view, parameters = null) { }
+    public render(view: string, parameters: any = null): any {}
+
 }
-/**
- * @property {String} EVENT_BEFORE_ACTION
- */
-Controller.EVENT_BEFORE_ACTION = 'beforeAction';
-/**
- * @property {String} EVENT_AFTER_ACTION
- */
-Controller.EVENT_AFTER_ACTION = 'afterAction';
-module.exports = Controller;
+
+export = Controller;

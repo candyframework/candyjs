@@ -4,8 +4,6 @@
  */
 import Candy = require('../Candy');
 import InvalidConfigException = require('../core/InvalidConfigException');
-import InvalidArgumentException = require('../core/InvalidArgumentException');
-import AbstractCache = require('./AbstractCache');
 
 /**
  * 缓存入口
@@ -13,37 +11,36 @@ import AbstractCache = require('./AbstractCache');
 class Cache {
 
     /**
-     * @property {Map<String, Object>} _caches
+     * @property {Map<String, Object>} _instances
      */
-    static _caches: any = {};
+    static _instances: Map<string, any> = new Map();
 
     /**
      * @typedef {import('./AbstractCache')} AbstractCache
      * @return {AbstractCache}
      */
-    static getCache(cacheFlag): AbstractCache {
-        const app: any = Candy.app;
+    static getCache(type: string): any {
+        let app = Candy.app;
 
-        if(undefined === cacheFlag) {
-            throw new InvalidArgumentException('An argument must be provide for getCache()');
-        }
-        if(undefined === app.cache || undefined === app.cache[cacheFlag]) {
+        if(undefined === app.cache || undefined === app.cache[type]) {
             throw new InvalidConfigException('The cache configuration is not found');
         }
-        if(undefined === app.cache[cacheFlag].classPath) {
+        if(undefined === app.cache[type].classPath) {
             throw new InvalidConfigException('The classPath of cache configuration is not found');
         }
 
-        if(undefined === Cache._caches[cacheFlag] || null === Cache._caches[cacheFlag]) {
-            Cache._caches[cacheFlag] = Candy.createObjectAsString(
-                app.cache[cacheFlag].classPath,
-                app.cache[cacheFlag]);
+        if(!Cache._instances.has(type)) {
+            Cache._instances.set(
+                type,
+                Candy.createObjectAsString(app.cache[type].classPath, app.cache[type])
+            );
 
-            Cache._caches[cacheFlag].init();
+            Cache._instances.get(type).init();
         }
 
-        return Cache._caches[cacheFlag];
+        return Cache._instances.get(type);
     }
 
 }
+
 export = Cache;

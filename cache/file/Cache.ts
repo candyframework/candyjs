@@ -33,11 +33,6 @@ class Cache extends AbstractCache {
      */
     public cachePath: string;
 
-    /**
-     * constructor
-     *
-     * @param {Object} config
-     */
     constructor(config: any) {
         super();
 
@@ -90,7 +85,7 @@ class Cache extends AbstractCache {
                         }
 
                         fs.utimes(cacheFile, life, life, () => {
-                            resolve();
+                            resolve(null);
                         });
                     });
 
@@ -105,7 +100,7 @@ class Cache extends AbstractCache {
                         }
 
                         fs.utimes(cacheFile, life, life, () => {
-                            resolve();
+                            resolve(null);
                         });
                     });
                 });
@@ -179,10 +174,11 @@ class Cache extends AbstractCache {
                     return;
                 }
 
-                resolve();
+                resolve(null);
             });
         });
     }
 
 }
+
 export = Cache;

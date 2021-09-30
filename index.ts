@@ -1,15 +1,32 @@
-"use strict";
 /**
  * @author afu
  * @license MIT
  */
-const http = require("http");
-const Hook = require("./core/Hook");
-const Logger = require("./log/Logger");
+import http = require('http');
+
+import Hook = require('./core/Hook');
+import Logger = require('./log/Logger');
+
 /**
  * 入口
  */
 class CandyJs {
+
+    /**
+     * logger
+     */
+    static _logger: Logger = null;
+
+    /**
+     * http server
+     */
+    public server: http.Server;
+
+    /**
+     * 当前应用
+     */
+    public app: any;
+
     /**
      * constructor
      *
@@ -20,48 +37,55 @@ class CandyJs {
         this.server = null;
         this.app = application;
     }
+
     /**
      * 获取日志对象
      *
      * @return {Logger}
      */
-    static getLogger() {
-        if (null === CandyJs._logger) {
+    static getLogger(): Logger {
+        if(null === CandyJs._logger) {
             CandyJs._logger = Logger.getLogger();
         }
+
         return CandyJs._logger;
     }
+
     /**
      * 设置日志对象
      *
      * @param {any} logger 日志对象
      */
-    static setLogger(logger) {
+    static setLogger(logger: Logger): void {
         CandyJs._logger = logger;
     }
+
     // web
-    requestListener(req, res) {
+    private requestListener(req: any, res: any): void {
         try {
             this.app.requestListener(req, res);
-        }
-        catch (e) {
+
+        } catch(e) {
             this.app.handlerException(res, e);
         }
     }
+
     // handler
-    handler(req, res) {
+    private handler(req: any, res: any): void {
         new Hook().trigger(req, res, (request, response) => {
             this.requestListener(request, response);
         });
     }
+
     /**
      * 获取 http server
      *
      * @return {http.Server}
      */
-    getServer() {
+    public getServer(): http.Server {
         return http.createServer(this.handler.bind(this));
     }
+
     /**
      * listen
      *
@@ -79,13 +103,11 @@ class CandyJs {
      * ```
      *
      */
-    listen(port, callback) {
+    public listen(port: number, callback: any): void {
         this.server = this.getServer();
         this.server.listen(port, callback);
     }
+
 }
-/**
- * logger
- */
-CandyJs._logger = null;
-module.exports = CandyJs;
+
+export = CandyJs;

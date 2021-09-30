@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "preserveConstEnums": true,
+        "moduleResolution": "node",
+        "sourceMap": false,
+        "allowJs": false,
+        "baseUrl": "."
+    },
+    "include": [
+        "cache/**/*",
+        "core/**/*",
+        "db/**/*",
+        "helpers/**/*",
+        "http/**/*",
+        "ioc/**/*",
+        "log/**/*",
+        "midwares/**/*",
+        "model/**/*",
+        "rest/**/*",
+        "session/**/*",
+        "test/**/*",
+        "utils/**/*",
+        "utils/**/*",
+        "index.ts"
+    ]
+}

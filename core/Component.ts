@@ -1,20 +1,34 @@
-"use strict";
 /**
  * @author afu
  * @license MIT
  */
-const Candy = require("../Candy");
-const Event = require("./Event");
-const Behavior = require("./Behavior");
+import Candy = require('../Candy');
+import Event = require('./Event');
+import Behavior = require('./Behavior');
+
 /**
  * 组件是实现 行为 (behavior) 事件 (event) 的基类
  */
 class Component extends Event {
+
+    /**
+     * @property {Map<String, Behavior>} behaviorsMap the attached behaviors
+     *
+     * {
+     *     'behaviorName1': instance1,
+     *     'behaviorNameN': instanceN
+     * }
+     */
+    public behaviorsMap: Map<string, Behavior>;
+
     constructor() {
         super();
+
         this.behaviorsMap = new Map();
+
         this.ensureDeclaredBehaviorsAttached();
     }
+
     /**
      * 声明组件的行为列表
      *
@@ -26,79 +40,94 @@ class Component extends Event {
      *
      * @return {any[]} 行为列表
      */
-    behaviors() {
+    public behaviors(): any[] {
         return null;
     }
+
     /**
      * 向组件附加一个行为
      *
      * @param {String} name 行为名称
      * @param {String | Object} behavior 行为
      */
-    attachBehavior(name, behavior) {
+    public attachBehavior(name: string, behavior: any): void {
         this.attachBehaviorInternal(name, behavior);
     }
+
     /**
      * 以列表形式向组件添加行为
      *
      * @param {Array} behaviors 行为列表
      */
-    attachBehaviors(behaviors) {
-        for (let v of behaviors) {
+    public attachBehaviors(behaviors: any[]): void {
+        for(let v of behaviors) {
             this.attachBehavior(v[0], v[1]);
         }
     }
+
     /**
      * 删除组件的行为
      *
      * @param {String} name 行为的名称
      * @return {Behavior | null}
      */
-    detachBehavior(name) {
-        if (!this.behaviorsMap.has(name)) {
+    public detachBehavior(name: string): Behavior | null {
+        if(!this.behaviorsMap.has(name)) {
             return null;
         }
+
         let behavior = this.behaviorsMap.get(name);
+
         this.behaviorsMap.delete(name);
         behavior.unListen();
+
         return behavior;
     }
+
     /**
      * 删除组件上所有的行为
      */
-    detachBehaviors() {
-        for (let name of this.behaviorsMap.keys()) {
+    public detachBehaviors(): void {
+        for(let name of this.behaviorsMap.keys()) {
             this.detachBehavior(name);
         }
     }
+
     /**
      * 确保 behaviors() 声明的行为已保存到组件
      */
-    ensureDeclaredBehaviorsAttached() {
+    private ensureDeclaredBehaviorsAttached(): void {
         let behaviors = this.behaviors();
-        if (null === behaviors) {
+
+        if(null === behaviors) {
             return;
         }
-        for (let v of behaviors) {
+
+        for(let v of behaviors) {
             this.attachBehaviorInternal(v[0], v[1]);
         }
     }
+
     /**
      * 保存行为类到组件
      *
      * @param {String} name 行为的名称
      * @param {Behavior | String | Object} behavior
      */
-    attachBehaviorInternal(name, behavior) {
-        if (!(behavior instanceof Behavior)) {
+    private attachBehaviorInternal(name: string, behavior: any): void {
+        if(!(behavior instanceof Behavior)) {
             behavior = Candy.createObject(behavior);
         }
-        if (this.behaviorsMap.has(name)) {
+
+        if(this.behaviorsMap.has(name)) {
             this.behaviorsMap.get(name).unListen();
         }
+
         // 行为类可以监听组件的事件并处理
         behavior.listen(this);
         this.behaviorsMap.set(name, behavior);
     }
+
 }
-module.exports = Component;
+
+export = Component;

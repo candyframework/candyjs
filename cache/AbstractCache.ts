@@ -45,4 +45,5 @@ abstract class AbstractCache implements ICache {
     public abstract delete(key: string): Promise<any>;
 
 }
+
 export = AbstractCache;
