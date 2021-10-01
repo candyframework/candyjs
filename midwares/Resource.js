@@ -5,7 +5,8 @@
 'use strict';
 
 const fs = require('fs');
-const url = require('url');
+
+const Request = require('../http/Request');
 
 /**
  * 静态资源处理
@@ -41,13 +42,13 @@ class Resource {
     /**
      * 是否是静态资源
      *
-     * @param {Object} request 请求对象
+     * @param {import('http').IncomingMessage} request 请求对象
      * @return {Boolean}
      */
     isStatic(request) {
         let ret = false;
-        let pathname = url.parse(request.url).pathname;
-        let ext = this.getExtName(pathname).substring(1);
+        let pathname = new Request(request).createURL().pathname;
+        let ext = this.getExtName(pathname);
         let mime = undefined === this.options.mime ?
             Resource.mime :
             Object.assign({}, Resource.mime, this.options.mime);
@@ -74,7 +75,7 @@ class Resource {
      */
     getMimeType(pathName) {
         let ret = '';
-        let ext = this.getExtName(pathName).substring(1);
+        let ext = this.getExtName(pathName);
         let mime = undefined === this.options.mime ?
             Resource.mime :
             Object.assign({}, Resource.mime, this.options.mime);
@@ -93,10 +94,16 @@ class Resource {
      * 获得扩展名
      *
      * @param {String} pathName 访问路径
-     * @return {String}
+     * @return {String} 扩展名
      */
     getExtName(pathName) {
-        return pathName.substring(pathName.lastIndexOf('.'));
+        let index = pathName.lastIndexOf('.');
+
+        if(-1 === index) {
+            return '';
+        }
+
+        return pathName.substring(index + 1);
     }
 
     /**
@@ -112,7 +119,7 @@ class Resource {
             return;
         }
 
-        let pathname = url.parse(request.url).pathname;
+        let pathname = new Request(request).createURL().pathname;
         let mimeType = this.getMimeType(pathname);
 
         pathname = (this.root + pathname).replace(/\.\./g, '');
@@ -138,7 +145,7 @@ class Resource {
             response.setHeader('Last-Modified', stats.mtime.toUTCString());
 
             // 设置缓存
-            let extName = this.getExtName(pathname);
+            let extName = '.' + this.getExtName(pathname);
             let cacheConfig = undefined === this.options.cache ?
                 Resource.cache : this.options.cache;
 
