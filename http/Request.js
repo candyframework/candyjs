@@ -4,9 +4,6 @@
  */
 'use strict';
 
-const url = require('url');
-const querystring = require('querystring');
-
 const Headers = require('./Headers');
 const CoreRequest = require('../core/Request');
 
@@ -39,15 +36,10 @@ class Request extends CoreRequest {
      * @return {String | null}
      */
     getQueryString(parameter, defaultValue = null) {
-        let parsed = url.parse(this.request.url);
+        let params = new URL(this.request.url, this.getHostInfo()).searchParams;
+        let value = params.get(parameter);
 
-        if(null === parsed.query) {
-            return defaultValue;
-        }
-
-        let ret = querystring.parse(parsed.query);
-
-        return undefined === ret[parameter] ? defaultValue : ret[parameter];
+        return null === value ? defaultValue : value;
     }
 
     /**
@@ -175,6 +167,15 @@ class Request extends CoreRequest {
      */
     getCurrent() {
         return this.getHostInfo() + this.request.url;
+    }
+
+    /**
+     * 创建 URL 对象
+     *
+     * @return {URL}
+     */
+    createURL() {
+        return new URL(this.request.url, this.getHostInfo());
     }
 
 }

@@ -4,10 +4,9 @@
  */
 'use strict';
 
-const url = require('url');
-
 const Candy = require('../Candy');
 const CandyJS = require('../index');
+const Request = require('../http/Request');
 const CoreApp = require('../core/Application');
 const Controller = require('./Controller');
 const StringHelper = require('../helpers/StringHelper');
@@ -87,7 +86,7 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     requestListener(request, response) {
-        let route = url.parse(request.url).pathname;
+        let route = new Request(request).createURL().pathname;
 
         CandyJS.getLogger().trace('Route requested: ' + route);
 
