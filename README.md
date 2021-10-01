@@ -126,10 +126,6 @@ new CandyJs(app).listen(8090, function(){
 |
 </pre>
 
-### 计划
-
-计划从 5.0 开始除了中间件外，其他所有 request 和 response 均只提供封装后的对象，不在暴露原生对象
-
 ### 变更
 
 + 2021-10-01
