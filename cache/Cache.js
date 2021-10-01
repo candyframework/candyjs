@@ -12,6 +12,7 @@ class Cache {
     /**
      * @typedef {import('./AbstractCache')} AbstractCache
      * @return {AbstractCache}
+     * @throws {InvalidConfigException}
      */
     static getCache(type) {
         let app = Candy.app;
@@ -29,7 +30,7 @@ class Cache {
     }
 }
 /**
- * @property {Map<String, Object>} _instances
+ * @type {Map<String, any>}
  */
 Cache._instances = new Map();
 module.exports = Cache;

@@ -10,6 +10,9 @@
  */
 class Behavior {
     constructor() {
+        /**
+         * @type {import('./Component')}
+         */
         this.component = null;
     }
     /**

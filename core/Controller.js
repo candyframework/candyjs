@@ -63,11 +63,11 @@ class Controller extends Component {
     render(view, parameters = null) { }
 }
 /**
- * @property {String} EVENT_BEFORE_ACTION
+ * 前置事件
  */
 Controller.EVENT_BEFORE_ACTION = 'beforeAction';
 /**
- * @property {String} EVENT_AFTER_ACTION
+ * 后置事件
  */
 Controller.EVENT_AFTER_ACTION = 'afterAction';
 module.exports = Controller;

@@ -23,7 +23,7 @@ export default interface ICache {
      * @param {String} key 缓存键
      * @param {String} value 缓存值
      * @param {Number} duration 缓存时间 毫秒
-     * @return {Promise}
+     * @return {Promise<any>}
      * @throws {Error}
      */
     set(key: string, value: string, duration: number): Promise<any>;

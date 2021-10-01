@@ -11,13 +11,14 @@ import InvalidConfigException = require('../core/InvalidConfigException');
 class Cache {
 
     /**
-     * @property {Map<String, Object>} _instances
+     * @type {Map<String, any>}
      */
     static _instances: Map<string, any> = new Map();
 
     /**
      * @typedef {import('./AbstractCache')} AbstractCache
      * @return {AbstractCache}
+     * @throws {InvalidConfigException}
      */
     static getCache(type: string): any {
         let app = Candy.app;

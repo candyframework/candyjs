@@ -11,11 +11,14 @@
 class Behavior {
 
     /**
-     * @property {any} 行为持有的组件
+     * 行为持有的组件
      */
     public component: any;
 
     constructor() {
+        /**
+         * @type {import('./Component')}
+         */
         this.component = null;
     }
 

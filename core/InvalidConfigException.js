@@ -1,14 +1,12 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
-const Exception = require('./Exception');
-
+const Exception = require("./Exception");
 /**
  * 配置异常
  */
-class InvalidConfigException extends Exception {}
-
+class InvalidConfigException extends Exception {
+}
 module.exports = InvalidConfigException;

@@ -16,18 +16,18 @@ class AbstractCommand extends Event {
 }
 exports.default = AbstractCommand;
 /**
- * @property {String} EVENT_BEFORE_QUERY
+ * EVENT_BEFORE_QUERY
  */
 AbstractCommand.EVENT_BEFORE_QUERY = 'beforeQuery';
 /**
- * @property {String} EVENT_AFTER_QUERY
+ * EVENT_AFTER_QUERY
  */
 AbstractCommand.EVENT_AFTER_QUERY = 'afterQuery';
 /**
- * @property {String} EVENT_BEFORE_EXECUTE
+ * EVENT_BEFORE_EXECUTE
  */
 AbstractCommand.EVENT_BEFORE_EXECUTE = 'beforeExecute';
 /**
- * @property {String} EVENT_AFTER_EXECUTE
+ * EVENT_AFTER_EXECUTE
  */
 AbstractCommand.EVENT_AFTER_EXECUTE = 'afterExecute';

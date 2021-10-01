@@ -1,14 +1,12 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
-const Exception = require('./Exception');
-
+const Exception = require("./Exception");
 /**
  * 缓存异常
  */
-class CacheException extends Exception {}
-
+class CacheException extends Exception {
+}
 module.exports = CacheException;

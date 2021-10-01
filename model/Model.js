@@ -1,22 +1,18 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
-const Candy = require('../Candy');
-const Component = require('../core/Component');
-const Validator = require('./Validator');
-const StringHelper = require('../helpers/StringHelper');
-const ModelException = require('../core/ModelException');
-
+const Candy = require("../Candy");
+const Component = require("../core/Component");
+const Validator = require("./Validator");
+const ModelException = require("../core/ModelException");
 /**
  * 用于存储和校验与数据库相关的数据
  */
 class Model extends Component {
     constructor() {
         super();
-
         /**
          * 数据字段配置 一般与数据库字段一致
          *
@@ -28,7 +24,6 @@ class Model extends Component {
          * ```
          */
         this.attributes = null;
-
         /**
          * 模型属性与表单字段对应关系 用于解决模型字段与表单字段名称不同问题
          *
@@ -39,13 +34,11 @@ class Model extends Component {
          * ```
          */
         this.attributesMap = null;
-
         /**
          * 错误信息
          */
         this.messages = [];
     }
-
     /**
      * Returns the validation rules for attributes
      *
@@ -63,7 +56,6 @@ class Model extends Component {
     rules() {
         return null;
     }
-
     /**
      * 获取所有属性
      *
@@ -72,7 +64,6 @@ class Model extends Component {
     getAttributes() {
         return this.attributes;
     }
-
     /**
      * 获取某个属性
      *
@@ -80,13 +71,11 @@ class Model extends Component {
      * @throws {ModelException}
      */
     getAttribute(attribute) {
-        if(null === this.attributes) {
+        if (null === this.attributes) {
             throw new ModelException('model has no attribute to get');
         }
-
         return this.attributes[attribute];
     }
-
     /**
      * 设置属性
      *
@@ -95,7 +84,6 @@ class Model extends Component {
     setAttributes(attributes) {
         this.attributes = attributes;
     }
-
     /**
      * 设置一个属性
      *
@@ -103,13 +91,11 @@ class Model extends Component {
      * @param {any} value 属性值
      */
     setAttribute(attribute, value) {
-        if(null === this.attributes) {
+        if (null === this.attributes) {
             this.attributes = {};
         }
-
         this.attributes[attribute] = value;
     }
-
     /**
      * 获取验证器
      *
@@ -117,82 +103,66 @@ class Model extends Component {
      */
     getValidators() {
         let rules = this.rules();
-        if(null === rules) {
+        if (null === rules) {
             return null;
         }
-
         let ret = [];
-
-        for(let i=0; i<rules.length; i++) {
+        for (let i = 0; i < rules.length; i++) {
             let messages = undefined === rules[i].messages ? null : rules[i].messages;
-
-            if(rules[i].rule instanceof Validator) {
+            if (rules[i].rule instanceof Validator) {
                 rules[i].rule.model = this;
                 rules[i].rule.attributes = rules[i].attributes;
                 rules[i].rule.messages = messages;
                 ret.push(rules[i].rule);
-
                 continue;
             }
-
-            ret.push(
-                Candy.createObjectAsDefinition({
-                    classPath: rules[i].rule,
-                    model: this,
-                    attributes: rules[i].attributes,
-                    messages: messages
-                })
-            );
+            ret.push(Candy.createObjectAsDefinition({
+                classPath: rules[i].rule,
+                model: this,
+                attributes: rules[i].attributes,
+                messages: messages
+            }));
         }
-
         return ret;
     }
-
     /**
      * 填充模型
      */
     fill(request) {
-        if(null === this.attributes) {
+        if (null === this.attributes) {
             throw new ModelException('model has no attributes to fill');
         }
-
         let fields = Object.getOwnPropertyNames(this.attributes);
         let data = request[Model.fromParameter];
-
         let value = '';
-        for(let field of fields) {
-            if(null !== this.attributesMap && undefined !== this.attributesMap[field]) {
-                value = data[ this.attributesMap[field] ];
-            } else {
-                value = data[ field ];
+        for (let field of fields) {
+            if (null !== this.attributesMap && undefined !== this.attributesMap[field]) {
+                value = data[this.attributesMap[field]];
             }
-
+            else {
+                value = data[field];
+            }
             this.attributes[field] = value;
         }
     }
-
     /**
      * 执行验证
      *
      * @return {Boolean}
      */
     validate() {
-        if(null === this.attributes) {
+        if (null === this.attributes) {
             throw new ModelException('model has no attributes to validate');
         }
-
         let validators = this.getValidators();
-        if(null === validators) {
+        if (null === validators) {
             return true;
         }
-
-        for(let validator of validators) {
+        for (let validator of validators) {
             this.messages = this.messages.concat(validator.validateAttributes());
         }
-
         return this.messages.length === 0;
     }
-
     /**
      * 获取错误信息
      *
@@ -201,7 +171,6 @@ class Model extends Component {
     getErrors() {
         return this.messages;
     }
-
     /**
      * 清空错误信息
      */
@@ -209,10 +178,8 @@ class Model extends Component {
         this.messages = [];
     }
 }
-
 /**
- * @property {String} fromParameter 从哪里获取参数
+ * 从哪里获取参数
  */
 Model.fromParameter = 'body';
-
 module.exports = Model;

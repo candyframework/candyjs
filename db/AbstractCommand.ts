@@ -8,23 +8,24 @@ import Event = require('../core/Event');
  * 数据库操作基类
  */
 export default abstract class AbstractCommand extends Event {
+
     /**
-     * @property {String} EVENT_BEFORE_QUERY
+     * EVENT_BEFORE_QUERY
      */
     public static EVENT_BEFORE_QUERY = 'beforeQuery';
 
     /**
-     * @property {String} EVENT_AFTER_QUERY
+     * EVENT_AFTER_QUERY
      */
     public static EVENT_AFTER_QUERY = 'afterQuery';
 
     /**
-     * @property {String} EVENT_BEFORE_EXECUTE
+     * EVENT_BEFORE_EXECUTE
      */
     public static EVENT_BEFORE_EXECUTE = 'beforeExecute';
 
     /**
-     * @property {String} EVENT_AFTER_EXECUTE
+     * EVENT_AFTER_EXECUTE
      */
     public static EVENT_AFTER_EXECUTE = 'afterExecute';
 
@@ -122,4 +123,5 @@ export default abstract class AbstractCommand extends Event {
      * @returns {any}
      */
     public abstract rollbackTransaction(): any;
+
 }

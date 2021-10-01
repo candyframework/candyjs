@@ -259,4 +259,5 @@ class ArrayList implements IList {
     }
 
 }
+
 export = ArrayList;

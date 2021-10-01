@@ -1,16 +1,13 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
-const fs = require('fs');
-
+const fs = require("fs");
 /**
  * 文件处理
  */
 class FileHelper {
-
     /**
      * 获取 dirname
      *
@@ -19,10 +16,8 @@ class FileHelper {
      */
     static getDirname(dir) {
         dir = dir.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');
-
         return '' === dir ? '/' : dir;
     }
-
     /**
      * 转化正常路径
      *
@@ -39,68 +34,59 @@ class FileHelper {
      */
     static normalizePath(path, directorySeparator = '/') {
         let ret = [];
-
         path = path.replace(/\\+/g, directorySeparator);
-        if(directorySeparator === path.charAt(path.length - 1)) {
+        if (directorySeparator === path.charAt(path.length - 1)) {
             path = path.substring(0, path.length - 1);
         }
-
         path = path.replace(/\/+/g, directorySeparator);
-
-        for(let arr = path.split(directorySeparator), len=arr.length, i=0; i<len; i++) {
-            if('.' === arr[i]) {
+        for (let arr = path.split(directorySeparator), len = arr.length, i = 0; i < len; i++) {
+            if ('.' === arr[i]) {
                 continue;
-
-            } else if('..' === arr[i] && ret.length > 0) {
+            }
+            else if ('..' === arr[i] && ret.length > 0) {
                 ret.pop();
-
-            } else {
+            }
+            else {
                 ret.push(arr[i]);
             }
         }
-
         return ret.join('/');
     }
-
     /**
      * 创建文件夹
      *
      * @param {String} dir 目录路径
      * @param {Number} mode 目录权限
-     * @param {Function} callback 回调函数
+     * @param {any} callback 回调函数
      */
     static createDirectory(dir, mode = 0o777, callback = null) {
         fs.access(dir, fs.constants.F_OK, (err) => {
-            if(null === err) {
+            if (null === err) {
                 null !== callback && callback();
                 return true;
             }
-
             let parentDir = FileHelper.getDirname(dir);
             FileHelper.createDirectory(parentDir, mode, (err) => {
                 fs.mkdir(dir, mode, callback);
             });
         });
     }
-
     /**
      * 同步创建文件夹
      *
      * @param {String} dir 目录路径
      * @param {Number} mode 目录权限
+     * @return {Boolean}
      */
     static createDirectorySync(dir, mode = 0o777) {
-        if(fs.existsSync(dir)) {
+        if (fs.existsSync(dir)) {
             return true;
         }
-
-        if(FileHelper.createDirectorySync(FileHelper.getDirname(dir))) {
+        if (FileHelper.createDirectorySync(FileHelper.getDirname(dir))) {
             fs.mkdirSync(dir, mode);
         }
-
         return true;
     }
-
     /**
      * 文件是否存在
      *
@@ -110,7 +96,5 @@ class FileHelper {
     static existsSync(path) {
         return fs.existsSync(path);
     }
-
 }
-
 module.exports = FileHelper;

@@ -21,8 +21,7 @@ class ActionFilter extends Behavior {
         super();
 
         /**
-         * @typedef {import('./ActionEvent')} ActionEvent
-         * @param {ActionEvent} actionEvent
+         * @param {import('./ActionEvent')} actionEvent
          */
         this.beforeFilter = (actionEvent) => {
             // since runControllerAction() may block the program
@@ -36,8 +35,7 @@ class ActionFilter extends Behavior {
         };
 
         /**
-         * @typedef {import('./ActionEvent')} ActionEvent
-         * @param {ActionEvent} actionEvent
+         * @param {import('./ActionEvent')} actionEvent
          */
         this.afterFilter = (actionEvent) => {
             this.unListen();
@@ -59,12 +57,12 @@ class ActionFilter extends Behavior {
     /**
      * 前置过滤
      */
-    public beforeAction(actionEvent) {}
+    public beforeAction(actionEvent: any) {}
 
     /**
      * 后置过滤
      */
-    public afterAction(actionEvent) {}
+    public afterAction(actionEvent: any) {}
 
 }
 

@@ -2,12 +2,12 @@
  * @author afu
  * @license MIT
  */
-'use strict';
 
 /**
  * HttpSession 接口
  */
 export default interface ISession {
+
     /**
      * 获取 sessionId
      */
@@ -34,4 +34,5 @@ export default interface ISession {
      * @param {String} name
      */
     deleteAttribute(name: string): any;
+
 }

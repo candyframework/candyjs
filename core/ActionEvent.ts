@@ -10,22 +10,22 @@ import Event = require('./Event');
 class ActionEvent extends Event {
 
     /**
-     * @property {any} request
+     * http request
      */
     public request: any;
 
     /**
-     * @property {any} response
+     * http response
      */
     public response: any;
 
     /**
-     * @property {any} data
+     * 数据
      */
     public data: any;
 
     /**
-     * @property {Boolean} 状态
+     * 状态
      */
     public valid: boolean;
 

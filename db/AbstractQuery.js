@@ -12,35 +12,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class AbstractQuery {
     constructor() {
         /**
-         * @property {String} $select the columns being selected
+         * the columns being selected
          */
         this.$select = '';
         /**
-         * @property {String} $from the table to be selected from
+         * the table to be selected from
          */
         this.$from = '';
         /**
-         * @property {String} $where the condition of a query
+         * the condition of a query
          */
         this.$where = '';
         /**
-         *  @property {String} $groupBy the column of group by
+         * the column of group by
          */
         this.$groupBy = '';
         /**
-         *  @property {String} $having the condition of a query
+         * the condition of a query
          */
         this.$having = '';
         /**
-         *  @property {String} $orderBy the sort condition
+         * the sort condition
          */
         this.$orderBy = '';
         /**
-         * @property {Map} $options other sql information
+         * other sql information
          */
         this.$options = new Map();
         /**
-         * @property {Array} $parameters list of query parameter values
+         * list of query parameter values
          */
         this.$parameters = [];
     }

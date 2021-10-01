@@ -24,6 +24,13 @@ CandyJs 不是第三方框架的扩展，而是一个全新的框架。
 
 + https://github.com/douyu-beijing/candyjs
 
++ 修改代码
+
+```
+$ npm install typescript
+$ ./node_modules/.bin/tsc
+```
+
 ### Node 版本
 
 8.0.0 +
@@ -124,6 +131,10 @@ new CandyJs(app).listen(8090, function(){
 计划从 5.0 开始除了中间件外，其他所有 request 和 response 均只提供封装后的对象，不在暴露原生对象
 
 ### 变更
+
++ 2021-10-01
+
+    * fix some bug
 
 + 2020-12-16
 

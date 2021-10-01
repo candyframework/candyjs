@@ -9,7 +9,7 @@
 class Event {
 
     /**
-     * @property {Map<String, Array>} eventsMap the attached event handlers
+     * the attached event handlers
      *
      * {
      *      'eventName1': [fn1, fn2],

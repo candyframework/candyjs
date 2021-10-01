@@ -16,8 +16,7 @@ class ActionFilter extends Behavior {
     constructor() {
         super();
         /**
-         * @typedef {import('./ActionEvent')} ActionEvent
-         * @param {ActionEvent} actionEvent
+         * @param {import('./ActionEvent')} actionEvent
          */
         this.beforeFilter = (actionEvent) => {
             // since runControllerAction() may block the program
@@ -29,8 +28,7 @@ class ActionFilter extends Behavior {
             this.beforeAction(actionEvent);
         };
         /**
-         * @typedef {import('./ActionEvent')} ActionEvent
-         * @param {ActionEvent} actionEvent
+         * @param {import('./ActionEvent')} actionEvent
          */
         this.afterFilter = (actionEvent) => {
             this.unListen();

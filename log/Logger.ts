@@ -211,4 +211,5 @@ class Logger {
     }
 
 }
+
 export = Logger;

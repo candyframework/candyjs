@@ -32,17 +32,17 @@ import TimeHelper = require('../../helpers/TimeHelper');
 class Log extends AbstractLog {
 
     /**
-     * @property {String} absolute path of log file. default at runtime directory of the application
+     * absolute path of log file. default at runtime directory of the application
      */
     public logPath: string;
 
     /**
-     * @property {String} log file name
+     * log file name
      */
     public logFile: string;
 
     /**
-     * @property {Number} maxFileSize maximum log file size in KB
+     * maximum log file size in KB
      */
     public maxFileSize: number;
 
@@ -131,4 +131,5 @@ class Log extends AbstractLog {
     }
 
 }
+
 export = Log;

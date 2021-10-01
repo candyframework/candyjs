@@ -11,7 +11,7 @@ import Event = require('../core/Event');
 abstract class AbstractLog extends Event implements ILog {
 
     /**
-     * @property {String} EVENT_FLUSH 事件
+     * EVENT_FLUSH 事件
      */
     static EVENT_FLUSH: string = 'flush';
 
@@ -44,4 +44,5 @@ abstract class AbstractLog extends Event implements ILog {
     }
 
 }
+
 export = AbstractLog;

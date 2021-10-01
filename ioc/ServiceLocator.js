@@ -1,12 +1,10 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
-const Candy = require('../Candy');
-const InvalidConfigException = require('../core/InvalidConfigException');
-
+const Candy = require("../Candy");
+const InvalidConfigException = require("../core/InvalidConfigException");
 /**
  * 服务定位器 [service locator](//en.wikipedia.org/wiki/Service_locator_pattern)
  *
@@ -28,38 +26,23 @@ const InvalidConfigException = require('../core/InvalidConfigException');
  * ```
  */
 class ServiceLocator {
-
-    /**
-     * constructor
-     */
     constructor() {
-        /**
-         * @property {Map<String, Object>} services
-         */
         this.services = new Map();
-
-        /**
-         * @property {Map<String, Object>} definitions
-         */
         this.definitions = new Map();
     }
-
     /**
      * 设置服务
      *
      * @param {String} key
-     * @param {Object} service
+     * @param {any} service
      */
     setService(key, service) {
-        if(null === service) {
+        if (null === service) {
             this.services.delete(key);
-
             return;
         }
-
         this.services.set(key, service);
     }
-
     /**
      * 以定义方式设置服务
      *
@@ -72,21 +55,17 @@ class ServiceLocator {
      *
      */
     setServicesAsDefinition(definition) {
-        for(let key in definition) {
-            if(null === definition[key]) {
+        for (let key in definition) {
+            if (null === definition[key]) {
                 this.definitions.delete(key);
-
                 continue;
             }
-
-            if(undefined === definition[key].classPath) {
+            if (undefined === definition[key].classPath) {
                 throw new InvalidConfigException('The service configuration must contain a "classPath" key');
             }
-
             this.definitions.set(key, definition[key]);
         }
     }
-
     /**
      * 检查服务是否存在
      *
@@ -96,7 +75,6 @@ class ServiceLocator {
     hasService(key) {
         return this.services.has(key) || this.definitions.has(key);
     }
-
     /**
      * 获取服务
      *
@@ -104,17 +82,13 @@ class ServiceLocator {
      * @return {Object | null}
      */
     getService(key) {
-        if(this.services.has(key)) {
+        if (this.services.has(key)) {
             return this.services.get(key);
         }
-
-        if(this.definitions.has(key)) {
+        if (this.definitions.has(key)) {
             return Candy.createObject(this.definitions.get(key));
         }
-
         return null;
     }
-
 }
-
 module.exports = ServiceLocator;

@@ -12,7 +12,7 @@ import Behavior = require('./Behavior');
 class Component extends Event {
 
     /**
-     * @property {Map<String, Behavior>} behaviorsMap the attached behaviors
+     * the attached behaviors
      *
      * {
      *     'behaviorName1': instance1,
@@ -48,7 +48,7 @@ class Component extends Event {
      * 向组件附加一个行为
      *
      * @param {String} name 行为名称
-     * @param {String | Object} behavior 行为
+     * @param {any} behavior 行为
      */
     public attachBehavior(name: string, behavior: any): void {
         this.attachBehaviorInternal(name, behavior);
@@ -57,7 +57,7 @@ class Component extends Event {
     /**
      * 以列表形式向组件添加行为
      *
-     * @param {Array} behaviors 行为列表
+     * @param {any[]} behaviors 行为列表
      */
     public attachBehaviors(behaviors: any[]): void {
         for(let v of behaviors) {
@@ -69,7 +69,7 @@ class Component extends Event {
      * 删除组件的行为
      *
      * @param {String} name 行为的名称
-     * @return {Behavior | null}
+     * @return {Behavior | null} 被删除的行为
      */
     public detachBehavior(name: string): Behavior | null {
         if(!this.behaviorsMap.has(name)) {
@@ -112,7 +112,7 @@ class Component extends Event {
      * 保存行为类到组件
      *
      * @param {String} name 行为的名称
-     * @param {Behavior | String | Object} behavior
+     * @param {any} behavior 行为配置
      */
     private attachBehaviorInternal(name: string, behavior: any): void {
         if(!(behavior instanceof Behavior)) {

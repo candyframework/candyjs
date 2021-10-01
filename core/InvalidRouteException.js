@@ -1,14 +1,12 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
-const Exception = require('./Exception');
-
+const Exception = require("./Exception");
 /**
  * 路由异常
  */
-class InvalidRouteException extends Exception {}
-
+class InvalidRouteException extends Exception {
+}
 module.exports = InvalidRouteException;

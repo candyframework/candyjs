@@ -321,4 +321,5 @@ class LinkedList implements IList {
     }
 
 }
+
 export = LinkedList;

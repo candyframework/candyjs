@@ -22,7 +22,7 @@
         "session/**/*",
         "test/**/*",
         "utils/**/*",
-        "utils/**/*",
+        "web/**/*",
         "index.ts"
     ]
 }

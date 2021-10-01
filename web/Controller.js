@@ -1,30 +1,25 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
-const Candy = require('../Candy');
-const CoreController = require('../core/Controller');
-
+const Candy = require("../Candy");
+const CoreController = require("../core/Controller");
 /**
  * 控制器
  */
 class Controller extends CoreController {
-
     /**
      * constructor
      */
     constructor(context) {
         super(context);
-
         /**
          * @typedef {import('./View')} View
          * @type {View} view
          */
         this.view = null;
     }
-
     /**
      * 获取视图类
      *
@@ -32,13 +27,11 @@ class Controller extends CoreController {
      * @return {View}
      */
     getView() {
-        if(null === this.view) {
+        if (null === this.view) {
             this.view = Candy.createObjectAsString(Candy.app.defaultView, this.context);
         }
-
         return this.view;
     }
-
     /**
      * 设置视图类
      *
@@ -47,7 +40,6 @@ class Controller extends CoreController {
     setView(view) {
         this.view = view;
     }
-
     /**
      * @inheritdoc
      */
@@ -55,14 +47,11 @@ class Controller extends CoreController {
         response.write('Controller must implements the run() method');
         response.end();
     }
-
     /**
      * @inheritdoc
      */
     render(view, parameters = null) {
         return this.getView().render(view, parameters);
     }
-
 }
-
 module.exports = Controller;

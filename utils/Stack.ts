@@ -33,4 +33,5 @@ class Stack extends ArrayList {
     }
 
 }
+
 export = Stack;

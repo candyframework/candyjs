@@ -96,19 +96,5 @@ class Application extends Event {
     getRootPath() {
         return Candy.getPathAlias('@root');
     }
-    /**
-     * handle request
-     *
-     * @param {any} request
-     * @param {any} response
-     */
-    requestListener(request, response) { }
-    /**
-     * 异常处理
-     *
-     * @param {any} response 输出类
-     * @param {Exception} exception 异常类
-     */
-    handlerException(response, exception) { }
 }
 module.exports = Application;

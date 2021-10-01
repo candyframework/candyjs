@@ -30,7 +30,7 @@ class AbstractLog extends Event {
     }
 }
 /**
- * @property {String} EVENT_FLUSH 事件
+ * EVENT_FLUSH 事件
  */
 AbstractLog.EVENT_FLUSH = 'flush';
 module.exports = AbstractLog;

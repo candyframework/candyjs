@@ -1,9 +1,8 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
 /**
  * Universal Resource Identifier
  *
@@ -20,54 +19,18 @@
  *
  */
 class URI {
-
     /**
      * constructor
      */
     constructor() {
-        /**
-         * @property {String} scheme 协议
-         */
         this.scheme = '';
-
-        /**
-         * @property {String} host 主机
-         */
         this.host = '';
-
-        /**
-         * @property {String} port 端口号
-         */
         this.port = '';
-
-        /**
-         * @property {String} user 用户
-         */
         this.user = '';
-
-        /**
-         * @property {String} password 密码
-         */
         this.password = '';
-
-        /**
-         * @property {String} path 资源路径
-         */
         this.path = '';
-
-        /**
-         * @property {String} query 请求参数
-         */
         this.query = '';
-
-        /**
-         * @property {String} fragment 锚点
-         */
         this.fragment = '';
-
-        /**
-         * @property {RegExp} uri 正则表达式
-         */
         this.uriRegExp = new RegExp([
             // (scheme)
             '(http|https)?',
@@ -84,10 +47,6 @@ class URI {
             // #(fragment)
             '(?:#(.*))?'
         ].join(''));
-
-        /**
-         * @property {Array} uri 正则表达式匹配项
-         */
         this.uriRegExpKeys = [
             'source',
             'scheme',
@@ -100,7 +59,6 @@ class URI {
             'fragment'
         ];
     }
-
     /**
      * 创建一个 uri
      *
@@ -113,30 +71,26 @@ class URI {
      */
     createURIString(scheme = '', authority = '', path = '', query = '', fragment = '') {
         let uri = '';
-
-        if('' !== scheme) {
+        if ('' !== scheme) {
             uri += scheme + '://';
         }
-        if('' !== authority) {
+        if ('' !== authority) {
             uri += authority;
         }
-        if('' !== path) {
-            if('/' !== path.charAt(0)) {
+        if ('' !== path) {
+            if ('/' !== path.charAt(0)) {
                 path = '/' + path;
             }
-
             uri += path;
         }
-        if('' !== query) {
+        if ('' !== query) {
             uri += '?' + query;
         }
-        if('' !== fragment) {
+        if ('' !== fragment) {
             uri += '#' + fragment;
         }
-
         return uri;
     }
-
     /**
      * 设置 uri
      *
@@ -144,33 +98,31 @@ class URI {
      */
     setURI(uri) {
         let ret = this.parseUrl(uri);
-
-        if(undefined !== ret.scheme) {
+        if (undefined !== ret.scheme) {
             this.scheme = ret.scheme;
         }
-        if(undefined !== ret.host) {
+        if (undefined !== ret.host) {
             this.host = ret.host;
         }
-        if(undefined !== ret.port) {
+        if (undefined !== ret.port) {
             this.port = ret.port;
         }
-        if(undefined !== ret.user) {
+        if (undefined !== ret.user) {
             this.user = ret.user;
         }
-        if(undefined !== ret.password) {
+        if (undefined !== ret.password) {
             this.password = ret.password;
         }
-        if(undefined !== ret.path) {
+        if (undefined !== ret.path) {
             this.path = ret.path;
         }
-        if(undefined !== ret.query) {
+        if (undefined !== ret.query) {
             this.query = ret.query;
         }
-        if(undefined !== ret.fragment) {
+        if (undefined !== ret.fragment) {
             this.fragment = ret.fragment;
         }
     }
-
     /**
      * 解析 url
      *
@@ -179,18 +131,14 @@ class URI {
      */
     parseUrl(url) {
         let ret = {};
-
         let matches = url.match(this.uriRegExp);
-
-        if(null !== matches) {
-            for(let i=0,len=this.uriRegExpKeys.length; i<len; i++) {
+        if (null !== matches) {
+            for (let i = 0, len = this.uriRegExpKeys.length; i < len; i++) {
                 ret[this.uriRegExpKeys[i]] = matches[i];
             }
         }
-
         return ret;
     }
-
     /**
      * 解析 URI 的 authority 部分
      *
@@ -198,33 +146,20 @@ class URI {
      */
     getAuthority() {
         let authority = '';
-
-        if('' !== this.user) {
+        if ('' !== this.user) {
             authority += this.user + ':' + this.password + '@';
         }
-
         authority += this.host;
-
-        if('' !== this.port) {
+        if ('' !== this.port) {
             authority += ':' + this.port;
         }
-
         return authority;
     }
-
     /**
      * 转为字符串
      */
     toString() {
-        return this.createURIString(
-            this.scheme,
-            this.getAuthority(),
-            this.path,
-            this.query,
-            this.fragment
-        );
+        return this.createURIString(this.scheme, this.getAuthority(), this.path, this.query, this.fragment);
     }
-
 }
-
 module.exports = URI;

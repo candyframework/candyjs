@@ -9,43 +9,44 @@
  * 子类应该继承该类并实现该类的抽象方法
  */
 export default abstract class AbstractQuery {
+
     /**
-     * @property {String} $select the columns being selected
+     * the columns being selected
      */
     public $select: string = '';
 
     /**
-     * @property {String} $from the table to be selected from
+     * the table to be selected from
      */
     public $from: string = '';
 
     /**
-     * @property {String} $where the condition of a query
+     * the condition of a query
      */
     public $where: string = '';
 
     /**
-     *  @property {String} $groupBy the column of group by
+     * the column of group by
      */
     public $groupBy: string = '';
 
     /**
-     *  @property {String} $having the condition of a query
+     * the condition of a query
      */
     public $having: string = '';
 
     /**
-     *  @property {String} $orderBy the sort condition
+     * the sort condition
      */
     public $orderBy: string = '';
 
     /**
-     * @property {Map} $options other sql information
+     * other sql information
      */
     public $options: Map<string, any> = new Map();
 
     /**
-     * @property {Array} $parameters list of query parameter values
+     * list of query parameter values
      */
     public $parameters: any[] = [];
 
@@ -131,4 +132,5 @@ export default abstract class AbstractQuery {
      * @param {String} columns
      */
     public abstract orderBy(columns: string): AbstractQuery;
+
 }

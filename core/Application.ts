@@ -9,20 +9,20 @@ import InvalidConfigException = require('./InvalidConfigException');
 /**
  * 应用基类
  */
-class Application extends Event {
+abstract class Application extends Event {
 
     /**
-     * @property {String} encoding 编码
+     * 编码
      */
     public encoding: string;
 
     /**
-     * @property {Boolean} debug 调试
+     * 调试开关
      */
     public debug: boolean;
 
     /**
-     * @property {String} exceptionHandler 异常处理类
+     * 异常处理类
      */
     public exceptionHandler: string;
 
@@ -128,18 +128,18 @@ class Application extends Event {
     /**
      * handle request
      *
-     * @param {any} request
-     * @param {any} response
+     * @param {any} request http request
+     * @param {any} response http response
      */
-    public requestListener(request, response): void {}
+    public abstract requestListener(request: any, response: any): void;
 
     /**
      * 异常处理
      *
-     * @param {any} response 输出类
+     * @param {any} response http response
      * @param {Exception} exception 异常类
      */
-    public handlerException(response, exception): void {}
+    public abstract handlerException(response: any, exception: any): void;
 
 }
 

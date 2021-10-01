@@ -11,17 +11,17 @@ import ActionEvent = require('./ActionEvent');
 class Controller extends Component {
 
     /**
-     * @property {String} EVENT_BEFORE_ACTION
+     * 前置事件
      */
-    static EVENT_BEFORE_ACTION = 'beforeAction';
+    static EVENT_BEFORE_ACTION: string = 'beforeAction';
 
     /**
-     * @property {String} EVENT_AFTER_ACTION
+     * 后置事件
      */
-    static EVENT_AFTER_ACTION = 'afterAction';
+    static EVENT_AFTER_ACTION: string = 'afterAction';
 
     /**
-     * @property {any} context 上下文环境 用于保存当前请求相关的信息
+     * 上下文环境 用于保存当前请求相关的信息
      */
     public context: any;
 
@@ -58,7 +58,7 @@ class Controller extends Component {
      * @param {any} request
      * @param {any} response
      */
-    private runControllerAction(request: any, response: any): void {
+    public runControllerAction(request: any, response: any): void {
         let actionEvent = new ActionEvent();
         actionEvent.request = request;
         actionEvent.response = response;

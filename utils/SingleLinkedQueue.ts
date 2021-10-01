@@ -180,4 +180,5 @@ class SingleLinkedQueue implements IQueue {
     }
 
 }
+
 export = SingleLinkedQueue;

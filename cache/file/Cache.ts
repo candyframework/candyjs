@@ -24,12 +24,12 @@ import FileHelper = require('../../helpers/FileHelper');
 class Cache extends AbstractCache {
 
     /**
-     * @property {String} fileExtension 缓存文件后缀
+     * 扩展名
      */
     public fileExtension: string;
 
     /**
-     * @property {String} cachePath 缓存目录
+     * 缓存目录
      */
     public cachePath: string;
 

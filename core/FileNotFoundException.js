@@ -1,14 +1,12 @@
+"use strict";
 /**
  * @author afu
  * @license MIT
  */
-'use strict';
-
-const Exception = require('./Exception');
-
+const Exception = require("./Exception");
 /**
  * 文件找不到异常
  */
-class FileNotFoundException extends Exception {}
-
+class FileNotFoundException extends Exception {
+}
 module.exports = FileNotFoundException;
