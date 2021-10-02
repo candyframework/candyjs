@@ -19,13 +19,13 @@ class ActionFilter extends Behavior {
          * @param {import('./ActionEvent')} actionEvent
          */
         this.beforeFilter = (actionEvent) => {
+            this.beforeAction(actionEvent);
             // since runControllerAction() may block the program
             // afterFilter() will not execute when `false === actionEvent.valid`
             // so unListen here
             if (!actionEvent.valid) {
                 this.unListen();
             }
-            this.beforeAction(actionEvent);
         };
         /**
          * @param {import('./ActionEvent')} actionEvent
