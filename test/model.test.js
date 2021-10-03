@@ -1,6 +1,7 @@
 const request = require('supertest');
 const assert = require('assert');
 const Model = require('../model/Model');
+const Validator = require('../model/Validator');
 
 // mock data
 const mockRequest = {
@@ -13,7 +14,7 @@ const mockRequest = {
 const mockRequest2 = {
     body: {
         user_name: '',
-        age: 20,
+        age: 209,
         school: ''
     }
 };
@@ -40,8 +41,32 @@ class UserModel extends Model {
                 rule: 'candy/model/RequiredValidator',
                 attributes: ['name', 'school'],
                 messages: ['用户名不能为空']
+            },
+            {
+                rule: new MyNumberValidator(),
+                attributes: ['age'],
+                messages: ['年龄不合法']
             }
         ];
+    }
+}
+
+class MyNumberValidator extends Validator {
+    constructor() {
+        super();
+
+        this.max = 100;
+        this.min = 1;
+    }
+
+    validate(attributeName, attributeValue) {
+        let info = this.getMessage(attributeName);
+
+        if(attributeValue < this.min || attributeValue > this.max) {
+            return '' === info ? 'age is invalid' : info;
+        }
+
+        return '';
     }
 }
 
@@ -78,6 +103,7 @@ describe('Fill model', function() {
         assert.equal(rs, false);
         assert.equal(m.getErrors()[0], '用户名不能为空');
         assert.equal(m.getErrors()[1], 'school is required');
+        assert.equal(m.getErrors()[2], '年龄不合法');
 
         done();
     });

@@ -109,6 +109,7 @@ class Model extends Component {
         let ret = [];
         for (let i = 0; i < rules.length; i++) {
             let messages = undefined === rules[i].messages ? null : rules[i].messages;
+            // rule is validator instance
             if (rules[i].rule instanceof Validator) {
                 rules[i].rule.model = this;
                 rules[i].rule.attributes = rules[i].attributes;
@@ -116,12 +117,22 @@ class Model extends Component {
                 ret.push(rules[i].rule);
                 continue;
             }
-            ret.push(Candy.createObjectAsDefinition({
-                classPath: rules[i].rule,
+            // rule is string
+            if ('string' === typeof rules[i].rule) {
+                ret.push(Candy.createObjectAsDefinition({
+                    classPath: rules[i].rule,
+                    model: this,
+                    attributes: rules[i].attributes,
+                    messages: messages
+                }));
+                continue;
+            }
+            // rule is config
+            ret.push(Candy.createObjectAsDefinition(Object.assign({
                 model: this,
                 attributes: rules[i].attributes,
                 messages: messages
-            }));
+            }, rules[i].rule)));
         }
         return ret;
     }

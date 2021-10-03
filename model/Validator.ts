@@ -81,7 +81,7 @@ class Validator {
     }
 
     /**
-     * 验证一个属性 子类应该实现该方法
+     * 验证一个属性 并返回错误信息
      *
      * @param {String} attributeName 属性名
      * @param {any} attributeValue 属性值
