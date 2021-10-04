@@ -128,6 +128,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2021-10-04
+
+    * npm package 4.9.0 添加 model
+
 + 2021-10-01
 
     * fix some bug

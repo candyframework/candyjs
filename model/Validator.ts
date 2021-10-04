@@ -12,6 +12,7 @@ class Validator {
     public model: any;
     public attributes: string[] | null;
     public messages: string[] | null;
+    public skip: boolean;
 
     constructor() {
         /**
@@ -39,6 +40,11 @@ class Validator {
          * ```
          */
         this.messages = null;
+
+        /**
+         * 是否跳过校验
+         */
+        this.skip = false;
     }
 
     /**
@@ -51,6 +57,12 @@ class Validator {
         let infos = [];
 
         for(let i=0, result=''; i<list.length; i++) {
+            // 跳过检查
+            if(this.skip) {
+                // continue or break in experimental stage
+                break;
+            }
+
             result = this.validate(list[i], this.model.attributes[ list[i] ]);
 
             if('' !== result) {

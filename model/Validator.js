@@ -32,6 +32,10 @@ class Validator {
          * ```
          */
         this.messages = null;
+        /**
+         * 是否跳过校验
+         */
+        this.skip = false;
     }
     /**
      * 执行验证
@@ -42,6 +46,11 @@ class Validator {
         let list = this.attributes;
         let infos = [];
         for (let i = 0, result = ''; i < list.length; i++) {
+            // 跳过检查
+            if (this.skip) {
+                // continue or break in experimental stage
+                break;
+            }
             result = this.validate(list[i], this.model.attributes[list[i]]);
             if ('' !== result) {
                 infos.push(result);

@@ -45,9 +45,10 @@ class Model extends Component {
      * ```
      * [
      *      {
+     *          // 必选参数
      *          rule: 'candy/model/RequiredValidator',
      *          attributes: ['name', 'age'],
-     *          // 错误信息 可选
+     *          // 可选参数 错误信息
      *          messages: ['name is required', 'age is required']
      *      }
      * ]

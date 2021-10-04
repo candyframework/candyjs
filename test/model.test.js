@@ -8,14 +8,20 @@ const mockRequest = {
     body: {
         user_name: 'zhang san',
         age: 10,
-        school: '233 school'
+        school: '233 school',
+        email: 'afu@afu.com',
+        password: '123',
+        confirming: '123'
     }
 };
 const mockRequest2 = {
     body: {
         user_name: '',
         age: 209,
-        school: ''
+        email: '',
+        school: '',
+        password: '123',
+        confirming: '123456'
     }
 };
 
@@ -27,7 +33,10 @@ class UserModel extends Model {
         this.attributes = {
             name: '',
             age: 0,
-            school: ''
+            school: '',
+            email: '',
+            password: '',
+            confirming: ''
         };
 
         this.attributesMap = {
@@ -46,6 +55,15 @@ class UserModel extends Model {
                 rule: new MyNumberValidator(),
                 attributes: ['age'],
                 messages: ['年龄不合法']
+            },
+            {
+                rule: 'candy/model/EqualValidator',
+                attributes: ['password', 'confirming'],
+                messages: ['两次密码不一致']
+            },
+            {
+                rule: 'candy/model/EmailValidator',
+                attributes: ['email']
             }
         ];
     }
@@ -104,6 +122,8 @@ describe('Fill model', function() {
         assert.equal(m.getErrors()[0], '用户名不能为空');
         assert.equal(m.getErrors()[1], 'school is required');
         assert.equal(m.getErrors()[2], '年龄不合法');
+        assert.equal(m.getErrors()[3], '两次密码不一致');
+        assert.equal(m.getErrors()[4], 'email is not valid');
 
         done();
     });
