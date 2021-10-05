@@ -33,7 +33,7 @@ class Cache extends AbstractCache {
      */
     public cachePath: string;
 
-    constructor(config: any) {
+    constructor() {
         super();
 
         this.fileExtension = '.bin';

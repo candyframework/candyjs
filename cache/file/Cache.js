@@ -21,7 +21,7 @@ const FileHelper = require("../../helpers/FileHelper");
  *
  */
 class Cache extends AbstractCache {
-    constructor(config) {
+    constructor() {
         super();
         this.fileExtension = '.bin';
         this.cachePath = Candy.getPathAlias('@runtime/caches');
