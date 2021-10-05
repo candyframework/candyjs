@@ -13,11 +13,6 @@ import Logger = require('./log/Logger');
 class CandyJs {
 
     /**
-     * logger
-     */
-    static _logger: Logger = null;
-
-    /**
      * http server
      */
     public server: http.Server;
@@ -33,7 +28,7 @@ class CandyJs {
      * @typedef {import('./core/Application')} Application
      * @param {Application} application 应用实例
      */
-    constructor(application) {
+    constructor(application: any) {
         this.server = null;
         this.app = application;
     }
@@ -44,20 +39,7 @@ class CandyJs {
      * @return {Logger}
      */
     static getLogger(): Logger {
-        if(null === CandyJs._logger) {
-            CandyJs._logger = Logger.getLogger();
-        }
-
-        return CandyJs._logger;
-    }
-
-    /**
-     * 设置日志对象
-     *
-     * @param {any} logger 日志对象
-     */
-    static setLogger(logger: Logger): void {
-        CandyJs._logger = logger;
+        return Logger.getLogger();
     }
 
     // web

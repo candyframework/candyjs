@@ -18,7 +18,7 @@ import TimeHelper = require('../../helpers/TimeHelper');
  *     'targets': {
  *         'file': {
  *             'classPath': 'candy/log/file/Log',
- *             'logPath': '@runtime/logs',
+ *             'logPath': 'absolute path',
  *             'logFile': 'system.log',
  *             'maxFileSize': 10240
  *         },
@@ -46,20 +46,12 @@ class Log extends AbstractLog {
      */
     public maxFileSize: number;
 
-    constructor(config: any) {
+    constructor() {
         super();
 
-        this.logPath = undefined === config.logPath
-            ? Candy.getPathAlias('@runtime/logs')
-            : config.logPath;
-
-        this.logFile = undefined === config.logFile
-            ? 'system.log'
-            : config.logFile;
-
-        this.maxFileSize = undefined === config.maxFileSize
-            ? 10240
-            : config.maxFileSize;
+        this.logPath = Candy.getPathAlias('@runtime/logs');
+        this.logFile = 'system.log';
+        this.maxFileSize = 10240;
     }
 
     /**

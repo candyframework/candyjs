@@ -61,7 +61,7 @@ class Logger {
      */
     public targets: any[];
 
-    constructor(settings: any) {
+    private constructor(settings: any) {
         this.messages = [];
         this.flushInterval = 10;
         this.targets = [];
@@ -83,12 +83,10 @@ class Logger {
 
         for(let target in settings.targets) {
             if(undefined !== settings.targets[target].classPath) {
-                let clazz = Candy.createObjectAsString(
-                    settings.targets[target].classPath,
-                    settings.targets[target]);
-                clazz.on(AbstractLog.EVENT_FLUSH, clazz);
+                let instance = Candy.createObjectAsDefinition(settings.targets[target]);
+                instance.on(AbstractLog.EVENT_FLUSH, instance);
 
-                this.targets.push(clazz);
+                this.targets.push(instance);
             }
         }
     }

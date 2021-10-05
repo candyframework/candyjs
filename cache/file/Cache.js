@@ -14,7 +14,7 @@ const FileHelper = require("../../helpers/FileHelper");
  * 'cache': {
  *      'file': {
  *          'classPath': 'candy/cache/file/Cache',
- *          'cachePath': '...'
+ *          'cachePath': 'absolute path'
  *      }
  * }
  * ```
@@ -23,12 +23,8 @@ const FileHelper = require("../../helpers/FileHelper");
 class Cache extends AbstractCache {
     constructor(config) {
         super();
-        this.fileExtension = undefined === config.fileExtension
-            ? '.bin'
-            : config.fileExtension;
-        this.cachePath = undefined === config.cachePath
-            ? Candy.getPathAlias('@runtime/caches')
-            : config.cachePath;
+        this.fileExtension = '.bin';
+        this.cachePath = Candy.getPathAlias('@runtime/caches');
     }
     getCacheFile(key) {
         return this.cachePath + '/' + key + this.fileExtension;

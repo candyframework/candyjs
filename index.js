@@ -26,18 +26,7 @@ class CandyJs {
      * @return {Logger}
      */
     static getLogger() {
-        if (null === CandyJs._logger) {
-            CandyJs._logger = Logger.getLogger();
-        }
-        return CandyJs._logger;
-    }
-    /**
-     * 设置日志对象
-     *
-     * @param {any} logger 日志对象
-     */
-    static setLogger(logger) {
-        CandyJs._logger = logger;
+        return Logger.getLogger();
     }
     // web
     requestListener(req, res) {
@@ -84,8 +73,4 @@ class CandyJs {
         this.server.listen(port, callback);
     }
 }
-/**
- * logger
- */
-CandyJs._logger = null;
 module.exports = CandyJs;

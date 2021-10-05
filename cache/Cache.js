@@ -23,7 +23,7 @@ class Cache {
             throw new InvalidConfigException('The classPath of cache configuration is not found');
         }
         if (!Cache._instances.has(type)) {
-            Cache._instances.set(type, Candy.createObjectAsString(app.cache[type].classPath, app.cache[type]));
+            Cache._instances.set(type, Candy.createObjectAsDefinition(app.cache[type]));
             Cache._instances.get(type).init();
         }
         return Cache._instances.get(type);
