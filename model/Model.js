@@ -146,6 +146,9 @@ class Model extends Component {
         }
         let fields = Object.getOwnPropertyNames(this.attributes);
         let data = request[Model.fromParameter];
+        if (undefined === data) {
+            return false;
+        }
         let value = '';
         for (let field of fields) {
             if (null !== this.attributesMap && undefined !== this.attributesMap[field]) {
@@ -156,6 +159,7 @@ class Model extends Component {
             }
             this.attributes[field] = value;
         }
+        return true;
     }
     /**
      * 执行验证
