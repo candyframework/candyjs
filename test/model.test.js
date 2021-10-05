@@ -10,8 +10,8 @@ const mockRequest = {
         age: 10,
         school: '233 school',
         email: 'afu@afu.com',
-        password: '123',
-        confirming: '123'
+        password: '123456',
+        confirming: '123456'
     }
 };
 const mockRequest2 = {
@@ -64,6 +64,15 @@ class UserModel extends Model {
             {
                 rule: 'candy/model/EmailValidator',
                 attributes: ['email']
+            },
+            {
+                rule: {
+                    classPath: 'candy/model/StringValidator',
+                    minLength: 6,
+                    maxLength: 20
+                },
+                attributes: ['password'],
+                messages: ['the length of the password is invalid']
             }
         ];
     }
@@ -124,6 +133,7 @@ describe('Fill model', function() {
         assert.equal(m.getErrors()[2], '年龄不合法');
         assert.equal(m.getErrors()[3], '两次密码不一致');
         assert.equal(m.getErrors()[4], 'email is not valid');
+        assert.equal(m.getErrors()[5], 'the length of the password is invalid');
 
         done();
     });

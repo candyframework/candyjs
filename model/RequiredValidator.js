@@ -12,7 +12,7 @@ const Validator = require("./Validator");
  *      rules() {
  *          return [
  *              {
- *                  rule: 'candy/model/RequiredValidator'.
+ *                  rule: 'candy/model/RequiredValidator',
  *                  attributes: ['name', 'email'],
  *                  messages: ['name is required', 'email is required']
  *              }

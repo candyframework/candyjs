@@ -12,7 +12,7 @@ const Validator = require("./Validator");
  *      rules() {
  *          return [
  *              {
- *                  rule: 'candy/model/EmailValidator'.
+ *                  rule: 'candy/model/EmailValidator',
  *                  attributes: ['user_email'],
  *                  messages: ['user email is not valid']
  *              }

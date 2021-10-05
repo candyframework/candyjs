@@ -12,7 +12,7 @@ import Validator = require('./Validator');
  *      rules() {
  *          return [
  *              {
- *                  rule: 'candy/model/EqualValidator'.
+ *                  rule: 'candy/model/EqualValidator',
  *                  attributes: ['password', 'confirming'],
  *                  messages: ['password error']
  *              }
