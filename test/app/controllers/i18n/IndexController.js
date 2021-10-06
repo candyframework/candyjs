@@ -4,6 +4,7 @@ var CandyJs = require('../../../../index');
 var Request = require('../../../../http/Request');
 
 class IndexController {
+
     run(req, res) {
         let q = new Request(req);
         let param = q.getQueryString('param', '');
