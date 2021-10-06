@@ -22,6 +22,9 @@ class AbstractTranslator {
     setBasePath(basePath) {
         this.basePath = basePath;
     }
+    /**
+     * 获取基础路径
+     */
     getBasePath() {
         return this.basePath;
     }

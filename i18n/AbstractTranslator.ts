@@ -41,6 +41,9 @@ class AbstractTranslator implements ITranslator {
         this.basePath = basePath;
     }
 
+    /**
+     * 获取基础路径
+     */
     public getBasePath(): string {
         return this.basePath;
     }
