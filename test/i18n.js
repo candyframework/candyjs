@@ -46,7 +46,7 @@ describe('I18N', function() {
             });
     });
 
-    it('en-US', function(done) {
+    it('param', function(done) {
         request(server)
             .get('/i18n?param=123&lang=en')
             .end(function(err, res){

@@ -13,7 +13,6 @@ import InvalidConfigException = require('../core/InvalidConfigException');
  * translator: {
  *      [type]: {
  *          classPath: 'candy/i18n/Translator',
- *          language: 'zh-CN',
  *          basePath: __dirname + '/app/messages'
  *      }
  * }
