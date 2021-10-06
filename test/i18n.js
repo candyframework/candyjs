@@ -45,4 +45,16 @@ describe('I18N', function() {
                 done();
             });
     });
+
+    it('en-US', function(done) {
+        request(server)
+            .get('/i18n?param=123&lang=en')
+            .end(function(err, res){
+                if (err) return done(err);
+
+                assert.equal(res.text.trim(), 'hello world123');
+
+                done();
+            });
+    });
 });

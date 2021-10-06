@@ -1,4 +1,4 @@
 const msg = {
-    'hello world': '你好 世界'
+    'hello world{param}': '你好 世界{param}'
 };
 module.exports = msg;
