@@ -139,9 +139,10 @@ class Candy {
      * 导入一个类文件
      *
      * @param {String} clazz 类全名
+     * @param {Boolean} isAlias 是否别名路径
      */
-    static include(clazz: string): any {
-        let realClass = Candy.getPathAlias('@' + clazz);
+    static include(clazz: string, isAlias: boolean = true): any {
+        let realClass = isAlias ? Candy.getPathAlias('@' + clazz) : clazz;
 
         // 文件不存在抛出异常
         // todo

@@ -6,6 +6,7 @@ import http = require('http');
 
 import Hook = require('./core/Hook');
 import Logger = require('./log/Logger');
+import I18N = require('./i18n/I18N');
 
 /**
  * 入口
@@ -34,12 +35,21 @@ class CandyJs {
     }
 
     /**
-     * 获取日志对象
+     * 获取日志实例
      *
      * @return {Logger}
      */
     static getLogger(): Logger {
         return Logger.getLogger();
+    }
+
+    /**
+     * 获取国际化实例
+     *
+     * @returns {I18N}
+     */
+    static getI18N(): I18N {
+        return I18N.getI18N();
     }
 
     // web
