@@ -56,17 +56,9 @@ class Candy {
     /**
      * 创建对象
      *
-     * @param {String | any} 以某个别名开头的类全名或类配置
-     *
-     * ```
-     * eg.
-     * 'alias/path/Class'
-     * or
-     * {classPath: 'some/path/Class', anyOtherProperties}
-     * ```
-     *
+     * @param {any} clazz 以某个别名开头的类全名或类配置
      * @param {any} parameters 构造函数参数
-     * @return {Object} 类实例
+     * @return {any} 类实例
      */
     static createObject(clazz, ...parameters) {
         if ('string' === typeof clazz) {
@@ -77,7 +69,8 @@ class Candy {
     /**
      * 字符串方式创建对象
      *
-     * @param {String} classPath
+     * @param {String} classPath 类路径
+     * @param {any} parameters 构造函数参数
      */
     static createObjectAsString(classPath, ...parameters) {
         let realClass = Candy.getPathAlias('@' + classPath);
@@ -87,7 +80,8 @@ class Candy {
     /**
      * 配置方式创建对象
      *
-     * @param {any} definition
+     * @param {any} definition 类配置
+     * @param {any} parameters 构造函数参数
      */
     static createObjectAsDefinition(definition, ...parameters) {
         let realClass = Candy.getPathAlias('@' + definition.classPath);
