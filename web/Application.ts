@@ -99,7 +99,7 @@ class Application extends CoreApp {
         let controller = this.createController(route);
 
         if(null === controller) {
-            throw new InvalidRouteException('The route requested is invalid ' + route);
+            throw new InvalidRouteException('The route requested is not found');
         }
 
         // 是否继承自框架控制器
@@ -160,7 +160,7 @@ class Application extends CoreApp {
 
         // 拦截路由
         if(null !== this.interceptAll) {
-            CandyJS.getLogger().trace('Route was intercepted: ' + route);
+            CandyJS.getLogger().trace('Route intercepted: ' + route);
 
             return Candy.createObject(this.interceptAll);
         }

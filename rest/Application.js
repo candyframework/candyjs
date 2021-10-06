@@ -49,7 +49,7 @@ class Application extends CoreApp {
         let route = new Request(request).createURL().pathname;
         let ret = this.resolveRoutes(route, request.method);
         if (null === ret) {
-            throw new InvalidRouteException('The REST route requested is invalid ' + route);
+            throw new InvalidRouteException('The route requested is not found');
         }
         // handler is function
         if ('function' === typeof ret.handler) {

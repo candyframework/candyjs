@@ -3,7 +3,6 @@
  * @author afu
  * @license MIT
  */
-const ModelException = require("../core/ModelException");
 /**
  * Validator base class
  */
@@ -82,7 +81,7 @@ class Validator {
      * @return {String} 有错误时返回错误信息 无错误时返回空字符串
      */
     validate(attributeName, attributeValue) {
-        throw new ModelException('Child class must implement the validate() method');
+        return '';
     }
 }
 module.exports = Validator;

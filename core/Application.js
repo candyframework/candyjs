@@ -26,7 +26,7 @@ class Application extends Event {
      */
     init(config) {
         if (undefined === config.id) {
-            throw new InvalidConfigException('The "id" configuration is required');
+            throw new InvalidConfigException('The "id" configuration of the Application is missing');
         }
         if (undefined !== config.appPath) {
             this.setAppPath(config.appPath);

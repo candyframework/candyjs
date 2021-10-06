@@ -73,7 +73,7 @@ class Model extends Component {
      */
     getAttribute(attribute) {
         if (null === this.attributes) {
-            throw new ModelException('model has no attribute to get');
+            throw new ModelException('The model has no attribute to get');
         }
         return this.attributes[attribute];
     }
@@ -142,7 +142,7 @@ class Model extends Component {
      */
     fill(request) {
         if (null === this.attributes) {
-            throw new ModelException('model has no attributes to fill');
+            throw new ModelException('The model has no attributes to fill');
         }
         let fields = Object.getOwnPropertyNames(this.attributes);
         let data = request[Model.fromParameter];
@@ -168,7 +168,7 @@ class Model extends Component {
      */
     validate() {
         if (null === this.attributes) {
-            throw new ModelException('model has no attributes to validate');
+            throw new ModelException('The model has no attributes to validate');
         }
         let validators = this.getValidators();
         if (null === validators) {

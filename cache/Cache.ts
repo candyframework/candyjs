@@ -27,7 +27,7 @@ class Cache {
             throw new InvalidConfigException('The cache configuration is not found');
         }
         if(undefined === app.cache[type].classPath) {
-            throw new InvalidConfigException('The classPath of cache configuration is not found');
+            throw new InvalidConfigException('The "classPath" configuration of the cache is missing');
         }
 
         if(!Cache._instances.has(type)) {

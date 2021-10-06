@@ -45,7 +45,7 @@ abstract class Application extends Event {
      */
     private init(config: any): void {
         if(undefined === config.id) {
-            throw new InvalidConfigException('The "id" configuration is required');
+            throw new InvalidConfigException('The "id" configuration of the Application is missing');
         }
 
         if(undefined !== config.appPath) {

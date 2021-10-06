@@ -64,7 +64,7 @@ class Application extends CoreApp {
         let ret = this.resolveRoutes(route, request.method);
 
         if(null === ret) {
-            throw new InvalidRouteException('The REST route requested is invalid ' + route);
+            throw new InvalidRouteException('The route requested is not found');
         }
 
         // handler is function

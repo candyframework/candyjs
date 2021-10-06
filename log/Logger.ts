@@ -70,13 +70,15 @@ class Logger {
     }
 
     private init(settings: any) {
+        // 没有配置日志
         if(undefined === settings) {
             return;
         }
 
         if(undefined === settings.targets) {
-            throw new InvalidConfigException('The log configuration is invalid');
+            throw new InvalidConfigException('The "targets" configuration of the log is missing');
         }
+
         if(undefined !== settings.flushInterval) {
             this.flushInterval = settings.flushInterval;
         }

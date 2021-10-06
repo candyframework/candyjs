@@ -33,7 +33,7 @@ class Application extends CoreApp {
         CandyJS.getLogger().trace('Route requested: ' + route);
         let controller = this.createController(route);
         if (null === controller) {
-            throw new InvalidRouteException('The route requested is invalid ' + route);
+            throw new InvalidRouteException('The route requested is not found');
         }
         // 是否继承自框架控制器
         if (!(controller instanceof Controller)) {
@@ -85,7 +85,7 @@ class Application extends CoreApp {
         }
         // 拦截路由
         if (null !== this.interceptAll) {
-            CandyJS.getLogger().trace('Route was intercepted: ' + route);
+            CandyJS.getLogger().trace('Route intercepted: ' + route);
             return Candy.createObject(this.interceptAll);
         }
         // 解析路由
