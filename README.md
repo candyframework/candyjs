@@ -18,7 +18,9 @@ CandyJs 不是第三方框架的扩展，而是一个全新的框架。
 
 + 最新文档请参阅源码的 doc 目录
 
-+ https://douyu-beijing.github.io/candyjs-guide
++ doc https://douyu-beijing.github.io/candyjs-guide
+
++ demo https://github.com/douyu-beijing/candyjs-examples
 
 ### 源码 source code
 
