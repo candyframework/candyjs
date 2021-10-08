@@ -27,6 +27,7 @@ import Validator = require('./Validator');
  *
  */
 class StringValidator extends Validator {
+
     /**
      * 最小长度
      */

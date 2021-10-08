@@ -14,7 +14,7 @@ import Validator = require('./Validator');
  *              {
  *                  rule: 'candy/model/EmailValidator',
  *                  attributes: ['user_email'],
- *                  messages: ['user email is not valid']
+ *                  messages: ['user email is invalid']
  *              }
  *          ];
  *      }
@@ -23,6 +23,7 @@ import Validator = require('./Validator');
  *
  */
 class EmailValidator extends Validator {
+
     /**
      * 模式
      */
@@ -41,7 +42,7 @@ class EmailValidator extends Validator {
         let info = this.getMessage(attributeName);
 
         if(!this.pattern.test(attributeValue)) {
-            return '' === info ? attributeName + ' is not valid' : info;
+            return '' === info ? attributeName + ' is invalid' : info;
         }
 
         return '';

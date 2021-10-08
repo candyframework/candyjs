@@ -14,7 +14,7 @@ const Validator = require("./Validator");
  *              {
  *                  rule: 'candy/model/EmailValidator',
  *                  attributes: ['user_email'],
- *                  messages: ['user email is not valid']
+ *                  messages: ['user email is invalid']
  *              }
  *          ];
  *      }
@@ -33,7 +33,7 @@ class EmailValidator extends Validator {
     validate(attributeName, attributeValue) {
         let info = this.getMessage(attributeName);
         if (!this.pattern.test(attributeValue)) {
-            return '' === info ? attributeName + ' is not valid' : info;
+            return '' === info ? attributeName + ' is invalid' : info;
         }
         return '';
     }
