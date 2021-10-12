@@ -232,6 +232,17 @@ class Model extends Component {
     }
 
     /**
+     * 获取第一个错误信息 如果没有则返回空
+     */
+    public getFirstError(): string {
+        if(this.messages.length > 0) {
+            return this.messages[0];
+        }
+
+        return '';
+    }
+
+    /**
      * 清空错误信息
      */
     public clearErrors(): void {

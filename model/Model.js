@@ -188,6 +188,15 @@ class Model extends Component {
         return this.messages;
     }
     /**
+     * 获取第一个错误信息 如果没有则返回空
+     */
+    getFirstError() {
+        if (this.messages.length > 0) {
+            return this.messages[0];
+        }
+        return '';
+    }
+    /**
      * 清空错误信息
      */
     clearErrors() {
