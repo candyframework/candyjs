@@ -1,12 +1,12 @@
 const assert = require('assert');
-const LinkedList = require('../../utils/LinkedList');
+const LinkedList = require('../utils/LinkedList');
 
 const list = new LinkedList();
 
 
 // test
-describe('LinkedList: ', function() {
-    it('add test', function(done) {
+describe('LinkedList', () => {
+    it('#add()', (done) => {
         list.add('a');
         list.add('b');
         list.add('c');
@@ -16,7 +16,7 @@ describe('LinkedList: ', function() {
         done();
     });
 
-    it('remove test', function(done) {
+    it('#remove()', (done) => {
         list.remove('a');
 
         assert.equal(list.get(0), 'b');
@@ -24,7 +24,7 @@ describe('LinkedList: ', function() {
         done();
     });
 
-    it('removeAt test', function(done) {
+    it('#removeAt()', (done) => {
         list.removeAt(0);
 
         assert.equal(list.get(0), 'c');
@@ -32,7 +32,7 @@ describe('LinkedList: ', function() {
         done();
     });
 
-    it('readd test', function(done) {
+    it('continue #add()', (done) => {
         list.add('x');
         list.add('y');
         list.add('z');
@@ -42,9 +42,10 @@ describe('LinkedList: ', function() {
         done();
     });
 
-    it('length test', function(done) {
+    it('#size()', (done) => {
         assert.equal(list.size(), 4);
 
         done();
     });
+
 });

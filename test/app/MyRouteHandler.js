@@ -2,7 +2,7 @@
 
 class MyRouteHandler {
     run(req, res) {
-        res.end('myroute');
+        res.end('custom route data');
     }
 }
 

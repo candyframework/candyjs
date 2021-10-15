@@ -19,13 +19,13 @@ const app = new App({
 });
 const server = new CandyJs(app).getServer();
 
+
 // test mvc
-describe('interceptRoutes', function() {
-    it('a route', function(done) {
+describe('Intercept', () => {
+    it('request route /abc', (done) => {
         request(server)
-            .get('/aroute')
-            .expect(200)
-            .end(function(err, res){
+            .get('/abc')
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'intercepted');
@@ -34,11 +34,10 @@ describe('interceptRoutes', function() {
             });
     });
 
-    it('b route', function(done) {
+    it('request route /xyz', (done) => {
         request(server)
-            .get('/broute')
-            .expect(200)
-            .end(function(err, res){
+            .get('/xyz')
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'intercepted');

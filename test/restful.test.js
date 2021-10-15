@@ -12,19 +12,19 @@ const app = new App({
 });
 
 // api
-app.get('/abc', function(req, res){
+app.get('/abc', (req, res) => {
     res.end('get ok');
 });
-app.get('/user/{id:\\d+}', function(req, res, params){
+app.get('/user/{id:\\d+}', (req, res, params) => {
     res.end( 'number_' + params.id );
 });
-app.get('/user/{name}', function(req, res, params){
+app.get('/user/{name}', (req, res, params) => {
     res.end( 'str_' + params.name );
 });
-app.get('/user/{name}/{page}', function(req, res, params){
+app.get('/user/{name}/{page}', (req, res, params) => {
     res.end( params.name + '_' + params.page );
 });
-app.post('/posts/add', function(req, res){
+app.post('/posts/add', (req, res) => {
     res.end('post ok');
 });
 app.get('/xyz', 'app/api/Demo@index');
@@ -35,12 +35,11 @@ const server = candyJs.getServer();
 
 
 // test restful api
-describe('RESTful api', function() {
-    it('simple get', function(done) {
+describe('RESTful', () => {
+    it('simple request test', (done) => {
         request(server)
             .get('/abc')
-            .expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'get ok');
@@ -49,11 +48,10 @@ describe('RESTful api', function() {
             });
     });
 
-    it('get with number param', function(done) {
+    it('with number param request test', (done)  => {
         request(server)
             .get('/user/123')
-            //.expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'number_123');
@@ -62,11 +60,10 @@ describe('RESTful api', function() {
             });
     });
 
-    it('get with string param', function(done) {
+    it('with string param request test', (done) => {
         request(server)
             .get('/user/zhangsan')
-            //.expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'str_zhangsan');
@@ -75,11 +72,10 @@ describe('RESTful api', function() {
             });
     });
 
-    it('get with multi params', function(done) {
+    it('multi params request test', (done) => {
         request(server)
             .get('/user/zhangsan/1')
-            //.expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'zhangsan_1');
@@ -88,11 +84,10 @@ describe('RESTful api', function() {
             });
     });
 
-    it('simple post', function(done) {
+    it('simple post', (done) => {
         request(server)
             .post('/posts/add')
-            //.expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'post ok');
@@ -101,11 +96,10 @@ describe('RESTful api', function() {
             });
     });
 
-    it('class get', function(done) {
+    it('use class', (done) => {
         request(server)
             .get('/xyz')
-            //.expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'restful class ok');
@@ -114,11 +108,10 @@ describe('RESTful api', function() {
             });
     });
 
-    it('class get with param', function(done) {
+    it('use class and param', (done) => {
         request(server)
             .get('/xyz/123')
-            //.expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, '123');

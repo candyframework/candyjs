@@ -1,12 +1,12 @@
 const assert = require('assert');
-const Stack = require('../../utils/Stack');
+const Stack = require('../utils/Stack');
 
 const s = new Stack();
 
 
 // test
-describe('Stack: ', function() {
-    it('push test', function(done) {
+describe('Stack', () => {
+    it('#push()', (done) => {
         s.push('a');
         s.push('b');
         s.push('c');
@@ -16,11 +16,12 @@ describe('Stack: ', function() {
         done();
     });
 
-    it('pop test', function(done) {
+    it('#pop()', (done) => {
         let ret = s.pop();
 
         assert.equal(ret, 'c');
 
         done();
     });
+
 });

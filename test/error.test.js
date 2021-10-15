@@ -10,7 +10,7 @@ const app = new App({
     id: 1
 });
 // api
-app.get('/test', function(req, res){
+app.get('/test', (req, res) => {
     setTimeout(() => {
         app.trigger('myerror', [res, 'error from customer']);
     }, 1000);
@@ -20,18 +20,16 @@ app.on('myerror', (params) => {
     res.end(params[1]);
 });
 
-
 const candyJs = new CandyJs(app);
 const server = candyJs.getServer();
 
 
 // test restful api
-describe('Test fire error', function() {
-    it('request /test', function(done) {
+describe('App', () => {
+    it('trigger error', (done) => {
         request(server)
             .get('/test')
-            .expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text, 'error from customer');
@@ -39,5 +37,4 @@ describe('Test fire error', function() {
                 done();
             });
     });
-
 });

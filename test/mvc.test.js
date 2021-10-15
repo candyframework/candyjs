@@ -12,7 +12,7 @@ const app = new App({
     'debug': true,
 
     'routesMap': {
-        'myroute': 'app/MyRouteHandler'
+        'customRoute': 'app/MyRouteHandler'
     },
 
     'modules': {
@@ -21,55 +21,40 @@ const app = new App({
 });
 const server = new CandyJs(app).getServer();
 
+
 // test mvc
-describe('MVC', function() {
-    it('simple get', function(done) {
+describe('MVC', () => {
+    it('simple request test', (done) => {
         request(server)
-            .get('/?p1=hh&p2=hehe')
-            .expect(200)
-            .end(function(err, res){
+            .get('/?p1=param1&p2=param2')
+            .end((err, res) => {
                 if (err) return done(err);
 
-                assert.equal(res.text.trim(), 'mvc hh');
+                assert.equal(res.text.trim(), 'mvc param1');
 
                 done();
             });
     });
 
-    it('routesmap get', function(done) {
+    it('routesmap request test', (done) => {
         request(server)
-            .get('/myroute')
-            .expect(200)
-            .end(function(err, res){
+            .get('/customRoute')
+            .end((err, res) => {
                 if (err) return done(err);
 
-                assert.equal(res.text.trim(), 'myroute');
+                assert.equal(res.text.trim(), 'custom route data');
 
                 done();
             });
     });
 
-    it('beforeaction get', function(done) {
-        request(server)
-            .get('/before')
-            .expect(200)
-            .end(function(err, res){
-                if (err) return done(err);
-
-                assert.equal(res.text.trim(), 'before action call');
-
-                done();
-            });
-    });
-
-    it('module get', function(done) {
+    it('module request test', (done) => {
         request(server)
             .get('/bbs')
-            .expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
-                assert.equal(res.text.trim(), 'module');
+                assert.equal(res.text.trim(), 'bbs module');
 
                 done();
             });

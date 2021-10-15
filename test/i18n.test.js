@@ -20,12 +20,13 @@ const app = new App({
 });
 const server = new CandyJs(app).getServer();
 
+
 // test mvc
-describe('I18N', function() {
-    it('zh-CN', function(done) {
+describe('I18N', () => {
+    it('zh-CN', (done) => {
         request(server)
             .get('/i18n?lang=cn')
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text.trim(), '你好 世界');
@@ -34,10 +35,10 @@ describe('I18N', function() {
             });
     });
 
-    it('en-US', function(done) {
+    it('en-US', (done) => {
         request(server)
             .get('/i18n?lang=en')
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text.trim(), 'hello world');
@@ -46,10 +47,10 @@ describe('I18N', function() {
             });
     });
 
-    it('param', function(done) {
+    it('with param', (done) => {
         request(server)
             .get('/i18n?param=123&lang=en')
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
                 assert.equal(res.text.trim(), 'hello world123');

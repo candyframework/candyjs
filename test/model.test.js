@@ -7,8 +7,8 @@ const Validator = require('../model/Validator');
 const mockRequest = {
     body: {
         user_name: 'zhang san',
-        age: 10,
-        school: '233 school',
+        age: 20,
+        school: 'abc school',
         email: 'afu@afu.com',
         password: '123456',
         confirming: '123456'
@@ -16,12 +16,12 @@ const mockRequest = {
 };
 const mockRequest2 = {
     body: {
-        user_name: '',
-        age: 209,
-        email: '',
-        school: '',
-        password: '123',
-        confirming: '123456'
+        user_name: 'zhang san',
+        age: 20,
+        school: 'abc school',
+        email: 'afu@afu.com',
+        password: '123456',
+        confirming: '123'
     }
 };
 
@@ -64,15 +64,6 @@ class UserModel extends Model {
             {
                 rule: 'candy/model/EmailValidator',
                 attributes: ['email']
-            },
-            {
-                rule: {
-                    classPath: 'candy/model/StringValidator',
-                    minLength: 6,
-                    maxLength: 20
-                },
-                attributes: ['password'],
-                messages: ['the length of the password is invalid']
             }
         ];
     }
@@ -99,19 +90,19 @@ class MyNumberValidator extends Validator {
 
 
 // 测试
-describe('Fill model', function() {
-    it('fill data test', function(done) {
+describe('Model', () => {
+    it('#fill() test', (done) => {
         const m = new UserModel();
         m.fill(mockRequest);
 
         assert.equal(m.getAttribute('name'), 'zhang san');
-        assert.equal(m.getAttribute('age'), 10);
-        assert.equal(m.getAttribute('school'), '233 school');
+        assert.equal(m.getAttribute('age'), 20);
+        assert.equal(m.getAttribute('school'), 'abc school');
 
         done();
     });
 
-    it('full data validate test', function(done) {
+    it('valid data test', (done) => {
         const m = new UserModel();
         m.fill(mockRequest);
 
@@ -122,20 +113,14 @@ describe('Fill model', function() {
         done();
     });
 
-    it('part of data validate test', function(done) {
+    it('invalid data test', (done) => {
         const m = new UserModel();
         m.fill(mockRequest2);
 
         let rs = m.validate();
         assert.equal(rs, false);
-        assert.equal(m.getErrors()[0], '用户名不能为空');
-        assert.equal(m.getErrors()[1], 'school is required');
-        assert.equal(m.getErrors()[2], '年龄不合法');
-        assert.equal(m.getErrors()[3], '两次密码不一致');
-        assert.equal(m.getErrors()[4], 'email is not valid');
-        assert.equal(m.getErrors()[5], 'the length of the password is invalid');
+        assert.equal(m.getFirstError(), '两次密码不一致');
 
         done();
     });
 });
-

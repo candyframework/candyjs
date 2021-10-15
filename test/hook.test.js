@@ -23,42 +23,38 @@ Hook.addHook((req, res, next) => {
 });
 
 // api
-app.get('/path1', function(req, res){
-    res.end('path1_rs');
+app.get('/path1', (req, res) => {
+    res.end('path1 data');
 });
-app.get('/path2', function(req, res){
-    res.end('path2_rs');
+app.get('/path2', (req, res) => {
+    res.end('path2 data');
 });
-
 
 const candyJs = new CandyJs(app);
-// candyJs.listen( 2333, () => {console.log('listened on 2333');} );
 const server = candyJs.getServer();
 
 
 // test
-describe('Hook test: ', function() {
-    it('get path1', function(done) {
+describe('Hook', () => {
+    it('request /path1', (done) => {
         request(server)
             .get('/path1')
-            .expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
-                assert.equal(res.text, 'path1_rs');
+                assert.equal(res.text, 'path1 data');
 
                 done();
             });
     });
 
-    it('get path2', function(done) {
+    it('request /path2', (done) => {
         request(server)
             .get('/path2')
-            .expect(200)
-            .end(function(err, res){
+            .end((err, res) => {
                 if (err) return done(err);
 
-                assert.equal(res.text, 'path2_rs');
+                assert.equal(res.text, 'path2 data');
 
                 done();
             });

@@ -1,12 +1,12 @@
 const assert = require('assert');
-const Q = require('../../utils/SingleLinkedQueue');
+const Q = require('../utils/SingleLinkedQueue');
 
 const q = new Q();
 
 
 // test
-describe('Queue: ', function() {
-    it('take test', function(done) {
+describe('Queue', () => {
+    it('#take()', (done) => {
         q.add('a');
         q.add('b');
         q.add('c');
@@ -17,11 +17,12 @@ describe('Queue: ', function() {
         done();
     });
 
-    it('remove test', function(done) {
+    it('#remove()', (done) => {
         q.remove('c');
 
         assert.equal(q.size(), 1);
 
         done();
     });
+
 });
