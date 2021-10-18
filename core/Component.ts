@@ -30,6 +30,15 @@ class Component extends Event {
     }
 
     /**
+     * 获取类名称
+     *
+     * @return {String}
+     */
+    public className(): string {
+        return this.constructor.name;
+    }
+
+    /**
      * 声明组件的行为列表
      *
      * [

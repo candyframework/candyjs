@@ -12,13 +12,13 @@ class Request {
         this._scriptFile = '';
     }
     /**
-     * 返回入口文件名
+     * 返回入口文件
      *
      * @return {String}
      */
     getScriptFile() {
         if ('' === this._scriptFile) {
-            this._scriptFile = process.mainModule.filename;
+            this._scriptFile = require.main.filename;
         }
         return this._scriptFile;
     }

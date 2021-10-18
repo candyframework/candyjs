@@ -16,6 +16,14 @@ class Component extends Event {
         this.ensureDeclaredBehaviorsAttached();
     }
     /**
+     * 获取类名称
+     *
+     * @return {String}
+     */
+    className() {
+        return this.constructor.name;
+    }
+    /**
      * 声明组件的行为列表
      *
      * [
