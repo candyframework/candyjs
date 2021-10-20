@@ -9,6 +9,9 @@ const Event = require("../core/Event");
  * 数据库操作基类
  */
 class AbstractCommand extends Event {
+    constructor() {
+        super();
+    }
     /**
      * 初始化操作
      */

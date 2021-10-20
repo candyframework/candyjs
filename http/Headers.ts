@@ -13,11 +13,9 @@ class Headers {
      *
      * header 头可能重复出现 所以这里以数组形式保存
      */
-    public headers: Map<String, String[]>;
+    public headers: Map<String, String[]> = new Map();
 
-    constructor() {
-        this.headers = new Map();
-    }
+    constructor() {}
 
     [Symbol.iterator]() {
         let index = 0;

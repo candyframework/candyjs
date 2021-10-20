@@ -39,6 +39,8 @@ class Validator {
      */
     public skip: boolean = false;
 
+    constructor() {}
+
     /**
      * 执行验证
      *

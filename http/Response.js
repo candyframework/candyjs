@@ -31,12 +31,33 @@ class Response extends CoreResponse {
      */
     constructor(response) {
         super(response);
+        /**
+         * 编码
+         */
         this.encoding = Candy.app.encoding;
+        /**
+         * HTTP protocol version
+         */
         this.version = '1.1';
+        /**
+         * the HTTP status code
+         */
         this.statusCode = 200;
+        /**
+         * the HTTP status description that comes together with the status code
+         */
         this.statusText = 'OK';
+        /**
+         * HTTP headers
+         */
         this.headers = new Headers();
+        /**
+         * HTTP content
+         */
         this.content = '';
+        /**
+         * HTTP cookies
+         */
         this.cookies = [];
     }
     /**

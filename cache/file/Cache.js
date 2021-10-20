@@ -23,7 +23,13 @@ const FileHelper = require("../../helpers/FileHelper");
 class Cache extends AbstractCache {
     constructor() {
         super();
+        /**
+         * 扩展名
+         */
         this.fileExtension = '.bin';
+        /**
+         * 缓存目录
+         */
         this.cachePath = Candy.getPathAlias('@runtime/caches');
     }
     getCacheFile(key) {

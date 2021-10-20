@@ -95,6 +95,8 @@ class URI {
         'fragment'
     ];
 
+    constructor() {}
+
     /**
      * 创建一个 uri
      *

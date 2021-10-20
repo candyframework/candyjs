@@ -20,6 +20,8 @@ class AbstractTranslator implements ITranslator {
      */
     public basePath: string = '';
 
+    constructor() {}
+
     /**
      * 设置语言
      */

@@ -31,8 +31,17 @@ const TimeHelper = require("../../helpers/TimeHelper");
 class Log extends AbstractLog {
     constructor() {
         super();
+        /**
+         * absolute path of log file. default at runtime directory of the application
+         */
         this.logPath = Candy.getPathAlias('@runtime/logs');
+        /**
+         * log file name
+         */
         this.logFile = 'system.log';
+        /**
+         * maximum log file size in KB
+         */
         this.maxFileSize = 10240;
     }
     /**

@@ -18,6 +18,8 @@ class Event {
      */
     public eventsMap: Map<string, any[]> = new Map();
 
+    constructor() {}
+
     /**
      * 注册事件处理
      *

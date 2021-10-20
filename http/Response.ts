@@ -107,37 +107,37 @@ class Response extends CoreResponse {
     /**
      * 编码
      */
-    public encoding: string;
+    public encoding: string = Candy.app.encoding;
 
     /**
      * HTTP protocol version
      */
-    public version: string;
+    public version: string = '1.1';
 
     /**
      * the HTTP status code
      */
-    public statusCode: number;
+    public statusCode: number = 200;
 
     /**
      * the HTTP status description that comes together with the status code
      */
-    public statusText: string;
+    public statusText: string = 'OK';
 
     /**
      * HTTP headers
      */
-    public headers: Headers;
+    public headers: Headers = new Headers();
 
     /**
      * HTTP content
      */
-    public content: string;
+    public content: string = '';
 
     /**
      * HTTP cookies
      */
-    public cookies: string[];
+    public cookies: string[] = [];
 
     /**
      * constructor
@@ -147,20 +147,6 @@ class Response extends CoreResponse {
      */
     constructor(response: any) {
         super(response);
-
-        this.encoding = Candy.app.encoding;
-
-        this.version = '1.1';
-
-        this.statusCode = 200;
-
-        this.statusText = 'OK';
-
-        this.headers = new Headers();
-
-        this.content = '';
-
-        this.cookies = [];
     }
 
     /**

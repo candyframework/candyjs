@@ -9,7 +9,7 @@
 class Request {
     constructor(request) {
         this.request = request;
-        this._scriptFile = '';
+        this.scriptFile = '';
     }
     /**
      * 返回入口文件
@@ -17,10 +17,10 @@ class Request {
      * @return {String}
      */
     getScriptFile() {
-        if ('' === this._scriptFile) {
-            this._scriptFile = require.main.filename;
+        if ('' === this.scriptFile) {
+            this.scriptFile = require.main.filename;
         }
-        return this._scriptFile;
+        return this.scriptFile;
     }
 }
 module.exports = Request;

@@ -15,6 +15,8 @@ class Behavior {
      */
     public component: any = null;
 
+    constructor() {}
+
     /**
      * 声明要监听的组件的事件和对应事件的处理程序
      *
