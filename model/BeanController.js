@@ -47,7 +47,7 @@ class BeanController extends Controller {
                 bean = Candy.createObjectAsDefinition(beans[i]);
             }
             bean.fill(this.context.request);
-            name = undefined === bean.modelName ? this.generateName(bean.className()) : bean.modelName;
+            name = '' === bean.modelName ? this.generateName(bean.className()) : bean.modelName;
             this[name] = bean;
         }
     }
