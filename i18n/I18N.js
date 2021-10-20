@@ -20,6 +20,9 @@ const InvalidConfigException = require("../core/InvalidConfigException");
  */
 class I18N {
     constructor() {
+        /**
+         * 翻译器
+         */
         this.translators = new Map();
     }
     /**

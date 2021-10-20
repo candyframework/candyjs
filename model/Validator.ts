@@ -8,43 +8,38 @@
  */
 class Validator {
 
-    public model: any;
-    public attributes: string[] | null;
-    public messages: string[] | null;
-    public skip: boolean;
+    /**
+     * 所属模型
+     *
+     * @typedef {import('./Model')} Model
+     * @type {Model}
+     */
+    public model: any = null;
 
-    constructor() {
-        /**
-         * 所属模型
-         *
-         * @typedef {import('./Model')} Model
-         * @type {Model}
-         */
-        this.model = null;
+    /**
+     * 待验证的属性
+     *
+     * ```
+     * ['name', 'age']
+     * ```
+     */
+    public attributes: string[] | null = null;
 
-        /**
-         * 待验证的属性
-         *
-         * ```
-         * ['name', 'age']
-         * ```
-         */
-        this.attributes = null;
+    /**
+     * 属性验证不通过时的错误信息 与 attributes 一一对应
+     *
+     * ```
+     * ['name is required', 'age is required']
+     * ```
+     */
+    public messages: string[] | null = null;
 
-        /**
-         * 属性验证不通过时的错误信息 与 attributes 一一对应
-         *
-         * ```
-         * ['name is required', 'age is required']
-         * ```
-         */
-        this.messages = null;
+    /**
+     * 是否跳过校验
+     */
+    public skip: boolean = false;
 
-        /**
-         * 是否跳过校验
-         */
-        this.skip = false;
-    }
+    constructor() {}
 
     /**
      * 执行验证

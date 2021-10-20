@@ -25,6 +25,9 @@ const Validator = require("./Validator");
 class BooleanValidator extends Validator {
     constructor() {
         super();
+        /**
+         * 是否严格模式
+         */
         this.strict = true;
     }
     /**

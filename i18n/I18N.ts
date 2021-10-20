@@ -26,11 +26,9 @@ class I18N {
     /**
      * 翻译器
      */
-    public translators: Map<string, Translator>;
+    public translators: Map<string, Translator> = new Map();
 
-    private constructor() {
-        this.translators = new Map();
-    }
+    private constructor() {}
 
     /**
      * 获取 i18n 实例

@@ -15,8 +15,7 @@ class Controller extends CoreController {
     constructor(context) {
         super(context);
         /**
-         * @typedef {import('./View')} View
-         * @type {View} view
+         * 视图类
          */
         this.view = null;
     }

@@ -13,7 +13,7 @@ class Request extends CoreRequest {
     /**
      * http headers
      */
-    public headers: Headers;
+    public headers: Headers = null;
 
     /**
      * constructor
@@ -23,8 +23,6 @@ class Request extends CoreRequest {
      */
     constructor(request: any) {
         super(request);
-
-        this.headers = null;
     }
 
     /**

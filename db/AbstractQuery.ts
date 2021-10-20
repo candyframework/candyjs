@@ -50,6 +50,8 @@ export default abstract class AbstractQuery {
      */
     public $parameters: any[] = [];
 
+    constructor() {}
+
     /**
      * Set parameters
      *

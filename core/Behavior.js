@@ -11,7 +11,7 @@
 class Behavior {
     constructor() {
         /**
-         * @type {import('./Component')}
+         * 行为持有的组件
          */
         this.component = null;
     }

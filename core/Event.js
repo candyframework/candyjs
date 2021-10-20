@@ -8,6 +8,14 @@
  */
 class Event {
     constructor() {
+        /**
+         * the attached event handlers
+         *
+         * {
+         *      'eventName1': [fn1, fn2],
+         *      'eventName2': [fn1, fn2]
+         * }
+         */
         this.eventsMap = new Map();
     }
     /**

@@ -8,6 +8,11 @@
  */
 class Headers {
     constructor() {
+        /**
+         * headers the headers in this collection
+         *
+         * header 头可能重复出现 所以这里以数组形式保存
+         */
         this.headers = new Map();
     }
     [Symbol.iterator]() {

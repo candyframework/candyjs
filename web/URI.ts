@@ -23,95 +23,79 @@ class URI {
     /**
      * 协议
      */
-    public scheme: string;
+    public scheme: string = '';
 
     /**
      * 主机
      */
-    public host: string;
+    public host: string = '';
 
     /**
      * 端口号
      */
-    public port: string;
+    public port: string = '';
 
     /**
      * 用户
      */
-    public user: string;
+    public user: string = '';
 
     /**
      * 密码
      */
-    public password: string;
+    public password: string = '';
 
     /**
      * 资源路径
      */
-    public path: string;
+    public path: string = '';
 
     /**
      * 请求参数
      */
-    public query: string;
+    public query: string = '';
 
     /**
      * 锚点
      */
-    public fragment: string;
+    public fragment: string = '';
 
     /**
      * 正则表达式
      */
-    public uriRegExp: RegExp;
+    public uriRegExp: RegExp = new RegExp([
+        // (scheme)
+        '(http|https)?',
+        // ://
+        '(?::\\/\\/)?',
+        // (user):(password)@
+        '(?:([^:@\\/]*):?([^:@\\/]*)@)?',
+        // (host):(port)
+        '([^:\\/?#]*)(?::(\\d*))?',
+        // (path)
+        '((?:\\/)?[^?#]*)',
+        // ?(query)
+        '(?:\\?([^#]*))?',
+        // #(fragment)
+        '(?:#(.*))?'
+    ].join(''));
 
     /**
      * 正则表达式匹配项
      */
-    public uriRegExpKeys: string[];
+    public uriRegExpKeys: string[] = [
+        'source',
+        'scheme',
+        'user',
+        'password',
+        'host',
+        'port',
+        'path',
+        'query',
+        'fragment'
+    ];
 
-    /**
-     * constructor
-     */
-    constructor() {
-        this.scheme = '';
-        this.host = '';
-        this.port = '';
-        this.user = '';
-        this.password = '';
-        this.path = '';
-        this.query = '';
-        this.fragment = '';
-
-        this.uriRegExp = new RegExp([
-            // (scheme)
-            '(http|https)?',
-            // ://
-            '(?::\\/\\/)?',
-            // (user):(password)@
-            '(?:([^:@\\/]*):?([^:@\\/]*)@)?',
-            // (host):(port)
-            '([^:\\/?#]*)(?::(\\d*))?',
-            // (path)
-            '((?:\\/)?[^?#]*)',
-            // ?(query)
-            '(?:\\?([^#]*))?',
-            // #(fragment)
-            '(?:#(.*))?'
-        ].join(''));
-
-        this.uriRegExpKeys = [
-            'source',
-            'scheme',
-            'user',
-            'password',
-            'host',
-            'port',
-            'path',
-            'query',
-            'fragment'
-        ];
-    }
+    constructor() {}
 
     /**
      * 创建一个 uri

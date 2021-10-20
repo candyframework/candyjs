@@ -4,6 +4,16 @@ const Candy = require("../Candy");
  * 抽象层
  */
 class AbstractTranslator {
+    constructor() {
+        /**
+         * 语言
+         */
+        this.language = '';
+        /**
+         * 语言配置所在目录
+         */
+        this.basePath = '';
+    }
     /**
      * 设置语言
      */
@@ -58,10 +68,11 @@ class AbstractTranslator {
     /**
      * 从文件系统加载语言
      *
-     * @param {String} path 文件路径
+     * @param {String} type 消息类型
      */
-    loadLanguageFromFile(path) {
-        let lang = Candy.include(path, false);
+    loadLanguageFromFile(type) {
+        let file = this.basePath + '/' + this.language + '/' + type;
+        let lang = Candy.include(file, false);
         return lang;
     }
 }

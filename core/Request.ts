@@ -9,12 +9,12 @@
 class Request {
 
     public request: any;
-    private _scriptFile: string;
+    private scriptFile: string;
 
     constructor(request: any) {
         this.request = request;
 
-        this._scriptFile = '';
+        this.scriptFile = '';
     }
 
     /**
@@ -23,11 +23,11 @@ class Request {
      * @return {String}
      */
     public getScriptFile(): string {
-        if ('' === this._scriptFile) {
-            this._scriptFile = require.main.filename;
+        if ('' === this.scriptFile) {
+            this.scriptFile = require.main.filename;
         }
 
-        return this._scriptFile;
+        return this.scriptFile;
     }
 
 }

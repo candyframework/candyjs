@@ -34,24 +34,20 @@ class Log extends AbstractLog {
     /**
      * absolute path of log file. default at runtime directory of the application
      */
-    public logPath: string;
+    public logPath: string = Candy.getPathAlias('@runtime/logs');
 
     /**
      * log file name
      */
-    public logFile: string;
+    public logFile: string = 'system.log';
 
     /**
      * maximum log file size in KB
      */
-    public maxFileSize: number;
+    public maxFileSize: number = 10240;
 
     constructor() {
         super();
-
-        this.logPath = Candy.getPathAlias('@runtime/logs');
-        this.logFile = 'system.log';
-        this.maxFileSize = 10240;
     }
 
     /**

@@ -16,11 +16,9 @@ class Event {
      *      'eventName2': [fn1, fn2]
      * }
      */
-    public eventsMap: Map<string, any[]>;
+    public eventsMap: Map<string, any[]> = new Map();
 
-    constructor() {
-        this.eventsMap = new Map();
-    }
+    constructor() {}
 
     /**
      * 注册事件处理

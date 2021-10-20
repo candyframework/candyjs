@@ -26,18 +26,15 @@ class Cache extends AbstractCache {
     /**
      * 扩展名
      */
-    public fileExtension: string;
+    public fileExtension: string = '.bin';
 
     /**
      * 缓存目录
      */
-    public cachePath: string;
+    public cachePath: string = Candy.getPathAlias('@runtime/caches');
 
     constructor() {
         super();
-
-        this.fileExtension = '.bin';
-        this.cachePath = Candy.getPathAlias('@runtime/caches');
     }
 
     private getCacheFile(key: string): string {

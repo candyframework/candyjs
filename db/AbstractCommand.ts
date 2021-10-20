@@ -29,6 +29,10 @@ export default abstract class AbstractCommand extends Event {
      */
     public static EVENT_AFTER_EXECUTE = 'afterExecute';
 
+    constructor() {
+        super();
+    }
+
     /**
      * 初始化操作
      */

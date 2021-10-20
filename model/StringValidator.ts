@@ -31,18 +31,15 @@ class StringValidator extends Validator {
     /**
      * 最小长度
      */
-    public minLength: number;
+    public minLength: number = 1;
 
     /**
      * 最大长度
      */
-    public maxLength: number;
+    public maxLength: number = 2333;
 
     constructor() {
         super();
-
-        this.minLength = 1;
-        this.maxLength = 2333;
     }
 
     /**

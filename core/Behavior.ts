@@ -13,14 +13,9 @@ class Behavior {
     /**
      * 行为持有的组件
      */
-    public component: any;
+    public component: any = null;
 
-    constructor() {
-        /**
-         * @type {import('./Component')}
-         */
-        this.component = null;
-    }
+    constructor() {}
 
     /**
      * 声明要监听的组件的事件和对应事件的处理程序

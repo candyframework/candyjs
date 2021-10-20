@@ -17,6 +17,9 @@ class Request extends CoreRequest {
      */
     constructor(request) {
         super(request);
+        /**
+         * http headers
+         */
         this.headers = null;
     }
     /**

@@ -12,30 +12,25 @@ class ActionEvent extends Event {
     /**
      * http request
      */
-    public request: any;
+    public request: any = null;
 
     /**
      * http response
      */
-    public response: any;
+    public response: any = null;
 
     /**
      * 数据
      */
-    public data: any;
+    public data: any = null;
 
     /**
      * 状态
      */
-    public valid: boolean;
+    public valid: boolean = true;
 
     constructor() {
         super();
-
-        this.request = null;
-        this.response = null;
-        this.data = null;
-        this.valid = true;
     }
 
 }
