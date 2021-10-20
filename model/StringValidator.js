@@ -29,7 +29,13 @@ const Validator = require("./Validator");
 class StringValidator extends Validator {
     constructor() {
         super();
+        /**
+         * 最小长度
+         */
         this.minLength = 1;
+        /**
+         * 最大长度
+         */
         this.maxLength = 2333;
     }
     /**

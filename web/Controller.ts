@@ -13,19 +13,13 @@ class Controller extends CoreController {
     /**
      * 视图类
      */
-    public view: any;
+    public view: any = null;
 
     /**
      * constructor
      */
     constructor(context: any) {
         super(context);
-
-        /**
-         * @typedef {import('./View')} View
-         * @type {View} view
-         */
-        this.view = null;
     }
 
     /**

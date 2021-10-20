@@ -8,6 +8,11 @@
  */
 class Exception extends Error {
 
+    /**
+     * 类名
+     */
+    public name: string;
+
     constructor(message: string) {
         super(message);
 

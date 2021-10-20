@@ -27,12 +27,10 @@ class BooleanValidator extends Validator {
     /**
      * 是否严格模式
      */
-    public strict: boolean;
+    public strict: boolean = true;
 
     constructor() {
         super();
-
-        this.strict = true;
     }
 
     /**

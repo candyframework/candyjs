@@ -13,12 +13,12 @@ class AbstractTranslator implements ITranslator {
     /**
      * 语言
      */
-    public language: string;
+    public language: string = '';
 
     /**
      * 语言配置所在目录
      */
-    public basePath: string;
+    public basePath: string = '';
 
     /**
      * 设置语言
@@ -84,10 +84,11 @@ class AbstractTranslator implements ITranslator {
     /**
      * 从文件系统加载语言
      *
-     * @param {String} path 文件路径
+     * @param {String} type 消息类型
      */
-    public loadLanguageFromFile(path: string): any {
-        let lang = Candy.include(path, false);
+    public loadLanguageFromFile(type: string): any {
+        let file = this.basePath + '/' + this.language + '/' + type;
+        let lang = Candy.include(file, false);
 
         return lang;
     }

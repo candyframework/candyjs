@@ -14,6 +14,10 @@ class Model extends Component {
     constructor() {
         super();
         /**
+         * 模型名
+         */
+        this.modelName = '';
+        /**
          * 数据字段配置 一般与数据库字段一致
          *
          * ```

@@ -18,8 +18,7 @@ class Translator extends AbstractTranslator {
      * @inheritdoc
      */
     translate(type, sourceMessage, parameters = null) {
-        let path = this.basePath + '/' + this.language + '/' + type;
-        let lang = this.loadLanguageFromFile(path);
+        let lang = this.loadLanguageFromFile(type);
         if (undefined === lang[sourceMessage]) {
             return sourceMessage;
         }

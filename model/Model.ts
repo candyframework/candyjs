@@ -17,40 +17,41 @@ class Model extends Component {
      */
     static fromParameter = 'body';
 
-    public attributes: any;
-    public attributesMap: any;
-    public messages: string[];
+    /**
+     * 模型名
+     */
+    public modelName: string = '';
+
+    /**
+     * 数据字段配置 一般与数据库字段一致
+     *
+     * ```
+     * {
+     *      name: 'defaultValue',
+     *      age: defaultValue
+     * }
+     * ```
+     */
+    public attributes: any = null;
+
+    /**
+     * 模型属性与表单字段对应关系 用于解决模型字段与表单字段名称不同问题
+     *
+     * ```
+     * {
+     *      name: 'form_user_name'
+     * }
+     * ```
+     */
+    public attributesMap: any = null;
+
+    /**
+     * 错误信息
+     */
+    public messages: string[] = [];
 
     constructor() {
         super();
-
-        /**
-         * 数据字段配置 一般与数据库字段一致
-         *
-         * ```
-         * {
-         *      name: 'defaultValue',
-         *      age: defaultValue
-         * }
-         * ```
-         */
-        this.attributes = null;
-
-        /**
-         * 模型属性与表单字段对应关系 用于解决模型字段与表单字段名称不同问题
-         *
-         * ```
-         * {
-         *      name: 'form_user_name'
-         * }
-         * ```
-         */
-        this.attributesMap = null;
-
-        /**
-         * 错误信息
-         */
-        this.messages = [];
     }
 
     /**

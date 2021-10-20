@@ -27,12 +27,10 @@ class EmailValidator extends Validator {
     /**
      * 模式
      */
-    public pattern: RegExp;
+    public pattern: RegExp = /^[a-zA-Z0-9_\.\-]+\@(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z0-9]{2,8}$/;
 
     constructor() {
         super();
-
-        this.pattern = /^[a-zA-Z0-9_\.\-]+\@(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z0-9]{2,8}$/;
     }
 
     /**

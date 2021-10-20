@@ -19,18 +19,42 @@
  *
  */
 class URI {
-    /**
-     * constructor
-     */
     constructor() {
+        /**
+         * 协议
+         */
         this.scheme = '';
+        /**
+         * 主机
+         */
         this.host = '';
+        /**
+         * 端口号
+         */
         this.port = '';
+        /**
+         * 用户
+         */
         this.user = '';
+        /**
+         * 密码
+         */
         this.password = '';
+        /**
+         * 资源路径
+         */
         this.path = '';
+        /**
+         * 请求参数
+         */
         this.query = '';
+        /**
+         * 锚点
+         */
         this.fragment = '';
+        /**
+         * 正则表达式
+         */
         this.uriRegExp = new RegExp([
             // (scheme)
             '(http|https)?',
@@ -47,6 +71,9 @@ class URI {
             // #(fragment)
             '(?:#(.*))?'
         ].join(''));
+        /**
+         * 正则表达式匹配项
+         */
         this.uriRegExpKeys = [
             'source',
             'scheme',
