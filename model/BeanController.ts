@@ -21,7 +21,8 @@ class BeanController extends Controller {
      * [
      *      'app/models/XxxModel',
      *      {
-     *          classPath: 'app/models/XxxModel'
+     *          classPath: 'app/models/XxxModel',
+     *          modelName: 'xxxModel'
      *      }
      * ]
      * ```
@@ -31,7 +32,10 @@ class BeanController extends Controller {
         return null;
     }
 
-    public generateName(name: string): string {
+    /**
+     * 生成模型名
+     */
+    public generateModelName(name: string): string {
         let ret = name.charAt(0).toLowerCase();
 
         return ret + name.substring(1);
@@ -54,7 +58,7 @@ class BeanController extends Controller {
             }
 
             bean.fill(this.context.request);
-            name = '' === bean.modelName ? this.generateName(bean.className()) : bean.modelName;
+            name = '' === bean.modelName ? this.generateModelName(bean.className()) : bean.modelName;
             this[name] = bean;
         }
     }

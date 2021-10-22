@@ -19,7 +19,8 @@ class BeanController extends Controller {
      * [
      *      'app/models/XxxModel',
      *      {
-     *          classPath: 'app/models/XxxModel'
+     *          classPath: 'app/models/XxxModel',
+     *          modelName: 'xxxModel'
      *      }
      * ]
      * ```
@@ -28,7 +29,10 @@ class BeanController extends Controller {
     autowire() {
         return null;
     }
-    generateName(name) {
+    /**
+     * 生成模型名
+     */
+    generateModelName(name) {
         let ret = name.charAt(0).toLowerCase();
         return ret + name.substring(1);
     }
@@ -47,7 +51,7 @@ class BeanController extends Controller {
                 bean = Candy.createObjectAsDefinition(beans[i]);
             }
             bean.fill(this.context.request);
-            name = '' === bean.modelName ? this.generateName(bean.className()) : bean.modelName;
+            name = '' === bean.modelName ? this.generateModelName(bean.className()) : bean.modelName;
             this[name] = bean;
         }
     }
