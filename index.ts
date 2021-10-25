@@ -16,7 +16,7 @@ class CandyJs {
     /**
      * http server
      */
-    public server: http.Server;
+    public server: http.Server = null;
 
     /**
      * 当前应用
@@ -30,7 +30,6 @@ class CandyJs {
      * @param {Application} application 应用实例
      */
     constructor(application: any) {
-        this.server = null;
         this.app = application;
     }
 

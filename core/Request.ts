@@ -9,12 +9,10 @@
 class Request {
 
     public request: any;
-    private scriptFile: string;
+    private scriptFile: string = '';
 
     constructor(request: any) {
         this.request = request;
-
-        this.scriptFile = '';
     }
 
     /**

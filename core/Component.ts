@@ -19,12 +19,10 @@ class Component extends Event {
      *     'behaviorNameN': instanceN
      * }
      */
-    public behaviorsMap: Map<string, Behavior>;
+    public behaviorsMap: Map<string, Behavior> = new Map();
 
     constructor() {
         super();
-
-        this.behaviorsMap = new Map();
 
         this.ensureDeclaredBehaviorsAttached();
     }

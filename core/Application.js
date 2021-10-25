@@ -12,8 +12,17 @@ const InvalidConfigException = require("./InvalidConfigException");
 class Application extends Event {
     constructor(config) {
         super();
+        /**
+         * 编码
+         */
         this.encoding = 'UTF-8';
+        /**
+         * 调试开关
+         */
         this.debug = false;
+        /**
+         * 异常处理类
+         */
         this.exceptionHandler = 'candy/web/ExceptionHandler';
         Candy.app = this;
         this.init(config);

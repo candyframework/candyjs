@@ -10,8 +10,11 @@ const Candy = require("../Candy");
  */
 class View {
     constructor(context) {
-        this.context = context;
+        /**
+         * 默认视图文件后缀
+         */
         this.defaultExtension = '.html';
+        this.context = context;
     }
     /**
      * 查找视图文件路径

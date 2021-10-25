@@ -14,24 +14,20 @@ abstract class Application extends Event {
     /**
      * 编码
      */
-    public encoding: string;
+    public encoding: string = 'UTF-8';
 
     /**
      * 调试开关
      */
-    public debug: boolean;
+    public debug: boolean = false;
 
     /**
      * 异常处理类
      */
-    public exceptionHandler: string;
+    public exceptionHandler: string = 'candy/web/ExceptionHandler';
 
     constructor(config: any) {
         super();
-
-        this.encoding = 'UTF-8';
-        this.debug = false;
-        this.exceptionHandler = 'candy/web/ExceptionHandler';
 
         Candy.app = this;
         this.init(config);

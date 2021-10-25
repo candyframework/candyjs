@@ -16,12 +16,57 @@ const InvalidRouteException = require("../core/InvalidRouteException");
 class Application extends CoreApp {
     constructor(config) {
         super(config);
+        /**
+         * 拦截所有路由
+         *
+         * 'app/some/Class'
+         *
+         * or a Object config
+         *
+         * {
+         *      'classPath': 'app/some/Class',
+         *      'property': 'value'
+         * }
+         *
+         */
         this.interceptAll = null;
+        /**
+         * 实现路由到控制器转换配置
+         *
+         * {
+         *     'u': 'app/controllers/user/IndexController',
+         *     'account': {
+         *         'classPath': 'app/controllers/user/IndexController',
+         *         'property': 'value'
+         *     }
+         * }
+         *
+         */
         this.routesMap = null;
+        /**
+         * 注册的模块
+         *
+         * 'modules': {
+         *     'bbs': 'app/modules/bbs'
+         * }
+         *
+         */
         this.modules = null;
+        /**
+         * 默认视图类
+         */
         this.defaultView = 'candy/web/View';
+        /**
+         * 默认控制器命名空间
+         */
         this.defaultControllerNamespace = 'app/controllers';
+        /**
+         * 默认路由
+         */
         this.defaultRoute = 'index/index';
+        /**
+         * 默认控制器
+         */
         this.defaultControllerId = 'index';
         Candy.config(this, config);
     }

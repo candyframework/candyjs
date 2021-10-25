@@ -8,8 +8,8 @@
  */
 class Request {
     constructor(request) {
-        this.request = request;
         this.scriptFile = '';
+        this.request = request;
     }
     /**
      * 返回入口文件
