@@ -28,7 +28,7 @@ class Application extends CoreApp {
      * }
      *
      */
-    public interceptAll: any;
+    public interceptAll: any = null;
 
     /**
      * 实现路由到控制器转换配置
@@ -42,7 +42,7 @@ class Application extends CoreApp {
      * }
      *
      */
-    public routesMap: any;
+    public routesMap: any = null;
 
     /**
      * 注册的模块
@@ -52,38 +52,30 @@ class Application extends CoreApp {
      * }
      *
      */
-    public modules: any;
+    public modules: any = null;
 
     /**
      * 默认视图类
      */
-    public defaultView: string;
+    public defaultView: string = 'candy/web/View';
 
     /**
      * 默认控制器命名空间
      */
-    public defaultControllerNamespace: string;
+    public defaultControllerNamespace: string = 'app/controllers';
 
     /**
      * 默认路由
      */
-    public defaultRoute: string;
+    public defaultRoute: string = 'index/index';
 
     /**
      * 默认控制器
      */
-    public defaultControllerId: string;
+    public defaultControllerId: string = 'index';
 
     constructor(config: any) {
         super(config);
-
-        this.interceptAll = null;
-        this.routesMap = null;
-        this.modules = null;
-        this.defaultView = 'candy/web/View';
-        this.defaultControllerNamespace = 'app/controllers';
-        this.defaultRoute = 'index/index';
-        this.defaultControllerId = 'index';
 
         Candy.config(this, config);
     }

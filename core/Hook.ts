@@ -22,18 +22,12 @@ class Hook {
         Hook._handlers.push(handler);
     }
 
-    private index: number;
-    private req: any;
-    private res: any;
-    private callback: any;
+    private index: number = 0;
+    private req: any = null;
+    private res: any = null;
+    private callback: any = null;
 
-    constructor() {
-        this.index = 0;
-
-        this.req = null;
-        this.res = null;
-        this.callback = null;
-    }
+    constructor() {}
 
     /**
      * 执行中间件

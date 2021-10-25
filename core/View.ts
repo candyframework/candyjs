@@ -19,12 +19,10 @@ class View {
     /**
      * 默认视图文件后缀
      */
-    public defaultExtension: string;
+    public defaultExtension: string = '.html';
 
     constructor(context: any) {
         this.context = context;
-
-        this.defaultExtension = '.html';
     }
 
     /**

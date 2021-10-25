@@ -18,6 +18,9 @@ class CandyJs {
      * @param {Application} application 应用实例
      */
     constructor(application) {
+        /**
+         * http server
+         */
         this.server = null;
         this.app = application;
     }

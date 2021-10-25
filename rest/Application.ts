@@ -19,34 +19,31 @@ class Application extends CoreApp {
      */
     static separator: string = '@';
 
-    public methods: any;
-    public cachedRouter: Map<string, FastRouter>;
+    /**
+     * 请求方法
+     *
+     * each method has the follow structure
+     *
+     * [
+     *      { route: route1, handler: callbackFunction1 },
+     *      { route: route2, handler: callbackFunction2 }
+     * ]
+     *
+     */
+    public methods: any = {
+        GET: [],
+        POST: [],
+        PUT: [],
+        DELETE: [],
+        PATCH: [],
+        HEAD: [],
+        OPTIONS: []
+    };
+
+    public cachedRouter: Map<string, FastRouter> = new Map();
 
     constructor(config: any) {
         super(config);
-
-        /**
-         * 请求方法
-         *
-         * each method has the follow structure
-         *
-         * [
-         *      { route: route1, handler: callbackFunction1 },
-         *      { route: route2, handler: callbackFunction2 }
-         * ]
-         *
-         */
-        this.methods = {
-            GET: [],
-            POST: [],
-            PUT: [],
-            DELETE: [],
-            PATCH: [],
-            HEAD: [],
-            OPTIONS: []
-        };
-
-        this.cachedRouter = new Map();
 
         Candy.config(this, config);
     }

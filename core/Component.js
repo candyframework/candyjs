@@ -12,6 +12,14 @@ const Behavior = require("./Behavior");
 class Component extends Event {
     constructor() {
         super();
+        /**
+         * the attached behaviors
+         *
+         * {
+         *     'behaviorName1': instance1,
+         *     'behaviorNameN': instanceN
+         * }
+         */
         this.behaviorsMap = new Map();
         this.ensureDeclaredBehaviorsAttached();
     }
