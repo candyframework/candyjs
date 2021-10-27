@@ -5,7 +5,13 @@ const IndexOutOfBoundsException = require("../core/IndexOutOfBoundsException");
  */
 class ArrayList {
     constructor() {
+        /**
+         * The size of the List
+         */
         this.length = 0;
+        /**
+         * The array that stored the elements
+         */
         this.elementData = [];
     }
     /**

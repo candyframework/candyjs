@@ -6,9 +6,18 @@ const IndexOutOfBoundsException = require("../core/IndexOutOfBoundsException");
  */
 class LinkedList {
     constructor() {
-        this.headNode = null;
-        this.tailNode = null;
+        /**
+         * The size of the List
+         */
         this.length = 0;
+        /**
+         * Pointer to first node
+         */
+        this.headNode = null;
+        /**
+         * Pointer to last node
+         */
+        this.tailNode = null;
     }
     [Symbol.iterator]() {
         let node = this.headNode;

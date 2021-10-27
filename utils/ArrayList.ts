@@ -9,12 +9,12 @@ class ArrayList implements IList {
     /**
      * The size of the List
      */
-    private length: number;
+    private length: number = 0;
 
     /**
      * The array that stored the elements
      */
-    private elementData: any[];
+    private elementData: any[] = [];
 
     /**
      * 将源数组拷贝到目标数组
@@ -50,10 +50,7 @@ class ArrayList implements IList {
         }
     }
 
-    constructor() {
-        this.length = 0;
-        this.elementData = [];
-    }
+    constructor() {}
 
     [Symbol.iterator]() {
         let index = 0;

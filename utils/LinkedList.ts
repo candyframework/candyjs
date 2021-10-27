@@ -10,23 +10,19 @@ class LinkedList implements IList {
     /**
      * The size of the List
      */
-    private length: number;
+    private length: number = 0;
 
     /**
      * Pointer to first node
      */
-    private headNode: DataNode;
+    private headNode: DataNode = null;
 
     /**
      * Pointer to last node
      */
-    private tailNode: DataNode;
+    private tailNode: DataNode = null;
 
-    constructor() {
-        this.headNode = null;
-        this.tailNode = null;
-        this.length = 0;
-    }
+    constructor() {}
 
     [Symbol.iterator]() {
         let node = this.headNode;

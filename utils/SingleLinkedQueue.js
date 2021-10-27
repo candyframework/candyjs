@@ -5,9 +5,18 @@ const DataNode = require("./DataNode");
  */
 class SingleLinkedQueue {
     constructor() {
-        this.headNode = null;
-        this.tailNode = null;
+        /**
+         * The size of queue
+         */
         this.length = 0;
+        /**
+         * Pointer to first node
+         */
+        this.headNode = null;
+        /**
+         * Pointer to last node
+         */
+        this.tailNode = null;
     }
     [Symbol.iterator]() {
         let node = this.headNode;

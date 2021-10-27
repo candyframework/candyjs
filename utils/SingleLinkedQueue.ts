@@ -7,25 +7,21 @@ import DataNode = require('./DataNode');
 class SingleLinkedQueue implements IQueue {
 
     /**
+     * The size of queue
+     */
+    private length: number = 0;
+
+    /**
      * Pointer to first node
      */
-    private headNode: DataNode;
+    private headNode: DataNode = null;
 
     /**
      * Pointer to last node
      */
-    private tailNode: DataNode;
+    private tailNode: DataNode = null;
 
-    /**
-     * The size of queue
-     */
-    private length: number;
-
-    constructor() {
-        this.headNode = null;
-        this.tailNode = null;
-        this.length = 0;
-    }
+    constructor() {}
 
     [Symbol.iterator]() {
         let node = this.headNode;
