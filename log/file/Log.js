@@ -54,7 +54,7 @@ class Log extends AbstractLog {
                 this.writeLog(messages);
                 return;
             }
-            FileHelper.createDirectory(this.logPath, 0o777, (err) => {
+            FileHelper.createDirectory(this.logPath, 0o777, () => {
                 this.writeLog(messages);
             });
         });

@@ -84,7 +84,7 @@ class Cache extends AbstractCache {
                     return;
                 }
 
-                FileHelper.createDirectory(this.cachePath, 0o777, (err) => {
+                FileHelper.createDirectory(this.cachePath, 0o777, () => {
                     fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
                         if(null !== err) {
                             reject(err);
