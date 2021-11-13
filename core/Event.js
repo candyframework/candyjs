@@ -3,6 +3,7 @@
  * @author afu
  * @license MIT
  */
+const LinkedList = require("../utils/LinkedList");
 /**
  * 简单 Event
  */
@@ -26,9 +27,9 @@ class Event {
      */
     on(eventName, handler) {
         if (!this.eventsMap.has(eventName)) {
-            this.eventsMap.set(eventName, []);
+            this.eventsMap.set(eventName, new LinkedList());
         }
-        this.eventsMap.get(eventName).push(handler);
+        this.eventsMap.get(eventName).add(handler);
     }
     /**
      * 注销事件
@@ -44,12 +45,8 @@ class Event {
             this.eventsMap.delete(eventName);
             return;
         }
-        let handlers = this.eventsMap.get(eventName);
-        for (let i = 0; i < handlers.length; i++) {
-            if (handler === handlers[i]) {
-                handlers.splice(i, 1);
-            }
-        }
+        let list = this.eventsMap.get(eventName);
+        list.remove(handler);
     }
     /**
      * 注销所有事件
@@ -68,8 +65,8 @@ class Event {
             return;
         }
         let handlers = this.eventsMap.get(eventName);
-        for (let i = 0; i < handlers.length; i++) {
-            handlers[i](parameter);
+        for (let h of handlers) {
+            h(parameter);
         }
     }
 }

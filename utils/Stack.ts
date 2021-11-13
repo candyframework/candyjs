@@ -16,8 +16,6 @@ class Stack extends ArrayList {
 
     /**
      * Removes the object at the top of this stack and returns it
-     *
-     * @throws {Error}
      */
     public pop(): any {
         let len = this.size();

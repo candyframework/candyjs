@@ -28,7 +28,7 @@ export default interface IList {
     /**
      * Returns the index of the first occurrence of the specified element in this list, or -1 if does not contain the element
      *
-     * @param {ANY} element
+     * @param {any} element
      * @returns {Number}
      */
     indexOf(element: any): number;
@@ -53,13 +53,15 @@ export default interface IList {
      *
      * @param {Number} index
      * @param {any} element
+     * @returns {Boolean}
      */
-    insert(index: number, element: any): void;
+    insert(index: number, element: any): boolean;
 
     /**
      * Removes the first occurrence of the specified element from this list
      *
      * @param {any} element
+     * @returns {Boolean}
      */
     remove(element: any): boolean;
 

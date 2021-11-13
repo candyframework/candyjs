@@ -1,6 +1,5 @@
 "use strict";
 const DataNode = require("./DataNode");
-const IndexOutOfBoundsException = require("../core/IndexOutOfBoundsException");
 /**
  * LinkedList
  */
@@ -92,6 +91,7 @@ class LinkedList {
      */
     getNode(index) {
         let node = null;
+        // 二分
         if (index < (this.length >> 1)) {
             node = this.headNode;
             for (let i = 0; i < index; i++) {
@@ -107,16 +107,12 @@ class LinkedList {
     }
     /**
      * Returns the number of elements in this list
-     *
-     * @returns {Number}
      */
     size() {
         return this.length;
     }
     /**
      * Returns true if this list contains no elements
-     *
-     * @returns {Boolean}
      */
     isEmpty() {
         return 0 === this.length;
@@ -125,7 +121,6 @@ class LinkedList {
      * Returns true if this list contains the specified element
      *
      * @param {any} element
-     * @returns {Boolean}
      */
     contains(element) {
         return this.indexOf(element) >= 0;
@@ -133,8 +128,7 @@ class LinkedList {
     /**
      * Returns the index of the first occurrence of the specified element in this list, or -1 if does not contain the element
      *
-     * @param {ANY} element
-     * @returns {Number}
+     * @param {any} element
      */
     indexOf(element) {
         let index = 0;
@@ -150,7 +144,6 @@ class LinkedList {
      * Returns the index of the last occurrence of the specified element in this list, or -1 if does not contain the element
      *
      * @param {any} element
-     * @returns {Number}
      */
     lastIndexOf(element) {
         let index = this.length;
@@ -175,17 +168,18 @@ class LinkedList {
      *
      * @param {Number} index
      * @param {any} element
-     * @throws {IndexOutOfBoundsException}
      */
     insert(index, element) {
         if (index > this.length) {
-            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+            return false;
         }
         if (index === this.length) {
             this.linkLast(element);
-            return;
         }
-        this.linkBefore(element, this.getNode(index));
+        else {
+            this.linkBefore(element, this.getNode(index));
+        }
+        return true;
     }
     /**
      * Removes the first occurrence of the specified element from this list
@@ -205,11 +199,10 @@ class LinkedList {
      * Removes the element at the specified position in this list
      *
      * @param {Number} index
-     * @throws {IndexOutOfBoundsException}
      */
     removeAt(index) {
         if (index >= this.length) {
-            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+            return null;
         }
         return this.unlink(this.getNode(index));
     }
@@ -217,11 +210,10 @@ class LinkedList {
      * Returns the element at the specified position in this list
      *
      * @param {Number} index
-     * @throws {IndexOutOfBoundsException}
      */
     get(index) {
         if (index >= this.length) {
-            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+            return null;
         }
         return this.getNode(index).data;
     }
@@ -230,11 +222,10 @@ class LinkedList {
      *
      * @param {Number} index
      * @param {any} element
-     * @throws {IndexOutOfBoundsException}
      */
     set(index, element) {
         if (index >= this.length) {
-            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+            return null;
         }
         let node = this.getNode(index);
         let oldValue = node.data;

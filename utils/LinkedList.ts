@@ -1,6 +1,6 @@
 import IList from './IList';
+
 import DataNode = require('./DataNode');
-import IndexOutOfBoundsException = require('../core/IndexOutOfBoundsException');
 
 /**
  * LinkedList
@@ -44,7 +44,7 @@ class LinkedList implements IList {
     /**
      * Links element as last element
      */
-    public linkLast(element: any): void {
+    protected linkLast(element: any): void {
         let last = this.tailNode;
         let newNode = new DataNode(element, null, last);
 
@@ -62,7 +62,7 @@ class LinkedList implements IList {
     /**
      * Inserts element before node
      */
-    public linkBefore(element: any, node: DataNode): void {
+    protected linkBefore(element: any, node: DataNode): void {
         let prev = node.previous;
         let newNode = new DataNode(element, node, prev);
 
@@ -80,7 +80,7 @@ class LinkedList implements IList {
     /**
      * Unlinks node
      */
-    public unlink(node: DataNode): any {
+    protected unlink(node: DataNode): any {
         let data = node.data;
         let next = node.next;
         let prev = node.previous;
@@ -108,9 +108,10 @@ class LinkedList implements IList {
     /**
      * Find node by index
      */
-    public getNode(index: number): DataNode {
+    protected getNode(index: number): DataNode {
         let node = null;
 
+        // 二分
         if(index < (this.length >> 1)) {
             node = this.headNode;
             for(let i = 0; i < index; i++) {
@@ -130,8 +131,6 @@ class LinkedList implements IList {
 
     /**
      * Returns the number of elements in this list
-     *
-     * @returns {Number}
      */
     public size(): number {
         return this.length;
@@ -139,8 +138,6 @@ class LinkedList implements IList {
 
     /**
      * Returns true if this list contains no elements
-     *
-     * @returns {Boolean}
      */
     public isEmpty(): boolean {
         return 0 === this.length;
@@ -150,7 +147,6 @@ class LinkedList implements IList {
      * Returns true if this list contains the specified element
      *
      * @param {any} element
-     * @returns {Boolean}
      */
     public contains(element: any): boolean {
         return this.indexOf(element) >= 0;
@@ -159,8 +155,7 @@ class LinkedList implements IList {
     /**
      * Returns the index of the first occurrence of the specified element in this list, or -1 if does not contain the element
      *
-     * @param {ANY} element
-     * @returns {Number}
+     * @param {any} element
      */
     public indexOf(element: any): number {
         let index = 0;
@@ -179,7 +174,6 @@ class LinkedList implements IList {
      * Returns the index of the last occurrence of the specified element in this list, or -1 if does not contain the element
      *
      * @param {any} element
-     * @returns {Number}
      */
     public lastIndexOf(element: any): number {
         let index = this.length;
@@ -208,19 +202,20 @@ class LinkedList implements IList {
      *
      * @param {Number} index
      * @param {any} element
-     * @throws {IndexOutOfBoundsException}
      */
-    public insert(index: number, element: any): void {
+    public insert(index: number, element: any): boolean {
         if(index > this.length) {
-            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+            return false;
         }
 
         if(index === this.length) {
             this.linkLast(element);
-            return;
+
+        } else {
+            this.linkBefore(element, this.getNode(index));
         }
 
-        this.linkBefore(element, this.getNode(index));
+        return true;
     }
 
     /**
@@ -243,11 +238,10 @@ class LinkedList implements IList {
      * Removes the element at the specified position in this list
      *
      * @param {Number} index
-     * @throws {IndexOutOfBoundsException}
      */
     public removeAt(index: number): any {
         if(index >= this.length) {
-            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+            return null;
         }
 
         return this.unlink(this.getNode(index));
@@ -257,11 +251,10 @@ class LinkedList implements IList {
      * Returns the element at the specified position in this list
      *
      * @param {Number} index
-     * @throws {IndexOutOfBoundsException}
      */
     public get(index: number): any {
         if(index >= this.length) {
-            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+            return null;
         }
 
         return this.getNode(index).data;
@@ -272,11 +265,10 @@ class LinkedList implements IList {
      *
      * @param {Number} index
      * @param {any} element
-     * @throws {IndexOutOfBoundsException}
      */
     public set(index: number, element: any): any {
         if(index >= this.length) {
-            throw new IndexOutOfBoundsException('index=' + index + ', size=' + this.length);
+            return null;
         }
 
         let node = this.getNode(index);

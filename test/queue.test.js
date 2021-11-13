@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Q = require('../utils/SingleLinkedQueue');
+const Q = require('../utils/LinkedQueue');
 
 const q = new Q();
 

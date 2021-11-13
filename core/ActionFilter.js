@@ -19,6 +19,11 @@ class ActionFilter extends Behavior {
          * @param {import('./ActionEvent')} actionEvent
          */
         this.beforeFilter = (actionEvent) => {
+            // 如果前一个 valid 为 false 那么本次 filter 不再执行
+            if (!actionEvent.valid) {
+                this.unListen();
+                return;
+            }
             this.beforeAction(actionEvent);
             // since runControllerAction() may block the program
             // afterFilter() will not execute when `false === actionEvent.valid`

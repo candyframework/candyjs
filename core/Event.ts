@@ -2,6 +2,7 @@
  * @author afu
  * @license MIT
  */
+import LinkedList = require('../utils/LinkedList');
 
 /**
  * 简单 Event
@@ -16,7 +17,7 @@ class Event {
      *      'eventName2': [fn1, fn2]
      * }
      */
-    public eventsMap: Map<string, any[]> = new Map();
+    public eventsMap: Map<string, LinkedList> = new Map();
 
     constructor() {}
 
@@ -28,10 +29,10 @@ class Event {
      */
     public on(eventName: string, handler: any): void {
         if(!this.eventsMap.has(eventName)) {
-            this.eventsMap.set(eventName, []);
+            this.eventsMap.set(eventName, new LinkedList());
         }
 
-        this.eventsMap.get(eventName).push(handler);
+        this.eventsMap.get(eventName).add(handler);
     }
 
     /**
@@ -50,12 +51,8 @@ class Event {
             return;
         }
 
-        let handlers = this.eventsMap.get(eventName);
-        for(let i=0; i<handlers.length; i++) {
-            if(handler === handlers[i]) {
-                handlers.splice(i, 1);
-            }
-        }
+        let list = this.eventsMap.get(eventName);
+        list.remove(handler);
     }
 
     /**
@@ -77,8 +74,9 @@ class Event {
         }
 
         let handlers = this.eventsMap.get(eventName);
-        for(let i=0; i<handlers.length; i++) {
-            handlers[i](parameter);
+
+        for(let h of handlers) {
+            h(parameter);
         }
     }
 
