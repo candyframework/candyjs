@@ -5,6 +5,8 @@
 import Candy = require('../Candy');
 import CoreController = require('../core/Controller');
 
+import View = require('./view');
+
 /**
  * 控制器
  */
@@ -13,7 +15,7 @@ class Controller extends CoreController {
     /**
      * 视图类
      */
-    public view: any = null;
+    public view: View = null;
 
     /**
      * constructor
@@ -24,11 +26,8 @@ class Controller extends CoreController {
 
     /**
      * 获取视图类
-     *
-     * @typedef {import('./View')} View
-     * @return {View}
      */
-    public getView(): any {
+    public getView(): View {
         if(null === this.view) {
             this.view = Candy.createObjectAsString(Candy.app.defaultView, this.context);
         }
@@ -41,7 +40,7 @@ class Controller extends CoreController {
      *
      * @param {any} view
      */
-    public setView(view: any): void {
+    public setView(view: View): void {
         this.view = view;
     }
 

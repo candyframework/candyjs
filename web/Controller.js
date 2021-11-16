@@ -21,9 +21,6 @@ class Controller extends CoreController {
     }
     /**
      * 获取视图类
-     *
-     * @typedef {import('./View')} View
-     * @return {View}
      */
     getView() {
         if (null === this.view) {
