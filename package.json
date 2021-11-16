@@ -1,6 +1,6 @@
 {
   "name": "candyjs",
-  "version": "4.9.6",
+  "version": "4.9.7",
   "description": "An Object-Oriented node mvc and REST framework",
   "main": "index.js",
   "scripts": {
