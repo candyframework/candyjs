@@ -40,6 +40,11 @@ class Application extends CoreApp {
         OPTIONS: []
     };
 
+    /**
+     * 是否合并路由
+     */
+    public combineRoutes: boolean = false;
+
     public cachedRouter: Map<string, FastRouter> = new Map();
 
     constructor(config: any) {
@@ -97,14 +102,18 @@ class Application extends CoreApp {
         }
 
         if(this.cachedRouter.has(httpMethod)) {
-            return this.cachedRouter.get(httpMethod).exec(route);
+            return this.combineRoutes
+                ? this.cachedRouter.get(httpMethod).exec(route)
+                : this.cachedRouter.get(httpMethod).execInOrder(route);
         }
 
         let fastRouter = new FastRouter();
         fastRouter.setRoutes(routesMap);
         this.cachedRouter.set(httpMethod, fastRouter);
 
-        return fastRouter.exec(route);
+        return this.combineRoutes
+            ? fastRouter.exec(route)
+            : fastRouter.execInOrder(route);
     }
 
     /**
