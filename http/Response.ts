@@ -1,6 +1,6 @@
 /**
- * @author yu
- * @license http://www.apache.org/licenses/LICENSE-2.0
+ * @author afu
+ * @license MIT
  */
 import Candy = require('../Candy');
 import CoreResponse = require('../core/Response');

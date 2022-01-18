@@ -1,6 +1,6 @@
 # 一个面向对象的高效 Node.js MVC and REST 框架
 
-CandyJs 不是第三方框架的扩展，而是一个全新的框架。
+CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 ### 为什么是 CandyJs
 
