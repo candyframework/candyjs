@@ -1,7 +1,7 @@
 "use strict";
 /**
- * @author yu
- * @license http://www.apache.org/licenses/LICENSE-2.0
+ * @author afu
+ * @license MIT
  */
 const Candy = require("../Candy");
 const CoreResponse = require("../core/Response");
