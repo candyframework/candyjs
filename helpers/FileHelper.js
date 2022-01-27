@@ -62,7 +62,7 @@ class FileHelper {
     static createDirectory(dir, mode = 0o777, callback = null) {
         fs.access(dir, fs.constants.F_OK, (err) => {
             if (null === err) {
-                null !== callback && callback();
+                null !== callback && callback(null);
                 return true;
             }
             let parentDir = FileHelper.getDirname(dir);

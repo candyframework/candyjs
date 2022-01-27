@@ -70,7 +70,7 @@ class FileHelper {
     static createDirectory(dir: string, mode: number = 0o777, callback: any = null): void {
         fs.access(dir, fs.constants.F_OK, (err) => {
             if(null === err) {
-                null !== callback && callback();
+                null !== callback && callback(null);
                 return true;
             }
 
