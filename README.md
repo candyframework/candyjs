@@ -128,6 +128,14 @@ new CandyJs(app).listen(8090, function(){
 |
 </pre>
 
+### 思想来源
+
+本程序借鉴了许多开源软件的架构思想，正是有这些优秀的开源作品，才有了本程序
+
++ `express` 本程序的 rest 格式路由以及中间件想法的来源
+
++ `ThinkPHP` 与 `Struts` 本程序多数思想来源于 tp 与 struts 框架
+
 ### 变更
 
 + 2021-11-13
