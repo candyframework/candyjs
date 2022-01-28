@@ -56,18 +56,6 @@ class View {
     /**
      * 读取视图文件
      *
-     * @deprecated since 4.2.1 请使用 getViewContent
-     * @param {String} view 视图文件名
-     * @param {any} callback 回调函数
-     */
-    public getTemplateContent(view: string, callback: any): void {
-        this.getViewContent(view, callback);
-    }
-
-    /**
-     * 读取视图文件
-     *
-     * @since 4.2.1
      * @param {String} view 视图文件名
      * @param {Function} callback 回调函数
      */
