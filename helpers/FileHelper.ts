@@ -68,8 +68,8 @@ class FileHelper {
      * @param {any} callback 回调函数
      */
     static createDirectory(dir: string, mode: number = 0o777, callback: any = null): void {
-        fs.access(dir, fs.constants.F_OK, (err) => {
-            if(null === err) {
+        fs.access(dir, fs.constants.F_OK, (error) => {
+            if(null === error) {
                 null !== callback && callback(null);
                 return true;
             }

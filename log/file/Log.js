@@ -49,8 +49,8 @@ class Log extends AbstractLog {
      */
     flush(messages) {
         // 检查目录
-        fs.access(this.logPath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
-            if (null === err) {
+        fs.access(this.logPath, fs.constants.R_OK | fs.constants.W_OK, (error) => {
+            if (null === error) {
                 this.writeLog(messages);
                 return;
             }
@@ -81,9 +81,9 @@ class Log extends AbstractLog {
         let msg = this.formatMessage(messages);
         let file = this.logPath + '/' + this.logFile;
         // check file exists
-        fs.access(file, fs.constants.F_OK, (err) => {
+        fs.access(file, fs.constants.F_OK, (error) => {
             // file not exists
-            if (null !== err) {
+            if (null !== error) {
                 fs.writeFile(file, msg, (err) => { });
                 return;
             }

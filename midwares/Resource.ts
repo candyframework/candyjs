@@ -157,8 +157,8 @@ class Resource {
             pathname = pathname.replace('//', '/');
         }
 
-        fs.stat(pathname, (err, stats) => {
-            if(null !== err) {
+        fs.stat(pathname, (error, stats) => {
+            if(null !== error) {
                 response.writeHead(404);
                 response.end();
                 return;

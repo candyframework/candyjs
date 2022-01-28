@@ -56,8 +56,8 @@ class Cache extends AbstractCache {
             let cacheFile = this.getCacheFile(key);
             let life = (Date.now() + duration) / 1000;
             // 检查目录
-            fs.access(this.cachePath, fs.constants.R_OK | fs.constants.W_OK, (err) => {
-                if (null === err) {
+            fs.access(this.cachePath, fs.constants.R_OK | fs.constants.W_OK, (error) => {
+                if (null === error) {
                     fs.writeFile(cacheFile, value, Candy.app.encoding, (err) => {
                         if (null !== err) {
                             reject(err);
@@ -100,9 +100,9 @@ class Cache extends AbstractCache {
     get(key) {
         return new Promise((resolve, reject) => {
             let cacheFile = this.getCacheFile(key);
-            fs.stat(cacheFile, (err, stats) => {
-                if (null !== err) {
-                    reject(err);
+            fs.stat(cacheFile, (error, stats) => {
+                if (null !== error) {
+                    reject(error);
                     return;
                 }
                 if (stats.mtime.getTime() < Date.now()) {
