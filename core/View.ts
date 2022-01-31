@@ -28,7 +28,7 @@ class View {
     /**
      * 查找视图文件路径
      *
-     * @param {String} view 视图文件名
+     * @param {String} view 视图名
      * @return {String} 视图文件路径
      */
     public findViewFile(view: string): string {
@@ -54,14 +54,24 @@ class View {
     }
 
     /**
-     * 读取视图文件
+     * 读取视图文件内容
      *
-     * @param {String} view 视图文件名
+     * @param {String} view 视图名
      * @param {Function} callback 回调函数
      */
     public getViewContent(view: string, callback: any): void {
         let file = this.findViewFile(view);
 
+        fs.readFile(file, Candy.app.encoding, callback);
+    }
+
+    /**
+     * 读取视图文件内容
+     *
+     * @param {String} file 视图文件路径
+     * @param {Function} callback 回调函数
+     */
+    public getFileContent(file: string, callback: any): void {
         fs.readFile(file, Candy.app.encoding, callback);
     }
 
