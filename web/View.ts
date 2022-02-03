@@ -2,6 +2,7 @@
  * @author afu
  * @license MIT
  */
+import Candy = require('../Candy');
 import CoreView = require('../core/View');
 
 /**
@@ -102,7 +103,11 @@ class View extends CoreView {
      */
     renderFile(file: string, parameters: any): any {
         this.getFileContent(file, (err, content) => {
-            this.context.response.write(null === err ? content : err.message);
+            this.context.response.write(
+                null === err
+                    ? content
+                    : (Candy.app.debug ? err.message : 'The view encountered an internal error')
+            );
             this.context.response.end();
         });
     }
