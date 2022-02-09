@@ -175,13 +175,13 @@ class Model extends Component {
     /**
      * 填充模型
      */
-    public fill(request: any): boolean {
+    public fill(incoming: any): boolean {
         if(null === this.attributes) {
             throw new ModelException('The model has no attributes to fill');
         }
 
         let fields = Object.getOwnPropertyNames(this.attributes);
-        let data = request[Model.fromParameter];
+        let data = incoming[Model.fromParameter];
 
         if(undefined === data) {
             return false;
