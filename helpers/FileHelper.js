@@ -87,14 +87,5 @@ class FileHelper {
         }
         return true;
     }
-    /**
-     * 文件是否存在
-     *
-     * @param {String} path 文件路径
-     * @return {Boolean}
-     */
-    static existsSync(path) {
-        return fs.existsSync(path);
-    }
 }
 module.exports = FileHelper;

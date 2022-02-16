@@ -100,16 +100,6 @@ class FileHelper {
         return true;
     }
 
-    /**
-     * 文件是否存在
-     *
-     * @param {String} path 文件路径
-     * @return {Boolean}
-     */
-    static existsSync(path: string): boolean {
-        return fs.existsSync(path);
-    }
-
 }
 
 export = FileHelper;

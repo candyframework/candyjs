@@ -111,29 +111,22 @@ class StringHelper {
      * @param {Boolean} doubleEncode 转义 & 符号
      * @return {String} 处理后的字符串
      */
-    static htmlSpecialChars(str: string, flag: number = 0, doubleEncode: boolean = true): string {
-        let OPTIONS = {
-            'ALL_QUOTES': 0,
-            'SINGLE_QUOTE': 1,
-            'DOUBLE_QUOTE': 2
-        };
-
+    static htmlSpecialChars(str: string, flag: number = 2, doubleEncode: boolean = false): string {
         // 放到最前面 防止多次转义
-        if(false !== doubleEncode) {
+        if(doubleEncode) {
             str = str.replace(/&/g, '&amp;');
         }
 
         str = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-        if(flag === OPTIONS.ALL_QUOTES) {
+        if(0 === flag) {
             str = str.replace(/'/g, '&#039;').replace(/"/g, '&quot;');
 
-        } else if(flag === OPTIONS.SINGLE_QUOTE) {
+        } else if(1 === flag) {
             str = str.replace(/'/g, '&#039;');
 
-        } else if(flag === OPTIONS.DOUBLE_QUOTE) {
+        } else if(2 === flag) {
             str = str.replace(/"/g, '&quot;');
-
         }
 
         return str;

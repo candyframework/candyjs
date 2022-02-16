@@ -101,7 +101,7 @@ class View extends CoreView {
     /**
      * @inheritdoc
      */
-    renderFile(file: string, parameters: any): any {
+    public renderFile(file: string, parameters: any): any {
         this.getFileContent(file, (err, content) => {
             this.context.response.write(
                 null === err
