@@ -138,6 +138,14 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2022-02-18
+
+    * 4.10.1 发布
+
+    * 移除了 `candy/web/Request#getCookie()` 增加了 `candy/web/Request#getCookies()`
+
+    * 修改 `candy/web/Request#getReferer()` 函数名为 `candy/web/Request#getReferrer()`
+
 + 2021-11-13
 
     * 4.9.6 修复 bug

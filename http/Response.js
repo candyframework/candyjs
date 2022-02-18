@@ -93,7 +93,7 @@ class Response extends CoreResponse {
      * 获取 header
      *
      * @param {String} name the name of the header
-     * @return {String | null}
+     * @return {String}
      */
     getHeader(name) {
         return this.headers.get(name);

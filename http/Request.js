@@ -33,28 +33,27 @@ class Request extends CoreRequest {
      *
      * @param {String} parameter 参数名
      * @param {String} defaultValue 默认值
-     * @return {any}
+     * @return {String}
      */
-    getQueryString(parameter, defaultValue = null) {
+    getQueryString(parameter, defaultValue = undefined) {
         let params = new URL(this.request.url, this.getHostInfo()).searchParams;
-        let value = params.get(parameter);
-        return null === value ? defaultValue : value;
+        return params.has(parameter) ? params.get(parameter) : defaultValue;
     }
     /**
      * 获取 post 参数
      *
      * @param {String} parameter 参数名
      * @param {String} defaultValue 默认值
-     * @return {any}
+     * @return {String}
      */
-    getParameter(parameter, defaultValue = null) {
+    getParameter(parameter, defaultValue = undefined) {
         if (undefined === this.request.body) {
             return defaultValue;
         }
         return undefined === this.request.body[parameter] ? defaultValue : this.request.body[parameter];
     }
     /**
-     * Returns the header collection
+     * Returns the headers collection
      *
      * @return {Headers}
      */
@@ -72,31 +71,27 @@ class Request extends CoreRequest {
         return this.headers;
     }
     /**
-     * 获取 cookie
+     * Returns the cookies collection
      *
-     * @param {String} name cookie name
-     * @return {String | null}
+     * @return {Map<String, String>}
      */
-    getCookie(name) {
+    getCookies() {
+        let map = new Map();
         let cookie = this.request.headers.cookie;
         if (undefined === cookie) {
-            return null;
+            return map;
         }
-        let ret = null;
         let list = cookie.split('; ');
-        for (let i = 0, equalIndex = 0, key = '', value = ''; i < list.length; i++) {
+        for (let i = 0, equalIndex = 0; i < list.length; i++) {
             equalIndex = list[i].indexOf('=');
             if (-1 === equalIndex) {
-                continue;
+                map.set(list[i], '');
             }
-            key = list[i].substring(0, equalIndex);
-            value = list[i].substring(equalIndex + 1);
-            if (name === key) {
-                ret = value;
-                break;
+            else {
+                map.set(list[i].substring(0, equalIndex), list[i].substring(equalIndex + 1));
             }
         }
-        return ret;
+        return map;
     }
     /**
      * 获取客户端 ip
@@ -115,14 +110,14 @@ class Request extends CoreRequest {
     /**
      * 获取引用网址
      *
-     * @return {String | null}
+     * @return {String}
      */
-    getReferer() {
-        let referer = this.request.headers.referer;
-        if (undefined === referer) {
-            return null;
+    getReferrer() {
+        let headers = this.request.headers;
+        if (undefined !== headers.referrer) {
+            return headers.referrer;
         }
-        return referer;
+        return headers.referer;
     }
     /**
      * 获取 URI 协议和主机部分

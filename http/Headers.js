@@ -38,7 +38,7 @@ class Headers {
      * @param {any} defaultValue
      * @return {String}
      */
-    get(name, defaultValue = null) {
+    get(name, defaultValue = undefined) {
         name = name.toLowerCase();
         if (this.headers.has(name)) {
             return this.headers.get(name).join(', ');

@@ -187,9 +187,9 @@ class Response extends CoreResponse {
      * 获取 header
      *
      * @param {String} name the name of the header
-     * @return {String | null}
+     * @return {String}
      */
-    public getHeader(name: string): string | null {
+    public getHeader(name: string): string {
         return this.headers.get(name);
     }
 

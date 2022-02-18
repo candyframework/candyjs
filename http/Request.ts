@@ -37,13 +37,12 @@ class Request extends CoreRequest {
      *
      * @param {String} parameter 参数名
      * @param {String} defaultValue 默认值
-     * @return {any}
+     * @return {String}
      */
-    public getQueryString(parameter: string, defaultValue: any = null): any {
+    public getQueryString(parameter: string, defaultValue: any = undefined): string {
         let params = new URL(this.request.url, this.getHostInfo()).searchParams;
-        let value = params.get(parameter);
 
-        return null === value ? defaultValue : value;
+        return params.has(parameter) ? params.get(parameter) : defaultValue;
     }
 
     /**
@@ -51,9 +50,9 @@ class Request extends CoreRequest {
      *
      * @param {String} parameter 参数名
      * @param {String} defaultValue 默认值
-     * @return {any}
+     * @return {String}
      */
-    public getParameter(parameter: string, defaultValue: any = null): any {
+    public getParameter(parameter: string, defaultValue: any = undefined): string {
         if(undefined === this.request.body) {
             return defaultValue;
         }
@@ -62,7 +61,7 @@ class Request extends CoreRequest {
     }
 
     /**
-     * Returns the header collection
+     * Returns the headers collection
      *
      * @return {Headers}
      */
@@ -83,37 +82,34 @@ class Request extends CoreRequest {
     }
 
     /**
-     * 获取 cookie
+     * Returns the cookies collection
      *
-     * @param {String} name cookie name
-     * @return {String | null}
+     * @return {Map<String, String>}
      */
-    public getCookie(name: string): string | null {
-        let cookie = this.request.headers.cookie;
+    public getCookies(): Map<string, string> {
+        let map = new Map();
 
+        let cookie = this.request.headers.cookie;
         if(undefined === cookie) {
-            return null;
+            return map;
         }
 
-        let ret = null;
         let list = cookie.split('; ');
-        for(let i=0, equalIndex=0, key='', value=''; i<list.length; i++) {
+        for(let i=0, equalIndex=0; i<list.length; i++) {
             equalIndex = list[i].indexOf('=');
 
             if(-1 === equalIndex) {
-                continue;
-            }
+                map.set(list[i], '');
 
-            key = list[i].substring(0, equalIndex);
-            value = list[i].substring(equalIndex + 1);
-
-            if(name === key) {
-                ret = value;
-                break;
+            } else {
+                map.set(
+                    list[i].substring(0, equalIndex),
+                    list[i].substring(equalIndex + 1)
+                );
             }
         }
 
-        return ret;
+        return map;
     }
 
     /**
@@ -136,16 +132,16 @@ class Request extends CoreRequest {
     /**
      * 获取引用网址
      *
-     * @return {String | null}
+     * @return {String}
      */
-    public getReferer(): string | null {
-        let referer = this.request.headers.referer;
+    public getReferrer(): string {
+        let headers = this.request.headers;
 
-        if(undefined === referer) {
-            return null;
+        if(undefined !== headers.referrer) {
+            return headers.referrer;
         }
 
-        return referer;
+        return headers.referer;
     }
 
     /**

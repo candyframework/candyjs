@@ -44,7 +44,7 @@ class Headers {
      * @param {any} defaultValue
      * @return {String}
      */
-    public get(name: string, defaultValue: any = null): string {
+    public get(name: string, defaultValue: any = undefined): string {
         name = name.toLowerCase();
 
         if(this.headers.has(name)) {
