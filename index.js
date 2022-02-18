@@ -6,7 +6,6 @@
 const http = require("http");
 const Hook = require("./core/Hook");
 const Logger = require("./log/Logger");
-const I18N = require("./i18n/I18N");
 /**
  * 入口
  */
@@ -31,14 +30,6 @@ class CandyJs {
      */
     static getLogger() {
         return Logger.getLogger();
-    }
-    /**
-     * 获取国际化实例
-     *
-     * @returns {I18N}
-     */
-    static getI18N() {
-        return I18N.getI18N();
     }
     // web
     requestListener(req, res) {

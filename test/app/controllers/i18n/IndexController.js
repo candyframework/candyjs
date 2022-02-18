@@ -1,7 +1,8 @@
 'use strict';
 
-var CandyJs = require('../../../../index');
-var Request = require('../../../../http/Request');
+const CandyJs = require('../../../../index');
+const Request = require('../../../../http/Request');
+const I18N = require('../../../../i18n/I18N');
 
 class IndexController {
 
@@ -10,10 +11,9 @@ class IndexController {
         let param = q.getQueryString('param', '');
         let lang = q.getQueryString('lang', '');
         // 设置语言可以用过滤器方式添加 代码复用性更高
-        let i18n = CandyJs.getI18N();
-        i18n.getTranslator('mytype').setLanguage(lang === 'en' ? 'en-US' : 'zh-CN');
+        I18N.getI18N().getTranslator('mytype').setLanguage(lang === 'en' ? 'en-US' : 'zh-CN');
 
-        let msg = CandyJs.getI18N().translate('mytype', 'hello world{param}', [param]);
+        let msg = I18N.getI18N().translate('mytype', 'hello world{param}', [param]);
         res.end(msg);
     }
 

@@ -1,8 +1,8 @@
 'use strict';
 
-var Candy = require('../../../../Candy');
-var Controller = Candy.include('candy/web/Controller');
-var Request = Candy.include('candy/http/Request');
+const Candy = require('../../../../Candy');
+const Controller = Candy.include('candy/web/Controller');
+const Request = Candy.include('candy/http/Request');
 
 class IndexController extends Controller {
 
