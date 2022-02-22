@@ -21,7 +21,6 @@
         "model/**/*",
         "rest/**/*",
         "session/**/*",
-        "test/**/*",
         "utils/**/*",
         "web/**/*",
         "index.ts"
