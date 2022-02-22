@@ -14,7 +14,7 @@ class Logger {
     /**
      * Logger instance
      */
-    static _logger = null;
+    static _instance = null;
 
     /**
      * Error message level
@@ -101,11 +101,11 @@ class Logger {
     static getLogger(): Logger {
         let app: any = Candy.app;
 
-        if(null === Logger._logger) {
-            Logger._logger = new Logger(app.log);
+        if(null === Logger._instance) {
+            Logger._instance = new Logger(app.log);
         }
 
-        return Logger._logger;
+        return Logger._instance;
     }
 
     /**

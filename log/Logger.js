@@ -42,10 +42,10 @@ class Logger {
      */
     static getLogger() {
         let app = Candy.app;
-        if (null === Logger._logger) {
-            Logger._logger = new Logger(app.log);
+        if (null === Logger._instance) {
+            Logger._instance = new Logger(app.log);
         }
-        return Logger._logger;
+        return Logger._instance;
     }
     /**
      * 创建新日志对象
@@ -142,7 +142,7 @@ class Logger {
 /**
  * Logger instance
  */
-Logger._logger = null;
+Logger._instance = null;
 /**
  * Error message level
  */
