@@ -4,12 +4,12 @@
  * @license MIT
  */
 const Candy = require("../Candy");
-const CandyJS = require("../index");
+const Logger = require("../log/Logger");
 const Request = require("../http/Request");
 const CoreApp = require("../core/Application");
-const Controller = require("./Controller");
 const StringHelper = require("../helpers/StringHelper");
 const InvalidRouteException = require("../core/InvalidRouteException");
+const Controller = require("./Controller");
 /**
  * web 应用
  */
@@ -75,7 +75,7 @@ class Application extends CoreApp {
      */
     requestListener(request, response) {
         let route = new Request(request).createURL().pathname;
-        CandyJS.getLogger().trace('Route requested: ' + route);
+        Logger.getLogger().trace('Route requested: ' + route);
         let controller = this.createController(route);
         if (null === controller) {
             throw new InvalidRouteException('The route requested is not found');
@@ -130,7 +130,7 @@ class Application extends CoreApp {
         }
         // 拦截路由
         if (null !== this.interceptAll) {
-            CandyJS.getLogger().trace('Route intercepted: ' + route);
+            Logger.getLogger().trace('Route intercepted: ' + route);
             return Candy.createObject(this.interceptAll);
         }
         // 解析路由
@@ -160,7 +160,7 @@ class Application extends CoreApp {
         // 模块没有前缀目录
         let clazz = null;
         if (null !== this.routesMap && undefined !== this.routesMap[id]) {
-            CandyJS.getLogger().trace('Create controller by routesMap: '
+            Logger.getLogger().trace('Create controller by routesMap: '
                 + ('string' === typeof this.routesMap[id]
                     ? this.routesMap[id] : this.routesMap[id].classPath));
             return Candy.createObject(this.routesMap[id], {
@@ -170,7 +170,7 @@ class Application extends CoreApp {
             });
         }
         if (null !== this.modules && undefined !== this.modules[id]) {
-            CandyJS.getLogger().trace('Create module controller: ' + this.modules[id]);
+            Logger.getLogger().trace('Create module controller: ' + this.modules[id]);
             moduleId = id;
             clazz = StringHelper.trimChar(this.modules[id], '/')
                 + '/controllers/'
@@ -181,7 +181,7 @@ class Application extends CoreApp {
                 viewPath: viewPath
             });
         }
-        CandyJS.getLogger().trace('Create common controller: ' + clazz);
+        Logger.getLogger().trace('Create common controller: ' + clazz);
         clazz = this.defaultControllerNamespace
             + '/'
             + viewPath
