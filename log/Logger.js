@@ -11,8 +11,27 @@ const AbstractLog = require("./AbstractLog");
  */
 class Logger {
     constructor(settings) {
+        /**
+         * @property {Array} messages logged messages
+         *
+         * Each log message is of the following structure:
+         *
+         * ```
+         * [
+         *   [0] => string:message
+         *   [1] => number:level
+         *   [2] => number:timestamp
+         * ]
+         * ```
+         */
         this.messages = [];
+        /**
+         * @property {Number} flushInterval how many messages should be logged before they are flushed from memory
+         */
         this.flushInterval = 10;
+        /**
+         * @property {Array} targets the targets class
+         */
         this.targets = [];
         this.init(settings);
     }

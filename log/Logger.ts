@@ -49,23 +49,19 @@ class Logger {
      * ]
      * ```
      */
-    public messages: any[];
+    public messages: any[] = [];
 
     /**
      * @property {Number} flushInterval how many messages should be logged before they are flushed from memory
      */
-    public flushInterval: number;
+    public flushInterval: number = 10;
 
     /**
      * @property {Array} targets the targets class
      */
-    public targets: any[];
+    public targets: any[] = [];
 
     private constructor(settings: any) {
-        this.messages = [];
-        this.flushInterval = 10;
-        this.targets = [];
-
         this.init(settings);
     }
 
