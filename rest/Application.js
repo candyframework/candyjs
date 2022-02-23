@@ -168,13 +168,13 @@ class Application extends CoreApp {
     /**
      * @inheritdoc
      */
-    handlerException(response, exception) {
+    handlerException(exception, response) {
         let handler = Candy.createObject(this.exceptionHandler);
-        handler.handlerException(response, exception);
+        handler.handlerException(exception, response);
     }
 }
 /**
- * class and method separate
+ * class and method separator
  */
 Application.separator = '@';
 module.exports = Application;

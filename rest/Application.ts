@@ -15,7 +15,7 @@ import InvalidRouteException = require('../core/InvalidRouteException');
 class Application extends CoreApp {
 
     /**
-     * class and method separate
+     * class and method separator
      */
     static separator: string = '@';
 
@@ -198,10 +198,10 @@ class Application extends CoreApp {
     /**
      * @inheritdoc
      */
-    public handlerException(response: any, exception: any): void {
+    public handlerException(exception: any, response: any): void {
         let handler = Candy.createObject(this.exceptionHandler);
 
-        handler.handlerException(response, exception);
+        handler.handlerException(exception, response);
     }
 
 }

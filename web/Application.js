@@ -93,9 +93,9 @@ class Application extends CoreApp {
     /**
      * @inheritdoc
      */
-    handlerException(response, exception) {
+    handlerException(exception, response) {
         let handler = Candy.createObject(this.exceptionHandler);
-        handler.handlerException(response, exception);
+        handler.handlerException(exception, response);
     }
     /**
      * 创建控制器实例

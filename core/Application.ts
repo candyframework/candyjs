@@ -132,10 +132,10 @@ abstract class Application extends Event {
     /**
      * 异常处理
      *
+     * @param {any} exception 异常类
      * @param {any} response http response
-     * @param {Exception} exception 异常类
      */
-    public abstract handlerException(response: any, exception: any): void;
+    public abstract handlerException(exception: any, response: any): void;
 
 }
 

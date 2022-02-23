@@ -37,7 +37,7 @@ class CandyJs {
             this.app.requestListener(req, res);
         }
         catch (e) {
-            this.app.handlerException(res, e);
+            this.app.handlerException(e, res);
         }
     }
     // handler

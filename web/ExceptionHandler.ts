@@ -13,7 +13,7 @@ class ExceptionHandler extends CoreExceptionHandler {
     /**
      * @inheritdoc
      */
-    public handlerException(response: any, exception: any): void {
+    public handlerException(exception: any, response: any): void {
         response.setHeader('Content-Type', 'text/plain');
         response.writeHead(500);
 

@@ -138,6 +138,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2022-02-23
+
+    * 4.10.3 修改了 `handlerException(exception, res)` 参数位置
+
 + 2022-02-18
 
     * 4.10.2 发布
