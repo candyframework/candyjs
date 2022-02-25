@@ -2,6 +2,8 @@
  * @author afu
  * @license MIT
  */
+import IComponent from './IComponent';
+
 import Candy = require('../Candy');
 import Event = require('./Event');
 import Behavior = require('./Behavior');
@@ -9,7 +11,7 @@ import Behavior = require('./Behavior');
 /**
  * 组件是实现 行为 (behavior) 事件 (event) 的基类
  */
-class Component extends Event {
+class Component extends Event implements IComponent {
 
     /**
      * the attached behaviors

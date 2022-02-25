@@ -1,9 +1,5 @@
 "use strict";
 /**
- * @author afu
- * @license MIT
- */
-/**
  * 行为类
  *
  * 行为类能够监听组件的事件并作出响应

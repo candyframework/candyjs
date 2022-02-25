@@ -2,6 +2,7 @@
  * @author afu
  * @license MIT
  */
+import IComponent from "./IComponent";
 
 /**
  * 行为类
@@ -13,7 +14,7 @@ class Behavior {
     /**
      * 行为持有的组件
      */
-    public component: any = null;
+    public component: IComponent = null;
 
     constructor() {}
 
@@ -36,7 +37,7 @@ class Behavior {
      * @typedef {import('./Component')} Component
      * @param {Component} component 组件
      */
-    public listen(component: any): void {
+    public listen(component: IComponent): void {
         this.component = component;
 
         let events = this.events();

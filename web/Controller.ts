@@ -2,10 +2,10 @@
  * @author afu
  * @license MIT
  */
+import View = require('./View');
+
 import Candy = require('../Candy');
 import CoreController = require('../core/Controller');
-
-import View = require('./view');
 
 /**
  * 控制器

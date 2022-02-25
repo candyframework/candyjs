@@ -3,6 +3,7 @@
  * @license MIT
  */
 import ILog from './ILog';
+
 import Event = require('../core/Event');
 
 /**

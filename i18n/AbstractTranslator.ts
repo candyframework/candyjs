@@ -3,6 +3,7 @@
  * @license MIT
  */
 import ITranslator from './ITranslator';
+
 import Candy = require('../Candy');
 
 /**

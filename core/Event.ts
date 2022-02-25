@@ -2,12 +2,14 @@
  * @author afu
  * @license MIT
  */
+import IEvent from './IEvent';
+
 import LinkedList = require('../utils/LinkedList');
 
 /**
  * 简单 Event
  */
-class Event {
+class Event implements IEvent {
 
     /**
      * the attached event handlers

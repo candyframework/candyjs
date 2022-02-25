@@ -1,8 +1,4 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const Candy = require("../Candy");
 const CoreController = require("../core/Controller");
 /**

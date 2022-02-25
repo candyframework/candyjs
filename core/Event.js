@@ -1,8 +1,4 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const LinkedList = require("../utils/LinkedList");
 /**
  * 简单 Event
