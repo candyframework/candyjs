@@ -20,40 +20,25 @@ class Component extends Event {
         this.ensureDeclaredBehaviorsAttached();
     }
     /**
-     * 获取类名称
-     *
-     * @return {String}
+     * @inheritdoc
      */
     className() {
         return this.constructor.name;
     }
     /**
-     * 声明组件的行为列表
-     *
-     * [
-     *      ['behaviorName', instanceClass],
-     *      ['behaviorName', 'behaviorClassPath'],
-     *      ['behaviorName', {'classPath': 'behaviorClassPath'}]
-     * ]
-     *
-     * @return {any[]} 行为列表
+     * @inheritdoc
      */
     behaviors() {
         return null;
     }
     /**
-     * 向组件附加一个行为
-     *
-     * @param {String} name 行为名称
-     * @param {any} behavior 行为
+     * @inheritdoc
      */
     attachBehavior(name, behavior) {
         this.attachBehaviorInternal(name, behavior);
     }
     /**
-     * 以列表形式向组件添加行为
-     *
-     * @param {any[]} behaviors 行为列表
+     * @inheritdoc
      */
     attachBehaviors(behaviors) {
         for (let v of behaviors) {
@@ -61,10 +46,7 @@ class Component extends Event {
         }
     }
     /**
-     * 删除组件的行为
-     *
-     * @param {String} name 行为的名称
-     * @return {Behavior | null} 被删除的行为
+     * @inheritdoc
      */
     detachBehavior(name) {
         if (!this.behaviorsMap.has(name)) {
@@ -76,7 +58,7 @@ class Component extends Event {
         return behavior;
     }
     /**
-     * 删除组件上所有的行为
+     * @inheritdoc
      */
     detachBehaviors() {
         for (let name of this.behaviorsMap.keys()) {

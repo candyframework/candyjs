@@ -15,7 +15,7 @@ class Candy {
      * @type {Application}
      * @property {Application} app 当前应用
      */
-    static app: any = null;
+    static app = null;
 
     /**
      * @property {Map<String, String>} pathAliases 路径别名

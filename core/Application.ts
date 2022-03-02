@@ -2,6 +2,8 @@
  * @author afu
  * @license MIT
  */
+import IApplication from './IApplication';
+
 import Candy = require('../Candy');
 import Event = require('./Event');
 import InvalidConfigException = require('./InvalidConfigException');
@@ -9,21 +11,10 @@ import InvalidConfigException = require('./InvalidConfigException');
 /**
  * 应用基类
  */
-abstract class Application extends Event {
+abstract class Application extends Event implements IApplication {
 
-    /**
-     * 编码
-     */
     public encoding: string = 'UTF-8';
-
-    /**
-     * 调试开关
-     */
     public debug: boolean = false;
-
-    /**
-     * 异常处理类
-     */
     public exceptionHandler: string = 'candy/web/ExceptionHandler';
 
     constructor(config: any) {
@@ -68,72 +59,54 @@ abstract class Application extends Event {
     }
 
     /**
-     * 设置应用路径
-     *
-     * @param {String} path 应用路径
+     * @inheritdoc
      */
     public setAppPath(path: string): void {
         Candy.setPathAlias('@app', path);
     }
 
     /**
-     * 得到应用目录
-     *
-     * @return {String} 路径
+     * @inheritdoc
      */
     public getAppPath(): string {
         return Candy.getPathAlias('@app');
     }
 
     /**
-     * 设置 runtime 路径
-     *
-     * @param {String} path 路径
+     * @inheritdoc
      */
     public setRuntimePath(path: string): void {
         Candy.setPathAlias('@runtime', path);
     }
 
     /**
-     * 得到 runtime 目录
-     *
-     * @return {String} 路径
+     * @inheritdoc
      */
     public getRuntimePath(): string {
         return Candy.getPathAlias('@runtime');
     }
 
     /**
-     * 设置 root 路径
-     *
-     * @param {String} path 路径
+     * @inheritdoc
      */
     public setRootPath(path: string): void {
         Candy.setPathAlias('@root', path);
     }
 
     /**
-     * 得到 root 目录
-     *
-     * @return {String} 路径
+     * @inheritdoc
      */
     public getRootPath(): string {
         return Candy.getPathAlias('@root');
     }
 
     /**
-     * handle request
-     *
-     * @param {any} request http request
-     * @param {any} response http response
+     * @inheritdoc
      */
     public abstract requestListener(request: any, response: any): void;
 
     /**
-     * 异常处理
-     *
-     * @param {any} exception 异常类
-     * @param {any} response http response
+     * @inheritdoc
      */
     public abstract handlerException(exception: any, response: any): void;
 

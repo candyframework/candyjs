@@ -1,8 +1,4 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const Candy = require("../Candy");
 const Event = require("./Event");
 const InvalidConfigException = require("./InvalidConfigException");
@@ -12,17 +8,8 @@ const InvalidConfigException = require("./InvalidConfigException");
 class Application extends Event {
     constructor(config) {
         super();
-        /**
-         * 编码
-         */
         this.encoding = 'UTF-8';
-        /**
-         * 调试开关
-         */
         this.debug = false;
-        /**
-         * 异常处理类
-         */
         this.exceptionHandler = 'candy/web/ExceptionHandler';
         Candy.app = this;
         this.init(config);
@@ -58,49 +45,37 @@ class Application extends Event {
         }
     }
     /**
-     * 设置应用路径
-     *
-     * @param {String} path 应用路径
+     * @inheritdoc
      */
     setAppPath(path) {
         Candy.setPathAlias('@app', path);
     }
     /**
-     * 得到应用目录
-     *
-     * @return {String} 路径
+     * @inheritdoc
      */
     getAppPath() {
         return Candy.getPathAlias('@app');
     }
     /**
-     * 设置 runtime 路径
-     *
-     * @param {String} path 路径
+     * @inheritdoc
      */
     setRuntimePath(path) {
         Candy.setPathAlias('@runtime', path);
     }
     /**
-     * 得到 runtime 目录
-     *
-     * @return {String} 路径
+     * @inheritdoc
      */
     getRuntimePath() {
         return Candy.getPathAlias('@runtime');
     }
     /**
-     * 设置 root 路径
-     *
-     * @param {String} path 路径
+     * @inheritdoc
      */
     setRootPath(path) {
         Candy.setPathAlias('@root', path);
     }
     /**
-     * 得到 root 目录
-     *
-     * @return {String} 路径
+     * @inheritdoc
      */
     getRootPath() {
         return Candy.getPathAlias('@root');
