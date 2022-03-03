@@ -2,40 +2,29 @@
  * @author afu
  * @license MIT
  */
-import IComponent from "./IComponent";
+import IBehavior from './IBehavior';
+import IComponent from './IComponent';
 
 /**
  * 行为类
  *
  * 行为类能够监听组件的事件并作出响应
  */
-class Behavior {
+class Behavior implements IBehavior {
 
-    /**
-     * 行为持有的组件
-     */
     public component: IComponent = null;
 
     constructor() {}
 
     /**
-     * 声明要监听的组件的事件和对应事件的处理程序
-     *
-     * [
-     *      ['eventName', handler]
-     * ]
-     *
-     * @return {any[]}
+     * @inheritdoc
      */
     public events(): any[] {
         return null;
     }
 
     /**
-     * 监听组件的事件
-     *
-     * @typedef {import('./Component')} Component
-     * @param {Component} component 组件
+     * @inheritdoc
      */
     public listen(component: IComponent): void {
         this.component = component;
@@ -51,7 +40,7 @@ class Behavior {
     }
 
     /**
-     * 取消监听组件的事件
+     * @inheritdoc
      */
     public unListen(): void {
         if(null === this.component) {

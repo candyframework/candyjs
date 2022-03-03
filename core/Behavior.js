@@ -6,28 +6,16 @@
  */
 class Behavior {
     constructor() {
-        /**
-         * 行为持有的组件
-         */
         this.component = null;
     }
     /**
-     * 声明要监听的组件的事件和对应事件的处理程序
-     *
-     * [
-     *      ['eventName', handler]
-     * ]
-     *
-     * @return {any[]}
+     * @inheritdoc
      */
     events() {
         return null;
     }
     /**
-     * 监听组件的事件
-     *
-     * @typedef {import('./Component')} Component
-     * @param {Component} component 组件
+     * @inheritdoc
      */
     listen(component) {
         this.component = component;
@@ -40,7 +28,7 @@ class Behavior {
         }
     }
     /**
-     * 取消监听组件的事件
+     * @inheritdoc
      */
     unListen() {
         if (null === this.component) {
