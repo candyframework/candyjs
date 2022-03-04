@@ -5,21 +5,10 @@ const LinkedList = require("../utils/LinkedList");
  */
 class Event {
     constructor() {
-        /**
-         * the attached event handlers
-         *
-         * {
-         *      'eventName1': [fn1, fn2],
-         *      'eventName2': [fn1, fn2]
-         * }
-         */
         this.eventsMap = new Map();
     }
     /**
-     * 注册事件处理
-     *
-     * @param {String} eventName 事件名称
-     * @param {Function} handler 事件处理器
+     * @inheritdoc
      */
     on(eventName, handler) {
         if (!this.eventsMap.has(eventName)) {
@@ -28,10 +17,7 @@ class Event {
         this.eventsMap.get(eventName).add(handler);
     }
     /**
-     * 注销事件
-     *
-     * @param {String} eventName 事件名称
-     * @param {Function} handler 事件处理器
+     * @inheritdoc
      */
     off(eventName, handler = null) {
         if (!this.eventsMap.has(eventName)) {
@@ -45,16 +31,13 @@ class Event {
         list.remove(handler);
     }
     /**
-     * 注销所有事件
+     * @inheritdoc
      */
     offAll() {
         this.eventsMap.clear();
     }
     /**
-     * 触发事件
-     *
-     * @param {String} eventName 事件名称
-     * @param {any} parameter 参数
+     * @inheritdoc
      */
     trigger(eventName, parameter = null) {
         if (!this.eventsMap.has(eventName)) {
