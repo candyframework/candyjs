@@ -2,6 +2,7 @@
  * @author afu
  * @license MIT
  */
+import IApp from './IAPP';
 
 /**
  * 辅助类
@@ -10,12 +11,8 @@ class Candy {
 
     /**
      * 应用实例
-     *
-     * @typedef {import('./core/Application')} Application
-     * @type {Application}
-     * @property {Application} app 当前应用
      */
-    static app = null;
+    static app: IApp = null;
 
     /**
      * @property {Map<String, String>} pathAliases 路径别名

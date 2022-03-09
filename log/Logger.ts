@@ -95,7 +95,7 @@ class Logger {
      * @return {Logger}
      */
     static getLogger(): Logger {
-        let app: any = Candy.app;
+        let app = Candy.app;
 
         if(null === Logger._instance) {
             Logger._instance = new Logger(app.log);

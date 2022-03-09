@@ -1,9 +1,5 @@
 "use strict";
 /**
- * @author afu
- * @license MIT
- */
-/**
  * 辅助类
  */
 class Candy {
@@ -120,10 +116,6 @@ class Candy {
 }
 /**
  * 应用实例
- *
- * @typedef {import('./core/Application')} Application
- * @type {Application}
- * @property {Application} app 当前应用
  */
 Candy.app = null;
 /**

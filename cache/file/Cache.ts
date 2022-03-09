@@ -108,7 +108,7 @@ class Cache extends AbstractCache {
         let cacheFile = this.getCacheFile(key);
 
         if(fs.existsSync(cacheFile) && fs.statSync(cacheFile).mtime.getTime() > Date.now()) {
-            ret = fs.readFileSync(cacheFile, Candy.app.encoding);
+            ret = fs.readFileSync(cacheFile, Candy.app.encoding as any);
         }
 
         return ret;
