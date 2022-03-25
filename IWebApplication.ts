@@ -1,6 +1,9 @@
 import IApplication from './core/IApplication';
 
-export default interface IApp extends IApplication {
+/**
+ * web 应用
+ */
+export default interface IWebApplication extends IApplication {
     /**
      * 日志配置
      */
@@ -35,4 +38,9 @@ export default interface IApp extends IApplication {
      * 默认视图配置
      */
     defaultView?: any;
+
+    /**
+     * 其他属性
+     */
+    [key: string]: any;
 }

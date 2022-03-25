@@ -2,6 +2,8 @@
  * @author afu
  * @license MIT
  */
+import IWebApplication from './IWebApplication';
+
 import http = require('http');
 
 import Hook = require('./core/Hook');
@@ -20,7 +22,7 @@ class CandyJs {
     /**
      * 当前应用
      */
-    public app: any;
+    public app: IWebApplication;
 
     /**
      * constructor

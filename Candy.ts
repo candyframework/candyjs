@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import IApp from './IAPP';
+import IWebApplication from './IWebApplication';
 
 /**
  * 辅助类
@@ -12,7 +12,7 @@ class Candy {
     /**
      * 应用实例
      */
-    static app: IApp = null;
+    static app: IWebApplication = null;
 
     /**
      * @property {Map<String, String>} pathAliases 路径别名

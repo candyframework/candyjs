@@ -1,8 +1,4 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const http = require("http");
 const Hook = require("./core/Hook");
 const Logger = require("./log/Logger");
