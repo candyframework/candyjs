@@ -1,18 +1,11 @@
 "use strict";
 /**
- * @author afu
- * @license MIT
- */
-/**
  * Validator base class
  */
 class Validator {
     constructor() {
         /**
          * 所属模型
-         *
-         * @typedef {import('./Model')} Model
-         * @type {Model}
          */
         this.model = null;
         /**

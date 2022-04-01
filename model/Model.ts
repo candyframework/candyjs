@@ -2,6 +2,8 @@
  * @author afu
  * @license MIT
  */
+import IModel from './IModel';
+
 import Candy = require('../Candy');
 import Component = require('../core/Component');
 import Validator = require('./Validator');
@@ -10,44 +12,16 @@ import ModelException = require('../core/ModelException');
 /**
  * 用于存储和校验与数据库相关的数据
  */
-class Model extends Component {
+class Model extends Component implements IModel {
 
     /**
      * 从哪里获取参数
      */
     static fromParameter = 'body';
 
-    /**
-     * 模型名
-     */
     public modelName: string = '';
-
-    /**
-     * 数据字段配置 一般与数据库字段一致
-     *
-     * ```
-     * {
-     *      name: 'defaultValue',
-     *      age: defaultValue
-     * }
-     * ```
-     */
     public attributes: any = null;
-
-    /**
-     * 模型属性与表单字段对应关系 用于解决模型字段与表单字段名称不同问题
-     *
-     * ```
-     * {
-     *      name: 'form_user_name'
-     * }
-     * ```
-     */
     public attributesMap: any = null;
-
-    /**
-     * 错误信息
-     */
     public messages: string[] = [];
 
     constructor() {
@@ -55,38 +29,21 @@ class Model extends Component {
     }
 
     /**
-     * Returns the validation rules for attributes
-     *
-     * ```
-     * [
-     *      {
-     *          // 必选参数
-     *          rule: 'candy/model/RequiredValidator',
-     *          attributes: ['name', 'age'],
-     *          // 可选参数 错误信息
-     *          messages: ['name is required', 'age is required']
-     *      }
-     * ]
-     * ```
+     * @inheritdoc
      */
     public rules(): any[] | null {
         return null;
     }
 
     /**
-     * 获取所有属性
-     *
-     * @return {any}
+     * @inheritdoc
      */
     public getAttributes(): any {
         return this.attributes;
     }
 
     /**
-     * 获取某个属性
-     *
-     * @param {String} attribute 属性名
-     * @throws {ModelException}
+     * @inheritdoc
      */
     public getAttribute(attribute: string): any {
         if(null === this.attributes) {
@@ -97,19 +54,14 @@ class Model extends Component {
     }
 
     /**
-     * 设置属性
-     *
-     * @param {any} attributes 属性
+     * @inheritdoc
      */
     public setAttributes(attributes: any): void {
         this.attributes = attributes;
     }
 
     /**
-     * 设置一个属性
-     *
-     * @param {String} attribute 属性名
-     * @param {any} value 属性值
+     * @inheritdoc
      */
     public setAttribute(attribute: string, value: any): void {
         if(null === this.attributes) {
@@ -120,9 +72,7 @@ class Model extends Component {
     }
 
     /**
-     * 获取验证器
-     *
-     * @return {Validator[] | null}
+     * @inheritdoc
      */
     public getValidators(): Validator[] | null {
         let rules = this.rules();
@@ -173,7 +123,7 @@ class Model extends Component {
     }
 
     /**
-     * 填充模型
+     * @inheritdoc
      */
     public fill(incoming: any): boolean {
         if(null === this.attributes) {
@@ -202,9 +152,7 @@ class Model extends Component {
     }
 
     /**
-     * 执行验证
-     *
-     * @return {Boolean}
+     * @inheritdoc
      */
     public validate(): boolean {
         if(null === this.attributes) {
@@ -224,16 +172,14 @@ class Model extends Component {
     }
 
     /**
-     * 获取错误信息
-     *
-     * @return {String[]}
+     * @inheritdoc
      */
     public getErrors(): string[] {
         return this.messages;
     }
 
     /**
-     * 获取第一个错误信息 如果没有则返回空
+     * @inheritdoc
      */
     public getFirstError(): string {
         if(this.messages.length > 0) {
@@ -244,7 +190,7 @@ class Model extends Component {
     }
 
     /**
-     * 清空错误信息
+     * @inheritdoc
      */
     public clearErrors(): void {
         this.messages = [];

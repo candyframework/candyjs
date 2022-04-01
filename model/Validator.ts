@@ -2,6 +2,7 @@
  * @author afu
  * @license MIT
  */
+import IModel from './IModel';
 
 /**
  * Validator base class
@@ -10,11 +11,8 @@ class Validator {
 
     /**
      * 所属模型
-     *
-     * @typedef {import('./Model')} Model
-     * @type {Model}
      */
-    public model: any = null;
+    public model: IModel = null;
 
     /**
      * 待验证的属性
