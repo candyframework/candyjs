@@ -6,14 +6,14 @@ import IList from './IList';
 class ArrayList implements IList {
 
     /**
-     * The size of the List
+     * The real size of the List
      */
     private length: number = 0;
 
     /**
      * The array that stored the elements
      */
-    private elementData: any[] = [];
+    private elementData: any[] /* = null */;
 
     /**
      * 将源数组拷贝到目标数组
@@ -26,17 +26,6 @@ class ArrayList implements IList {
      */
     static arrayCopy(src: any[], srcPos: number, dest: any[], destPos: number, length: number): void {
         let copied = 0;
-
-        let expand = destPos + length - dest.length;
-        let tmp = null;
-        if(expand > 0) {
-            tmp = new Array(expand);
-            for(let i=0; i<tmp.length; i++) {
-                tmp[i] = undefined;
-            }
-            dest.push.apply(dest, tmp);
-        }
-
         for(let i=srcPos; i<src.length; i++) {
             if(destPos < dest.length) {
                 dest[destPos++] = src[i];
@@ -49,7 +38,9 @@ class ArrayList implements IList {
         }
     }
 
-    constructor() {}
+    constructor(initialCapacity: number = 10) {
+        this.elementData = new Array(initialCapacity);
+    }
 
     [Symbol.iterator]() {
         let index = 0;
@@ -63,9 +54,36 @@ class ArrayList implements IList {
                     return ret;
                 }
 
-                return { value: undefined, done: true };
+                return { value: void 0, done: true };
             }
         };
+    }
+
+    private ensureCapacity(minCapacity: number): void {
+        if(minCapacity - this.elementData.length > 0) {
+            this.growCapacity(minCapacity);
+        }
+    }
+
+    private growCapacity(minCapacity: number): void {
+        let oldCapacity = this.elementData.length;
+        let newCapacity = oldCapacity + (oldCapacity >> 1);
+
+        if(newCapacity - minCapacity < 0) {
+            newCapacity = minCapacity;
+        }
+
+        // overflow
+        if(newCapacity > Number.MAX_SAFE_INTEGER) {
+            newCapacity = Number.MAX_SAFE_INTEGER;
+        }
+
+        let dest = new Array(newCapacity);
+        ArrayList.arrayCopy(this.elementData, 0,
+            dest, 0,
+            Math.min(oldCapacity, newCapacity)
+        );
+        this.elementData = dest;
     }
 
     /**
@@ -127,13 +145,9 @@ class ArrayList implements IList {
      * @param {any} element
      */
     public add(element: any): void {
-        if(this.elementData.length > this.length) {
-            this.elementData[this.length++] = element;
-            return;
-        }
+        this.ensureCapacity(this.length + 1);
 
-        this.length++;
-        this.elementData.push(element);
+        this.elementData[this.length++] = element;
     }
 
     /**
@@ -147,9 +161,14 @@ class ArrayList implements IList {
             return false;
         }
 
-        ArrayList.arrayCopy(this.elementData, index, this.elementData, index + 1, this.length - index);
-        this.length++;
+        this.ensureCapacity(this.length + 1);
+
+        ArrayList.arrayCopy(this.elementData, index,
+            this.elementData, index + 1,
+            this.length - index);
+
         this.elementData[index] = element;
+        this.length++;
 
         return true;
     }
@@ -167,7 +186,7 @@ class ArrayList implements IList {
                 if(move > 0) {
                     ArrayList.arrayCopy(this.elementData, i + 1, this.elementData, i, move);
                 }
-                this.elementData[--this.length] = undefined;
+                this.elementData[--this.length] = void 0;
                 return true;
             }
         }
@@ -190,7 +209,7 @@ class ArrayList implements IList {
         if(move > 0) {
             ArrayList.arrayCopy(this.elementData, index + 1, this.elementData, index, move);
         }
-        this.elementData[--this.length] = undefined;
+        this.elementData[--this.length] = void 0;
 
         return oldValue;
     }
@@ -229,8 +248,11 @@ class ArrayList implements IList {
      * Removes all of the elements from this list
      */
     public clear(): void {
+        for(let i=0; i<this.length; i++) {
+            this.elementData[i] = void 0;
+        }
+
         this.length = 0;
-        this.elementData = [];
     }
 
     public toString(): string {

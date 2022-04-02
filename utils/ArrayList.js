@@ -3,15 +3,12 @@
  * ArrayList
  */
 class ArrayList {
-    constructor() {
+    constructor(initialCapacity = 10) {
         /**
-         * The size of the List
+         * The real size of the List
          */
         this.length = 0;
-        /**
-         * The array that stored the elements
-         */
-        this.elementData = [];
+        this.elementData = new Array(initialCapacity);
     }
     /**
      * 将源数组拷贝到目标数组
@@ -24,15 +21,6 @@ class ArrayList {
      */
     static arrayCopy(src, srcPos, dest, destPos, length) {
         let copied = 0;
-        let expand = destPos + length - dest.length;
-        let tmp = null;
-        if (expand > 0) {
-            tmp = new Array(expand);
-            for (let i = 0; i < tmp.length; i++) {
-                tmp[i] = undefined;
-            }
-            dest.push.apply(dest, tmp);
-        }
         for (let i = srcPos; i < src.length; i++) {
             if (destPos < dest.length) {
                 dest[destPos++] = src[i];
@@ -52,9 +40,28 @@ class ArrayList {
                     index++;
                     return ret;
                 }
-                return { value: undefined, done: true };
+                return { value: void 0, done: true };
             }
         };
+    }
+    ensureCapacity(minCapacity) {
+        if (minCapacity - this.elementData.length > 0) {
+            this.growCapacity(minCapacity);
+        }
+    }
+    growCapacity(minCapacity) {
+        let oldCapacity = this.elementData.length;
+        let newCapacity = oldCapacity + (oldCapacity >> 1);
+        if (newCapacity - minCapacity < 0) {
+            newCapacity = minCapacity;
+        }
+        // overflow
+        if (newCapacity > Number.MAX_SAFE_INTEGER) {
+            newCapacity = Number.MAX_SAFE_INTEGER;
+        }
+        let dest = new Array(newCapacity);
+        ArrayList.arrayCopy(this.elementData, 0, dest, 0, Math.min(oldCapacity, newCapacity));
+        this.elementData = dest;
     }
     /**
      * Returns the number of elements in this list
@@ -108,12 +115,8 @@ class ArrayList {
      * @param {any} element
      */
     add(element) {
-        if (this.elementData.length > this.length) {
-            this.elementData[this.length++] = element;
-            return;
-        }
-        this.length++;
-        this.elementData.push(element);
+        this.ensureCapacity(this.length + 1);
+        this.elementData[this.length++] = element;
     }
     /**
      * Inserts the specified element at the specified position
@@ -125,9 +128,10 @@ class ArrayList {
         if (index > this.length) {
             return false;
         }
+        this.ensureCapacity(this.length + 1);
         ArrayList.arrayCopy(this.elementData, index, this.elementData, index + 1, this.length - index);
-        this.length++;
         this.elementData[index] = element;
+        this.length++;
         return true;
     }
     /**
@@ -143,7 +147,7 @@ class ArrayList {
                 if (move > 0) {
                     ArrayList.arrayCopy(this.elementData, i + 1, this.elementData, i, move);
                 }
-                this.elementData[--this.length] = undefined;
+                this.elementData[--this.length] = void 0;
                 return true;
             }
         }
@@ -163,7 +167,7 @@ class ArrayList {
         if (move > 0) {
             ArrayList.arrayCopy(this.elementData, index + 1, this.elementData, index, move);
         }
-        this.elementData[--this.length] = undefined;
+        this.elementData[--this.length] = void 0;
         return oldValue;
     }
     /**
@@ -195,8 +199,10 @@ class ArrayList {
      * Removes all of the elements from this list
      */
     clear() {
+        for (let i = 0; i < this.length; i++) {
+            this.elementData[i] = void 0;
+        }
         this.length = 0;
-        this.elementData = [];
     }
     toString() {
         let ret = '[ ';

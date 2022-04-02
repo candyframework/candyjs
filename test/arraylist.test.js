@@ -1,7 +1,7 @@
 const assert = require('assert');
 const ArrayList = require('../utils/ArrayList');
 
-const list = new ArrayList();
+const list = new ArrayList(10);
 
 
 // test
