@@ -186,7 +186,7 @@ class Application extends CoreApp {
 
         // 搜索顺序 用户配置 -> 模块控制器 -> 普通控制器
         // 模块没有前缀目录
-        let clazz = null;
+        let clazz = '';
         if(null !== this.routesMap && undefined !== this.routesMap[id]) {
             Logger.getLogger().trace('Create controller by routesMap: '
                 + ('string' === typeof this.routesMap[id]
@@ -200,12 +200,12 @@ class Application extends CoreApp {
         }
 
         if(null !== this.modules && undefined !== this.modules[id]) {
-            Logger.getLogger().trace('Create module controller: ' + this.modules[id]);
-
             moduleId = id;
             clazz = StringHelper.trimChar(this.modules[id], '/')
                 + '/controllers/'
                 + StringHelper.ucFirst(controllerId) + 'Controller';
+
+            Logger.getLogger().trace('Create module controller: ' + clazz);
 
             return Candy.createObjectAsString(clazz, {
                 moduleId: moduleId,
@@ -214,13 +214,13 @@ class Application extends CoreApp {
             });
         }
 
-        Logger.getLogger().trace('Create common controller: ' + clazz);
-
         clazz = this.defaultControllerNamespace
             + '/'
             + viewPath
             + '/'
             + StringHelper.ucFirst(controllerId) + 'Controller';
+
+        Logger.getLogger().trace('Create common controller: ' + clazz);
 
         return Candy.createObjectAsString(clazz, {
             moduleId: moduleId,
