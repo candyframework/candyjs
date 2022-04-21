@@ -35,7 +35,7 @@ $ ./node_modules/.bin/tsc
 
 ### Node 版本
 
-10.0.0 +
+由于 `candy/http/Request` 类使用了全局 `URL` 类，所以需要 nodejs 10.0 及以上版本
 
 ### Hello world
 
