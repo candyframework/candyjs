@@ -35,7 +35,7 @@ $ ./node_modules/.bin/tsc
 
 ### Node 版本
 
-8.0.0 +
+10.0.0 +
 
 ### Hello world
 
