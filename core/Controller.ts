@@ -67,6 +67,10 @@ class Controller extends Component {
         this.beforeAction(actionEvent);
 
         if(true !== actionEvent.valid) {
+            // will replace to response.writableEnded()
+            if(!response.finished) {
+                response.end('');
+            }
             return;
         }
 

@@ -45,6 +45,10 @@ class Controller extends Component {
         // todo 这里没想好怎么设计 让我想想看
         this.beforeAction(actionEvent);
         if (true !== actionEvent.valid) {
+            // will replace to response.writableEnded()
+            if (!response.finished) {
+                response.end('');
+            }
             return;
         }
         this.run(request, response);
