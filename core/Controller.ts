@@ -71,6 +71,7 @@ class Controller extends Component {
             if(!response.finished) {
                 response.end('');
             }
+
             return;
         }
 
