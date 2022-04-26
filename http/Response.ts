@@ -2,7 +2,6 @@
  * @author afu
  * @license MIT
  */
-import Candy = require('../Candy');
 import CoreResponse = require('../core/Response');
 import Cookie = require('./Cookie');
 import Headers = require('./Headers');
@@ -107,7 +106,7 @@ class Response extends CoreResponse {
     /**
      * 编码
      */
-    public encoding: string = Candy.app.encoding;
+    public encoding: string = 'UTF-8';
 
     /**
      * HTTP protocol version

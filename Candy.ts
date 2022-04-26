@@ -115,13 +115,13 @@ class Candy {
      */
     static createObjectAsDefinition(definition: any, ...parameters: any[]): any {
         let realClass = Candy.getPathAlias('@' + definition.classPath);
-        let properties = Candy.config({}, definition);
+        let properties = Candy.configure({}, definition);
 
         let ClassName = require(realClass + Candy.defaultExtension);
         let instance = new ClassName(...parameters);
 
         delete properties.classPath;
-        Candy.config(instance, properties);
+        Candy.configure(instance, properties);
 
         return instance;
     }
@@ -148,7 +148,7 @@ class Candy {
      * @param {any} properties 配置项
      * @return {Object} 源对象
      */
-    static config(object: any, properties: any): any {
+    static configure(object: any, properties: any): any {
         for(let key in properties) {
             object[key] = properties[key];
         }

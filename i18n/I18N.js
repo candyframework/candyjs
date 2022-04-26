@@ -1,8 +1,4 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const Candy = require("../Candy");
 const InvalidConfigException = require("../core/InvalidConfigException");
 /**
@@ -10,8 +6,9 @@ const InvalidConfigException = require("../core/InvalidConfigException");
  *
  * ```
  * translator: {
+ *      // 基于 file 的翻译器
  *      [type]: {
- *          classPath: 'candy/i18n/Translator',
+ *          classPath: 'candy/i18n/file/Translator',
  *          basePath: __dirname + '/app/messages'
  *      }
  * }
@@ -61,7 +58,7 @@ class I18N {
         if (undefined === app.translator[type].classPath) {
             throw new InvalidConfigException('The "classPath" configuration of the translator is missing');
         }
-        this.translators.set(type, Candy.createObjectAsDefinition(app.translator[type]));
+        this.translators.set(type, Candy.createObjectAsDefinition(app.translator[type], app));
         return this.translators.get(type);
     }
 }

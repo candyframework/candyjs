@@ -3,7 +3,6 @@
  * @author afu
  * @license MIT
  */
-const Candy = require("../Candy");
 const CoreResponse = require("../core/Response");
 const Cookie = require("./Cookie");
 const Headers = require("./Headers");
@@ -34,7 +33,7 @@ class Response extends CoreResponse {
         /**
          * 编码
          */
-        this.encoding = Candy.app.encoding;
+        this.encoding = 'UTF-8';
         /**
          * HTTP protocol version
          */

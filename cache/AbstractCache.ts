@@ -10,6 +10,15 @@ import ICache from './ICache';
 abstract class AbstractCache implements ICache {
 
     /**
+     * 应用
+     */
+    public application: any;
+
+    constructor(application) {
+        this.application = application;
+    }
+
+    /**
      * 进行初始化
      */
     public init() {}

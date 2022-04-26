@@ -10,7 +10,7 @@ const AbstractLog = require("./AbstractLog");
  * 日志
  */
 class Logger {
-    constructor(settings) {
+    constructor(application) {
         /**
          * @property {Array} messages logged messages
          *
@@ -33,7 +33,8 @@ class Logger {
          * @property {Array} targets the targets class
          */
         this.targets = [];
-        this.init(settings);
+        this.application = application;
+        this.init(application.log);
     }
     init(settings) {
         // 没有配置日志
@@ -48,7 +49,7 @@ class Logger {
         }
         for (let target in settings.targets) {
             if (undefined !== settings.targets[target].classPath) {
-                let instance = Candy.createObjectAsDefinition(settings.targets[target]);
+                let instance = Candy.createObjectAsDefinition(settings.targets[target], this.application);
                 instance.on(AbstractLog.EVENT_FLUSH, instance);
                 this.targets.push(instance);
             }
@@ -62,18 +63,9 @@ class Logger {
     static getLogger() {
         let app = Candy.app;
         if (null === Logger._instance) {
-            Logger._instance = new Logger(app.log);
+            Logger._instance = new Logger(app);
         }
         return Logger._instance;
-    }
-    /**
-     * 创建新日志对象
-     *
-     * @param {Object} settings
-     * @return {Logger}
-     */
-    static newInstance(settings) {
-        return new Logger(settings);
     }
     /**
      * 记录日志
@@ -127,7 +119,7 @@ class Logger {
      * @param {String} message the message to be logged
      */
     trace(message) {
-        if (Candy.app.debug) {
+        if (this.application.debug) {
             this.log(message, Logger.LEVEL_TRACE);
         }
     }

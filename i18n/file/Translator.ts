@@ -2,19 +2,31 @@
  * @author afu
  * @license MIT
  */
-import Candy = require('../Candy');
-import AbstractTranslator = require('./AbstractTranslator');
+import Candy = require('../../Candy');
+import AbstractTranslator = require('../AbstractTranslator');
 
 /**
  * 翻译器
  */
 class Translator extends AbstractTranslator {
 
-    constructor() {
-        super();
+    constructor(application) {
+        super(application);
 
         this.language = 'en-US';
         this.basePath = Candy.getPathAlias('@app/i18n');
+    }
+
+    /**
+     * 从文件系统加载语言
+     *
+     * @param {String} type 消息类型
+     */
+    public loadLanguageFromFile(type: string): any {
+        let file = this.basePath + '/' + this.language + '/' + type;
+        let lang = Candy.include(file, false);
+
+        return lang;
     }
 
     /**

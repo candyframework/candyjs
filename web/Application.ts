@@ -77,7 +77,7 @@ class Application extends CoreApp {
     constructor(config: any) {
         super(config);
 
-        Candy.config(this, config);
+        Candy.configure(this, config);
     }
 
     /**
@@ -85,9 +85,6 @@ class Application extends CoreApp {
      */
     public requestListener(request: any, response: any): void {
         let route = new Request(request).createURL().pathname;
-
-        Logger.getLogger().trace('Route requested: ' + route);
-
         let controller = this.createController(route);
 
         if(null === controller) {
@@ -110,7 +107,7 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     public handlerException(exception: any, response: any): void {
-        let handler = Candy.createObject(this.exceptionHandler);
+        let handler = Candy.createObject(this.exceptionHandler, this);
 
         handler.handlerException(exception, response);
     }
@@ -152,8 +149,6 @@ class Application extends CoreApp {
 
         // 拦截路由
         if(null !== this.interceptAll) {
-            Logger.getLogger().trace('Route intercepted: ' + route);
-
             return Candy.createObject(this.interceptAll);
         }
 
@@ -188,11 +183,8 @@ class Application extends CoreApp {
         // 模块没有前缀目录
         let clazz = '';
         if(null !== this.routesMap && undefined !== this.routesMap[id]) {
-            Logger.getLogger().trace('Create controller by routesMap: '
-                + ('string' === typeof this.routesMap[id]
-                    ? this.routesMap[id] : this.routesMap[id].classPath));
-
             return Candy.createObject(this.routesMap[id], {
+                application: this,
                 moduleId: moduleId,
                 controllerId: controllerId,
                 viewPath: viewPath
@@ -205,9 +197,8 @@ class Application extends CoreApp {
                 + '/controllers/'
                 + StringHelper.ucFirst(controllerId) + 'Controller';
 
-            Logger.getLogger().trace('Create module controller: ' + clazz);
-
             return Candy.createObjectAsString(clazz, {
+                application: this,
                 moduleId: moduleId,
                 controllerId: controllerId,
                 viewPath: viewPath
@@ -220,9 +211,8 @@ class Application extends CoreApp {
             + '/'
             + StringHelper.ucFirst(controllerId) + 'Controller';
 
-        Logger.getLogger().trace('Create common controller: ' + clazz);
-
         return Candy.createObjectAsString(clazz, {
+            application: this,
             moduleId: moduleId,
             controllerId: controllerId,
             viewPath: viewPath

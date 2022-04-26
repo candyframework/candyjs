@@ -1,31 +1,16 @@
 "use strict";
 const http = require("http");
 const Hook = require("./core/Hook");
-const Logger = require("./log/Logger");
 /**
  * 入口
  */
 class CandyJs {
-    /**
-     * constructor
-     *
-     * @typedef {import('./core/Application')} Application
-     * @param {Application} application 应用实例
-     */
     constructor(application) {
         /**
          * http server
          */
         this.server = null;
         this.app = application;
-    }
-    /**
-     * 获取日志实例
-     *
-     * @return {Logger}
-     */
-    static getLogger() {
-        return Logger.getLogger();
     }
     // web
     requestListener(req, res) {

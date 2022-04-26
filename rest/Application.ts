@@ -50,7 +50,7 @@ class Application extends CoreApp {
     constructor(config: any) {
         super(config);
 
-        Candy.config(this, config);
+        Candy.configure(this, config);
     }
 
     /**
@@ -199,7 +199,7 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     public handlerException(exception: any, response: any): void {
-        let handler = Candy.createObject(this.exceptionHandler);
+        let handler = Candy.createObject(this.exceptionHandler, this);
 
         handler.handlerException(exception, response);
     }

@@ -39,7 +39,7 @@ class Application extends CoreApp {
          */
         this.combineRoutes = false;
         this.cachedRouter = new Map();
-        Candy.config(this, config);
+        Candy.configure(this, config);
     }
     /**
      * 请求处理
@@ -169,7 +169,7 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     handlerException(exception, response) {
-        let handler = Candy.createObject(this.exceptionHandler);
+        let handler = Candy.createObject(this.exceptionHandler, this);
         handler.handlerException(exception, response);
     }
 }

@@ -4,8 +4,9 @@ const Event = require("../core/Event");
  * 日志抽象层
  */
 class AbstractLog extends Event {
-    constructor() {
+    constructor(application) {
         super();
+        this.application = application;
     }
     /**
      * flush log

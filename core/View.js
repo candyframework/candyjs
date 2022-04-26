@@ -26,8 +26,8 @@ class View {
         if ('@' === view.charAt(0)) {
             return Candy.getPathAlias(view) + this.defaultExtension;
         }
-        let app = Candy.app;
         let context = this.context;
+        let app = this.context.application;
         // 模块无子目录 普通控制器有子目录
         if ('' !== context.moduleId) {
             return app.modules[context.moduleId]
@@ -48,7 +48,7 @@ class View {
      */
     getViewContent(view, callback) {
         let file = this.findViewFile(view);
-        fs.readFile(file, Candy.app.encoding, callback);
+        fs.readFile(file, this.context.application.encoding, callback);
     }
     /**
      * 读取视图文件内容
@@ -57,7 +57,7 @@ class View {
      * @param {Function} callback 回调函数
      */
     getFileContent(file, callback) {
-        fs.readFile(file, Candy.app.encoding, callback);
+        fs.readFile(file, this.context.application.encoding, callback);
     }
     /**
      * 渲染视图文件

@@ -61,8 +61,15 @@ class Logger {
      */
     public targets: any[] = [];
 
-    private constructor(settings: any) {
-        this.init(settings);
+    /**
+     * 应用
+     */
+    public application: any;
+
+    constructor(application: any) {
+        this.application = application;
+
+        this.init(application.log);
     }
 
     private init(settings: any) {
@@ -81,7 +88,7 @@ class Logger {
 
         for(let target in settings.targets) {
             if(undefined !== settings.targets[target].classPath) {
-                let instance = Candy.createObjectAsDefinition(settings.targets[target]);
+                let instance = Candy.createObjectAsDefinition(settings.targets[target], this.application);
                 instance.on(AbstractLog.EVENT_FLUSH, instance);
 
                 this.targets.push(instance);
@@ -98,20 +105,10 @@ class Logger {
         let app = Candy.app;
 
         if(null === Logger._instance) {
-            Logger._instance = new Logger(app.log);
+            Logger._instance = new Logger(app);
         }
 
         return Logger._instance;
-    }
-
-    /**
-     * 创建新日志对象
-     *
-     * @param {Object} settings
-     * @return {Logger}
-     */
-    static newInstance(settings: any): Logger {
-        return new Logger(settings);
     }
 
     /**
@@ -173,7 +170,7 @@ class Logger {
      * @param {String} message the message to be logged
      */
     public trace(message: string): void {
-        if(Candy.app.debug) {
+        if(this.application.debug) {
             this.log(message, Logger.LEVEL_TRACE);
         }
     }

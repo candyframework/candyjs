@@ -16,8 +16,15 @@ abstract class AbstractLog extends Event implements ILog {
      */
     static EVENT_FLUSH: string = 'flush';
 
-    constructor() {
+    /**
+     * 应用
+     */
+    public application: any;
+
+    constructor(application) {
         super();
+
+        this.application = application;
     }
 
     /**

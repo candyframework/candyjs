@@ -4,7 +4,6 @@
  * @license MIT
  */
 const Candy = require("../Candy");
-const Logger = require("../log/Logger");
 const Request = require("../http/Request");
 const CoreApp = require("../core/Application");
 const StringHelper = require("../helpers/StringHelper");
@@ -68,14 +67,13 @@ class Application extends CoreApp {
          * 默认控制器
          */
         this.defaultControllerId = 'index';
-        Candy.config(this, config);
+        Candy.configure(this, config);
     }
     /**
      * @inheritdoc
      */
     requestListener(request, response) {
         let route = new Request(request).createURL().pathname;
-        Logger.getLogger().trace('Route requested: ' + route);
         let controller = this.createController(route);
         if (null === controller) {
             throw new InvalidRouteException('The route requested is not found');
@@ -94,7 +92,7 @@ class Application extends CoreApp {
      * @inheritdoc
      */
     handlerException(exception, response) {
-        let handler = Candy.createObject(this.exceptionHandler);
+        let handler = Candy.createObject(this.exceptionHandler, this);
         handler.handlerException(exception, response);
     }
     /**
@@ -130,7 +128,6 @@ class Application extends CoreApp {
         }
         // 拦截路由
         if (null !== this.interceptAll) {
-            Logger.getLogger().trace('Route intercepted: ' + route);
             return Candy.createObject(this.interceptAll);
         }
         // 解析路由
@@ -160,10 +157,8 @@ class Application extends CoreApp {
         // 模块没有前缀目录
         let clazz = '';
         if (null !== this.routesMap && undefined !== this.routesMap[id]) {
-            Logger.getLogger().trace('Create controller by routesMap: '
-                + ('string' === typeof this.routesMap[id]
-                    ? this.routesMap[id] : this.routesMap[id].classPath));
             return Candy.createObject(this.routesMap[id], {
+                application: this,
                 moduleId: moduleId,
                 controllerId: controllerId,
                 viewPath: viewPath
@@ -174,8 +169,8 @@ class Application extends CoreApp {
             clazz = StringHelper.trimChar(this.modules[id], '/')
                 + '/controllers/'
                 + StringHelper.ucFirst(controllerId) + 'Controller';
-            Logger.getLogger().trace('Create module controller: ' + clazz);
             return Candy.createObjectAsString(clazz, {
+                application: this,
                 moduleId: moduleId,
                 controllerId: controllerId,
                 viewPath: viewPath
@@ -186,8 +181,8 @@ class Application extends CoreApp {
             + viewPath
             + '/'
             + StringHelper.ucFirst(controllerId) + 'Controller';
-        Logger.getLogger().trace('Create common controller: ' + clazz);
         return Candy.createObjectAsString(clazz, {
+            application: this,
             moduleId: moduleId,
             controllerId: controllerId,
             viewPath: viewPath

@@ -48,14 +48,6 @@ abstract class Application extends Event implements IApplication {
             // set "app/runtime"
             this.setRuntimePath(this.getAppPath() + '/runtime');
         }
-
-        if(undefined !== config.rootPath) {
-            this.setRootPath(config.rootPath);
-            delete config.rootPath;
-
-        } else {
-            this.setRootPath(process.env.PWD);
-        }
     }
 
     /**
@@ -84,20 +76,6 @@ abstract class Application extends Event implements IApplication {
      */
     public getRuntimePath(): string {
         return Candy.getPathAlias('@runtime');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public setRootPath(path: string): void {
-        Candy.setPathAlias('@root', path);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public getRootPath(): string {
-        return Candy.getPathAlias('@root');
     }
 
     /**

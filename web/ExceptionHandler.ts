@@ -2,7 +2,6 @@
  * @author afu
  * @license MIT
  */
-import Candy = require('../Candy');
 import CoreExceptionHandler = require('../core/ExceptionHandler');
 
 /**
@@ -10,14 +9,20 @@ import CoreExceptionHandler = require('../core/ExceptionHandler');
  */
 class ExceptionHandler extends CoreExceptionHandler {
 
+    constructor(application) {
+        super(application);
+    }
+
     /**
      * @inheritdoc
      */
     public handlerException(exception: any, response: any): void {
+        let app = this.application;
+
         response.setHeader('Content-Type', 'text/plain');
         response.writeHead(500);
 
-        response.write(null !== Candy.app && true === Candy.app.debug
+        response.write(true === app.debug
             ? exception.message + '\n' + exception.stack
             : 'The server encountered an internal error');
         response.end();

@@ -46,8 +46,8 @@ class Log extends AbstractLog {
      */
     public maxFileSize: number = 10240;
 
-    constructor() {
-        super();
+    constructor(application) {
+        super(application);
     }
 
     /**

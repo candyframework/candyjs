@@ -7,7 +7,6 @@ import IWebApplication from './IWebApplication';
 import http = require('http');
 
 import Hook = require('./core/Hook');
-import Logger = require('./log/Logger');
 
 /**
  * 入口
@@ -24,23 +23,8 @@ class CandyJs {
      */
     public app: IWebApplication;
 
-    /**
-     * constructor
-     *
-     * @typedef {import('./core/Application')} Application
-     * @param {Application} application 应用实例
-     */
     constructor(application: any) {
         this.app = application;
-    }
-
-    /**
-     * 获取日志实例
-     *
-     * @return {Logger}
-     */
-    static getLogger(): Logger {
-        return Logger.getLogger();
     }
 
     // web

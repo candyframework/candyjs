@@ -36,13 +36,6 @@ class Application extends Event {
             // set "app/runtime"
             this.setRuntimePath(this.getAppPath() + '/runtime');
         }
-        if (undefined !== config.rootPath) {
-            this.setRootPath(config.rootPath);
-            delete config.rootPath;
-        }
-        else {
-            this.setRootPath(process.env.PWD);
-        }
     }
     /**
      * @inheritdoc
@@ -67,18 +60,6 @@ class Application extends Event {
      */
     getRuntimePath() {
         return Candy.getPathAlias('@runtime');
-    }
-    /**
-     * @inheritdoc
-     */
-    setRootPath(path) {
-        Candy.setPathAlias('@root', path);
-    }
-    /**
-     * @inheritdoc
-     */
-    getRootPath() {
-        return Candy.getPathAlias('@root');
     }
 }
 module.exports = Application;

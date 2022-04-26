@@ -1,5 +1,8 @@
 # 一个面向对象的高效 Node.js MVC and REST 框架
 
+[![NPM version](https://img.shields.io/npm/v/candyjs.svg?style=flat-square)](https://www.npmjs.com/package/candyjs)
+
+
 CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 ### 为什么是 CandyJs
@@ -71,8 +74,6 @@ new CandyJs(app).listen(8090, function(){
 
 + @runtime  缓存目录 默认指向 @app/runtime `Candy.app.getRuntimePath()` 可得到该值
 
-+ @root  网站根目录 `Candy.app.getRootPath()` 可得到该值
-
 ### 项目目录示例
 
 <pre>
@@ -137,6 +138,18 @@ new CandyJs(app).listen(8090, function(){
 + `ThinkPHP` 与 `Struts` 本程序多数思想来源于 tp 与 struts 框架
 
 ### 变更
+
++ 2022-04-29
+
+    * 4.12.0
+
+    * 移除 `Application#getRootPath()` 与 `Application#setRootPath()`
+
+    * 移除 `Logger.newInstance(settings)` 方法
+
+    * 移除 `CandyJs.getLogger(app)` 方法
+
+    * 移动 `candy/i18n/Translator` 到 `candy/i18n/file/Translator`
 
 + 2022-04-21
 

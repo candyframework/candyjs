@@ -13,7 +13,7 @@ const app = new App({
 
     'translator': {
         'mytype': {
-            classPath: 'candy/i18n/Translator',
+            classPath: 'candy/i18n/file/Translator',
             basePath: __dirname + '/app/i18n'
         }
     }

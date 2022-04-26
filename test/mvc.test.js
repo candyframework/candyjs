@@ -28,6 +28,7 @@ describe('MVC', () => {
         request(server)
             .get('/?p1=param1&p2=param2')
             .end((err, res) => {
+                console.log(33, err, res.text)
                 if (err) return done(err);
 
                 assert.equal(res.text.trim(), 'mvc param1');

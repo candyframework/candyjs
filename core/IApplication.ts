@@ -51,20 +51,6 @@ export default interface IApplication {
     getRuntimePath(): string;
 
     /**
-     * 设置 root 路径
-     *
-     * @param {String} path 路径
-     */
-    setRootPath(path: string): void;
-
-    /**
-     * 得到 root 目录
-     *
-     * @return {String} 路径
-     */
-    getRootPath(): string;
-
-    /**
      * handle request
      *
      * @param {any} request http request

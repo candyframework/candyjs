@@ -29,8 +29,8 @@ const TimeHelper = require("../../helpers/TimeHelper");
  *
  */
 class Log extends AbstractLog {
-    constructor() {
-        super();
+    constructor(application) {
+        super(application);
         /**
          * absolute path of log file. default at runtime directory of the application
          */

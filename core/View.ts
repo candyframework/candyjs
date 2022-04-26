@@ -36,8 +36,8 @@ abstract class View {
             return Candy.getPathAlias(view) + this.defaultExtension;
         }
 
-        let app = Candy.app;
         let context = this.context;
+        let app = this.context.application;
 
         // 模块无子目录 普通控制器有子目录
         if('' !== context.moduleId) {
@@ -62,7 +62,7 @@ abstract class View {
     public getViewContent(view: string, callback: any): void {
         let file = this.findViewFile(view);
 
-        fs.readFile(file, Candy.app.encoding, callback);
+        fs.readFile(file, this.context.application.encoding, callback);
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class View {
      * @param {Function} callback 回调函数
      */
     public getFileContent(file: string, callback: any): void {
-        fs.readFile(file, Candy.app.encoding, callback);
+        fs.readFile(file, this.context.application.encoding, callback);
     }
 
     /**

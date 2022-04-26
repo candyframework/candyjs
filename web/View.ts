@@ -2,7 +2,6 @@
  * @author afu
  * @license MIT
  */
-import Candy = require('../Candy');
 import CoreView = require('../core/View');
 
 /**
@@ -106,7 +105,9 @@ class View extends CoreView {
             this.context.response.write(
                 null === err
                     ? content
-                    : (Candy.app.debug ? err.message : 'The view encountered an internal error')
+                    : (this.context.application.debug
+                        ? err.message
+                        : 'The view encountered an internal error')
             );
             this.context.response.end();
         });

@@ -13,7 +13,7 @@ const app = new App({
 app.get('/test', (req, res) => {
     setTimeout(() => {
         app.trigger('myerror', [res, 'error from customer']);
-    }, 1000);
+    }, 50);
 });
 app.on('myerror', (params) => {
     const res = params[0];
