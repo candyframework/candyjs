@@ -45,7 +45,7 @@ abstract class Application extends Event implements IApplication {
             delete config.runtimePath;
 
         } else {
-            // set "app/runtime"
+            // set as "app/runtime"
             this.setRuntimePath(this.getAppPath() + '/runtime');
         }
     }
