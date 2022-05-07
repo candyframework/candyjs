@@ -3,7 +3,7 @@
  * @author afu
  * @license MIT
  */
-const Validator = require("./Validator");
+const Validator = require("../Validator");
 /**
  * Check if the attribute value is a boolean value
  *

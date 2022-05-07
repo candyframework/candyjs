@@ -47,7 +47,7 @@ class UserModel extends Model {
     rules() {
         return [
             {
-                rule: 'candy/model/RequiredValidator',
+                rule: 'candy/model/validators/RequiredValidator',
                 attributes: ['name', 'school'],
                 messages: ['用户名不能为空']
             },
@@ -57,12 +57,12 @@ class UserModel extends Model {
                 messages: ['年龄不合法']
             },
             {
-                rule: 'candy/model/EqualValidator',
+                rule: 'candy/model/validators/EqualValidator',
                 attributes: ['password', 'confirming'],
                 messages: ['两次密码不一致']
             },
             {
-                rule: 'candy/model/EmailValidator',
+                rule: 'candy/model/validators/EmailValidator',
                 attributes: ['email']
             }
         ];

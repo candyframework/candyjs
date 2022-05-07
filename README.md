@@ -139,6 +139,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2022-05-07
+
+    * 4.13.0 移动 `candy/model/*Validator` 到 `candy/model/validators/*Validator`
+
 + 2022-04-29
 
     * 4.12.0

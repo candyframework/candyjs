@@ -3,7 +3,7 @@
  * @author afu
  * @license MIT
  */
-const Validator = require("./Validator");
+const Validator = require("../Validator");
 /**
  * 校验字符串
  *

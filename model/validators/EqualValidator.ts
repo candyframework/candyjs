@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import Validator = require('./Validator');
+import Validator = require('../Validator');
 
 /**
  * 多个值是否完全相等

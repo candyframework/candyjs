@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import Validator = require('./Validator');
+import Validator = require('../Validator');
 
 /**
  * 检查邮件地址是否合法

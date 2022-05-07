@@ -3,7 +3,7 @@
  * @author afu
  * @license MIT
  */
-const Validator = require("./Validator");
+const Validator = require("../Validator");
 /**
  * 多个值是否完全相等
  *

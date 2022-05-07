@@ -3,7 +3,7 @@
  * @author afu
  * @license MIT
  */
-const Validator = require("./Validator");
+const Validator = require("../Validator");
 /**
  * 检查邮件地址是否合法
  *

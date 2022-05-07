@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import Validator = require('./Validator');
+import Validator = require('../Validator');
 
 /**
  * 校验字符串

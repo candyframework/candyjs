@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import Validator = require('./Validator');
+import Validator = require('../Validator');
 
 /**
  * Check if the attribute value is a boolean value
