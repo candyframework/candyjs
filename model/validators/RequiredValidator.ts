@@ -12,7 +12,7 @@ import Validator = require('../Validator');
  *      rules() {
  *          return [
  *              {
- *                  rule: 'candy/model/RequiredValidator',
+ *                  rule: 'candy/model/validators/RequiredValidator',
  *                  attributes: ['name', 'email'],
  *                  messages: ['name is required', 'email is required']
  *              }

@@ -13,7 +13,7 @@ const Validator = require("../Validator");
  *          return [
  *              {
  *                  rule: {
- *                      classPath: 'candy/model/StringValidator',
+ *                      classPath: 'candy/model/validators/StringValidator',
  *                      minLength: 1,
  *                      maxLength: 2333
  *                  },

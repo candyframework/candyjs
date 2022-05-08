@@ -12,7 +12,7 @@ const Validator = require("../Validator");
  *      rules() {
  *          return [
  *              {
- *                  rule: 'candy/model/BooleanValidator',
+ *                  rule: 'candy/model/validators/BooleanValidator',
  *                  attributes: ['booleanAttr'],
  *                  messages: ['booleanAttr is invalid']
  *              }
