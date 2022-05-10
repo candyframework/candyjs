@@ -31,9 +31,9 @@ class RequiredValidator extends Validator {
         let info = this.getMessage(attributeName);
 
         if(
-            null === attributeValue
-            || undefined === attributeValue
+            undefined === attributeValue
             || '' === attributeValue
+            || null === attributeValue
         ) {
             return '' === info ? attributeName + ' is required' : info;
         }

@@ -29,6 +29,11 @@ import Validator = require('../Validator');
 class StringValidator extends Validator {
 
     /**
+     * 删除两端空格
+     */
+    public trim: boolean = true;
+
+    /**
      * 最小长度
      */
     public minLength: number = 1;
@@ -47,6 +52,14 @@ class StringValidator extends Validator {
      */
     public validate(attributeName: string, attributeValue: any): string {
         let info = this.getMessage(attributeName);
+
+        if(undefined === attributeValue) {
+            attributeValue = '';
+        }
+
+        if('' !== attributeValue && this.trim) {
+            attributeValue = attributeValue.trim();
+        }
 
         if(attributeValue.length < this.minLength || attributeValue.length > this.maxLength) {
             return '' === info

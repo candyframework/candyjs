@@ -30,6 +30,10 @@ class StringValidator extends Validator {
     constructor() {
         super();
         /**
+         * 删除两端空格
+         */
+        this.trim = true;
+        /**
          * 最小长度
          */
         this.minLength = 1;
@@ -43,6 +47,12 @@ class StringValidator extends Validator {
      */
     validate(attributeName, attributeValue) {
         let info = this.getMessage(attributeName);
+        if (undefined === attributeValue) {
+            attributeValue = '';
+        }
+        if ('' !== attributeValue && this.trim) {
+            attributeValue = attributeValue.trim();
+        }
         if (attributeValue.length < this.minLength || attributeValue.length > this.maxLength) {
             return '' === info
                 ? 'length of the ' + attributeName + ' should be between ' + this.minLength + ' and ' + this.maxLength
