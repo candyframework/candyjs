@@ -66,7 +66,9 @@ class Resource {
      * @return {any} 中间件
      */
     public serve(): any {
-        return this.handler.bind(this);
+        return (req, res, next) => {
+            this.handler(req, res, next);
+        };
     }
 
     /**

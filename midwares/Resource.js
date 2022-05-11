@@ -31,7 +31,9 @@ class Resource {
      * @return {any} 中间件
      */
     serve() {
-        return this.handler.bind(this);
+        return (req, res, next) => {
+            this.handler(req, res, next);
+        };
     }
     /**
      * 是否是静态资源

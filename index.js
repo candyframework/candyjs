@@ -33,7 +33,9 @@ class CandyJs {
      * @return {http.Server}
      */
     getServer() {
-        return http.createServer(this.handler.bind(this));
+        return http.createServer((req, res) => {
+            this.handler(req, res);
+        });
     }
     /**
      * listen
