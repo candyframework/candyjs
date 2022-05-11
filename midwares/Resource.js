@@ -12,7 +12,7 @@ class Resource {
     /**
      * constructor
      *
-     * @param {String} root 静态资源目录
+     * @param {String} directory 静态资源目录
      * @param {any} options 配置参数
      *
      * {
@@ -21,18 +21,30 @@ class Resource {
      * }
      *
      */
-    constructor(root, options = {}) {
-        this.root = root;
+    constructor(directory, options = {}) {
+        this.directory = directory;
         this.options = options;
     }
     /**
      * 入口
      *
+     * @deprecated since 4.13.3 使用 `Resource.serve(directory, options?: any)` 替代
      * @return {any} 中间件
      */
     serve() {
         return (req, res, next) => {
             this.handler(req, res, next);
+        };
+    }
+    /**
+     * 托管目录
+     */
+    static serve(directory, options = {}) {
+        if (null === Resource.instance) {
+            Resource.instance = new Resource(directory, options);
+        }
+        return (req, res, next) => {
+            Resource.instance.handler(req, res, next);
         };
     }
     /**
@@ -106,7 +118,7 @@ class Resource {
         }
         let pathname = new Request(request).createURL().pathname;
         let mimeType = this.getMimeType(pathname);
-        pathname = (this.root + pathname).replace(/\.\./g, '');
+        pathname = (this.directory + pathname).replace(/\.\./g, '');
         while (pathname.indexOf('//') >= 0) {
             pathname = pathname.replace('//', '/');
         }
@@ -144,6 +156,10 @@ class Resource {
         });
     }
 }
+/**
+ * 实例
+ */
+Resource.instance = null;
 /**
  * MimeType
  */
