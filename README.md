@@ -139,6 +139,10 @@ new CandyJs(app).listen(8090, function(){
 
 ### 变更
 
++ 2022-05-12
+
+    * 4.14.0 删除 `candy/midwares/Resource#serve()` 替换为静态方法 `candy/midwares/Resource.serve(directory, options)`
+
 + 2022-05-07
 
     * 4.13.0 移动 `candy/model/*Validator` 到 `candy/model/validators/*Validator`

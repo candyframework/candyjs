@@ -35,4 +35,9 @@ export default interface ISession {
      */
     deleteAttribute(name: string): any;
 
+    /**
+     * 清空
+     */
+    clear(): void;
+
 }
