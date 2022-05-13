@@ -140,10 +140,6 @@ class Resource {
 
     /**
      * 处理静态资源
-     *
-     * @param {any} request
-     * @param {any} response
-     * @param {any} next
      */
     public handler(request: any, response: any, next: any): void {
         if('GET' !== request.method || !this.isStatic(request)) {

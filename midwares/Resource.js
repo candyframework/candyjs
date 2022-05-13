@@ -83,10 +83,6 @@ class Resource {
     }
     /**
      * 处理静态资源
-     *
-     * @param {any} request
-     * @param {any} response
-     * @param {any} next
      */
     handler(request, response, next) {
         if ('GET' !== request.method || !this.isStatic(request)) {
