@@ -23,9 +23,13 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 + doc https://douyu-beijing.github.io/candyjs-guide
 
++ examples https://gitee.com/candyjs/candyjs-examples
+
 + examples https://github.com/douyu-beijing/candyjs-examples
 
 ### 源码
+
++ https://gitee.com/candyjs/candyjs
 
 + https://github.com/douyu-beijing/candyjs
 
