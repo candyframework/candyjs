@@ -2,7 +2,6 @@
  * @author afu
  * @license MIT
  */
-import AbstractCommand from './AbstractCommand';
 
 /**
  * 一主多从数据库入口
@@ -17,16 +16,12 @@ export default abstract class AbstractDb {
 
     /**
      * 获取一个主库连接
-     *
-     * @returns {AbstractCommand}
      */
-    public abstract getMain(): AbstractCommand;
+    public abstract getMain(): any;
 
     /**
      * 获取一个从库链接
-     *
-     * @returns {AbstractCommand}
      */
-    public abstract getSlave(): AbstractCommand;
+    public abstract getSlave(): any;
 
 }
