@@ -12,7 +12,10 @@ import InvalidConfigException = require('../core/InvalidConfigException');
  */
 class Cache {
 
-    static _instances: Map<string, AbstractCache> = new Map();
+    /**
+     * 实例
+     */
+    private static instances: Map<string, AbstractCache> = new Map();
 
     /**
      * 获取缓存对象
@@ -27,12 +30,12 @@ class Cache {
             throw new InvalidConfigException('The "classPath" configuration of the cache is missing');
         }
 
-        if(!Cache._instances.has(type)) {
-            Cache._instances.set(type, Candy.createObjectAsDefinition(app.cache[type], app));
-            Cache._instances.get(type).init();
+        if(!Cache.instances.has(type)) {
+            Cache.instances.set(type, Candy.createObjectAsDefinition(app.cache[type], app));
+            Cache.instances.get(type).init();
         }
 
-        return Cache._instances.get(type);
+        return Cache.instances.get(type);
     }
 
 }

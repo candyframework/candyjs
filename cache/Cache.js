@@ -16,12 +16,15 @@ class Cache {
         if (undefined === app.cache[type].classPath) {
             throw new InvalidConfigException('The "classPath" configuration of the cache is missing');
         }
-        if (!Cache._instances.has(type)) {
-            Cache._instances.set(type, Candy.createObjectAsDefinition(app.cache[type], app));
-            Cache._instances.get(type).init();
+        if (!Cache.instances.has(type)) {
+            Cache.instances.set(type, Candy.createObjectAsDefinition(app.cache[type], app));
+            Cache.instances.get(type).init();
         }
-        return Cache._instances.get(type);
+        return Cache.instances.get(type);
     }
 }
-Cache._instances = new Map();
+/**
+ * 实例
+ */
+Cache.instances = new Map();
 module.exports = Cache;

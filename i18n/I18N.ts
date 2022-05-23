@@ -23,7 +23,10 @@ import InvalidConfigException = require('../core/InvalidConfigException');
  */
 class I18N {
 
-    static _instance: I18N = null;
+    /**
+     * 实例
+     */
+    private static instance: I18N = null;
 
     /**
      * 翻译器
@@ -36,11 +39,11 @@ class I18N {
      * 获取 i18n 实例
      */
     static getI18N(): I18N {
-        if(null === I18N._instance) {
-            I18N._instance = new I18N();
+        if(null === I18N.instance) {
+            I18N.instance = new I18N();
         }
 
-        return I18N._instance;
+        return I18N.instance;
     }
 
     /**

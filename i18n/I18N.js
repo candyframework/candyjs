@@ -26,10 +26,10 @@ class I18N {
      * 获取 i18n 实例
      */
     static getI18N() {
-        if (null === I18N._instance) {
-            I18N._instance = new I18N();
+        if (null === I18N.instance) {
+            I18N.instance = new I18N();
         }
-        return I18N._instance;
+        return I18N.instance;
     }
     /**
      * 翻译
@@ -62,5 +62,8 @@ class I18N {
         return this.translators.get(type);
     }
 }
-I18N._instance = null;
+/**
+ * 实例
+ */
+I18N.instance = null;
 module.exports = I18N;
