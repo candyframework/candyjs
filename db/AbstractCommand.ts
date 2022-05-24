@@ -43,29 +43,14 @@ export default abstract class AbstractCommand extends Event {
      *
      * @param {String} sql
      */
-    public abstract prepareSql(sql: string): AbstractCommand;
+    public abstract prepareSql(sql: string): any;
 
     /**
      * Prepares a sql statement for execution
      *
      * @param {String} sql
      */
-    public abstract prepareStatement(sql: string): AbstractCommand;
-
-    /**
-     * 绑定一个参数 只能用于绑定命名参数
-     *
-     * @param {String} parameter
-     * @param {String} value
-     */
-    public abstract bindValue(parameter: string, value: string): AbstractCommand;
-
-    /**
-     * 绑定多个参数 用于绑定占位符参数
-     *
-     * @param {Array} parameters
-     */
-    public abstract bindValues(parameter: any[]): AbstractCommand;
+    public abstract prepareStatement(sql: string): any;
 
     /**
      * Executes the query and returns all results as an array
