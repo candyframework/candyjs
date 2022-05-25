@@ -36,10 +36,6 @@ class AbstractQuery {
          */
         this.$orderBy = '';
         /**
-         * other sql information
-         */
-        this.$options = new Map();
-        /**
          * list of query parameter values
          */
         this.$parameters = [];

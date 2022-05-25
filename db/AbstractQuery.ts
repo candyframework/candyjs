@@ -41,11 +41,6 @@ export default abstract class AbstractQuery {
     public $orderBy: string = '';
 
     /**
-     * other sql information
-     */
-    public $options: Map<string, any> = new Map();
-
-    /**
      * list of query parameter values
      */
     public $parameters: any[] = [];
