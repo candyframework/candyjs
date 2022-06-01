@@ -1,6 +1,6 @@
 {
   "name": "candyjs",
-  "version": "4.14.3",
+  "version": "4.14.4",
   "description": "An Object-Oriented node mvc and REST framework",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "_candy": "./bin/_candy"
   },
   "license": "MIT",
-  "homepage": "https://gitee.com/candyjs/candyjs",
+  "homepage": "https://github.com/candyframework/candyjs",
   "dependencies": {
     "fast-regexp-router": "^1.1.1"
   }
