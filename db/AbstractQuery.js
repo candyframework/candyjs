@@ -1,8 +1,4 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * SQL 查询生成器抽象层

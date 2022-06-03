@@ -1,9 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @author afu
- * @license MIT
- */
 const Event = require("../core/Event");
 /**
  * 数据库操作基类
