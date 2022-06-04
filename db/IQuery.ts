@@ -9,13 +9,6 @@
 export default interface IQuery {
 
     /**
-     * Set parameters
-     *
-     * @param {Array} parameters
-     */
-    addParameters(parameters: any[]): void;
-
-    /**
      * Executes the query and returns a single column of row
      *
      * @returns {Promise} 结果集的第一行第一列记录 如果没有记录则返回 null
