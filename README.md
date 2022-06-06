@@ -25,16 +25,7 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 + examples https://gitee.com/candyjs/candyjs-examples
 
-### 源码
-
-+ https://gitee.com/candyjs/candyjs
-
-+ 修改代码
-
-```
-$ npm install typescript
-$ ./node_modules/.bin/tsc
-```
++ examples https://github.com/candyframework/candyjs-examples
 
 ### Node 版本
 
