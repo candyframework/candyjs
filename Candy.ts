@@ -100,9 +100,7 @@ class Candy {
      * @param {any} parameters 构造函数参数
      */
     static createObjectAsString(classPath: string, ...parameters: any[]): any {
-        let realClass = Candy.getPathAlias('@' + classPath);
-
-        let ClassName = require(realClass + Candy.defaultExtension);
+        let ClassName = Candy.include(classPath, true);
 
         return new ClassName(...parameters);
     }
@@ -114,10 +112,9 @@ class Candy {
      * @param {any} parameters 构造函数参数
      */
     static createObjectAsDefinition(definition: any, ...parameters: any[]): any {
-        let realClass = Candy.getPathAlias('@' + definition.classPath);
         let properties = Candy.configure({}, definition);
 
-        let ClassName = require(realClass + Candy.defaultExtension);
+        let ClassName = Candy.include(definition.classPath, true);
         let instance = new ClassName(...parameters);
 
         delete properties.classPath;
