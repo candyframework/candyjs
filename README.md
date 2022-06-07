@@ -17,6 +17,8 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 + CandyJs 采用 MIT 许可 这意味着您可以免费的使用 CandyJs 来开发 WEB 应用
 
++ 良好的 TypeScript 开发体验，详尽的代码提示
+
 ### 文档
 
 + 最新文档请参阅源码的 doc 目录
@@ -38,10 +40,10 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 ```javascript
 // 入口文件 index.js
 
-var CandyJs = require('candyjs');
-var App = require('candyjs/web/Application');
+const CandyJs = require('candyjs');
+const App = require('candyjs/web/Application');
 
-var app = new App({
+const app = new App({
     'id': 1,
 
     // 定义调试应用
@@ -59,7 +61,7 @@ new CandyJs(app).listen(8090, function(){
 
 ### 系统内置别名
 
-+ @candy  系统目录
++ @candy  框架目录
 
 + @app  项目目录 由 appPath 指定 `Candy.app.getAppPath()` 可得到该值
 
