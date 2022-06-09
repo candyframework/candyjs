@@ -2,9 +2,6 @@
 const Candy = require("../Candy");
 const Event = require("./Event");
 const InvalidConfigException = require("./InvalidConfigException");
-/**
- * 应用基类
- */
 class Application extends Event {
     constructor(config) {
         super();
@@ -14,12 +11,6 @@ class Application extends Event {
         Candy.app = this;
         this.init(config);
     }
-    /**
-     * 初始化应用
-     *
-     * @param {any} config 应用配置
-     * @throws {InvalidConfigException} 当丢失必要配置项目时
-     */
     init(config) {
         if (undefined === config.id) {
             throw new InvalidConfigException('The "id" configuration of the Application is missing');
@@ -33,31 +24,18 @@ class Application extends Event {
             delete config.runtimePath;
         }
         else {
-            // set as "app/runtime"
             this.setRuntimePath(this.getAppPath() + '/runtime');
         }
     }
-    /**
-     * @inheritdoc
-     */
     setAppPath(path) {
         Candy.setPathAlias('@app', path);
     }
-    /**
-     * @inheritdoc
-     */
     getAppPath() {
         return Candy.getPathAlias('@app');
     }
-    /**
-     * @inheritdoc
-     */
     setRuntimePath(path) {
         Candy.setPathAlias('@runtime', path);
     }
-    /**
-     * @inheritdoc
-     */
     getRuntimePath() {
         return Candy.getPathAlias('@runtime');
     }

@@ -1,19 +1,9 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const CoreExceptionHandler = require("../core/ExceptionHandler");
-/**
- * web 异常错误处理
- */
 class ExceptionHandler extends CoreExceptionHandler {
     constructor(application) {
         super(application);
     }
-    /**
-     * @inheritdoc
-     */
     handlerException(exception, response) {
         let app = this.application;
         response.setHeader('Content-Type', 'text/plain');

@@ -1,54 +1,18 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const fs = require("fs");
 const Candy = require("../../Candy");
 const Logger = require("../Logger");
 const AbstractLog = require("../AbstractLog");
 const FileHelper = require("../../helpers/FileHelper");
 const TimeHelper = require("../../helpers/TimeHelper");
-/**
- * 文件日志
- *
- * ```
- * 'log': {
- *     'targets': {
- *         'file': {
- *             'classPath': 'candy/log/file/Log',
- *             'logPath': 'absolute path',
- *             'logFile': 'system.log',
- *             'maxFileSize': 10240
- *         },
- *         'other': {...}
- *     },
- *     'flushInterval': 10
- * }
- * ```
- *
- */
 class Log extends AbstractLog {
     constructor(application) {
         super(application);
-        /**
-         * absolute path of log file. default at runtime directory of the application
-         */
         this.logPath = Candy.getPathAlias('@runtime/logs');
-        /**
-         * log file name
-         */
         this.logFile = 'system.log';
-        /**
-         * maximum log file size in KB
-         */
         this.maxFileSize = 10240;
     }
-    /**
-     * @inheritdoc
-     */
     flush(messages) {
-        // 检查目录
         fs.access(this.logPath, fs.constants.R_OK | fs.constants.W_OK, (error) => {
             if (null === error) {
                 this.writeLog(messages);
@@ -59,9 +23,6 @@ class Log extends AbstractLog {
             });
         });
     }
-    /**
-     * 格式化内容
-     */
     formatMessage(messages) {
         let msg = '';
         for (let i = 0, len = messages.length; i < len; i++) {
@@ -74,20 +35,14 @@ class Log extends AbstractLog {
         }
         return msg;
     }
-    /**
-     * 写日志
-     */
     writeLog(messages) {
         let msg = this.formatMessage(messages);
         let file = this.logPath + '/' + this.logFile;
-        // check file exists
         fs.access(file, fs.constants.F_OK, (error) => {
-            // file not exists
             if (null !== error) {
                 fs.writeFile(file, msg, (err) => { });
                 return;
             }
-            // check file size
             fs.stat(file, (err, stats) => {
                 if (stats.size > this.maxFileSize * 1024) {
                     let newFile = file + TimeHelper.format('ymdhis');

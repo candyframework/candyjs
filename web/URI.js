@@ -1,79 +1,23 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
-/**
- * Universal Resource Identifier
- *
- * @see https://tools.ietf.org/html/rfc3986
- *
- * URI = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
- *
- * eg.
- *
- * foo://user:password@example.com:8000/over/there?name=ferret#nose
- * \_/   \____________________________/ \________/ \_________/ \__/
- *  |                   |                   |           |        |
- * scheme           authority              path       query   fragment
- *
- */
 class URI {
     constructor() {
-        /**
-         * 协议
-         */
         this.scheme = '';
-        /**
-         * 主机
-         */
         this.host = '';
-        /**
-         * 端口号
-         */
         this.port = '';
-        /**
-         * 用户
-         */
         this.user = '';
-        /**
-         * 密码
-         */
         this.password = '';
-        /**
-         * 资源路径
-         */
         this.path = '';
-        /**
-         * 请求参数
-         */
         this.query = '';
-        /**
-         * 锚点
-         */
         this.fragment = '';
-        /**
-         * 正则表达式
-         */
         this.uriRegExp = new RegExp([
-            // (scheme)
             '(http|https)?',
-            // ://
             '(?::\\/\\/)?',
-            // (user):(password)@
             '(?:([^:@\\/]*):?([^:@\\/]*)@)?',
-            // (host):(port)
             '([^:\\/?#]*)(?::(\\d*))?',
-            // (path)
             '((?:\\/)?[^?#]*)',
-            // ?(query)
             '(?:\\?([^#]*))?',
-            // #(fragment)
             '(?:#(.*))?'
         ].join(''));
-        /**
-         * 正则表达式匹配项
-         */
         this.uriRegExpKeys = [
             'source',
             'scheme',
@@ -86,16 +30,6 @@ class URI {
             'fragment'
         ];
     }
-    /**
-     * 创建一个 uri
-     *
-     * @param {String} scheme
-     * @param {String} authority
-     * @param {String} path
-     * @param {String} query
-     * @param {String} fragment
-     * @return {String}
-     */
     createURIString(scheme = '', authority = '', path = '', query = '', fragment = '') {
         let uri = '';
         if ('' !== scheme) {
@@ -118,11 +52,6 @@ class URI {
         }
         return uri;
     }
-    /**
-     * 设置 uri
-     *
-     * @param {String} uri
-     */
     setURI(uri) {
         let ret = this.parseUrl(uri);
         if (undefined !== ret.scheme) {
@@ -150,12 +79,6 @@ class URI {
             this.fragment = ret.fragment;
         }
     }
-    /**
-     * 解析 url
-     *
-     * @param {String} url
-     * @return {any}
-     */
     parseUrl(url) {
         let ret = {};
         let matches = url.match(this.uriRegExp);
@@ -166,11 +89,6 @@ class URI {
         }
         return ret;
     }
-    /**
-     * 解析 URI 的 authority 部分
-     *
-     * @return {String}
-     */
     getAuthority() {
         let authority = '';
         if ('' !== this.user) {
@@ -182,9 +100,6 @@ class URI {
         }
         return authority;
     }
-    /**
-     * 转为字符串
-     */
     toString() {
         return this.createURIString(this.scheme, this.getAuthority(), this.path, this.query, this.fragment);
     }

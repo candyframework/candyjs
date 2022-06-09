@@ -1,21 +1,9 @@
 "use strict";
 const DataNode = require("./DataNode");
-/**
- * LinkedList
- */
 class LinkedList {
     constructor() {
-        /**
-         * The size of the List
-         */
         this.length = 0;
-        /**
-         * Pointer to first node
-         */
         this.headNode = null;
-        /**
-         * Pointer to last node
-         */
         this.tailNode = null;
     }
     [Symbol.iterator]() {
@@ -31,9 +19,6 @@ class LinkedList {
             }
         };
     }
-    /**
-     * Links element as last element
-     */
     linkLast(element) {
         let last = this.tailNode;
         let newNode = new DataNode(element, null, last);
@@ -46,9 +31,6 @@ class LinkedList {
         }
         this.length++;
     }
-    /**
-     * Inserts element before node
-     */
     linkBefore(element, node) {
         let prev = node.previous;
         let newNode = new DataNode(element, node, prev);
@@ -61,9 +43,6 @@ class LinkedList {
         }
         this.length++;
     }
-    /**
-     * Unlinks node
-     */
     unlink(node) {
         let data = node.data;
         let next = node.next;
@@ -86,12 +65,8 @@ class LinkedList {
         this.length--;
         return data;
     }
-    /**
-     * Find node by index
-     */
     getNode(index) {
         let node = null;
-        // 二分
         if (index < (this.length >> 1)) {
             node = this.headNode;
             for (let i = 0; i < index; i++) {
@@ -105,31 +80,15 @@ class LinkedList {
         }
         return node;
     }
-    /**
-     * Returns the number of elements in this list
-     */
     size() {
         return this.length;
     }
-    /**
-     * Returns true if this list contains no elements
-     */
     isEmpty() {
         return 0 === this.length;
     }
-    /**
-     * Returns true if this list contains the specified element
-     *
-     * @param {any} element
-     */
     contains(element) {
         return this.indexOf(element) >= 0;
     }
-    /**
-     * Returns the index of the first occurrence of the specified element in this list, or -1 if does not contain the element
-     *
-     * @param {any} element
-     */
     indexOf(element) {
         let index = 0;
         for (let x = this.headNode; null !== x; x = x.next) {
@@ -140,11 +99,6 @@ class LinkedList {
         }
         return -1;
     }
-    /**
-     * Returns the index of the last occurrence of the specified element in this list, or -1 if does not contain the element
-     *
-     * @param {any} element
-     */
     lastIndexOf(element) {
         let index = this.length;
         for (let x = this.tailNode; null !== x; x = x.previous) {
@@ -155,20 +109,9 @@ class LinkedList {
         }
         return -1;
     }
-    /**
-     * Appends the specified element to the end of this list
-     *
-     * @param {any} element
-     */
     add(element) {
         this.linkLast(element);
     }
-    /**
-     * Inserts the specified element at the specified position
-     *
-     * @param {Number} index
-     * @param {any} element
-     */
     insert(index, element) {
         if (index > this.length) {
             return false;
@@ -181,11 +124,6 @@ class LinkedList {
         }
         return true;
     }
-    /**
-     * Removes the first occurrence of the specified element from this list
-     *
-     * @param {any} element
-     */
     remove(element) {
         for (let x = this.headNode; null !== x; x = x.next) {
             if (element === x.data) {
@@ -195,34 +133,18 @@ class LinkedList {
         }
         return false;
     }
-    /**
-     * Removes the element at the specified position in this list
-     *
-     * @param {Number} index
-     */
     removeAt(index) {
         if (index >= this.length) {
             return null;
         }
         return this.unlink(this.getNode(index));
     }
-    /**
-     * Returns the element at the specified position in this list
-     *
-     * @param {Number} index
-     */
     get(index) {
         if (index >= this.length) {
             return null;
         }
         return this.getNode(index).data;
     }
-    /**
-     * Replaces the element in the list with the specified element
-     *
-     * @param {Number} index
-     * @param {any} element
-     */
     set(index, element) {
         if (index >= this.length) {
             return null;
@@ -232,9 +154,6 @@ class LinkedList {
         node.data = element;
         return oldValue;
     }
-    /**
-     * Removes all of the elements from this list
-     */
     clear() {
         for (let next = null, x = this.headNode; null !== x;) {
             next = x.next;

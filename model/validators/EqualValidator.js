@@ -1,31 +1,6 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const Validator = require("../Validator");
-/**
- * 多个值是否完全相等
- *
- * ```
- * class XxxModel extends Model {
- *      rules() {
- *          return [
- *              {
- *                  rule: 'candy/model/validators/EqualValidator',
- *                  attributes: ['password', 'confirming'],
- *                  messages: ['password error']
- *              }
- *          ];
- *      }
- * }
- * ```
- *
- */
 class EqualValidator extends Validator {
-    /**
-     * @inheritdoc
-     */
     validate(attributeName, attributeValue) {
         let hasError = false;
         let validatingAttributes = this.attributes;

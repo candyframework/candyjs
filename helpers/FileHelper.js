@@ -1,37 +1,10 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const fs = require("fs");
-/**
- * 文件处理
- */
 class FileHelper {
-    /**
-     * 获取 dirname
-     *
-     * @param {String} dir 目录路径
-     * @return {String}
-     */
     static getDirname(dir) {
         dir = dir.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');
         return '' === dir ? '/' : dir;
     }
-    /**
-     * 转化正常路径
-     *
-     * ```
-     * 路径分隔符转换 e.g. '\\a\\b\\c' becomes '/a/b/c'
-     * 删除末尾分隔符 e.g. '/a/b/c/' becomes '/a/b/c'
-     * 多斜线转为单个 e.g. '/a///b/c' becomes '/a/b/c'
-     * 处理 .. 与 . e.g. '/a/./b/../c' becomes '/a/c'
-     * ```
-     *
-     * @param {String} path 待转换路径
-     * @param {String} directorySeparator 目录分隔符
-     * @return {String} 转换后的路径
-     */
     static normalizePath(path, directorySeparator = '/') {
         let ret = [];
         path = path.replace(/\\+/g, directorySeparator);
@@ -52,13 +25,6 @@ class FileHelper {
         }
         return ret.join('/');
     }
-    /**
-     * 创建文件夹
-     *
-     * @param {String} dir 目录路径
-     * @param {Number} mode 目录权限
-     * @param {any} callback 回调函数
-     */
     static createDirectory(dir, mode = 0o777, callback = null) {
         fs.access(dir, fs.constants.F_OK, (error) => {
             if (null === error) {
@@ -71,13 +37,6 @@ class FileHelper {
             });
         });
     }
-    /**
-     * 同步创建文件夹
-     *
-     * @param {String} dir 目录路径
-     * @param {Number} mode 目录权限
-     * @return {Boolean}
-     */
     static createDirectorySync(dir, mode = 0o777) {
         if (fs.existsSync(dir)) {
             return true;

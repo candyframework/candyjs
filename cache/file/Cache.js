@@ -1,61 +1,30 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const fs = require("fs");
 const Candy = require("../../Candy");
 const AbstractCache = require("../AbstractCache");
 const FileHelper = require("../../helpers/FileHelper");
-/**
- * 文件缓存
- *
- * ```
- * 'cache': {
- *      'file': {
- *          'classPath': 'candy/cache/file/Cache',
- *          'cachePath': 'absolute path'
- *      }
- * }
- * ```
- *
- */
 class Cache extends AbstractCache {
     constructor(application) {
         super(application);
-        /**
-         * 扩展名
-         */
         this.fileExtension = '.bin';
-        /**
-         * 缓存目录
-         */
         this.cachePath = Candy.getPathAlias('@runtime/caches');
     }
     getCacheFile(key) {
         return this.cachePath + '/' + key + this.fileExtension;
     }
-    /**
-     * @inheritdoc
-     */
-    setSync(key, value, duration = 31536000000 /* one year */) {
+    setSync(key, value, duration = 31536000000) {
         let cacheFile = this.getCacheFile(key);
         let life = (Date.now() + duration) / 1000;
-        // 目录不存在就创建
         if (!fs.existsSync(this.cachePath)) {
             FileHelper.createDirectorySync(this.cachePath);
         }
         fs.writeFileSync(cacheFile, value, this.application.encoding);
         fs.utimesSync(cacheFile, life, life);
     }
-    /**
-     * @inheritdoc
-     */
-    set(key, value, duration = 31536000000 /* one year */) {
+    set(key, value, duration = 31536000000) {
         return new Promise((resolve, reject) => {
             let cacheFile = this.getCacheFile(key);
             let life = (Date.now() + duration) / 1000;
-            // 检查目录
             fs.access(this.cachePath, fs.constants.R_OK | fs.constants.W_OK, (error) => {
                 if (null === error) {
                     fs.writeFile(cacheFile, value, this.application.encoding, (err) => {
@@ -83,9 +52,6 @@ class Cache extends AbstractCache {
             });
         });
     }
-    /**
-     * @inheritdoc
-     */
     getSync(key) {
         let ret = null;
         let cacheFile = this.getCacheFile(key);
@@ -94,9 +60,6 @@ class Cache extends AbstractCache {
         }
         return ret;
     }
-    /**
-     * @inheritdoc
-     */
     get(key) {
         return new Promise((resolve, reject) => {
             let cacheFile = this.getCacheFile(key);
@@ -119,16 +82,10 @@ class Cache extends AbstractCache {
             });
         });
     }
-    /**
-     * @inheritdoc
-     */
     deleteSync(key) {
         let cacheFile = this.getCacheFile(key);
         fs.unlinkSync(cacheFile);
     }
-    /**
-     * @inheritdoc
-     */
     delete(key) {
         return new Promise((resolve, reject) => {
             let cacheFile = this.getCacheFile(key);

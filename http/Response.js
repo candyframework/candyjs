@@ -1,78 +1,22 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const CoreResponse = require("../core/Response");
 const Cookie = require("./Cookie");
 const Headers = require("./Headers");
 const HttpException = require("../core/HttpException");
-/**
- * HTTP response
- *
- * 使用 response 输出内容
- *
- * const response = new Response(res);
- * response.setContent('some data from server');
- * response.send();
- *
- * 使用 response 重定向
- *
- * response.redirect('http://foo.com');
- *
- */
 class Response extends CoreResponse {
-    /**
-     * constructor
-     *
-     * @typedef {import('http').ServerResponse} ServerResponse
-     * @param {ServerResponse} response
-     */
     constructor(response) {
         super(response);
-        /**
-         * 编码
-         */
         this.encoding = 'UTF-8';
-        /**
-         * HTTP protocol version
-         */
         this.version = '1.1';
-        /**
-         * the HTTP status code
-         */
         this.statusCode = 200;
-        /**
-         * the HTTP status description that comes together with the status code
-         */
         this.statusText = 'OK';
-        /**
-         * HTTP headers
-         */
         this.headers = new Headers();
-        /**
-         * HTTP content
-         */
         this.content = '';
-        /**
-         * HTTP cookies
-         */
         this.cookies = [];
     }
-    /**
-     * 得到 http status code
-     *
-     * @return {Number}
-     */
     getStatusCode() {
         return this.statusCode;
     }
-    /**
-     * 设置 http status code
-     *
-     * @param {Number} value the status code
-     * @param {String} text the status text
-     */
     setStatusCode(value, text = '') {
         if (value < 100 || value >= 600) {
             throw new HttpException('HTTP status code is invalid');
@@ -88,53 +32,25 @@ class Response extends CoreResponse {
         }
         return this;
     }
-    /**
-     * 获取 header
-     *
-     * @param {String} name the name of the header
-     * @return {String}
-     */
     getHeader(name) {
         return this.headers.get(name);
     }
-    /**
-     * 设置 header
-     *
-     * @param {String} name the name of the header
-     * @param {String} value the value of the header
-     */
     setHeader(name, value) {
         this.headers.add(name, value);
         return this;
     }
-    /**
-     * 获取实体内容
-     *
-     * @return {String}
-     */
     getContent() {
         return this.content;
     }
-    /**
-     * 设置实体内容
-     *
-     * @param {String} content 实体内容
-     */
     setContent(content) {
         this.content = content;
         return this;
     }
-    /**
-     * 设置一条 cookie
-     */
     setCookie(name, value, expires = 0, path = '', domain = '', secure = false, httpOnly = false) {
         let cookie = new Cookie(name, value, expires, path, domain, secure, httpOnly);
         this.cookies.push(cookie.toString());
         return this;
     }
-    /**
-     * 发送 header
-     */
     sendHeaders() {
         if (this.response.headersSent) {
             return;
@@ -147,15 +63,9 @@ class Response extends CoreResponse {
         }
         this.response.writeHead(this.statusCode, this.statusText);
     }
-    /**
-     * 发送内容
-     */
     sendContent() {
         this.response.write(this.content, this.encoding);
     }
-    /**
-     * @inheritdoc
-     */
     send(content = '') {
         if ('' !== content) {
             this.setContent(content);
@@ -164,28 +74,17 @@ class Response extends CoreResponse {
         this.sendContent();
         this.response.end();
     }
-    /**
-     * 重定向
-     *
-     * @param {String} url
-     * @param {Number} statusCode
-     */
     redirect(url, statusCode = 302) {
         this.setHeader('Location', url);
         this.setStatusCode(statusCode);
         this.send();
     }
 }
-/**
- * list of HTTP status codes and the corresponding texts
- */
 Response.httpStatuses = {
-    // Informational
     '100': 'Continue',
     '101': 'Switching Protocols',
     '102': 'Processing',
     '118': 'Connection timed out',
-    // Success
     '200': 'OK',
     '201': 'Created',
     '202': 'Accepted',
@@ -197,7 +96,6 @@ Response.httpStatuses = {
     '208': 'Already Reported',
     '210': 'Content Different',
     '226': 'IM Used',
-    // Redirection
     '300': 'Multiple Choices',
     '301': 'Moved Permanently',
     '302': 'Found',
@@ -208,7 +106,6 @@ Response.httpStatuses = {
     '307': 'Temporary Redirect',
     '308': 'Permanent Redirect',
     '310': 'Too many Redirect',
-    // Client error
     '400': 'Bad Request',
     '401': 'Unauthorized',
     '402': 'Payment Required',
@@ -238,7 +135,6 @@ Response.httpStatuses = {
     '431': 'Request Header Fields Too Large',
     '449': 'Retry With',
     '450': 'Blocked by Windows Parental Controls',
-    // Server error
     '500': 'Internal Server Error',
     '501': 'Not Implemented',
     '502': 'Bad Gateway or Proxy Error',

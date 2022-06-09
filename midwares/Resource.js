@@ -1,20 +1,10 @@
 "use strict";
-/**
- * @author afu
- * @license MIT
- */
 const fs = require("fs");
 const Request = require("../http/Request");
-/**
- * 静态资源处理
- */
 class Resource {
     constructor(directory) {
         this.directory = directory;
     }
-    /**
-     * 托管目录
-     */
     static serve(directory, options = {}) {
         if (null === Resource.instance) {
             if (undefined !== options.mime) {
@@ -29,12 +19,6 @@ class Resource {
             Resource.instance.handler(req, res, next);
         };
     }
-    /**
-     * 是否是静态资源
-     *
-     * @param {any} request 请求对象
-     * @return {Boolean}
-     */
     isStatic(request) {
         let ret = false;
         let pathname = new Request(request).createURL().pathname;
@@ -50,12 +34,6 @@ class Resource {
         }
         return ret;
     }
-    /**
-     * 获取 mimeType
-     *
-     * @param {String} pathName 访问路径
-     * @return {String}
-     */
     getMimeType(pathName) {
         let ret = '';
         let ext = this.getExtName(pathName);
@@ -68,12 +46,6 @@ class Resource {
         }
         return ret;
     }
-    /**
-     * 获得扩展名
-     *
-     * @param {String} pathName 访问路径
-     * @return {String} 扩展名
-     */
     getExtName(pathName) {
         let index = pathName.lastIndexOf('.');
         if (-1 === index) {
@@ -81,9 +53,6 @@ class Resource {
         }
         return pathName.substring(index + 1);
     }
-    /**
-     * 处理静态资源
-     */
     handler(request, response, next) {
         if ('GET' !== request.method || !this.isStatic(request)) {
             next();
@@ -106,17 +75,14 @@ class Resource {
                 response.end();
                 return;
             }
-            // headers
             response.setHeader('Content-Type', '' === mimeType ? 'text/plain' : mimeType);
             response.setHeader('Last-Modified', stats.mtime.toUTCString());
-            // 设置缓存
             let extName = '.' + this.getExtName(pathname);
             let cacheConfig = Resource.cache;
             if (cacheConfig.regExp.test(extName)) {
                 response.setHeader('Expires', new Date(Date.now() + cacheConfig.maxAge).toUTCString());
                 response.setHeader('Cache-Control', 'max-age=' + cacheConfig.maxAge / 1000);
             }
-            // 有缓存直接返回
             if (stats.mtime.toUTCString() === request.headers['if-modified-since']) {
                 response.writeHead(304);
                 response.end();
@@ -128,13 +94,7 @@ class Resource {
         });
     }
 }
-/**
- * 实例
- */
 Resource.instance = null;
-/**
- * MimeType
- */
 Resource.mime = {
     'js': 'text/javascript',
     'css': 'text/css',
@@ -150,13 +110,8 @@ Resource.mime = {
     'mpeg': 'video/mpeg',
     'swf': 'application/x-shockwave-flash'
 };
-/**
- * 缓存
- */
 Resource.cache = {
-    // 那些资源需要缓存
     'regExp': /(\.gif|\.jpg|\.jpeg|\.png|\.js|\.css)$/ig,
-    // 缓存时间毫秒 默认 30 天 = 1000 * 3600 * 24 * 30
     'maxAge': 2592000000
 };
 module.exports = Resource;
