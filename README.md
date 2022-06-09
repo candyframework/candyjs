@@ -1,6 +1,7 @@
 # 一个面向对象的高效 Node.js MVC and REST 框架
 
 [![NPM version](https://img.shields.io/npm/v/candyjs.svg?style=flat-square)](https://www.npmjs.com/package/candyjs)
+[![Test coverage](https://img.shields.io/codecov/c/github/candyframework/candyjs.svg?style=flat-square)](https://app.codecov.io/gh/candyframework/candyjs)
 
 
 CandyJs 并非基于第三方框架扩展，而是一个新的框架。

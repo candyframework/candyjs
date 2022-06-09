@@ -3,3 +3,8 @@
 node_modules
 package-lock.json
 yarn.lock
+
+coverage
+.nyc_output
+codecov
+codecov.exe
