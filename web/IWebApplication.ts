@@ -1,4 +1,4 @@
-import IApplication from './core/IApplication';
+import IApplication from '../core/IApplication';
 
 /**
  * web 应用

@@ -2,8 +2,9 @@
  * @author afu
  * @license MIT
  */
+import IWebApplication from './IWebApplication';
+
 import Candy = require('../Candy');
-import Logger = require('../log/Logger');
 import Request = require('../http/Request');
 import CoreApp = require('../core/Application');
 import StringHelper = require('../helpers/StringHelper');
@@ -13,7 +14,7 @@ import Controller = require('./Controller');
 /**
  * web 应用
  */
-class Application extends CoreApp {
+class Application extends CoreApp implements IWebApplication {
 
     /**
      * 拦截所有路由

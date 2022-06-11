@@ -2,6 +2,8 @@
  * @author afu
  * @license MIT
  */
+import IRestApplication from './IRestApplication';
+
 import FastRouter = require('fast-regexp-router');
 
 import Candy = require('../Candy');
@@ -12,7 +14,7 @@ import InvalidRouteException = require('../core/InvalidRouteException');
 /**
  * rest application
  */
-class Application extends CoreApp {
+class Application extends CoreApp implements IRestApplication {
 
     /**
      * class and method separator
@@ -147,49 +149,49 @@ class Application extends CoreApp {
     }
 
     /**
-     * get
+     * @inheritdoc
      */
     public get(route: string, handler: any): void {
         this.addRoute('GET', route, handler);
     }
 
     /**
-     * post
+     * @inheritdoc
      */
     public post(route: string, handler: any): void {
         this.addRoute('POST', route, handler);
     }
 
     /**
-     * put
+     * @inheritdoc
      */
     public put(route: string, handler: any): void {
         this.addRoute('PUT', route, handler);
     }
 
     /**
-     * delete
+     * @inheritdoc
      */
     public delete(route: string, handler: any): void {
         this.addRoute('DELETE', route, handler);
     }
 
     /**
-     * patch
+     * @inheritdoc
      */
     public patch(route: string, handler: any): void {
         this.addRoute('PATCH', route, handler);
     }
 
     /**
-     * head
+     * @inheritdoc
      */
     public head(route: string, handler: any): void {
         this.addRoute('HEAD', route, handler);
     }
 
     /**
-     * options
+     * @inheritdoc
      */
     public options(route: string, handler: any): void {
         this.addRoute('OPTIONS', route, handler);

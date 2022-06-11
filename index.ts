@@ -2,10 +2,9 @@
  * @author afu
  * @license MIT
  */
-import IWebApplication from './IWebApplication';
+import IWebApplication from './web/IWebApplication';
 
 import http = require('http');
-
 import Hook = require('./core/Hook');
 
 /**

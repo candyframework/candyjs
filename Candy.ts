@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import IWebApplication from './IWebApplication';
+import IWebApplication from './web/IWebApplication';
 
 /**
  * 辅助类
