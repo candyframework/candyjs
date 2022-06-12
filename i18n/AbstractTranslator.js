@@ -17,9 +17,6 @@ class AbstractTranslator {
     getBasePath() {
         return this.basePath;
     }
-    translate(type, sourceMessage, parameters = null) {
-        return '';
-    }
     parseMessage(targetMessage, parameters = null) {
         if (null === parameters) {
             return targetMessage;
