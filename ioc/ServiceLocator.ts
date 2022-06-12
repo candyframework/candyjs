@@ -27,15 +27,9 @@ import InvalidConfigException = require('../core/InvalidConfigException');
  */
 class ServiceLocator {
 
-    public services: Map<string, string>;
+    public services: Map<string, string> = new Map();
 
-    public definitions: Map<string, any>;
-
-    constructor() {
-        this.services = new Map();
-
-        this.definitions = new Map();
-    }
+    public definitions: Map<string, any> = new Map();
 
     /**
      * 设置服务
