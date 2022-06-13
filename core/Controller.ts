@@ -8,7 +8,7 @@ import ActionEvent = require('./ActionEvent');
 /**
  * 控制器基类
  */
-class Controller extends Component {
+abstract class Controller extends Component {
 
     /**
      * 前置事件
@@ -91,7 +91,7 @@ class Controller extends Component {
      * @param {String} view 视图名
      * @param {any} parameters 参数
      */
-    public render(view: string, parameters: any = null): any {}
+    public abstract render(view: string, parameters?: any): any;
 
 }
 

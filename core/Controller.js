@@ -27,7 +27,6 @@ class Controller extends Component {
         this.afterAction(actionEvent);
     }
     run(request, response) { }
-    render(view, parameters = null) { }
 }
 Controller.EVENT_BEFORE_ACTION = 'beforeAction';
 Controller.EVENT_AFTER_ACTION = 'afterAction';
