@@ -30,8 +30,7 @@ export default interface IBehavior {
     /**
      * 监听组件的事件
      *
-     * @typedef {import('./Component')} Component
-     * @param {Component} component 组件
+     * @param {IComponent} component 组件
      */
     listen(component: IComponent): void;
 
