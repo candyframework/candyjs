@@ -3,7 +3,7 @@ import IList from './IList';
 /**
  * ArrayList
  */
-class ArrayList implements IList {
+class ArrayList<T> implements IList<T> {
 
     /**
      * The real size of the List
@@ -144,7 +144,7 @@ class ArrayList implements IList {
      *
      * @param {any} element
      */
-    public add(element: any): void {
+    public add(element: T): void {
         this.ensureCapacity(this.length + 1);
 
         this.elementData[this.length++] = element;
@@ -156,7 +156,7 @@ class ArrayList implements IList {
      * @param {Number} index
      * @param {any} element
      */
-    public insert(index: number, element: any): boolean {
+    public insert(index: number, element: T): boolean {
         if(index > this.length) {
             return false;
         }
@@ -199,7 +199,7 @@ class ArrayList implements IList {
      *
      * @param {Number} index
      */
-    public removeAt(index: number): any {
+    public removeAt(index: number): T {
         if(index >= this.length) {
             return null;
         }
@@ -219,7 +219,7 @@ class ArrayList implements IList {
      *
      * @param {Number} index
      */
-    public get(index: number): any {
+    public get(index: number): T {
         if(index >= this.length) {
             return null;
         }
@@ -233,7 +233,7 @@ class ArrayList implements IList {
      * @param {Number} index
      * @param {any} element
      */
-    public set(index: number, element: any): any {
+    public set(index: number, element: T): T {
         if(index >= this.length) {
             return null;
         }

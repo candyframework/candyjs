@@ -12,7 +12,7 @@ export default interface IEvent {
      * ```
      *
      */
-    eventsMap: Map<string, LinkedList>;
+    eventsMap: Map<string, LinkedList<any>>;
 
     /**
      * 注册事件处理

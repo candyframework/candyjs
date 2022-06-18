@@ -11,7 +11,7 @@ import LinkedList = require('../utils/LinkedList');
  */
 class Event implements IEvent {
 
-    public eventsMap: Map<string, LinkedList> = new Map();
+    public eventsMap: Map<string, LinkedList<any>> = new Map();
 
     constructor() {}
 

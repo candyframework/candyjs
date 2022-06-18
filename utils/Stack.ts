@@ -3,21 +3,21 @@ import ArrayList = require('./ArrayList');
 /**
  * Stack
  */
-class Stack extends ArrayList {
+class Stack<T> extends ArrayList<T> {
 
     /**
      * Push an item onto the top of this stack
      *
      * @param {any} item
      */
-    public push(item: any): void {
+    public push(item: T): void {
         this.add(item);
     }
 
     /**
      * Removes the object at the top of this stack and returns it
      */
-    public pop(): any {
+    public pop(): T {
         let len = this.size();
 
         return this.removeAt(len - 1);

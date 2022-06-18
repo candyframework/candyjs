@@ -1,7 +1,7 @@
 /**
  * Queue 接口
  */
-export default interface IQueue {
+export default interface IQueue<T> {
 
     /**
      * 返回队列大小
@@ -13,14 +13,14 @@ export default interface IQueue {
      *
      * @param {any} item 数据
      */
-    add(item: any): void;
+    add(item: T): void;
 
     /**
      * 移除并返回队首元素
      *
      * @return {any | null}
      */
-    take(): any;
+    take(): T;
 
     /**
      * 删除一个元素

@@ -5,7 +5,7 @@ import DataNode = require('./DataNode');
 /**
  * LinkedList
  */
-class LinkedList implements IList {
+class LinkedList<T> implements IList<T> {
 
     /**
      * The size of the List
@@ -193,7 +193,7 @@ class LinkedList implements IList {
      *
      * @param {any} element
      */
-    public add(element: any): void {
+    public add(element: T): void {
         this.linkLast(element);
     }
 
@@ -203,7 +203,7 @@ class LinkedList implements IList {
      * @param {Number} index
      * @param {any} element
      */
-    public insert(index: number, element: any): boolean {
+    public insert(index: number, element: T): boolean {
         if(index > this.length) {
             return false;
         }
@@ -239,7 +239,7 @@ class LinkedList implements IList {
      *
      * @param {Number} index
      */
-    public removeAt(index: number): any {
+    public removeAt(index: number): T {
         if(index >= this.length) {
             return null;
         }
@@ -252,7 +252,7 @@ class LinkedList implements IList {
      *
      * @param {Number} index
      */
-    public get(index: number): any {
+    public get(index: number): T {
         if(index >= this.length) {
             return null;
         }
@@ -266,7 +266,7 @@ class LinkedList implements IList {
      * @param {Number} index
      * @param {any} element
      */
-    public set(index: number, element: any): any {
+    public set(index: number, element: T): T {
         if(index >= this.length) {
             return null;
         }

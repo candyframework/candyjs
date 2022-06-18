@@ -1,7 +1,7 @@
 /**
  * List 接口
  */
-export default interface IList {
+export default interface IList<T> {
 
     /**
      * Returns the number of elements in this list
@@ -46,7 +46,7 @@ export default interface IList {
      *
      * @param {any} element
      */
-    add(element: any): void;
+    add(element: T): void;
 
     /**
      * Inserts the specified element at the specified position
@@ -55,7 +55,7 @@ export default interface IList {
      * @param {any} element
      * @returns {Boolean}
      */
-    insert(index: number, element: any): boolean;
+    insert(index: number, element: T): boolean;
 
     /**
      * Removes the first occurrence of the specified element from this list
@@ -70,14 +70,14 @@ export default interface IList {
      *
      * @param {Number} index
      */
-    removeAt(index: number): any;
+    removeAt(index: number): T;
 
     /**
      * Returns the element at the specified position in this list
      *
      * @param {Number} index
      */
-    get(index: number): any;
+    get(index: number): T;
 
     /**
      * Replaces the element in the list with the specified element
@@ -85,7 +85,7 @@ export default interface IList {
      * @param {Number} index
      * @param {any} element
      */
-    set(index: number, element: any): any;
+    set(index: number, element: T): T;
 
     /**
      * Removes all of the elements from this list
