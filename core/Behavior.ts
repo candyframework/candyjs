@@ -12,6 +12,9 @@ import IComponent from './IComponent';
  */
 class Behavior implements IBehavior {
 
+    /**
+     * 行为持有的组件
+     */
     public component: IComponent = null;
 
     constructor() {}
