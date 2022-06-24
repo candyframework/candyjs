@@ -2,6 +2,8 @@
  * @author afu
  * @license MIT
  */
+import ActionEvent = require('./ActionEvent');
+
 import Behavior = require('./Behavior');
 import Controller = require('./Controller');
 
@@ -20,10 +22,7 @@ class ActionFilter extends Behavior {
     constructor() {
         super();
 
-        /**
-         * @param {import('./ActionEvent')} actionEvent
-         */
-        this.beforeFilter = (actionEvent) => {
+        this.beforeFilter = (actionEvent: ActionEvent) => {
             // 如果前一个 valid 为 false 那么本次 filter 不再执行
             if(!actionEvent.valid) {
                 this.unListen();
@@ -40,10 +39,7 @@ class ActionFilter extends Behavior {
             }
         };
 
-        /**
-         * @param {import('./ActionEvent')} actionEvent
-         */
-        this.afterFilter = (actionEvent) => {
+        this.afterFilter = (actionEvent: ActionEvent) => {
             this.unListen();
 
             this.afterAction(actionEvent);
@@ -63,12 +59,12 @@ class ActionFilter extends Behavior {
     /**
      * 前置过滤
      */
-    public beforeAction(actionEvent: any) {}
+    public beforeAction(actionEvent: ActionEvent) {}
 
     /**
      * 后置过滤
      */
-    public afterAction(actionEvent: any) {}
+    public afterAction(actionEvent: ActionEvent) {}
 
 }
 
