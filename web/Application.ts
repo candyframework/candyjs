@@ -82,7 +82,7 @@ class Application extends CoreApp implements IWebApplication {
     }
 
     protected init(config: any) {
-        Candy.setPathAlias('@webroot', require.main.path);
+        // Candy.setPathAlias('@webroot', require.main.path);
 
         super.init(config);
     }
@@ -144,12 +144,10 @@ class Application extends CoreApp implements IWebApplication {
 
         route = StringHelper.lTrimChar(route, '/');
 
-        // route eg. index/index
         if('' === route || '/' === route) {
             route = this.defaultRoute;
         }
 
-        // 检测非法
         if(route.indexOf('//') >= 0) {
             return null;
         }
@@ -159,8 +157,6 @@ class Application extends CoreApp implements IWebApplication {
             return Candy.createObject(this.interceptAll);
         }
 
-        // 解析路由
-        // 目录前缀或模块 id
         let id = '';
         let pos = route.indexOf('/');
         if(-1 !== pos) {
@@ -173,10 +169,8 @@ class Application extends CoreApp implements IWebApplication {
             route = '';
         }
 
-        // 保存前缀
         viewPath = id;
 
-        // 保存当前控制器标识
         if( -1 !== (pos = route.lastIndexOf('/')) ) {
             viewPath = viewPath + '/' + route.substring(0, pos);
 
