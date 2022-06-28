@@ -17,6 +17,10 @@ class Application extends CoreApp {
         this.defaultControllerId = 'index';
         Candy.configure(this, config);
     }
+    init(config) {
+        Candy.setPathAlias('@npm', require.main.paths[0]);
+        super.init(config);
+    }
     requestListener(request, response) {
         let route = new Request(request).createURL().pathname;
         let controller = this.createController(route);

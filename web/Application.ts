@@ -81,6 +81,12 @@ class Application extends CoreApp implements IWebApplication {
         Candy.configure(this, config);
     }
 
+    protected init(config: any) {
+        Candy.setPathAlias('@npm', require.main.paths[0]);
+
+        super.init(config);
+    }
+
     /**
      * @inheritdoc
      */

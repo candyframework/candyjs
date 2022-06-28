@@ -30,7 +30,7 @@ abstract class Application extends Event implements IApplication {
      * @param {any} config 应用配置
      * @throws {InvalidConfigException} 当丢失必要配置项目时
      */
-    private init(config: any): void {
+    protected init(config: any): void {
         if(undefined === config.id) {
             throw new InvalidConfigException('The "id" configuration of the Application is missing');
         }
