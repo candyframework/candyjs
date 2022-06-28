@@ -82,7 +82,7 @@ class Application extends CoreApp implements IWebApplication {
     }
 
     protected init(config: any) {
-        Candy.setPathAlias('@npm', require.main.paths[0]);
+        Candy.setPathAlias('@webroot', require.main.path);
 
         super.init(config);
     }

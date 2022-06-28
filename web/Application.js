@@ -18,7 +18,7 @@ class Application extends CoreApp {
         Candy.configure(this, config);
     }
     init(config) {
-        Candy.setPathAlias('@npm', require.main.paths[0]);
+        Candy.setPathAlias('@webroot', require.main.path);
         super.init(config);
     }
     requestListener(request, response) {
