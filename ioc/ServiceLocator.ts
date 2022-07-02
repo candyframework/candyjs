@@ -27,8 +27,14 @@ import InvalidConfigException = require('../core/InvalidConfigException');
  */
 class ServiceLocator {
 
-    public services: Map<string, string> = new Map();
+    /**
+     * service 缓存
+     */
+    public services: Map<string, any> = new Map();
 
+    /**
+     * 服务配置
+     */
     public definitions: Map<string, any> = new Map();
 
     /**
@@ -88,7 +94,7 @@ class ServiceLocator {
      * 获取服务
      *
      * @param {String} key
-     * @return {Object | null}
+     * @return {any}
      */
     public getService(key: string): any {
         if(this.services.has(key)) {
@@ -96,10 +102,19 @@ class ServiceLocator {
         }
 
         if(this.definitions.has(key)) {
-            return Candy.createObject(this.definitions.get(key));
+            this.services.set(key, Candy.createObject(this.definitions.get(key)));
+            return this.services.get(key);
         }
 
         return null;
+    }
+
+    /**
+     * 清空服务
+     */
+    public clear(): void {
+        this.services.clear();
+        this.definitions.clear();
     }
 
 }

@@ -33,9 +33,14 @@ class ServiceLocator {
             return this.services.get(key);
         }
         if (this.definitions.has(key)) {
-            return Candy.createObject(this.definitions.get(key));
+            this.services.set(key, Candy.createObject(this.definitions.get(key)));
+            return this.services.get(key);
         }
         return null;
+    }
+    clear() {
+        this.services.clear();
+        this.definitions.clear();
     }
 }
 module.exports = ServiceLocator;
