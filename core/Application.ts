@@ -15,7 +15,7 @@ abstract class Application extends Event implements IApplication {
 
     public encoding: string = 'UTF-8';
     public debug: boolean = false;
-    public exceptionHandler: string = 'candy/web/ExceptionHandler';
+    public exceptionHandler: string = '';
 
     constructor(config: any) {
         super();

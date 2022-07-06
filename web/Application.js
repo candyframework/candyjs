@@ -8,6 +8,7 @@ const Controller = require("./Controller");
 class Application extends CoreApp {
     constructor(config) {
         super(config);
+        this.exceptionHandler = 'candy/web/ExceptionHandler';
         this.interceptAll = null;
         this.routesMap = null;
         this.modules = null;

@@ -7,6 +7,7 @@ const InvalidRouteException = require("../core/InvalidRouteException");
 class Application extends CoreApp {
     constructor(config) {
         super(config);
+        this.exceptionHandler = 'candy/web/ExceptionHandler';
         this.methods = {
             GET: [],
             POST: [],

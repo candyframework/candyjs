@@ -16,6 +16,8 @@ import Controller = require('./Controller');
  */
 class Application extends CoreApp implements IWebApplication {
 
+    public exceptionHandler: string = 'candy/web/ExceptionHandler';
+
     /**
      * 拦截所有路由
      *

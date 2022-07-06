@@ -20,7 +20,7 @@ class ServiceLocator {
                 continue;
             }
             if (undefined === definition[key].classPath) {
-                throw new InvalidConfigException('The "classPath" configuration of the service is missing');
+                throw new InvalidConfigException('The "classPath" configuration of the "' + key + '" service is missing');
             }
             this.definitions.set(key, definition[key]);
         }

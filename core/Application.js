@@ -7,7 +7,7 @@ class Application extends Event {
         super();
         this.encoding = 'UTF-8';
         this.debug = false;
-        this.exceptionHandler = 'candy/web/ExceptionHandler';
+        this.exceptionHandler = '';
         Candy.app = this;
         this.init(config);
     }

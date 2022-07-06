@@ -16,6 +16,8 @@ import InvalidRouteException = require('../core/InvalidRouteException');
  */
 class Application extends CoreApp implements IRestApplication {
 
+    public exceptionHandler: string = 'candy/web/ExceptionHandler';
+
     /**
      * class and method separator
      */
