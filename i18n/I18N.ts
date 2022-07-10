@@ -32,7 +32,7 @@ class I18N {
     /**
      * 翻译器
      */
-    private serviceLocator: ServiceLocator = new ServiceLocator();
+    private translators: ServiceLocator = new ServiceLocator();
 
     private constructor() {}
 
@@ -72,14 +72,14 @@ class I18N {
             throw new InvalidConfigException('The translator configuration is not found');
         }
 
-        if(!this.serviceLocator.hasService(type)) {
-            this.serviceLocator.setService(
+        if(!this.translators.hasService(type)) {
+            this.translators.setService(
                 type,
                 Candy.createObjectAsDefinition(app.translator[type], app)
             );
         }
 
-        return this.serviceLocator.getService(type);
+        return this.translators.getService(type);
     }
 
 }
