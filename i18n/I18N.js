@@ -1,9 +1,10 @@
 "use strict";
 const Candy = require("../Candy");
+const ServiceLocator = require("../ioc/ServiceLocator");
 const InvalidConfigException = require("../core/InvalidConfigException");
 class I18N {
     constructor() {
-        this.translators = new Map();
+        this.serviceLocator = new ServiceLocator();
     }
     static getI18N() {
         if (null === I18N.instance) {
@@ -16,18 +17,14 @@ class I18N {
         return translator.translate(type, message, parameters);
     }
     getTranslator(type) {
-        if (this.translators.has(type)) {
-            return this.translators.get(type);
-        }
         let app = Candy.app;
         if (undefined === app.translator || undefined === app.translator[type]) {
             throw new InvalidConfigException('The translator configuration is not found');
         }
-        if (undefined === app.translator[type].classPath) {
-            throw new InvalidConfigException('The "classPath" configuration of the translator is missing');
+        if (!this.serviceLocator.hasService(type)) {
+            this.serviceLocator.setService(type, Candy.createObjectAsDefinition(app.translator[type], app));
         }
-        this.translators.set(type, Candy.createObjectAsDefinition(app.translator[type], app));
-        return this.translators.get(type);
+        return this.serviceLocator.getService(type);
     }
 }
 I18N.instance = null;

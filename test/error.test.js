@@ -1,4 +1,4 @@
-// node >= 6.0.0
+// node >= 10.0.0
 
 const request = require('supertest');
 const assert = require('assert');

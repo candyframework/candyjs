@@ -5,6 +5,7 @@
 import AbstractTranslator = require('./AbstractTranslator');
 
 import Candy = require('../Candy');
+import ServiceLocator = require('../ioc/ServiceLocator');
 import InvalidConfigException = require('../core/InvalidConfigException');
 
 /**
@@ -31,7 +32,7 @@ class I18N {
     /**
      * 翻译器
      */
-    public translators: Map<string, AbstractTranslator> = new Map();
+    private serviceLocator: ServiceLocator = new ServiceLocator();
 
     private constructor() {}
 
@@ -65,21 +66,20 @@ class I18N {
      * @param {String} type
      */
     public getTranslator(type: string): AbstractTranslator {
-        if(this.translators.has(type)) {
-            return this.translators.get(type);
-        }
-
         let app = Candy.app;
+
         if(undefined === app.translator || undefined === app.translator[type]) {
             throw new InvalidConfigException('The translator configuration is not found');
         }
-        if(undefined === app.translator[type].classPath) {
-            throw new InvalidConfigException('The "classPath" configuration of the translator is missing');
+
+        if(!this.serviceLocator.hasService(type)) {
+            this.serviceLocator.setService(
+                type,
+                Candy.createObjectAsDefinition(app.translator[type], app)
+            );
         }
 
-        this.translators.set(type, Candy.createObjectAsDefinition(app.translator[type], app));
-
-        return this.translators.get(type);
+        return this.serviceLocator.getService(type);
     }
 
 }

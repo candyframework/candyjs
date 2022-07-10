@@ -1,5 +1,6 @@
 "use strict";
 const Candy = require("../Candy");
+const ServiceLocator = require("../ioc/ServiceLocator");
 const InvalidConfigException = require("../core/InvalidConfigException");
 class Cache {
     static getCache(type) {
@@ -7,15 +8,12 @@ class Cache {
         if (undefined === app.cache || undefined === app.cache[type]) {
             throw new InvalidConfigException('The cache configuration is not found');
         }
-        if (undefined === app.cache[type].classPath) {
-            throw new InvalidConfigException('The "classPath" configuration of the cache is missing');
+        if (!Cache.serviceLocator.hasService(type)) {
+            Cache.serviceLocator.setService(type, Candy.createObjectAsDefinition(app.cache[type], app));
+            Cache.serviceLocator.getService(type).init();
         }
-        if (!Cache.instances.has(type)) {
-            Cache.instances.set(type, Candy.createObjectAsDefinition(app.cache[type], app));
-            Cache.instances.get(type).init();
-        }
-        return Cache.instances.get(type);
+        return Cache.serviceLocator.getService(type);
     }
 }
-Cache.instances = new Map();
+Cache.serviceLocator = new ServiceLocator();
 module.exports = Cache;
