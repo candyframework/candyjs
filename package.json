@@ -15,8 +15,7 @@
   ],
   "author": "candyjs",
   "bin": {
-    "_candy": "./bin/_candy",
-    "_candyts": "./bin/_candyts"
+    "_candy": "./bin/_candy"
   },
   "license": "MIT",
   "homepage": "https://github.com/candyframework/candyjs",
