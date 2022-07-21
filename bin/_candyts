@@ -31,7 +31,7 @@ prject
     app
         controllers
             index
-                IndexController.js
+                IndexController.ts
         views
             index
                 index.html
@@ -40,18 +40,16 @@ prject
 */
 const controllerPath = dir + '/app/controllers/index';
 const viewPath = dir + '/app/views/index';
-const mainFile = dir + '/index.js';
+const mainFile = dir + '/index.ts';
 
 createDirectorySync(controllerPath);
 createDirectorySync(viewPath);
 
 // controller file
-fs.writeFile(controllerPath + '/IndexController.js',
-`'use strict';
+fs.writeFile(controllerPath + '/IndexController.ts',
+`import Controller from 'candyjs/web/Controller';
 
-const Controller = require('candyjs/web/Controller');
-
-class IndexController extends Controller {
+export default class IndexController extends Controller {
 
     run(req, res) {
         this.getView().getViewContent('index', (err, data) => {
@@ -61,8 +59,6 @@ class IndexController extends Controller {
     }
 
 }
-
-module.exports = IndexController;
 `,
 function(err){
     if(err) throw err;
@@ -87,8 +83,10 @@ function(err){
 
 // main file
 fs.writeFile(mainFile,
-`const CandyJs = require('candyjs');
-const App = require('candyjs/web/Application');
+`import '@candyjs/tswrapper';
+
+import CandyJs from 'candyjs';
+import App from 'candyjs/web/Application';
 
 new CandyJs(new App({
     'id': 1,
