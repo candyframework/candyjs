@@ -36,15 +36,18 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 ### Hello world
 
-使用 CandyJs 你只需要从一个入口文件开始，文件可以使用 https://www.npmjs.com/package/@candyjs/cli 工具生成
+使用 CandyJs 你只需要从一个入口文件开始
+
+初始项目可以利用 `bin/_candy` 命令或者 `@candyjs/cli` 工具生成
 
 ```javascript
-// 入口文件 index.js
+// 入口文件 index.ts
+import '@candyjs/tswrapper';
 
-const CandyJs = require('candyjs');
-const App = require('candyjs/web/Application');
+import CandyJs from 'candyjs';
+import App from 'candyjs/web/Application';
 
-const app = new App({
+new CandyJs(new App({
     'id': 1,
 
     // 定义调试应用
@@ -53,10 +56,8 @@ const app = new App({
     // 定义应用路径
     'appPath': __dirname + '/app'
 
-});
-
-new CandyJs(app).listen(8090, function(){
-    console.log('listen on 8090');
+})).listen(2333, () => {
+    console.log('listen on 2333');
 });
 ```
 
@@ -68,10 +69,10 @@ new CandyJs(app).listen(8090, function(){
 
 + @runtime  缓存目录 默认指向 @app/runtime `Candy.app.getRuntimePath()` 可得到该值
 
-### 项目目录示例
+### 项目目录规范示例
 
 <pre>
-|- index.js
+|- index.ts
 |
 |- node_modules 目录
 |
@@ -85,13 +86,13 @@ new CandyJs(app).listen(8090, function(){
 |      |
 |      |-- user 用户组目录
 |      |   |
-|      |   |-- IndexController.js
-|      |   |-- OtherController.js
+|      |   |-- IndexController.ts
+|      |   |-- OtherController.ts
 |      |
 |      |-- goods 商品组目录
 |      |   |
-|      |   |-- IndexController.js
-|      |   |-- OtherController.js
+|      |   |-- IndexController.ts
+|      |   |-- OtherController.ts
 |      |
 |   -- views 普通控制器模板目录
 |      |
@@ -111,7 +112,7 @@ new CandyJs(app).listen(8090, function(){
 |      |   |
 |      |   |-- controllers 模块控制器目录 其下无子目录
 |      |   |   |
-|      |   |   |-- IndexController.js
+|      |   |   |-- IndexController.ts
 |      |   |
 |      |   |-- views 模块模板目录
 |      |   |   |
