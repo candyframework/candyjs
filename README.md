@@ -36,7 +36,7 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 ### Hello world
 
-使用 CandyJs 你只需要从一个入口文件开始， 入口文件的内容可以使用 CandyJs 自带的工具来生成
+使用 CandyJs 你只需要从一个入口文件开始，文件可以使用 https://www.npmjs.com/package/@candyjs/cli 工具生成
 
 ```javascript
 // 入口文件 index.js
