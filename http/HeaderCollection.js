@@ -39,6 +39,7 @@ class HeaderCollection {
         this.headers.set(name, [value]);
     }
     has(name) {
+        name = name.toLowerCase();
         return this.headers.has(name);
     }
     remove(name) {

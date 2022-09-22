@@ -31,6 +31,7 @@ class CookieCollection {
         this.cookies.set(name, value);
     }
     has(name) {
+        name = name.toLowerCase();
         return this.cookies.has(name);
     }
     remove(name) {

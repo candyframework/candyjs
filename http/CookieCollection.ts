@@ -71,6 +71,8 @@ class CookieCollection {
      * @return {Boolean}
      */
     public has(name: string): boolean {
+        name = name.toLowerCase();
+
         return this.cookies.has(name);
     }
 

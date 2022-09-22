@@ -90,6 +90,8 @@ class HeaderCollection {
      * @return {Boolean}
      */
     public has(name: string): boolean {
+        name = name.toLowerCase();
+
         return this.headers.has(name);
     }
 
