@@ -8,7 +8,7 @@ import ActionEvent = require('./ActionEvent');
 /**
  * 控制器基类
  */
-abstract class Controller extends Component {
+abstract class Controller<CT> extends Component {
 
     /**
      * 前置事件
@@ -23,7 +23,7 @@ abstract class Controller extends Component {
     /**
      * 上下文环境 用于保存当前请求相关的信息
      */
-    public context: any;
+    public context: CT;
 
     /**
      * constructor

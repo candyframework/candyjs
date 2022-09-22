@@ -14,7 +14,7 @@ abstract class View {
     /**
      * 上下文环境
      */
-    public context: any;
+    protected context: any;
 
     /**
      * 默认视图文件后缀

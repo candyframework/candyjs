@@ -2,6 +2,7 @@
  * @author afu
  * @license MIT
  */
+import IWebContext from './IWebContext';
 import View = require('./View');
 
 import Candy = require('../Candy');
@@ -10,7 +11,7 @@ import CoreController = require('../core/Controller');
 /**
  * 控制器
  */
-class Controller extends CoreController {
+class Controller extends CoreController<IWebContext> {
 
     /**
      * 视图类
