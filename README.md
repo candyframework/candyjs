@@ -134,6 +134,10 @@ new CandyJs(new App({
 
 ### 变更
 
++ 2022-09-22
+
+    * 4.16.0 优化 http 工具包
+
 + 2022-05-12
 
     * 4.14.0 删除 `candy/midwares/Resource#serve()` 替换为静态方法 `candy/midwares/Resource.serve(directory, options)`

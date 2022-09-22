@@ -1,14 +1,14 @@
 "use strict";
-class Headers {
+class CookieCollection {
     constructor() {
-        this.headers = new Map();
+        this.cookies = new Map();
     }
     [Symbol.iterator]() {
         let index = 0;
-        let keysIterator = this.headers.keys();
+        let keysIterator = this.cookies.keys();
         return {
             next: () => {
-                if (index++ < this.headers.size) {
+                if (index++ < this.cookies.size) {
                     let key = keysIterator.next().value;
                     return {
                         value: [key, this.get(key)],
@@ -21,32 +21,24 @@ class Headers {
     }
     get(name, defaultValue = undefined) {
         name = name.toLowerCase();
-        if (this.headers.has(name)) {
-            return this.headers.get(name).join(', ');
+        if (this.cookies.has(name)) {
+            return this.cookies.get(name);
         }
         return defaultValue;
     }
     set(name, value) {
         name = name.toLowerCase();
-        this.headers.set(name, [value]);
-    }
-    add(name, value) {
-        name = name.toLowerCase();
-        if (this.headers.has(name)) {
-            this.headers.get(name).push(value);
-            return;
-        }
-        this.headers.set(name, [value]);
+        this.cookies.set(name, value);
     }
     has(name) {
-        return this.headers.has(name);
+        return this.cookies.has(name);
     }
     remove(name) {
         name = name.toLowerCase();
-        return this.headers.delete(name);
+        return this.cookies.delete(name);
     }
     clear() {
-        this.headers.clear();
+        this.cookies.clear();
     }
 }
-module.exports = Headers;
+module.exports = CookieCollection;

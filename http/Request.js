@@ -1,10 +1,12 @@
 "use strict";
-const Headers = require("./Headers");
 const CoreRequest = require("../core/Request");
+const HeaderCollection = require("./HeaderCollection");
+const CookieCollection = require("./CookieCollection");
 class Request extends CoreRequest {
     constructor(request) {
         super(request);
         this.headers = null;
+        this.cookies = null;
     }
     getSession(create = true) { }
     getQueryString(parameter, defaultValue = undefined) {
@@ -19,7 +21,7 @@ class Request extends CoreRequest {
     }
     getHeaders() {
         if (null === this.headers) {
-            this.headers = new Headers();
+            this.headers = new HeaderCollection();
             let map = this.request.headers;
             for (let name in map) {
                 this.headers.set(name, map[name]);
@@ -28,22 +30,24 @@ class Request extends CoreRequest {
         return this.headers;
     }
     getCookies() {
-        let map = new Map();
-        let cookie = this.request.headers.cookie;
-        if (undefined === cookie) {
-            return map;
-        }
-        let list = cookie.split('; ');
-        for (let i = 0, equalIndex = 0; i < list.length; i++) {
-            equalIndex = list[i].indexOf('=');
-            if (-1 === equalIndex) {
-                map.set(list[i], '');
+        if (null === this.cookies) {
+            this.cookies = new CookieCollection();
+            let cookie = this.request.headers.cookie;
+            if (undefined === cookie) {
+                return this.cookies;
             }
-            else {
-                map.set(list[i].substring(0, equalIndex), list[i].substring(equalIndex + 1));
+            let list = cookie.split('; ');
+            for (let i = 0, equalIndex = 0; i < list.length; i++) {
+                equalIndex = list[i].indexOf('=');
+                if (-1 === equalIndex) {
+                    this.cookies.set(list[i], '');
+                }
+                else {
+                    this.cookies.set(list[i].substring(0, equalIndex), list[i].substring(equalIndex + 1));
+                }
             }
         }
-        return map;
+        return this.cookies;
     }
     getClientIp() {
         let forward = this.request.headers['x-forwarded-for'];

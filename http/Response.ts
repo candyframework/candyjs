@@ -4,7 +4,7 @@
  */
 import CoreResponse = require('../core/Response');
 import Cookie = require('./Cookie');
-import Headers = require('./Headers');
+import HeaderCollection = require('./HeaderCollection');
 import HttpException = require('../core/HttpException');
 
 /**
@@ -126,7 +126,7 @@ class Response extends CoreResponse {
     /**
      * HTTP headers
      */
-    public headers: Headers = new Headers();
+    public headers: HeaderCollection = new HeaderCollection();
 
     /**
      * HTTP content

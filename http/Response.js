@@ -1,7 +1,7 @@
 "use strict";
 const CoreResponse = require("../core/Response");
 const Cookie = require("./Cookie");
-const Headers = require("./Headers");
+const HeaderCollection = require("./HeaderCollection");
 const HttpException = require("../core/HttpException");
 class Response extends CoreResponse {
     constructor(response) {
@@ -10,7 +10,7 @@ class Response extends CoreResponse {
         this.version = '1.1';
         this.statusCode = 200;
         this.statusText = 'OK';
-        this.headers = new Headers();
+        this.headers = new HeaderCollection();
         this.content = '';
         this.cookies = [];
     }

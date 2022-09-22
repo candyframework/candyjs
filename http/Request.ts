@@ -2,8 +2,9 @@
  * @author afu
  * @license MIT
  */
-import Headers = require('./Headers');
 import CoreRequest = require('../core/Request');
+import HeaderCollection = require('./HeaderCollection');
+import CookieCollection = require('./CookieCollection');
 
 /**
  * HTTP request
@@ -13,7 +14,12 @@ class Request extends CoreRequest {
     /**
      * http headers
      */
-    public headers: Headers = null;
+    private headers: HeaderCollection = null;
+
+    /**
+     * http cookies
+     */
+    private cookies: CookieCollection = null;
 
     /**
      * constructor
@@ -63,11 +69,11 @@ class Request extends CoreRequest {
     /**
      * Returns the headers collection
      *
-     * @return {Headers}
+     * @return {HeaderCollection}
      */
-    public getHeaders(): Headers {
+    public getHeaders(): HeaderCollection {
         if(null === this.headers) {
-            this.headers = new Headers();
+            this.headers = new HeaderCollection();
 
             let map = this.request.headers;
             for(let name in map) {
@@ -84,32 +90,34 @@ class Request extends CoreRequest {
     /**
      * Returns the cookies collection
      *
-     * @return {Map<String, String>}
+     * @return {CookieCollection}
      */
-    public getCookies(): Map<string, string> {
-        let map = new Map();
+    public getCookies(): CookieCollection {
+        if(null === this.cookies) {
+            this.cookies = new CookieCollection();
 
-        let cookie = this.request.headers.cookie;
-        if(undefined === cookie) {
-            return map;
-        }
+            let cookie = this.request.headers.cookie;
+            if(undefined === cookie) {
+                return this.cookies;
+            }
 
-        let list = cookie.split('; ');
-        for(let i=0, equalIndex=0; i<list.length; i++) {
-            equalIndex = list[i].indexOf('=');
+            let list = cookie.split('; ');
+            for(let i=0, equalIndex=0; i<list.length; i++) {
+                equalIndex = list[i].indexOf('=');
 
-            if(-1 === equalIndex) {
-                map.set(list[i], '');
+                if(-1 === equalIndex) {
+                    this.cookies.set(list[i], '');
 
-            } else {
-                map.set(
-                    list[i].substring(0, equalIndex),
-                    list[i].substring(equalIndex + 1)
-                );
+                } else {
+                    this.cookies.set(
+                        list[i].substring(0, equalIndex),
+                        list[i].substring(equalIndex + 1)
+                    );
+                }
             }
         }
 
-        return map;
+        return this.cookies;
     }
 
     /**

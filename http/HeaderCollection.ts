@@ -6,14 +6,14 @@
 /**
  * HTTP headers collection
  */
-class Headers {
+class HeaderCollection {
 
     /**
      * headers the headers in this collection
      *
      * header 头可能重复出现 所以这里以数组形式保存
      */
-    public headers: Map<String, String[]> = new Map();
+    private headers: Map<string, string[]> = new Map();
 
     constructor() {}
 
@@ -114,4 +114,4 @@ class Headers {
 
 }
 
-export = Headers;
+export = HeaderCollection;
