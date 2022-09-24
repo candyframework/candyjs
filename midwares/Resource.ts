@@ -33,8 +33,7 @@ class Resource {
         'tiff': 'image/tiff',
 
         'mp3': 'audio/mpeg',
-        'mpeg': 'video/mpeg',
-        'swf': 'application/x-shockwave-flash'
+        'mpeg': 'video/mpeg'
     };
 
     /**

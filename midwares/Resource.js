@@ -107,8 +107,7 @@ Resource.mime = {
     'svg': 'image/svg+xml',
     'tiff': 'image/tiff',
     'mp3': 'audio/mpeg',
-    'mpeg': 'video/mpeg',
-    'swf': 'application/x-shockwave-flash'
+    'mpeg': 'video/mpeg'
 };
 Resource.cache = {
     'regExp': /(\.gif|\.jpg|\.jpeg|\.png|\.js|\.css)$/ig,
