@@ -59,12 +59,12 @@ class ActionFilter extends Behavior {
     /**
      * 前置过滤
      */
-    public beforeAction(actionEvent: ActionEvent) {}
+    public beforeAction(actionEvent: ActionEvent): void {}
 
     /**
      * 后置过滤
      */
-    public afterAction(actionEvent: ActionEvent) {}
+    public afterAction(actionEvent: ActionEvent): void {}
 
 }
 
