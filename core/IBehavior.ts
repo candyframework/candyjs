@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import IComponent from "./IComponent";
+import IComponent from './IComponent';
 
 /**
  * 行为接口
