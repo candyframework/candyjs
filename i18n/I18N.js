@@ -3,29 +3,17 @@ const Candy = require("../Candy");
 const ServiceLocator = require("../ioc/ServiceLocator");
 const InvalidConfigException = require("../core/InvalidConfigException");
 class I18N {
-    constructor() {
-        this.translators = new ServiceLocator();
-    }
-    static getI18N() {
-        if (null === I18N.instance) {
-            I18N.instance = new I18N();
-        }
-        return I18N.instance;
-    }
-    translate(type, message, parameters = null) {
-        let translator = this.getTranslator(type);
-        return translator.translate(type, message, parameters);
-    }
-    getTranslator(type) {
+    constructor() { }
+    static getTranslator(type) {
         let app = Candy.app;
         if (undefined === app.translator || undefined === app.translator[type]) {
             throw new InvalidConfigException('The translator configuration is not found');
         }
-        if (!this.translators.hasService(type)) {
-            this.translators.setService(type, Candy.createObjectAsDefinition(app.translator[type], app));
+        if (!I18N.translators.hasService(type)) {
+            I18N.translators.setService(type, Candy.createObjectAsDefinition(app.translator[type], app));
         }
-        return this.translators.getService(type);
+        return I18N.translators.getService(type);
     }
 }
-I18N.instance = null;
+I18N.translators = new ServiceLocator();
 module.exports = I18N;
