@@ -1,4 +1,4 @@
 const msg = {
-    'hello world {param}': 'hello world {param}'
+    title: 'hello world {param}'
 };
 module.exports = msg;

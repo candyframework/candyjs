@@ -13,7 +13,7 @@ class IndexController {
         let t = I18N.getTranslator('mytype')
         t.setLanguage(lang === 'en' ? 'en-US' : 'zh-CN');
 
-        let msg = t.translate('file', 'hello world {param}', [param]);
+        let msg = t.translate('file', 'title', [param]);
         res.end(msg);
     }
 

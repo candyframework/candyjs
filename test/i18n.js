@@ -53,7 +53,7 @@ describe('I18N', () => {
             .end((err, res) => {
                 if (err) return done(err);
 
-                assert.equal(res.text.trim(), 'hello world123');
+                assert.equal(res.text.trim(), 'hello world 123');
 
                 done();
             });
