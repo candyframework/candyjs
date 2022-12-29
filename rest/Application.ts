@@ -4,7 +4,7 @@
  */
 import IRestApplication from './IRestApplication';
 
-import FastRouter = require('fast-regexp-router');
+import * as FastRouter from 'fast-regexp-router';
 
 import Candy = require('../Candy');
 import Request = require('../http/Request');
