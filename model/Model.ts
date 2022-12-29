@@ -10,7 +10,7 @@ import Validator = require('./Validator');
 import ModelException = require('../core/ModelException');
 
 /**
- * 用于存储和校验与数据库相关的数据
+ * 用于存储和校验数据
  */
 class Model extends Component implements IModel {
 
@@ -20,6 +20,7 @@ class Model extends Component implements IModel {
     static fromParameter = 'body';
 
     public modelName: string = '';
+
     public attributes: any = null;
     public attributesMap: any = null;
     public messages: string[] = [];

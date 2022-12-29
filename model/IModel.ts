@@ -10,7 +10,10 @@ export default interface IModel {
     modelName: string;
 
     /**
-     * 数据字段配置 一般与数据库字段一致
+     * 数据字段配置
+     *
+     * 现阶段没有完整的反射机制可以获取模型属性列表
+     * 所以使用一个专用变量保存模型的属性
      *
      * ```
      * {
