@@ -106,11 +106,12 @@ Resource.mime = {
     'webp': 'image/webp',
     'svg': 'image/svg+xml',
     'tiff': 'image/tiff',
+    'avif': 'image/avif',
     'mp3': 'audio/mpeg',
     'mpeg': 'video/mpeg'
 };
 Resource.cache = {
-    'regExp': /(\.gif|\.jpg|\.jpeg|\.png|\.js|\.css)$/ig,
+    'regExp': /(\.gif|\.jpg|\.jpeg|\.png|\.avif|\.js|\.css)$/ig,
     'maxAge': 2592000000
 };
 module.exports = Resource;

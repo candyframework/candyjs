@@ -31,6 +31,7 @@ class Resource {
         'webp': 'image/webp',
         'svg': 'image/svg+xml',
         'tiff': 'image/tiff',
+        'avif': 'image/avif',
 
         'mp3': 'audio/mpeg',
         'mpeg': 'video/mpeg'
@@ -41,7 +42,7 @@ class Resource {
      */
     static cache = {
         // 那些资源需要缓存
-        'regExp': /(\.gif|\.jpg|\.jpeg|\.png|\.js|\.css)$/ig,
+        'regExp': /(\.gif|\.jpg|\.jpeg|\.png|\.avif|\.js|\.css)$/ig,
         // 缓存时间毫秒 默认 30 天 = 1000 * 3600 * 24 * 30
         'maxAge': 2592000000
     };
