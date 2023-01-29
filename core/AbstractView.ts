@@ -9,7 +9,7 @@ import Candy = require('../Candy');
 /**
  * 视图
  */
-abstract class View {
+abstract class AbstractView {
 
     /**
      * 上下文环境
@@ -99,4 +99,4 @@ abstract class View {
 
 }
 
-export = View;
+export = AbstractView;

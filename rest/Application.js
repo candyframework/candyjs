@@ -2,9 +2,9 @@
 const FastRouter = require("fast-regexp-router");
 const Candy = require("../Candy");
 const Request = require("../http/Request");
-const CoreApp = require("../core/Application");
+const AbstractApplication = require("../core/AbstractApplication");
 const InvalidRouteException = require("../core/InvalidRouteException");
-class Application extends CoreApp {
+class Application extends AbstractApplication {
     constructor(config) {
         super(config);
         this.exceptionHandler = 'candy/web/ExceptionHandler';

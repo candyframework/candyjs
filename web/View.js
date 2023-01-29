@@ -1,6 +1,6 @@
 "use strict";
-const CoreView = require("../core/View");
-class View extends CoreView {
+const AbstractView = require("../core/AbstractView");
+class View extends AbstractView {
     constructor(context) {
         super(context);
         this.output = true;

@@ -8,7 +8,7 @@ import ActionEvent = require('./ActionEvent');
 /**
  * 控制器基类
  */
-abstract class Controller<CT> extends Component {
+abstract class AbstractController<CT> extends Component {
 
     /**
      * 前置事件
@@ -40,7 +40,7 @@ abstract class Controller<CT> extends Component {
      * @param {ActionEvent} actionEvent
      */
     public beforeAction(actionEvent: ActionEvent): void {
-        this.trigger(Controller.EVENT_BEFORE_ACTION, actionEvent);
+        this.trigger(AbstractController.EVENT_BEFORE_ACTION, actionEvent);
     }
 
     /**
@@ -49,7 +49,7 @@ abstract class Controller<CT> extends Component {
      * @param {ActionEvent} actionEvent
      */
     public afterAction(actionEvent: ActionEvent): void {
-        this.trigger(Controller.EVENT_AFTER_ACTION, actionEvent);
+        this.trigger(AbstractController.EVENT_AFTER_ACTION, actionEvent);
     }
 
     /**
@@ -95,4 +95,4 @@ abstract class Controller<CT> extends Component {
 
 }
 
-export = Controller;
+export = AbstractController;

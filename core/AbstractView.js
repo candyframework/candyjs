@@ -1,7 +1,7 @@
 "use strict";
 const fs = require("fs");
 const Candy = require("../Candy");
-class View {
+class AbstractView {
     constructor(context) {
         this.defaultExtension = '.html';
         this.context = context;
@@ -35,4 +35,4 @@ class View {
         return this.renderFile(file, parameters);
     }
 }
-module.exports = View;
+module.exports = AbstractView;

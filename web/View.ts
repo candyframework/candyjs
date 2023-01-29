@@ -2,12 +2,12 @@
  * @author afu
  * @license MIT
  */
-import CoreView = require('../core/View');
+import AbstractView = require('../core/AbstractView');
 
 /**
  * web 视图
  */
-class View extends CoreView {
+class View extends AbstractView {
 
     /**
      * 是否直接输出

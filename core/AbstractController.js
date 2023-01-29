@@ -1,16 +1,16 @@
 "use strict";
 const Component = require("./Component");
 const ActionEvent = require("./ActionEvent");
-class Controller extends Component {
+class AbstractController extends Component {
     constructor(context) {
         super();
         this.context = context;
     }
     beforeAction(actionEvent) {
-        this.trigger(Controller.EVENT_BEFORE_ACTION, actionEvent);
+        this.trigger(AbstractController.EVENT_BEFORE_ACTION, actionEvent);
     }
     afterAction(actionEvent) {
-        this.trigger(Controller.EVENT_AFTER_ACTION, actionEvent);
+        this.trigger(AbstractController.EVENT_AFTER_ACTION, actionEvent);
     }
     runControllerAction(request, response) {
         let actionEvent = new ActionEvent();
@@ -28,6 +28,6 @@ class Controller extends Component {
     }
     run(request, response) { }
 }
-Controller.EVENT_BEFORE_ACTION = 'beforeAction';
-Controller.EVENT_AFTER_ACTION = 'afterAction';
-module.exports = Controller;
+AbstractController.EVENT_BEFORE_ACTION = 'beforeAction';
+AbstractController.EVENT_AFTER_ACTION = 'afterAction';
+module.exports = AbstractController;

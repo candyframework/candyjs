@@ -5,7 +5,7 @@
 import ActionEvent = require('./ActionEvent');
 
 import Behavior = require('./Behavior');
-import Controller = require('./Controller');
+import AbstractController = require('./AbstractController');
 
 /**
  * 动作过滤器
@@ -51,8 +51,8 @@ class ActionFilter extends Behavior {
      */
     public events(): any[] {
         return [
-            [Controller.EVENT_BEFORE_ACTION, this.beforeFilter],
-            [Controller.EVENT_AFTER_ACTION, this.afterFilter]
+            [AbstractController.EVENT_BEFORE_ACTION, this.beforeFilter],
+            [AbstractController.EVENT_AFTER_ACTION, this.afterFilter]
         ];
     }
 

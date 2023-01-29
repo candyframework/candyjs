@@ -1,11 +1,11 @@
 "use strict";
 const Candy = require("../Candy");
 const Request = require("../http/Request");
-const CoreApp = require("../core/Application");
 const StringHelper = require("../helpers/StringHelper");
+const AbstractApplication = require("../core/AbstractApplication");
 const InvalidRouteException = require("../core/InvalidRouteException");
 const Controller = require("./Controller");
-class Application extends CoreApp {
+class Application extends AbstractApplication {
     constructor(config) {
         super(config);
         this.exceptionHandler = 'candy/web/ExceptionHandler';

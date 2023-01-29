@@ -1,7 +1,7 @@
 "use strict";
 const Candy = require("../Candy");
-const CoreController = require("../core/Controller");
-class Controller extends CoreController {
+const AbstractController = require("../core/AbstractController");
+class Controller extends AbstractController {
     constructor(context) {
         super(context);
         this.view = null;

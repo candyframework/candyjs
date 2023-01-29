@@ -134,6 +134,10 @@ new CandyJs(new App({
 
 ### 变更
 
++ 2023-01-26
+
+    * 4.17.2 对 `core/Application core/View core/Controller` 抽象类进行了重命名
+
 + 2022-11-16
 
     * 4.17.0 重构 I18N

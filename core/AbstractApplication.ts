@@ -11,7 +11,7 @@ import InvalidConfigException = require('./InvalidConfigException');
 /**
  * 应用基类
  */
-abstract class Application extends Event implements IApplication {
+abstract class AbstractApplication extends Event implements IApplication {
 
     public encoding: string = 'UTF-8';
     public debug: boolean = false;
@@ -90,4 +90,4 @@ abstract class Application extends Event implements IApplication {
 
 }
 
-export = Application;
+export = AbstractApplication;

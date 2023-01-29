@@ -1,6 +1,6 @@
 "use strict";
 const Behavior = require("./Behavior");
-const Controller = require("./Controller");
+const AbstractController = require("./AbstractController");
 class ActionFilter extends Behavior {
     constructor() {
         super();
@@ -21,8 +21,8 @@ class ActionFilter extends Behavior {
     }
     events() {
         return [
-            [Controller.EVENT_BEFORE_ACTION, this.beforeFilter],
-            [Controller.EVENT_AFTER_ACTION, this.afterFilter]
+            [AbstractController.EVENT_BEFORE_ACTION, this.beforeFilter],
+            [AbstractController.EVENT_AFTER_ACTION, this.afterFilter]
         ];
     }
     beforeAction(actionEvent) { }

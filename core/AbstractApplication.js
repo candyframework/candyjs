@@ -2,7 +2,7 @@
 const Candy = require("../Candy");
 const Event = require("./Event");
 const InvalidConfigException = require("./InvalidConfigException");
-class Application extends Event {
+class AbstractApplication extends Event {
     constructor(config) {
         super();
         this.encoding = 'UTF-8';
@@ -40,4 +40,4 @@ class Application extends Event {
         return Candy.getPathAlias('@runtime');
     }
 }
-module.exports = Application;
+module.exports = AbstractApplication;

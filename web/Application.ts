@@ -6,15 +6,15 @@ import IWebApplication from './IWebApplication';
 
 import Candy = require('../Candy');
 import Request = require('../http/Request');
-import CoreApp = require('../core/Application');
 import StringHelper = require('../helpers/StringHelper');
+import AbstractApplication = require('../core/AbstractApplication');
 import InvalidRouteException = require('../core/InvalidRouteException');
 import Controller = require('./Controller');
 
 /**
  * web 应用
  */
-class Application extends CoreApp implements IWebApplication {
+class Application extends AbstractApplication implements IWebApplication {
 
     public exceptionHandler: string = 'candy/web/ExceptionHandler';
 

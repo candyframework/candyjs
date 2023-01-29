@@ -8,13 +8,13 @@ import * as FastRouter from 'fast-regexp-router';
 
 import Candy = require('../Candy');
 import Request = require('../http/Request');
-import CoreApp = require('../core/Application');
+import AbstractApplication = require('../core/AbstractApplication');
 import InvalidRouteException = require('../core/InvalidRouteException');
 
 /**
  * rest application
  */
-class Application extends CoreApp implements IRestApplication {
+class Application extends AbstractApplication implements IRestApplication {
 
     public exceptionHandler: string = 'candy/web/ExceptionHandler';
 

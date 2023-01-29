@@ -6,12 +6,12 @@ import IWebContext from './IWebContext';
 import View = require('./View');
 
 import Candy = require('../Candy');
-import CoreController = require('../core/Controller');
+import AbstractController = require('../core/AbstractController');
 
 /**
  * 控制器
  */
-class Controller extends CoreController<IWebContext> {
+class Controller extends AbstractController<IWebContext> {
 
     /**
      * 视图类
