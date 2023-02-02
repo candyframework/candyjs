@@ -1,4 +1,5 @@
-import IEvent from "./IEvent";
+import IEvent from './IEvent';
+import IFilter from './IFilter';
 
 export default interface IComponent extends IEvent {
     /**
@@ -24,19 +25,25 @@ export default interface IComponent extends IEvent {
     behaviors(): any[];
 
     /**
+     * 声明过滤器列表
+     *
+     * ```
+     * [
+     *      instanceFilterClass,
+     *      'filterClassPath'
+     * ]
+     * ```
+     *
+     */
+    filters(): any[];
+
+    /**
      * 向组件附加一个行为
      *
      * @param {String} name 行为名称
      * @param {any} behavior 行为
      */
     attachBehavior(name: string, behavior: any): void;
-
-     /**
-     * 以列表形式向组件添加行为
-     *
-     * @param {any[]} behaviors 行为列表
-     */
-    attachBehaviors(behaviors: any[]): void;
 
     /**
      * 删除组件的行为
@@ -45,9 +52,4 @@ export default interface IComponent extends IEvent {
      * @return {Behavior | null} 被删除的行为
      */
     detachBehavior(name: string): any;
-
-    /**
-     * 删除组件上所有的行为
-     */
-    detachBehaviors(): void;
 }

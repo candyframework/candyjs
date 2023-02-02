@@ -17,16 +17,9 @@ class AbstractController extends Component {
         actionEvent.request = request;
         actionEvent.response = response;
         this.beforeAction(actionEvent);
-        if (true !== actionEvent.valid) {
-            if (!response.finished) {
-                response.end('');
-            }
-            return;
-        }
-        this.run(request, response);
+        this.filterChain.doFilter(request, response);
         this.afterAction(actionEvent);
     }
-    run(request, response) { }
 }
 AbstractController.EVENT_BEFORE_ACTION = 'beforeAction';
 AbstractController.EVENT_AFTER_ACTION = 'afterAction';

@@ -8,21 +8,19 @@ import Behavior = require('./Behavior');
 import AbstractController = require('./AbstractController');
 
 /**
- * 动作过滤器
+ * 动作切面
  *
- * 过滤器会在控制器的动作执行之前执行并且只支持同步操作
- *
- * 自定义过滤器需要从此类继承 并选择实现 `beforeAction()` 或者 `afterAction()`
+ * 具体切面类需要从此类继承 并选择实现 `beforeAction()` 或者 `afterAction()`
  */
-class ActionFilter extends Behavior {
+class ActionAspect extends Behavior {
 
-    private beforeFilter: any;
-    private afterFilter: any;
+    private beforeAspect: any;
+    private afterAspect: any;
 
     constructor() {
         super();
 
-        this.beforeFilter = (actionEvent: ActionEvent) => {
+        this.beforeAspect = (actionEvent: ActionEvent) => {
             // 如果前一个 valid 为 false 那么本次 filter 不再执行
             if(!actionEvent.valid) {
                 this.unListen();
@@ -39,7 +37,7 @@ class ActionFilter extends Behavior {
             }
         };
 
-        this.afterFilter = (actionEvent: ActionEvent) => {
+        this.afterAspect = (actionEvent: ActionEvent) => {
             this.unListen();
 
             this.afterAction(actionEvent);
@@ -51,21 +49,23 @@ class ActionFilter extends Behavior {
      */
     public events(): any[] {
         return [
-            [AbstractController.EVENT_BEFORE_ACTION, this.beforeFilter],
-            [AbstractController.EVENT_AFTER_ACTION, this.afterFilter]
+            [AbstractController.EVENT_BEFORE_ACTION, this.beforeAspect],
+            [AbstractController.EVENT_AFTER_ACTION, this.afterAspect]
         ];
     }
 
     /**
-     * 前置过滤
+     * 前置切面
      */
     public beforeAction(actionEvent: ActionEvent): void {}
 
     /**
-     * 后置过滤
+     * 后置切面
+     *
+     * 由于控制器可能包含异步逻辑 所以该方法不能保证在控制器动作执行完成后再运行
      */
     public afterAction(actionEvent: ActionEvent): void {}
 
 }
 
-export = ActionFilter;
+export = ActionAspect;

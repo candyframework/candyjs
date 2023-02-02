@@ -2,10 +2,13 @@
 const Candy = require("../Candy");
 const Event = require("./Event");
 const Behavior = require("./Behavior");
+const FilterChain = require("./FilterChain");
 class Component extends Event {
     constructor() {
         super();
         this.behaviorsMap = new Map();
+        this.filterChain = new FilterChain();
+        this.initializeFilterChain();
         this.ensureDeclaredBehaviorsAttached();
     }
     className() {
@@ -14,15 +17,16 @@ class Component extends Event {
     behaviors() {
         return null;
     }
+    filters() {
+        return null;
+    }
     attachBehavior(name, behavior) {
         this.attachBehaviorInternal(name, behavior);
     }
-    attachBehaviors(behaviors) {
-        for (let v of behaviors) {
-            this.attachBehavior(v[0], v[1]);
-        }
-    }
     detachBehavior(name) {
+        if (null === this.behaviorsMap) {
+            return;
+        }
         if (!this.behaviorsMap.has(name)) {
             return null;
         }
@@ -30,11 +34,6 @@ class Component extends Event {
         this.behaviorsMap.delete(name);
         behavior.unListen();
         return behavior;
-    }
-    detachBehaviors() {
-        for (let name of this.behaviorsMap.keys()) {
-            this.detachBehavior(name);
-        }
     }
     ensureDeclaredBehaviorsAttached() {
         let behaviors = this.behaviors();
@@ -54,6 +53,19 @@ class Component extends Event {
         }
         behavior.listen(this);
         this.behaviorsMap.set(name, behavior);
+    }
+    initializeFilterChain() {
+        this.filterChain.setResource(this);
+        let filters = this.filters();
+        if (null === filters) {
+            return;
+        }
+        for (let filter of filters) {
+            if ('string' === typeof filter) {
+                filter = Candy.createObject(filter);
+            }
+            this.filterChain.addFilter(filter);
+        }
     }
 }
 module.exports = Component;

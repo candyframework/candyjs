@@ -134,6 +134,18 @@ new CandyJs(new App({
 
 ### 变更
 
++ 2023-2
+
+    * 4.18 变更
+
+    * 新增过滤器
+
+    * 修改 `core/ActionFilter` 名字为 `core/ActionAspect`
+
+    * 删除 `Component#attachBehaviors()` 方法 使用 `Component#attachBehavior()` 代替
+
+    * 删除 `Component#detachBehaviors()` 方法 使用 `Component#detachBehavior()` 代替
+
 + 2023-01-26
 
     * 4.17.2 对 `core/Application core/View core/Controller` 抽象类进行了重命名

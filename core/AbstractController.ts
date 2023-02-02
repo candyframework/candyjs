@@ -66,16 +66,7 @@ abstract class AbstractController<CT> extends Component {
         // todo 这里没想好怎么设计 让我想想看
         this.beforeAction(actionEvent);
 
-        if(true !== actionEvent.valid) {
-            // will replace to response.writableEnded()
-            if(!response.finished) {
-                response.end('');
-            }
-
-            return;
-        }
-
-        this.run(request, response);
+        this.filterChain.doFilter(request, response);
 
         this.afterAction(actionEvent);
     }
@@ -83,7 +74,7 @@ abstract class AbstractController<CT> extends Component {
     /**
      * 执行控制器入口
      */
-    public run(request: any, response: any): void {}
+    public abstract run(request: any, response: any): void;
 
     /**
      * 渲染文件 须由子类进行实现

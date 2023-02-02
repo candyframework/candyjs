@@ -1,10 +1,10 @@
 "use strict";
 const Behavior = require("./Behavior");
 const AbstractController = require("./AbstractController");
-class ActionFilter extends Behavior {
+class ActionAspect extends Behavior {
     constructor() {
         super();
-        this.beforeFilter = (actionEvent) => {
+        this.beforeAspect = (actionEvent) => {
             if (!actionEvent.valid) {
                 this.unListen();
                 return;
@@ -14,18 +14,18 @@ class ActionFilter extends Behavior {
                 this.unListen();
             }
         };
-        this.afterFilter = (actionEvent) => {
+        this.afterAspect = (actionEvent) => {
             this.unListen();
             this.afterAction(actionEvent);
         };
     }
     events() {
         return [
-            [AbstractController.EVENT_BEFORE_ACTION, this.beforeFilter],
-            [AbstractController.EVENT_AFTER_ACTION, this.afterFilter]
+            [AbstractController.EVENT_BEFORE_ACTION, this.beforeAspect],
+            [AbstractController.EVENT_AFTER_ACTION, this.afterAspect]
         ];
     }
     beforeAction(actionEvent) { }
     afterAction(actionEvent) { }
 }
-module.exports = ActionFilter;
+module.exports = ActionAspect;
