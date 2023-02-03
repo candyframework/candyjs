@@ -8,7 +8,13 @@ import IFilterChain from './IFilterChain';
 import ArrayList = require('../utils/ArrayList');
 
 /**
- * 处理请求的过滤链
+ * 处理请求和响应的责任链
+ *
+ * ```
+ * -- req --> |         | -- req --> |         | -- req --> |     |
+ *            | filter1 |            | filter2 |            | RES |
+ * <-- res -- |         | <-- res -- |         | <-- res -- |     |
+ * ```
  */
 class FilterChain implements IFilterChain {
 
