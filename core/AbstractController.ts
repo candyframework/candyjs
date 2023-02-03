@@ -54,7 +54,7 @@ abstract class AbstractController<CT> extends Component {
         }
 
         for(let filter of filters) {
-            if('string' === typeof filter) {
+            if('function' !== typeof filter.doFilter) {
                 filter = Candy.createObject(filter);
             }
 
@@ -67,8 +67,9 @@ abstract class AbstractController<CT> extends Component {
      *
      * ```
      * [
-     *      instanceFilterClass,
+     *      filterInstance,
      *      'filterClassPath'
+     *      {'classPath': 'filterClassPath', otherProps: xxx}
      * ]
      * ```
      *
@@ -107,6 +108,15 @@ abstract class AbstractController<CT> extends Component {
         actionEvent.response = response;
 
         this.beforeAction(actionEvent);
+
+        if(false === actionEvent.valid) {
+            // will replace to response.writableEnded()
+            if(!response.finished) {
+                response.end('');
+            }
+
+            return;
+        }
 
         this.filterChain.doFilter(request, response);
 

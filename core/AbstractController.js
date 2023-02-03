@@ -17,7 +17,7 @@ class AbstractController extends Component {
             return;
         }
         for (let filter of filters) {
-            if ('string' === typeof filter) {
+            if ('function' !== typeof filter.doFilter) {
                 filter = Candy.createObject(filter);
             }
             this.filterChain.addFilter(filter);
@@ -37,6 +37,12 @@ class AbstractController extends Component {
         actionEvent.request = request;
         actionEvent.response = response;
         this.beforeAction(actionEvent);
+        if (false === actionEvent.valid) {
+            if (!response.finished) {
+                response.end('');
+            }
+            return;
+        }
         this.filterChain.doFilter(request, response);
         this.afterAction(actionEvent);
     }
