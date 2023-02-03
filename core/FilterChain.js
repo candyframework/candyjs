@@ -9,6 +9,7 @@ class FilterChain {
     doFilter(req, res) {
         if (this.position >= this.filters.size()) {
             this.resource.run(req, res);
+            this.clearFilters();
             return;
         }
         let filter = this.filters.get(this.position++);

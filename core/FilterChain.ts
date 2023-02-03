@@ -30,6 +30,7 @@ class FilterChain implements IFilterChain {
     public doFilter(req: any, res: any): void {
         if(this.position >= this.filters.size()) {
             this.resource.run(req, res);
+            this.clearFilters();
             return;
         }
 
