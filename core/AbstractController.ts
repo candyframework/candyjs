@@ -2,8 +2,10 @@
  * @author afu
  * @license MIT
  */
+import Candy  = require('../Candy');
 import Component = require('./Component');
 import ActionEvent = require('./ActionEvent');
+import FilterChain = require('./FilterChain');
 
 /**
  * 控制器基类
@@ -26,12 +28,53 @@ abstract class AbstractController<CT> extends Component {
     public context: CT;
 
     /**
+     * the filter collection
+     */
+    public filterChain: FilterChain = new FilterChain();
+
+    /**
      * constructor
      */
     constructor(context: any) {
         super();
 
         this.context = context;
+        this.initializeFilterChain();
+    }
+
+    /**
+     * 初始化过滤链
+     */
+    private initializeFilterChain(): void {
+        this.filterChain.setResource(this);
+
+        let filters = this.filters();
+        if(null === filters) {
+            return;
+        }
+
+        for(let filter of filters) {
+            if('string' === typeof filter) {
+                filter = Candy.createObject(filter);
+            }
+
+            this.filterChain.addFilter(filter);
+        }
+    }
+
+    /**
+     * 声明过滤器列表
+     *
+     * ```
+     * [
+     *      instanceFilterClass,
+     *      'filterClassPath'
+     * ]
+     * ```
+     *
+     */
+    public filters(): any[] {
+        return null;
     }
 
     /**
@@ -63,7 +106,6 @@ abstract class AbstractController<CT> extends Component {
         actionEvent.request = request;
         actionEvent.response = response;
 
-        // todo 这里没想好怎么设计 让我想想看
         this.beforeAction(actionEvent);
 
         this.filterChain.doFilter(request, response);

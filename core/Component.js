@@ -2,22 +2,16 @@
 const Candy = require("../Candy");
 const Event = require("./Event");
 const Behavior = require("./Behavior");
-const FilterChain = require("./FilterChain");
 class Component extends Event {
     constructor() {
         super();
         this.behaviorsMap = new Map();
-        this.filterChain = new FilterChain();
-        this.initializeFilterChain();
         this.ensureDeclaredBehaviorsAttached();
     }
     className() {
         return this.constructor.name;
     }
     behaviors() {
-        return null;
-    }
-    filters() {
         return null;
     }
     attachBehavior(name, behavior) {
@@ -50,19 +44,6 @@ class Component extends Event {
         }
         behavior.listen(this);
         this.behaviorsMap.set(name, behavior);
-    }
-    initializeFilterChain() {
-        this.filterChain.setResource(this);
-        let filters = this.filters();
-        if (null === filters) {
-            return;
-        }
-        for (let filter of filters) {
-            if ('string' === typeof filter) {
-                filter = Candy.createObject(filter);
-            }
-            this.filterChain.addFilter(filter);
-        }
     }
 }
 module.exports = Component;
