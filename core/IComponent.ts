@@ -1,5 +1,8 @@
+/**
+ * @author afu
+ * @license MIT
+ */
 import IEvent from './IEvent';
-import IFilter from './IFilter';
 
 export default interface IComponent extends IEvent {
     /**
@@ -23,19 +26,6 @@ export default interface IComponent extends IEvent {
      * @return {any[]} 行为列表
      */
     behaviors(): any[];
-
-    /**
-     * 声明过滤器列表
-     *
-     * ```
-     * [
-     *      instanceFilterClass,
-     *      'filterClassPath'
-     * ]
-     * ```
-     *
-     */
-    filters(): any[];
 
     /**
      * 向组件附加一个行为

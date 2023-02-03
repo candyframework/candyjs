@@ -7,10 +7,9 @@ import IComponent from './IComponent';
 import Candy = require('../Candy');
 import Event = require('./Event');
 import Behavior = require('./Behavior');
-import FilterChain = require('./FilterChain');
 
 /**
- * 组件是实现 过滤器 (filter) 行为 (behavior) 事件 (event) 的基类
+ * 组件是实现 行为 (behavior) 事件 (event) 的基类
  */
 class Component extends Event implements IComponent {
 
@@ -19,15 +18,9 @@ class Component extends Event implements IComponent {
      */
     public behaviorsMap: Map<string, Behavior> = new Map();
 
-    /**
-     * the filter collection
-     */
-    public filterChain: FilterChain = new FilterChain();
-
     constructor() {
         super();
 
-        this.initializeFilterChain();
         this.ensureDeclaredBehaviorsAttached();
     }
 
@@ -42,13 +35,6 @@ class Component extends Event implements IComponent {
      * @inheritdoc
      */
     public behaviors(): any[] {
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public filters(): any[] {
         return null;
     }
 
@@ -102,26 +88,6 @@ class Component extends Event implements IComponent {
         // 行为类可以监听组件的事件并处理
         behavior.listen(this);
         this.behaviorsMap.set(name, behavior);
-    }
-
-    /**
-     * 初始化过滤链
-     */
-    private initializeFilterChain(): void {
-        this.filterChain.setResource(this);
-
-        let filters = this.filters();
-        if(null === filters) {
-            return;
-        }
-
-        for(let filter of filters) {
-            if('string' === typeof filter) {
-                filter = Candy.createObject(filter);
-            }
-
-            this.filterChain.addFilter(filter);
-        }
     }
 
 }
