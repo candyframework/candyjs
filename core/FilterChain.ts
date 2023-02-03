@@ -1,3 +1,7 @@
+/**
+ * @author afu
+ * @license MIT
+ */
 import IFilter from './IFilter';
 import IFilterChain from './IFilterChain';
 
@@ -29,7 +33,7 @@ class FilterChain implements IFilterChain {
             return;
         }
 
-        let filter = this.filters.get(this.position);
+        let filter = this.filters.get(this.position++);
         filter.doFilter(req, res, this);
     }
 

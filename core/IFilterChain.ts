@@ -1,3 +1,11 @@
+/**
+ * @author afu
+ * @license MIT
+ */
+
+/**
+ * 过滤链接口
+ */
 export default interface IFilterChain {
 
     /**

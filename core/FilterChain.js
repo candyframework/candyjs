@@ -11,7 +11,7 @@ class FilterChain {
             this.resource.run(req, res);
             return;
         }
-        let filter = this.filters.get(this.position);
+        let filter = this.filters.get(this.position++);
         filter.doFilter(req, res, this);
     }
     addFilter(filter) {

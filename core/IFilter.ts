@@ -1,5 +1,12 @@
+/**
+ * @author afu
+ * @license MIT
+ */
 import IFilterChain from './IFilterChain';
 
+/**
+ * 过滤器接口
+ */
 export default interface IFilter {
 
     /**

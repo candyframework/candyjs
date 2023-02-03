@@ -63,10 +63,6 @@ class Component extends Event implements IComponent {
      * @inheritdoc
      */
     public detachBehavior(name: string): Behavior | null {
-        if(null === this.behaviorsMap) {
-            return;
-        }
-
         if(!this.behaviorsMap.has(name)) {
             return null;
         }

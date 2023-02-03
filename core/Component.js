@@ -24,9 +24,6 @@ class Component extends Event {
         this.attachBehaviorInternal(name, behavior);
     }
     detachBehavior(name) {
-        if (null === this.behaviorsMap) {
-            return;
-        }
         if (!this.behaviorsMap.has(name)) {
             return null;
         }
