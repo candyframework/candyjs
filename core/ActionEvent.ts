@@ -25,7 +25,7 @@ class ActionEvent extends Event {
     public data: any = null;
 
     /**
-     * 是否继续执行后续行为
+     * 是否继续执行后续程序
      */
     public valid: boolean = true;
 

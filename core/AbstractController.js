@@ -38,9 +38,6 @@ class AbstractController extends Component {
         actionEvent.response = response;
         this.beforeAction(actionEvent);
         if (false === actionEvent.valid) {
-            if (!response.finished) {
-                response.end('');
-            }
             return;
         }
         this.filterChain.doFilter(request, response);
