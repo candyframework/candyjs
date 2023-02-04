@@ -56,6 +56,8 @@ class ActionAspect extends Behavior {
 
     /**
      * 前置切面
+     *
+     * 如果设置 `actionEvent.valid = false` 那么程序将终止运行 需要手动调用 `response.end()` 结束请求
      */
     public beforeAction(actionEvent: ActionEvent): void {}
 

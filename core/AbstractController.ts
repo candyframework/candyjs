@@ -110,11 +110,6 @@ abstract class AbstractController<CT> extends Component {
         this.beforeAction(actionEvent);
 
         if(false === actionEvent.valid) {
-            // will replace to response.writableEnded()
-            if(!response.finished) {
-                response.end('');
-            }
-
             return;
         }
 
