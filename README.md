@@ -8,7 +8,7 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 ### 为什么是 CandyJs
 
-+ CandyJs 实现了 MVC (Model-View-Controller) 设计模式并基于该模式组织代码
++ CandyJs 实现了 MVC (Model-View-Controller) 模式并基于该模式组织代码
 
 + CandyJs 实现了自动路由映射
 
@@ -18,7 +18,7 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 + CandyJs 采用 MIT 许可 这意味着您可以免费的使用 CandyJs 来开发 WEB 应用
 
-+ 良好的 TypeScript 开发体验，详尽的代码提示
++ 良好的 TypeScript 开发体验
 
 ### 文档
 
@@ -131,6 +131,8 @@ new CandyJs(new App({
 + `express` 本程序的 rest 格式路由以及中间件想法的来源
 
 + `ThinkPHP` 与 `Struts` 本程序多数思想来源于 tp 与 struts 框架
+
++ `JavaEE` 一些设计思想被引入本程序
 
 ### 变更
 
