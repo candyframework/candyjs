@@ -119,12 +119,12 @@ abstract class AbstractController<CT> extends Component {
     }
 
     /**
-     * 执行控制器入口
+     * 控制器入口
      */
     public abstract run(request: any, response: any): void;
 
     /**
-     * 渲染文件 须由子类进行实现
+     * 渲染视图
      *
      * @param {String} view 视图名
      * @param {any} parameters 参数
