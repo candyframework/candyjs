@@ -2,10 +2,10 @@
  * @author afu
  * @license MIT
  */
-import Candy  = require('../Candy');
 import Component = require('./Component');
 import ActionEvent = require('./ActionEvent');
 import FilterChain = require('./FilterChain');
+import FilterFactory = require('./FilterFactory');
 
 /**
  * 控制器基类
@@ -30,7 +30,7 @@ abstract class AbstractController<CT> extends Component {
     /**
      * the filter collection
      */
-    public filterChain: FilterChain = new FilterChain();
+    public filterChain: FilterChain = FilterFactory.createFilterChain(this);
 
     /**
      * constructor
@@ -39,27 +39,6 @@ abstract class AbstractController<CT> extends Component {
         super();
 
         this.context = context;
-        this.initializeFilterChain();
-    }
-
-    /**
-     * 初始化过滤链
-     */
-    private initializeFilterChain(): void {
-        this.filterChain.setResource(this);
-
-        let filters = this.filters();
-        if(null === filters) {
-            return;
-        }
-
-        for(let filter of filters) {
-            if('function' !== typeof filter.doFilter) {
-                filter = Candy.createObject(filter);
-            }
-
-            this.filterChain.addFilter(filter);
-        }
     }
 
     /**

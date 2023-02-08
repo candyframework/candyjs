@@ -1,27 +1,12 @@
 "use strict";
-const Candy = require("../Candy");
 const Component = require("./Component");
 const ActionEvent = require("./ActionEvent");
-const FilterChain = require("./FilterChain");
+const FilterFactory = require("./FilterFactory");
 class AbstractController extends Component {
     constructor(context) {
         super();
-        this.filterChain = new FilterChain();
+        this.filterChain = FilterFactory.createFilterChain(this);
         this.context = context;
-        this.initializeFilterChain();
-    }
-    initializeFilterChain() {
-        this.filterChain.setResource(this);
-        let filters = this.filters();
-        if (null === filters) {
-            return;
-        }
-        for (let filter of filters) {
-            if ('function' !== typeof filter.doFilter) {
-                filter = Candy.createObject(filter);
-            }
-            this.filterChain.addFilter(filter);
-        }
     }
     filters() {
         return null;
