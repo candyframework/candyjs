@@ -8,9 +8,6 @@ class AbstractController extends Component {
         this.filterChain = FilterFactory.createFilterChain(this);
         this.context = context;
     }
-    filters() {
-        return null;
-    }
     beforeAction(actionEvent) {
         this.trigger(AbstractController.EVENT_BEFORE_ACTION, actionEvent);
     }
@@ -27,6 +24,9 @@ class AbstractController extends Component {
         }
         this.filterChain.doFilter(request, response);
         this.afterAction(actionEvent);
+    }
+    filters() {
+        return null;
     }
 }
 AbstractController.EVENT_BEFORE_ACTION = 'beforeAction';

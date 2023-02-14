@@ -2,6 +2,8 @@
  * @author afu
  * @license MIT
  */
+import IResource from './IResource';
+
 import Candy  = require('../Candy');
 import FilterChain = require('./FilterChain');
 
@@ -15,10 +17,10 @@ class FilterFactory {
     /**
      * 创建过滤连
      *
-     * @param {any} resource 资源
+     * @param {IResource} resource 资源
      * @return {FilterChain}
      */
-    public static createFilterChain(resource: any): FilterChain {
+    public static createFilterChain(resource: IResource): FilterChain {
         let filterChain = new FilterChain();
         filterChain.setResource(resource);
 

@@ -2,6 +2,8 @@
  * @author afu
  * @license MIT
  */
+import IResource from './IResource';
+
 import Component = require('./Component');
 import ActionEvent = require('./ActionEvent');
 import FilterChain = require('./FilterChain');
@@ -10,7 +12,7 @@ import FilterFactory = require('./FilterFactory');
 /**
  * 控制器基类
  */
-abstract class AbstractController<CT> extends Component {
+abstract class AbstractController<CT> extends Component implements IResource {
 
     /**
      * 前置事件
@@ -30,7 +32,7 @@ abstract class AbstractController<CT> extends Component {
     /**
      * the filter collection
      */
-    public filterChain: FilterChain = FilterFactory.createFilterChain(this);
+    public filterChain: FilterChain;
 
     /**
      * constructor
@@ -38,23 +40,8 @@ abstract class AbstractController<CT> extends Component {
     constructor(context: any) {
         super();
 
+        this.filterChain = FilterFactory.createFilterChain(this);
         this.context = context;
-    }
-
-    /**
-     * 声明过滤器列表
-     *
-     * ```
-     * [
-     *      filterInstance,
-     *      'filterClassPath'
-     *      {'classPath': 'filterClassPath', otherProps: xxx}
-     * ]
-     * ```
-     *
-     */
-    public filters(): any[] {
-        return null;
     }
 
     /**
@@ -98,7 +85,23 @@ abstract class AbstractController<CT> extends Component {
     }
 
     /**
-     * 控制器入口
+     * @inheritdoc
+     *
+     * ```
+     * [
+     *      filterInstance,
+     *      'filterClassPath'
+     *      {'classPath': 'filterClassPath', otherProps: xxx}
+     * ]
+     * ```
+     *
+     */
+    public filters(): any[] {
+        return null;
+    }
+
+    /**
+     * @inheritdoc
      */
     public abstract run(request: any, response: any): void;
 

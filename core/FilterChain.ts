@@ -4,6 +4,7 @@
  */
 import IFilter from './IFilter';
 import IFilterChain from './IFilterChain';
+import IResource from './IResource';
 
 import ArrayList = require('../utils/ArrayList');
 
@@ -18,7 +19,7 @@ import ArrayList = require('../utils/ArrayList');
  */
 class FilterChain implements IFilterChain {
 
-    private resource = null;
+    private resource: IResource = null;
 
     /**
      * The current position of the filter chain
@@ -64,7 +65,10 @@ class FilterChain implements IFilterChain {
         this.resource = null;
     }
 
-    public setResource(resource: any): void {
+    /**
+     * 设置被访问的资源
+     */
+    public setResource(resource: IResource): void {
         this.resource = resource;
     }
 

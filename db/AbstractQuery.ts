@@ -59,24 +59,54 @@ export default abstract class AbstractQuery implements IQuery {
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public abstract getColumn(): Promise<string>;
 
+    /**
+     * @inheritdoc
+     */
     public abstract getOne(): Promise<any>;
 
+    /**
+     * @inheritdoc
+     */
     public abstract getAll(): Promise<any>;
 
+    /**
+     * @inheritdoc
+     */
     public abstract count(column: string): Promise<number>;
 
+    /**
+     * @inheritdoc
+     */
     public abstract select(columns: string): AbstractQuery;
 
+    /**
+     * @inheritdoc
+     */
     public abstract from(table: string): AbstractQuery;
 
+    /**
+     * @inheritdoc
+     */
     public abstract where(condition: string, parameters: any[]): AbstractQuery;
 
+    /**
+     * @inheritdoc
+     */
     public abstract groupBy(column: string): AbstractQuery;
 
+    /**
+     * @inheritdoc
+     */
     public abstract having(condition: string): AbstractQuery;
 
+    /**
+     * @inheritdoc
+     */
     public abstract orderBy(columns: string): AbstractQuery;
 
 }

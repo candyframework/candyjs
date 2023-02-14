@@ -40,26 +40,59 @@ export default abstract class AbstractCommand extends Event implements ICommand 
      */
     public initConnection(configuration: any): void {}
 
+    /**
+     * @inheritdoc
+     */
     public abstract prepareSql(sql: string): any;
 
+    /**
+     * @inheritdoc
+     */
     public abstract prepareStatement(sql: string): any;
 
+    /**
+     * @inheritdoc
+     */
     public abstract queryAll(): Promise<any>;
 
+    /**
+     * @inheritdoc
+     */
     public abstract queryOne(): Promise<any>;
 
+    /**
+     * @inheritdoc
+     */
     public abstract queryColumn(): Promise<string>;
 
+    /**
+     * @inheritdoc
+     */
     public abstract execute(): Promise<number>;
 
+    /**
+     * @inheritdoc
+     */
     public abstract close(): void;
 
+    /**
+     * @inheritdoc
+     */
     public abstract getLastSql(): string;
 
+    /**
+     * @inheritdoc
+     */
     public abstract beginTransaction(): any;
 
+    /**
+     * @inheritdoc
+     */
     public abstract commitTransaction(): any;
 
+    /**
+     * @inheritdoc
+     */
     public abstract rollbackTransaction(): any;
 
 }
