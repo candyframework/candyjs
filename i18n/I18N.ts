@@ -12,13 +12,18 @@ import InvalidConfigException = require('../core/InvalidConfigException');
  * 国际化
  *
  * ```
+ * // config
  * translator: {
  *      // 基于 file 的翻译器
- *      [type]: {
+ *      fileBased: {
  *          classPath: 'candy/i18n/file/Translator',
  *          basePath: __dirname + '/app/messages'
  *      }
  * }
+ *
+ * // use
+ * const translator = I18N.getTranslator('fileBased');
+ * translator.translate('categoryFile', 'property');
  * ```
  *
  */
