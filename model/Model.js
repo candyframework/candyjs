@@ -89,6 +89,9 @@ class Model extends Component {
         if (null === this.attributes) {
             throw new ModelException('The model has no attributes to validate');
         }
+        if (!this.beforeValidate()) {
+            return false;
+        }
         let validators = this.getValidators();
         if (null === validators) {
             return true;
@@ -96,8 +99,13 @@ class Model extends Component {
         for (let validator of validators) {
             this.messages = this.messages.concat(validator.validateAttributes());
         }
+        this.afterValidate();
         return this.messages.length === 0;
     }
+    beforeValidate() {
+        return true;
+    }
+    afterValidate() { }
     getErrors() {
         return this.messages;
     }

@@ -160,6 +160,10 @@ class Model extends Component implements IModel {
             throw new ModelException('The model has no attributes to validate');
         }
 
+        if(!this.beforeValidate()) {
+            return false;
+        }
+
         let validators = this.getValidators();
         if(null === validators) {
             return true;
@@ -169,8 +173,22 @@ class Model extends Component implements IModel {
             this.messages = this.messages.concat(validator.validateAttributes());
         }
 
+        this.afterValidate();
+
         return this.messages.length === 0;
     }
+
+    /**
+     * 前置校验
+     */
+    public beforeValidate(): boolean {
+        return true;
+    }
+
+    /**
+     * 后置校验
+     */
+    public afterValidate(): void {}
 
     /**
      * @inheritdoc
