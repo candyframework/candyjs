@@ -7,7 +7,7 @@ class AbstractView {
         this.context = context;
     }
     findViewFile(view) {
-        if ('@' === view.charAt(0)) {
+        if (64 === view.charCodeAt(0)) {
             return Candy.getPathAlias(view) + this.defaultExtension;
         }
         let context = this.context;

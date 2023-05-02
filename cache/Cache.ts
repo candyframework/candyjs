@@ -16,7 +16,7 @@ class Cache {
     /**
      * 实例
      */
-    private static serviceLocator: ServiceLocator = new ServiceLocator();
+    private static caches: ServiceLocator = new ServiceLocator();
 
     /**
      * 获取缓存对象
@@ -28,15 +28,15 @@ class Cache {
             throw new InvalidConfigException('The cache configuration is not found');
         }
 
-        if(!Cache.serviceLocator.hasService(type)) {
-            Cache.serviceLocator.setService(
+        if(!Cache.caches.hasService(type)) {
+            Cache.caches.setService(
                 type,
                 Candy.createObjectAsDefinition(app.cache[type], app)
             );
-            Cache.serviceLocator.getService(type).init();
+            Cache.caches.getService(type).init();
         }
 
-        return Cache.serviceLocator.getService(type);
+        return Cache.caches.getService(type);
     }
 
 }

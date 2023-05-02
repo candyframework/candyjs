@@ -32,7 +32,8 @@ abstract class AbstractView {
      * @return {String} 视图文件路径
      */
     public findViewFile(view: string): string {
-        if('@' === view.charAt(0)) {
+        // @xxx
+        if(64 === view.charCodeAt(0)) {
             return Candy.getPathAlias(view) + this.defaultExtension;
         }
 

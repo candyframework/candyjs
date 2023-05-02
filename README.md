@@ -34,6 +34,18 @@ CandyJs 并非基于第三方框架扩展，而是一个新的框架。
 
 由于 `candy/http/Request` 类使用了全局 `URL` 类，所以需要 nodejs 10.0 及以上版本
 
+### 快速开始
+
+可以使用 cli 工具快速搭建一个示例项目
+
+```bash
+# 安装依赖
+npm install -g @candyjs/cli
+
+# 运行命令 根据提示进行操作
+candyjs-cli
+```
+
 ### Hello world
 
 使用 CandyJs 你只需要从一个入口文件开始

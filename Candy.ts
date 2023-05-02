@@ -31,7 +31,8 @@ class Candy {
      * @return {String} 路径
      */
     static getPathAlias(alias: string): string {
-        if('@' !== alias.charAt(0)) {
+        // not starts with @
+        if(64 !== alias.charCodeAt(0)) {
             return alias;
         }
 
@@ -54,11 +55,13 @@ class Candy {
      * @param {String} path 路径
      */
     static setPathAlias(alias: string, path: string): void {
-        if('@' !== alias.charAt(0)) {
+        // not starts with @
+        if(64 !== alias.charCodeAt(0)) {
             alias = '@' + alias;
         }
 
-        if('/' === path.charAt(path.length - 1)) {
+        // '/'
+        if(47 === path.charCodeAt(path.length - 1)) {
             path = path.substring(0, path.length - 1);
         }
 
@@ -71,7 +74,8 @@ class Candy {
      * @param {String} alias 路径别名
      */
     static deletePathAlias(alias: string): void {
-        if('@' !== alias.charAt(0)) {
+        // not starts with @
+        if(64 !== alias.charCodeAt(0)) {
             alias = '@' + alias;
         }
 

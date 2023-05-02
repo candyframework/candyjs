@@ -1,7 +1,7 @@
 "use strict";
 class Candy {
     static getPathAlias(alias) {
-        if ('@' !== alias.charAt(0)) {
+        if (64 !== alias.charCodeAt(0)) {
             return alias;
         }
         let pos = alias.indexOf('/');
@@ -14,16 +14,16 @@ class Candy {
         return '';
     }
     static setPathAlias(alias, path) {
-        if ('@' !== alias.charAt(0)) {
+        if (64 !== alias.charCodeAt(0)) {
             alias = '@' + alias;
         }
-        if ('/' === path.charAt(path.length - 1)) {
+        if (47 === path.charCodeAt(path.length - 1)) {
             path = path.substring(0, path.length - 1);
         }
         Candy.pathAliases.set(alias, path);
     }
     static deletePathAlias(alias) {
-        if ('@' !== alias.charAt(0)) {
+        if (64 !== alias.charCodeAt(0)) {
             alias = '@' + alias;
         }
         Candy.pathAliases.delete(alias);
