@@ -54,7 +54,7 @@ class Logger {
     /**
      * @property {Number} flushInterval how many messages should be logged before they are flushed from memory
      */
-    public flushInterval: number = 10;
+    public flushInterval: number = 1;
 
     /**
      * @property {Array} targets the targets class

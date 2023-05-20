@@ -5,7 +5,7 @@ const AbstractLog = require("./AbstractLog");
 class Logger {
     constructor(application) {
         this.messages = [];
-        this.flushInterval = 10;
+        this.flushInterval = 1;
         this.targets = [];
         this.application = application;
         this.init(application.log);

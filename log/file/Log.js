@@ -11,6 +11,7 @@ class Log extends AbstractLog {
         this.logPath = Candy.getPathAlias('@runtime/logs');
         this.logFile = 'system.log';
         this.maxFileSize = 10240;
+        this.level = Logger.LEVEL_INFO;
     }
     flush(messages) {
         fs.access(this.logPath, fs.constants.R_OK | fs.constants.W_OK, (error) => {
@@ -26,10 +27,12 @@ class Log extends AbstractLog {
     formatMessage(messages) {
         let msg = '';
         for (let i = 0, len = messages.length; i < len; i++) {
-            msg += TimeHelper.format('y-m-d h:i:s', messages[i][2])
-                + ' [ '
-                + Logger.getLevelName(messages[i][1])
-                + ' ] '
+            if (messages[i][1] > this.level) {
+                continue;
+            }
+            msg = msg
+                + '[' + Logger.getLevelName(messages[i][1]) + ']'
+                + ' [' + TimeHelper.format('y-m-d h:i:s', messages[i][2]) + '] '
                 + messages[i][0]
                 + '\n';
         }
@@ -40,18 +43,23 @@ class Log extends AbstractLog {
         let file = this.logPath + '/' + this.logFile;
         fs.access(file, fs.constants.F_OK, (error) => {
             if (null !== error) {
-                fs.writeFile(file, msg, (err) => { });
+                fs.writeFile(file, msg, () => { });
                 return;
             }
             fs.stat(file, (err, stats) => {
                 if (stats.size > this.maxFileSize * 1024) {
                     let newFile = file + TimeHelper.format('ymdhis');
-                    fs.rename(file, newFile, (err) => {
-                        fs.appendFile(file, msg, (err) => { });
+                    fs.rename(file, newFile, (e) => {
+                        if (null !== e) {
+                            fs.appendFile(file, msg, () => { });
+                        }
+                        else {
+                            fs.writeFile(file, msg, () => { });
+                        }
                     });
                     return;
                 }
-                fs.appendFile(file, msg, (err) => { });
+                fs.appendFile(file, msg, () => { });
             });
         });
     }

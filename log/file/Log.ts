@@ -16,11 +16,12 @@ import TimeHelper = require('../../helpers/TimeHelper');
  * ```
  * 'log': {
  *     'targets': {
- *         'file': {
+ *         'infoLog': {
  *             'classPath': 'candy/log/file/Log',
  *             'logPath': 'absolute path',
  *             'logFile': 'system.log',
- *             'maxFileSize': 10240
+ *             'maxFileSize': 10240,
+ *             'level': Logger.LEVEL_INFO
  *         },
  *         'other': {...}
  *     },
@@ -45,6 +46,11 @@ class Log extends AbstractLog {
      * maximum log file size in KB
      */
     public maxFileSize: number = 10240;
+
+    /**
+     * the log greater than the level will be dropped
+     */
+    public level: number = Logger.LEVEL_INFO;
 
     constructor(application) {
         super(application);
@@ -74,10 +80,14 @@ class Log extends AbstractLog {
     private formatMessage(messages: any[]): string {
         let msg = '';
         for(let i=0,len=messages.length; i<len; i++) {
-            msg += TimeHelper.format('y-m-d h:i:s', messages[i][2])
-                + ' [ '
-                + Logger.getLevelName(messages[i][1])
-                + ' ] '
+            // level
+            if(messages[i][1] > this.level) {
+                continue;
+            }
+
+            msg = msg
+                + '[' + Logger.getLevelName(messages[i][1]) + ']'
+                + ' [' + TimeHelper.format('y-m-d h:i:s', messages[i][2]) + '] '
                 + messages[i][0]
                 + '\n';
         }
@@ -96,24 +106,28 @@ class Log extends AbstractLog {
         fs.access(file, fs.constants.F_OK, (error) => {
             // file not exists
             if(null !== error) {
-                fs.writeFile(file, msg, (err) => {});
+                fs.writeFile(file, msg, () => {});
 
                 return;
             }
 
-            // check file size
+            // exists then check file size
             fs.stat(file, (err, stats) => {
                 if(stats.size > this.maxFileSize * 1024) {
                     let newFile = file + TimeHelper.format('ymdhis');
 
-                    fs.rename(file, newFile, (err) => {
-                        fs.appendFile(file, msg, (err) => {});
+                    fs.rename(file, newFile, (e) => {
+                        if(null !== e) {
+                            fs.appendFile(file, msg, () => {});
+                        } else {
+                            fs.writeFile(file, msg, () => {});
+                        }
                     });
 
                     return;
                 }
 
-                fs.appendFile(file, msg, (err) => {});
+                fs.appendFile(file, msg, () => {});
             });
         });
     }
