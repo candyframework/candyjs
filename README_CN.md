@@ -141,7 +141,7 @@ new CandyJs(new App({
 
 ### 变更
 
-+ 2023-2
++ 2023-5
 
     * 4.18.4 优化日志 增加按天分割日志 `candy/log/file/DailyRotateLog`
 
