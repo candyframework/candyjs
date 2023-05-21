@@ -1,4 +1,4 @@
-const Log = require('../log/file/Log');
+const Log = require('../log/file/DailyRotateLog');
 
 const log = new Log();
 log.logPath = '.';

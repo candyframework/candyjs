@@ -1,7 +1,6 @@
 "use strict";
 const Candy = require("../Candy");
 const InvalidConfigException = require("../core/InvalidConfigException");
-const AbstractLog = require("./AbstractLog");
 class Logger {
     constructor(application) {
         this.messages = [];
@@ -23,7 +22,7 @@ class Logger {
         for (let target in settings.targets) {
             if (undefined !== settings.targets[target].classPath) {
                 let instance = Candy.createObjectAsDefinition(settings.targets[target], this.application);
-                instance.on(AbstractLog.EVENT_FLUSH, instance);
+                instance.on(Logger.EVENT_FLUSH, instance);
                 this.targets.push(instance);
             }
         }
@@ -45,7 +44,7 @@ class Logger {
         let messages = this.messages;
         this.messages = [];
         for (let target of this.targets) {
-            target.trigger(AbstractLog.EVENT_FLUSH, messages);
+            target.trigger(Logger.EVENT_FLUSH, messages);
         }
     }
     error(message) {
@@ -84,6 +83,7 @@ class Logger {
     }
 }
 Logger.instance = null;
+Logger.EVENT_FLUSH = 'flush';
 Logger.LEVEL_ERROR = 1;
 Logger.LEVEL_WARNING = 2;
 Logger.LEVEL_INFO = 4;

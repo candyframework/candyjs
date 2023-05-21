@@ -5,21 +5,19 @@
 import ILog from './ILog';
 
 import Event = require('../core/Event');
+import Logger = require('./Logger');
 
 /**
  * 日志抽象层
  */
 abstract class AbstractLog extends Event implements ILog {
 
-    /**
-     * EVENT_FLUSH 事件
-     */
-    static EVENT_FLUSH: string = 'flush';
+    public application: any;
 
     /**
-     * 应用
+     * the log greater than the level will be dropped
      */
-    public application: any;
+    public level: number = Logger.LEVEL_INFO;
 
     constructor(application) {
         super();
@@ -32,7 +30,7 @@ abstract class AbstractLog extends Event implements ILog {
      *
      * @param {Array} message the message to be logged
      */
-    public flush(messages: any[]): void {}
+    public abstract flush(messages: any[]): void;
 
     /**
      * 触发事件

@@ -2,7 +2,7 @@
  * @author afu
  * @license MIT
  */
-import AbstractCache = require('./AbstractCache');
+import ICache from './ICache';
 
 import Candy = require('../Candy');
 import ServiceLocator = require('../ioc/ServiceLocator');
@@ -21,7 +21,7 @@ class Cache {
     /**
      * 获取缓存对象
      */
-    static getCache(type: string): AbstractCache {
+    static getCache(type: string): ICache {
         let app = Candy.app;
 
         if(undefined === app.cache || undefined === app.cache[type]) {

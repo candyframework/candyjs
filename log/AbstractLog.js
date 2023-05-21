@@ -1,11 +1,12 @@
 "use strict";
 const Event = require("../core/Event");
+const Logger = require("./Logger");
 class AbstractLog extends Event {
     constructor(application) {
         super();
+        this.level = Logger.LEVEL_INFO;
         this.application = application;
     }
-    flush(messages) { }
     trigger(eventName, parameter = null) {
         if (!this.eventsMap.has(eventName)) {
             return;
@@ -16,5 +17,4 @@ class AbstractLog extends Event {
         }
     }
 }
-AbstractLog.EVENT_FLUSH = 'flush';
 module.exports = AbstractLog;

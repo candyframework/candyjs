@@ -6,13 +6,13 @@ const AbstractLog = require("../AbstractLog");
 const FileHelper = require("../../helpers/FileHelper");
 const TimeHelper = require("../../helpers/TimeHelper");
 const LinkedQueue = require("../../utils/LinkedQueue");
-class Log extends AbstractLog {
+class DailyRotateLog extends AbstractLog {
     constructor(application) {
         super(application);
         this.isWriting = false;
         this.logPath = Candy.getPathAlias('@runtime/logs');
         this.logFile = 'system.log';
-        this.maxFileSize = 10240;
+        this.dateFormat = 'ymd';
         this.queue = new LinkedQueue();
     }
     flush(messages) {
@@ -45,7 +45,7 @@ class Log extends AbstractLog {
     }
     writeLog(message) {
         let msg = this.formatMessage(message);
-        let file = this.logPath + '/' + this.logFile;
+        let file = this.logPath + '/' + this.logFile + TimeHelper.format(this.dateFormat);
         fs.access(file, fs.constants.F_OK, (error) => {
             if (null !== error) {
                 fs.writeFile(file, msg, () => {
@@ -53,26 +53,8 @@ class Log extends AbstractLog {
                 });
                 return;
             }
-            fs.stat(file, (err, stats) => {
-                if (stats.size > this.maxFileSize * 1024) {
-                    let newFile = file + TimeHelper.format('ymdhis');
-                    fs.rename(file, newFile, (e) => {
-                        if (null !== e) {
-                            fs.appendFile(file, msg, () => {
-                                this.process();
-                            });
-                        }
-                        else {
-                            fs.writeFile(file, msg, () => {
-                                this.process();
-                            });
-                        }
-                    });
-                    return;
-                }
-                fs.appendFile(file, msg, () => {
-                    this.process();
-                });
+            fs.appendFile(file, msg, () => {
+                this.process();
             });
         });
     }
@@ -84,4 +66,4 @@ class Log extends AbstractLog {
         return msg;
     }
 }
-module.exports = Log;
+module.exports = DailyRotateLog;

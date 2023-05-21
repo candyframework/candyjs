@@ -12,16 +12,15 @@ import TimeHelper = require('../../helpers/TimeHelper');
 import LinkedQueue = require('../../utils/LinkedQueue');
 
 /**
- * 文件日志
+ * 按天分割的日志
  *
  * ```
  * 'log': {
  *     'targets': {
- *         'infoLog': {
- *             'classPath': 'candy/log/file/Log',
+ *         'rotateLog': {
+ *             'classPath': 'candy/log/file/DailyRotateLog',
  *             'logPath': 'absolute path',
  *             'logFile': 'system.log',
- *             'maxFileSize': 10240,
  *             'level': Logger.LEVEL_INFO
  *         }
  *     },
@@ -30,7 +29,7 @@ import LinkedQueue = require('../../utils/LinkedQueue');
  * ```
  *
  */
-class Log extends AbstractLog {
+class DailyRotateLog extends AbstractLog {
 
     private queue: LinkedQueue<any[]>;
     private isWriting: boolean = false;
@@ -46,9 +45,9 @@ class Log extends AbstractLog {
     public logFile: string = 'system.log';
 
     /**
-     * maximum log file size in KB
+     * rotate date format
      */
-    public maxFileSize: number = 10240;
+    public dateFormat: string = 'ymd';
 
     constructor(application) {
         super(application);
@@ -104,7 +103,7 @@ class Log extends AbstractLog {
      */
     private writeLog(message: any[]): void {
         let msg = this.formatMessage(message);
-        let file = this.logPath + '/' + this.logFile;
+        let file = this.logPath + '/' + this.logFile + TimeHelper.format(this.dateFormat);
 
         fs.access(file, fs.constants.F_OK, (error) => {
             // file not exists
@@ -117,29 +116,8 @@ class Log extends AbstractLog {
                 return;
             }
 
-            // exists then check file size
-            fs.stat(file, (err, stats) => {
-                if(stats.size > this.maxFileSize * 1024) {
-                    let newFile = file + TimeHelper.format('ymdhis');
-
-                    fs.rename(file, newFile, (e) => {
-                        if(null !== e) {
-                            fs.appendFile(file, msg, () => {
-                                this.process();
-                            });
-                        } else {
-                            fs.writeFile(file, msg, () => {
-                                this.process();
-                            });
-                        }
-                    });
-
-                    return;
-                }
-
-                fs.appendFile(file, msg, () => {
-                    this.process();
-                });
+            fs.appendFile(file, msg, () => {
+                this.process();
             });
         });
     }
@@ -158,4 +136,4 @@ class Log extends AbstractLog {
 
 }
 
-export = Log;
+export = DailyRotateLog;

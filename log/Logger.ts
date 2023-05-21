@@ -4,7 +4,6 @@
  */
 import Candy = require('../Candy');
 import InvalidConfigException = require('../core/InvalidConfigException');
-import AbstractLog = require('./AbstractLog');
 
 /**
  * 日志
@@ -15,6 +14,11 @@ class Logger {
      * Logger instance
      */
     private static instance = null;
+
+    /**
+     * EVENT_FLUSH 事件
+     */
+    static EVENT_FLUSH: string = 'flush';
 
     /**
      * Error message level
@@ -89,7 +93,7 @@ class Logger {
         for(let target in settings.targets) {
             if(undefined !== settings.targets[target].classPath) {
                 let instance = Candy.createObjectAsDefinition(settings.targets[target], this.application);
-                instance.on(AbstractLog.EVENT_FLUSH, instance);
+                instance.on(Logger.EVENT_FLUSH, instance);
 
                 this.targets.push(instance);
             }
@@ -133,7 +137,7 @@ class Logger {
         this.messages = [];
 
         for(let target of this.targets) {
-            target.trigger(AbstractLog.EVENT_FLUSH, messages);
+            target.trigger(Logger.EVENT_FLUSH, messages);
         }
     }
 
