@@ -9,6 +9,7 @@ import Logger = require('../Logger');
 import AbstractLog = require('../AbstractLog');
 import FileHelper = require('../../helpers/FileHelper');
 import TimeHelper = require('../../helpers/TimeHelper');
+import LinkedQueue = require('../../utils/LinkedQueue');
 
 /**
  * 文件日志
@@ -32,6 +33,9 @@ import TimeHelper = require('../../helpers/TimeHelper');
  */
 class Log extends AbstractLog {
 
+    private queue: LinkedQueue<any[]>;
+    private isWriting: boolean = false;
+
     /**
      * absolute path of log file. default at runtime directory of the application
      */
@@ -54,59 +58,65 @@ class Log extends AbstractLog {
 
     constructor(application) {
         super(application);
+
+        this.queue = new LinkedQueue();
     }
 
     /**
      * @inheritdoc
      */
     public flush(messages: any[]): void {
+        for(let i=0; i<messages.length; i++) {
+            this.queue.add(messages[i]);
+        }
+
+        if(this.isWriting) {
+            return;
+        }
+        this.isWriting = true;
+
+        this.process();
+    }
+
+    /**
+     * process log queue
+     */
+    private process() {
+        let log = this.queue.take();
+
+        if(null === log) {
+            this.isWriting = false;
+            return;
+        }
+
         // 检查目录
         fs.access(this.logPath, fs.constants.R_OK | fs.constants.W_OK, (error) => {
             if(null === error) {
-                this.writeLog(messages);
+                this.writeLog(log);
 
                 return;
             }
 
             FileHelper.createDirectory(this.logPath, 0o777, () => {
-                this.writeLog(messages);
+                this.writeLog(log);
             });
         });
     }
 
     /**
-     * 格式化内容
-     */
-    private formatMessage(messages: any[]): string {
-        let msg = '';
-        for(let i=0,len=messages.length; i<len; i++) {
-            // level
-            if(messages[i][1] > this.level) {
-                continue;
-            }
-
-            msg = msg
-                + '[' + Logger.getLevelName(messages[i][1]) + ']'
-                + ' [' + TimeHelper.format('y-m-d h:i:s', messages[i][2]) + '] '
-                + messages[i][0]
-                + '\n';
-        }
-
-        return msg;
-    }
-
-    /**
      * 写日志
      */
-    private writeLog(messages: any[]): void {
-        let msg = this.formatMessage(messages);
+    private writeLog(message: any[]): void {
+        let msg = this.formatMessage(message);
         let file = this.logPath + '/' + this.logFile;
 
-        // check file exists
         fs.access(file, fs.constants.F_OK, (error) => {
             // file not exists
             if(null !== error) {
-                fs.writeFile(file, msg, () => {});
+                fs.writeFile(file, msg, () => {
+                    // next log
+                    this.process();
+                });
 
                 return;
             }
@@ -118,18 +128,41 @@ class Log extends AbstractLog {
 
                     fs.rename(file, newFile, (e) => {
                         if(null !== e) {
-                            fs.appendFile(file, msg, () => {});
+                            fs.appendFile(file, msg, () => {
+                                this.process();
+                            });
                         } else {
-                            fs.writeFile(file, msg, () => {});
+                            fs.writeFile(file, msg, () => {
+                                this.process();
+                            });
                         }
                     });
 
                     return;
                 }
 
-                fs.appendFile(file, msg, () => {});
+                fs.appendFile(file, msg, () => {
+                    this.process();
+                });
             });
         });
+    }
+
+    /**
+     * 格式化内容
+     */
+    private formatMessage(message: any[]): string {
+        // level
+        if(message[1] > this.level) {
+            return '';
+        }
+
+        let msg = '[' + Logger.getLevelName(message[1]) + ']'
+            + ' [' + TimeHelper.format('y-m-d h:i:s', message[2]) + '] '
+            + message[0]
+            + '\n';
+
+        return msg;
     }
 
 }
