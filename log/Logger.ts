@@ -174,9 +174,7 @@ class Logger {
      * @param {String} message the message to be logged
      */
     public trace(message: string): void {
-        if(this.application.debug) {
-            this.log(message, Logger.LEVEL_TRACE);
-        }
+        this.log(message, Logger.LEVEL_TRACE);
     }
 
     /**

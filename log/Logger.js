@@ -57,9 +57,7 @@ class Logger {
         this.log(message, Logger.LEVEL_INFO);
     }
     trace(message) {
-        if (this.application.debug) {
-            this.log(message, Logger.LEVEL_TRACE);
-        }
+        this.log(message, Logger.LEVEL_TRACE);
     }
     static getLevelName(level) {
         let name = 'unknown';
