@@ -84,7 +84,7 @@ class Cache extends AbstractCache {
                     return;
                 }
 
-                FileHelper.createDirectory(this.cachePath, 0o777, () => {
+                FileHelper.createDirectory(this.cachePath, this.directoryMode, () => {
                     fs.writeFile(cacheFile, value, this.application.encoding, (err) => {
                         if(null !== err) {
                             reject(err);

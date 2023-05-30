@@ -15,6 +15,11 @@ abstract class AbstractLog extends Event implements ILog {
     public application: any;
 
     /**
+     * the permission of the directory
+     */
+    public directoryMode: number = 0o777;
+
+    /**
      * the log greater than the level will be dropped
      */
     public level: number = Logger.LEVEL_INFO;

@@ -9,6 +9,8 @@ import ICache from './ICache';
  */
 abstract class AbstractCache implements ICache {
 
+    public directoryMode: number = 0o777;
+
     /**
      * 应用
      */

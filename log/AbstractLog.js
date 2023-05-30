@@ -4,6 +4,7 @@ const Logger = require("./Logger");
 class AbstractLog extends Event {
     constructor(application) {
         super();
+        this.directoryMode = 0o777;
         this.level = Logger.LEVEL_INFO;
         this.application = application;
     }
