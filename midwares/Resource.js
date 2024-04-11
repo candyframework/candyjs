@@ -5,14 +5,8 @@ class Resource {
     constructor(directory) {
         this.directory = directory;
     }
-    static serve(directory, options = {}) {
+    static serve(directory) {
         if (null === Resource.instance) {
-            if (undefined !== options.mime) {
-                Object.assign(Resource.mime, options.mime);
-            }
-            if (undefined !== options.cache) {
-                Object.assign(Resource.cache, options.cache);
-            }
             Resource.instance = new Resource(directory);
         }
         return (req, res, next) => {
@@ -26,7 +20,7 @@ class Resource {
         if ('' === ext) {
             return false;
         }
-        for (let key in Resource.mime) {
+        for (let key in Resource.MIME) {
             if (ext === key) {
                 ret = true;
                 break;
@@ -37,7 +31,7 @@ class Resource {
     getMimeType(pathName) {
         let ret = '';
         let ext = this.getExtName(pathName);
-        let mime = Resource.mime;
+        let mime = Resource.MIME;
         for (let key in mime) {
             if (ext === key) {
                 ret = mime[key];
@@ -78,10 +72,9 @@ class Resource {
             response.setHeader('Content-Type', '' === mimeType ? 'text/plain' : mimeType);
             response.setHeader('Last-Modified', stats.mtime.toUTCString());
             let extName = '.' + this.getExtName(pathname);
-            let cacheConfig = Resource.cache;
-            if (cacheConfig.regExp.test(extName)) {
-                response.setHeader('Expires', new Date(Date.now() + cacheConfig.maxAge).toUTCString());
-                response.setHeader('Cache-Control', 'max-age=' + cacheConfig.maxAge / 1000);
+            if (Resource.CACHE_TYPES.test(extName)) {
+                response.setHeader('Expires', new Date(Date.now() + Resource.CACHE_TIME).toUTCString());
+                response.setHeader('Cache-Control', 'max-age=' + Resource.CACHE_TIME / 1000);
             }
             if (stats.mtime.toUTCString() === request.headers['if-modified-since']) {
                 response.writeHead(304);
@@ -95,9 +88,10 @@ class Resource {
     }
 }
 Resource.instance = null;
-Resource.mime = {
+Resource.MIME = {
     'js': 'text/javascript',
     'css': 'text/css',
+    'txt': 'text/plain',
     'ico': 'image/x-icon',
     'gif': 'image/gif',
     'png': 'image/png',
@@ -107,11 +101,23 @@ Resource.mime = {
     'svg': 'image/svg+xml',
     'tiff': 'image/tiff',
     'avif': 'image/avif',
+    'bmp': 'image/x-ms-bmp',
+    'woff': 'application/font-woff',
+    'eot': 'application/vnd.ms-fontobject',
+    'mid': 'audio/midi',
     'mp3': 'audio/mpeg',
-    'mpeg': 'video/mpeg'
+    'ogg': 'audio/ogg',
+    'm4a': 'audio/x-m4a',
+    'ra': 'audio/x-realaudio',
+    'mpeg': 'video/mpeg',
+    '3gpp': 'video/3gpp',
+    'webm': 'video/webm',
+    'flv': 'video/x-flv',
+    'wmv': 'video/x-ms-wmv',
+    'avi': 'video/x-msvideo',
+    'rar': 'application/x-rar-compressed',
+    'zip': 'application/zip'
 };
-Resource.cache = {
-    'regExp': /(\.gif|\.jpg|\.jpeg|\.png|\.avif|\.js|\.css)$/ig,
-    'maxAge': 2592000000
-};
+Resource.CACHE_TIME = 2592000000;
+Resource.CACHE_TYPES = /(\.gif|\.jpg|\.jpeg|\.png|\.webp|\.js|\.css)$/ig;
 module.exports = Resource;

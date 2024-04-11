@@ -7,7 +7,7 @@ import fs = require('fs');
 import Request = require('../http/Request');
 
 /**
- * 静态资源处理
+ * Static Resources
  */
 class Resource {
 
@@ -19,9 +19,10 @@ class Resource {
     /**
      * MimeType
      */
-    static mime = {
+    public static MIME = {
         'js': 'text/javascript',
         'css': 'text/css',
+        'txt': 'text/plain',
 
         'ico': 'image/x-icon',
         'gif': 'image/gif',
@@ -32,20 +33,36 @@ class Resource {
         'svg': 'image/svg+xml',
         'tiff': 'image/tiff',
         'avif': 'image/avif',
+        'bmp': 'image/x-ms-bmp',
 
+        'woff': 'application/font-woff',
+        'eot': 'application/vnd.ms-fontobject',
+
+        'mid': 'audio/midi',
         'mp3': 'audio/mpeg',
-        'mpeg': 'video/mpeg'
+        'ogg': 'audio/ogg',
+        'm4a': 'audio/x-m4a',
+        'ra': 'audio/x-realaudio',
+        'mpeg': 'video/mpeg',
+        '3gpp': 'video/3gpp',
+        'webm': 'video/webm',
+        'flv': 'video/x-flv',
+        'wmv': 'video/x-ms-wmv',
+        'avi': 'video/x-msvideo',
+
+        'rar': 'application/x-rar-compressed',
+        'zip': 'application/zip'
     };
 
     /**
-     * 缓存
+     * 毫秒缓存时间
      */
-    static cache = {
-        // 那些资源需要缓存
-        'regExp': /(\.gif|\.jpg|\.jpeg|\.png|\.avif|\.js|\.css)$/ig,
-        // 缓存时间毫秒 默认 30 天 = 1000 * 3600 * 24 * 30
-        'maxAge': 2592000000
-    };
+    public static CACHE_TIME = 2592000000;
+
+    /**
+     * 缓存的类型
+     */
+    public static CACHE_TYPES = /(\.gif|\.jpg|\.jpeg|\.png|\.webp|\.js|\.css)$/ig;
 
     /**
      * 静态资源目录
@@ -59,15 +76,8 @@ class Resource {
     /**
      * 托管目录
      */
-    static serve(directory: string, options: any = {}) {
+    static serve(directory: string) {
         if(null === Resource.instance) {
-            if(undefined !== options.mime) {
-                Object.assign(Resource.mime, options.mime);
-            }
-            if(undefined !== options.cache) {
-                Object.assign(Resource.cache, options.cache);
-            }
-
             Resource.instance = new Resource(directory);
         }
 
@@ -91,7 +101,7 @@ class Resource {
             return false;
         }
 
-        for(let key in Resource.mime) {
+        for(let key in Resource.MIME) {
             if(ext === key) {
                 ret = true;
                 break;
@@ -110,7 +120,7 @@ class Resource {
     public getMimeType(pathName: string): string {
         let ret = '';
         let ext = this.getExtName(pathName);
-        let mime = Resource.mime;
+        let mime = Resource.MIME;
 
         for(let key in mime) {
             if(ext === key) {
@@ -174,11 +184,10 @@ class Resource {
 
             // 设置缓存
             let extName = '.' + this.getExtName(pathname);
-            let cacheConfig = Resource.cache;
 
-            if(cacheConfig.regExp.test(extName)) {
-                response.setHeader('Expires', new Date(Date.now() + cacheConfig.maxAge).toUTCString());
-                response.setHeader('Cache-Control', 'max-age=' + cacheConfig.maxAge / 1000);
+            if(Resource.CACHE_TYPES.test(extName)) {
+                response.setHeader('Expires', new Date(Date.now() + Resource.CACHE_TIME).toUTCString());
+                response.setHeader('Cache-Control', 'max-age=' + Resource.CACHE_TIME / 1000);
             }
 
             // 有缓存直接返回
