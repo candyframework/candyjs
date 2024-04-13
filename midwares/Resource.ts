@@ -155,7 +155,8 @@ class Resource {
                 return;
             }
 
-            // 有缓存直接返回
+            // not modified
+            // if(request.headers['if-none-match']) {}
             if(stats.mtime.toUTCString() === request.headers['if-modified-since']) {
                 response.writeHead(304);
                 response.end();
@@ -164,9 +165,10 @@ class Resource {
 
             // headers
             response.setHeader('Content-Type', mimeType);
+            // response.setHeader('ETag', '');
             response.setHeader('Last-Modified', stats.mtime.toUTCString());
 
-            // 设置缓存
+            // cache
             let ext = this.getExtName(pathname);
             if(Resource.CACHE_TIME[ext] !== undefined) {
                 response.setHeader('Expires', new Date(Date.now() + Resource.CACHE_TIME[ext]).toUTCString());
