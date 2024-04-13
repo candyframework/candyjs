@@ -5,40 +5,22 @@ class Resource {
     constructor(directory) {
         this.directory = directory;
     }
-    static serve(directory) {
-        if (null === Resource.instance) {
-            Resource.instance = new Resource(directory);
-        }
+    serve() {
         return (req, res, next) => {
-            Resource.instance.handler(req, res, next);
+            this.handler(req, res, next);
         };
     }
-    isStatic(request) {
-        let ret = false;
-        let pathname = new Request(request).createURL().pathname;
+    isStatic(pathname) {
         let ext = this.getExtName(pathname);
         if ('' === ext) {
             return false;
         }
-        for (let key in Resource.MIME) {
-            if (ext === key) {
-                ret = true;
-                break;
-            }
-        }
-        return ret;
+        return Resource.MIME[ext] !== undefined;
     }
     getMimeType(pathName) {
-        let ret = '';
         let ext = this.getExtName(pathName);
         let mime = Resource.MIME;
-        for (let key in mime) {
-            if (ext === key) {
-                ret = mime[key];
-                break;
-            }
-        }
-        return ret;
+        return mime[ext] === undefined ? '' : mime[ext];
     }
     getExtName(pathName) {
         let index = pathName.lastIndexOf('.');
@@ -48,16 +30,17 @@ class Resource {
         return pathName.substring(index + 1);
     }
     handler(request, response, next) {
-        if ('GET' !== request.method || !this.isStatic(request)) {
+        let pathname = new Request(request).createURL().pathname;
+        if ('GET' !== request.method || !this.isStatic(pathname)) {
             next();
             return;
         }
-        let pathname = new Request(request).createURL().pathname;
         let mimeType = this.getMimeType(pathname);
-        pathname = (this.directory + pathname).replace(/\.\./g, '');
+        pathname = pathname.replace(/\.\./g, '');
         while (pathname.indexOf('//') >= 0) {
             pathname = pathname.replace('//', '/');
         }
+        pathname = this.directory + pathname;
         fs.stat(pathname, (error, stats) => {
             if (null !== error) {
                 response.writeHead(404);
@@ -69,17 +52,17 @@ class Resource {
                 response.end();
                 return;
             }
-            response.setHeader('Content-Type', '' === mimeType ? 'text/plain' : mimeType);
-            response.setHeader('Last-Modified', stats.mtime.toUTCString());
-            let extName = '.' + this.getExtName(pathname);
-            if (Resource.CACHE_TYPES.test(extName)) {
-                response.setHeader('Expires', new Date(Date.now() + Resource.CACHE_TIME).toUTCString());
-                response.setHeader('Cache-Control', 'max-age=' + Resource.CACHE_TIME / 1000);
-            }
             if (stats.mtime.toUTCString() === request.headers['if-modified-since']) {
                 response.writeHead(304);
                 response.end();
                 return;
+            }
+            response.setHeader('Content-Type', mimeType);
+            response.setHeader('Last-Modified', stats.mtime.toUTCString());
+            let ext = this.getExtName(pathname);
+            if (Resource.CACHE_TIME[ext] !== undefined) {
+                response.setHeader('Expires', new Date(Date.now() + Resource.CACHE_TIME[ext]).toUTCString());
+                response.setHeader('Cache-Control', 'max-age=' + Resource.CACHE_TIME[ext] / 1000);
             }
             let rs = fs.createReadStream(pathname);
             response.writeHead(200);
@@ -87,7 +70,6 @@ class Resource {
         });
     }
 }
-Resource.instance = null;
 Resource.MIME = {
     'js': 'text/javascript',
     'css': 'text/css',
@@ -118,6 +100,13 @@ Resource.MIME = {
     'rar': 'application/x-rar-compressed',
     'zip': 'application/zip'
 };
-Resource.CACHE_TIME = 2592000000;
-Resource.CACHE_TYPES = /(\.gif|\.jpg|\.jpeg|\.png|\.webp|\.js|\.css)$/ig;
+Resource.CACHE_TIME = {
+    'js': 2592000000,
+    'css': 2592000000,
+    'gif': 2592000000,
+    'jpg': 2592000000,
+    'jpeg': 2592000000,
+    'png': 2592000000,
+    'webp': 2592000000
+};
 module.exports = Resource;

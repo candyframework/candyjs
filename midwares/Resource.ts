@@ -12,11 +12,6 @@ import Request = require('../http/Request');
 class Resource {
 
     /**
-     * 实例
-     */
-    private static instance: Resource = null;
-
-    /**
      * MimeType
      */
     public static MIME = {
@@ -57,12 +52,15 @@ class Resource {
     /**
      * 毫秒缓存时间
      */
-    public static CACHE_TIME = 2592000000;
-
-    /**
-     * 缓存的类型
-     */
-    public static CACHE_TYPES = /(\.gif|\.jpg|\.jpeg|\.png|\.webp|\.js|\.css)$/ig;
+    public static CACHE_TIME = {
+        'js': 2592000000,
+        'css': 2592000000,
+        'gif': 2592000000,
+        'jpg': 2592000000,
+        'jpeg': 2592000000,
+        'png': 2592000000,
+        'webp': 2592000000
+    };
 
     /**
      * 静态资源目录
@@ -74,41 +72,28 @@ class Resource {
     }
 
     /**
-     * 托管目录
+     * 托管
      */
-    static serve(directory: string) {
-        if(null === Resource.instance) {
-            Resource.instance = new Resource(directory);
-        }
-
+    public serve() {
         return (req, res, next) => {
-            Resource.instance.handler(req, res, next);
+            this.handler(req, res, next);
         };
     }
 
     /**
      * 是否是静态资源
      *
-     * @param {any} request 请求对象
+     * @param {String} pathname 请求路径
      * @return {Boolean}
      */
-    public isStatic(request: any): boolean {
-        let ret = false;
-        let pathname = new Request(request).createURL().pathname;
+    public isStatic(pathname: string): boolean {
         let ext = this.getExtName(pathname);
 
         if('' === ext) {
             return false;
         }
 
-        for(let key in Resource.MIME) {
-            if(ext === key) {
-                ret = true;
-                break;
-            }
-        }
-
-        return ret;
+        return Resource.MIME[ext] !== undefined;
     }
 
     /**
@@ -118,18 +103,10 @@ class Resource {
      * @return {String}
      */
     public getMimeType(pathName: string): string {
-        let ret = '';
         let ext = this.getExtName(pathName);
         let mime = Resource.MIME;
 
-        for(let key in mime) {
-            if(ext === key) {
-                ret = mime[key];
-                break;
-            }
-        }
-
-        return ret;
+        return mime[ext] === undefined ? '' : mime[ext];
     }
 
     /**
@@ -152,18 +129,18 @@ class Resource {
      * 处理静态资源
      */
     public handler(request: any, response: any, next: any): void {
-        if('GET' !== request.method || !this.isStatic(request)) {
+        let pathname = new Request(request).createURL().pathname;
+        if('GET' !== request.method || !this.isStatic(pathname)) {
             next();
             return;
         }
 
-        let pathname = new Request(request).createURL().pathname;
         let mimeType = this.getMimeType(pathname);
-
-        pathname = (this.directory + pathname).replace(/\.\./g, '');
+        pathname = pathname.replace(/\.\./g, '');
         while(pathname.indexOf('//') >= 0) {
             pathname = pathname.replace('//', '/');
         }
+        pathname = this.directory + pathname;
 
         fs.stat(pathname, (error, stats) => {
             if(null !== error) {
@@ -178,23 +155,22 @@ class Resource {
                 return;
             }
 
-            // headers
-            response.setHeader('Content-Type', '' === mimeType ? 'text/plain' : mimeType);
-            response.setHeader('Last-Modified', stats.mtime.toUTCString());
-
-            // 设置缓存
-            let extName = '.' + this.getExtName(pathname);
-
-            if(Resource.CACHE_TYPES.test(extName)) {
-                response.setHeader('Expires', new Date(Date.now() + Resource.CACHE_TIME).toUTCString());
-                response.setHeader('Cache-Control', 'max-age=' + Resource.CACHE_TIME / 1000);
-            }
-
             // 有缓存直接返回
             if(stats.mtime.toUTCString() === request.headers['if-modified-since']) {
                 response.writeHead(304);
                 response.end();
                 return;
+            }
+
+            // headers
+            response.setHeader('Content-Type', mimeType);
+            response.setHeader('Last-Modified', stats.mtime.toUTCString());
+
+            // 设置缓存
+            let ext = this.getExtName(pathname);
+            if(Resource.CACHE_TIME[ext] !== undefined) {
+                response.setHeader('Expires', new Date(Date.now() + Resource.CACHE_TIME[ext]).toUTCString());
+                response.setHeader('Cache-Control', 'max-age=' + Resource.CACHE_TIME[ext] / 1000);
             }
 
             let rs = fs.createReadStream(pathname);
