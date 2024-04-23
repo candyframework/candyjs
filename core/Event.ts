@@ -7,7 +7,7 @@ import IEvent from './IEvent';
 import LinkedList = require('../utils/LinkedList');
 
 /**
- * 简单 Event
+ * Simple Event
  */
 class Event implements IEvent {
 

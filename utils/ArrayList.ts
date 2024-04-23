@@ -46,7 +46,7 @@ class ArrayList<T> implements IList<T> {
         let index = 0;
 
         return {
-            next: () => {
+            next: (): { value: T | undefined, done: boolean } => {
                 if(index < this.length) {
                     let ret = { value: this.elementData[index], done: false };
                     index++;

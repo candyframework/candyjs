@@ -28,7 +28,7 @@ class LinkedList<T> implements IList<T> {
         let node = this.headNode;
 
         return {
-            next: () => {
+            next: (): { value: T | undefined, done: boolean } => {
                 if(null !== node) {
                     let ret = { value: node.data, done: false };
                     node = node.next;
