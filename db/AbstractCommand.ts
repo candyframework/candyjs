@@ -3,6 +3,7 @@
  * @license MIT
  */
 import ICommand from './ICommand';
+import IStatement from './IStatement';
 
 import Event = require('../core/Event');
 
@@ -43,12 +44,12 @@ export default abstract class AbstractCommand extends Event implements ICommand 
     /**
      * @inheritdoc
      */
-    public abstract prepareSql(sql: string): any;
+    public abstract prepareSql(sql: string): AbstractCommand;
 
     /**
      * @inheritdoc
      */
-    public abstract prepareStatement(sql: string): any;
+    public abstract prepareStatement(sql: string): IStatement;
 
     /**
      * @inheritdoc

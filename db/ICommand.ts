@@ -2,6 +2,7 @@
  * @author afu
  * @license MIT
  */
+import IStatement from './IStatement';
 
 /**
  * 数据库操作接口层
@@ -9,7 +10,7 @@
 export default interface ICommand {
 
     /**
-     * 初始化操作
+     * Initialization operation
      */
     initConnection(configuration: any): void;
 
@@ -18,14 +19,14 @@ export default interface ICommand {
      *
      * @param {String} sql
      */
-    prepareSql(sql: string): any;
+    prepareSql(sql: string): ICommand;
 
     /**
      * Prepares a sql statement for execution
      *
      * @param {String} sql
      */
-    prepareStatement(sql: string): any;
+    prepareStatement(sql: string): IStatement;
 
     /**
      * Executes the query and returns all results as an array
@@ -49,40 +50,40 @@ export default interface ICommand {
     queryColumn(): Promise<string>;
 
     /**
-     * 执行 sql 修改语句
+     * Execute the modification query and returns the number of affected rows
      *
      * @returns {Promise} 影响行数
      */
     execute(): Promise<number>;
 
     /**
-     * 关闭数据库连接
+     * Close db connection
      */
     close(): void;
 
     /**
-     * 获取上一次执行的 sql 语句
+     * Get the last executed SQL
      *
      * @returns {String}
      */
     getLastSql(): string;
 
     /**
-     * 开启事务
+     * Begin a transaction
      *
      * @returns {any}
      */
     beginTransaction(): any;
 
     /**
-     * 提交事务
+     * Commit transaction
      *
      * @returns {any}
      */
     commitTransaction(): any;
 
     /**
-     * 回滚事务
+     * Rollback transaction
      *
      * @returns {any}
      */

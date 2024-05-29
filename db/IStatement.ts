@@ -45,7 +45,7 @@ export default interface IStatement {
     queryColumn(): Promise<string>;
 
     /**
-     * 执行 sql 修改语句
+     * Execute the modification query and returns the number of affected rows
      *
      * @returns {Promise} 影响行数
      */
