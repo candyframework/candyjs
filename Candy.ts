@@ -17,7 +17,7 @@ class Candy {
     /**
      * @property {Map<String, String>} pathAliases 路径别名
      */
-    static pathAliases: Map<string, string> = new Map([ ['@candy', __dirname] ]);
+    static pathAliases: Map<string, string> = new Map([['@candy', __dirname]]);
 
     /**
      * @property {String} defaultExtension 默认文件扩展名
@@ -32,14 +32,14 @@ class Candy {
      */
     static getPathAlias(alias: string): string {
         // not starts with @
-        if(64 !== alias.charCodeAt(0)) {
+        if (64 !== alias.charCodeAt(0)) {
             return alias;
         }
 
         // 截取开头作为别名
         let pos = alias.indexOf('/');
         let root = -1 === pos ? alias : alias.substring(0, pos);
-        if(Candy.pathAliases.has(root)) {
+        if (Candy.pathAliases.has(root)) {
             return -1 === pos
                 ? Candy.pathAliases.get(root)
                 : Candy.pathAliases.get(root) + alias.substring(pos);
@@ -56,12 +56,12 @@ class Candy {
      */
     static setPathAlias(alias: string, path: string): void {
         // not starts with @
-        if(64 !== alias.charCodeAt(0)) {
+        if (64 !== alias.charCodeAt(0)) {
             alias = '@' + alias;
         }
 
         // '/'
-        if(47 === path.charCodeAt(path.length - 1)) {
+        if (47 === path.charCodeAt(path.length - 1)) {
             path = path.substring(0, path.length - 1);
         }
 
@@ -75,7 +75,7 @@ class Candy {
      */
     static deletePathAlias(alias: string): void {
         // not starts with @
-        if(64 !== alias.charCodeAt(0)) {
+        if (64 !== alias.charCodeAt(0)) {
             alias = '@' + alias;
         }
 
@@ -89,12 +89,12 @@ class Candy {
      * @param {any} parameters 构造函数参数
      * @return {any} 类实例
      */
-    static createObject(clazz: any, ...parameters: any[]): any {
-        if('string' === typeof clazz) {
-            return Candy.createObjectAsString(clazz, ...parameters);
+    static createObject<T = any>(clazz: any, ...parameters: any[]): T {
+        if ('string' === typeof clazz) {
+            return Candy.createObjectAsString<T>(clazz, ...parameters);
         }
 
-        return Candy.createObjectAsDefinition(clazz, ...parameters);
+        return Candy.createObjectAsDefinition<T>(clazz, ...parameters);
     }
 
     /**
@@ -103,7 +103,7 @@ class Candy {
      * @param {String} classPath 类路径
      * @param {any} parameters 构造函数参数
      */
-    static createObjectAsString(classPath: string, ...parameters: any[]): any {
+    static createObjectAsString<T = any>(classPath: string, ...parameters: any[]): T {
         let ClassName = Candy.include(classPath, true);
 
         return new ClassName(...parameters);
@@ -115,7 +115,7 @@ class Candy {
      * @param {any} definition 类配置
      * @param {any} parameters 构造函数参数
      */
-    static createObjectAsDefinition(definition: any, ...parameters: any[]): any {
+    static createObjectAsDefinition<T = any>(definition: any, ...parameters: any[]): T {
         let properties = Candy.configure({}, definition);
 
         let ClassName = Candy.include(definition.classPath, true);
@@ -147,10 +147,10 @@ class Candy {
      *
      * @param {any} object 需要配置的对象
      * @param {any} properties 配置项
-     * @return {Object} 源对象
+     * @return 源对象
      */
     static configure(object: any, properties: any): any {
-        for(let key in properties) {
+        for (let key in properties) {
             object[key] = properties[key];
         }
 
